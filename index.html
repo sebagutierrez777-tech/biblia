@@ -459,6 +459,11 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
 .sv-sig{margin:0;padding-left:20px}.sv-sig li{font-size:16px;line-height:1.5;margin-bottom:12px}.sv-sig .chip{margin-top:6px}
 .cn-g{margin:0 0 12px}.cn-g b{font-size:15px}.cn-g b small{color:var(--muted);font-weight:600;margin-left:4px}.cn-g .fi-r{margin-top:6px}
 .fch svg{flex:none}
+.aviso{position:relative}.aviso b{padding-right:30px}
+.av-x{position:absolute;top:8px;right:8px;width:34px;height:34px;border-radius:50%;color:var(--muted);font-size:15px;display:flex;align-items:center;justify-content:center}
+.av-x:active{background:var(--line)}
+.aviso.arch{opacity:.75;border-left-color:var(--line)}
+.av-ver{align-self:flex-start;min-height:36px;padding:4px 2px;font-size:14px;font-weight:700;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
 </style>
 <style>
 /* Presentación y bienvenida */
@@ -2019,13 +2024,20 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     }, function(){});
   }
   function markDot(){ var nuevos = AVISOS.some(function(a){ return vistos.indexOf(a.id) < 0; }); var b = document.querySelector('nav button[data-tab="vFavs"]'); if (b) b.classList.toggle("dot", nuevos); }
+  var avArch = store.get("avisosArch", []), avVerArch = false;
+  function avisoArt(a, arch){
+    var f = a.fecha ? new Date(a.fecha + "T12:00:00").toLocaleDateString("es-CL", {day:"numeric", month:"long"}) : "";
+    return '<article class="aviso' + (arch ? " arch" : vistos.indexOf(a.id) < 0 ? " nuevo" : "") + '"><button type="button" class="av-x" data-act="' + (arch ? "avSacar" : "avArch") + '" data-id="' + esc(a.id) + '" aria-label="' + (arch ? "Sacar del archivo" : "Archivar aviso") + '">' + (arch ? "↩" : "✕") + '</button><small>Aviso IDP Chile' + (f ? " · " + esc(f) : "") + '</small><b>' + esc(a.titulo || "") + '</b><p>' + esc(a.texto || "") + '</p>' + (a.enlace ? '<a href="' + esc(a.enlace) + '" target="_blank" rel="noopener">' + esc(a.texto_enlace || "Ver más") + ' ›</a>' : '') + '</article>';
+  }
   function avisosHtml(){
     if (!AVISOS.length) return "";
+    var vis = AVISOS.filter(function(a){ return avArch.indexOf(a.id) < 0; }), ar = AVISOS.filter(function(a){ return avArch.indexOf(a.id) >= 0; });
     var h = '<div class="avisos" aria-label="Avisos de la iglesia">';
-    AVISOS.slice(0, 5).forEach(function(a){
-      var f = a.fecha ? new Date(a.fecha + "T12:00:00").toLocaleDateString("es-CL", {day:"numeric", month:"long"}) : "";
-      h += '<article class="aviso' + (vistos.indexOf(a.id) < 0 ? " nuevo" : "") + '"><small>Aviso IDP Chile' + (f ? " · " + esc(f) : "") + '</small><b>' + esc(a.titulo || "") + '</b><p>' + esc(a.texto || "") + '</p>' + (a.enlace ? '<a href="' + esc(a.enlace) + '" target="_blank" rel="noopener">' + esc(a.texto_enlace || "Ver más") + ' ›</a>' : '') + '</article>';
-    });
+    vis.slice(0, 5).forEach(function(a){ h += avisoArt(a, false); });
+    if (ar.length){
+      h += '<button type="button" class="av-ver" data-act="avVer">' + (avVerArch ? "Ocultar avisos archivados" : "Ver avisos archivados (" + ar.length + ")") + '</button>';
+      if (avVerArch) ar.forEach(function(a){ h += avisoArt(a, true); });
+    }
     return h + '</div>';
   }
   function seeAvisos(){ var ch = false; AVISOS.forEach(function(a){ if (vistos.indexOf(a.id) < 0){ vistos.push(a.id); ch = true; } }); if (ch){ store.set("avisosVistos", vistos); setTimeout(markDot, 1500); } }
@@ -2119,6 +2131,9 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
       else if (a === "vddRead") go(r[0], r[1], r[2]);
       else if (a === "vddShare"){ var vid = ver(cur.v).books[r[0]] && DATA[cur.v][r[0]][r[1]][r[2]] ? cur.v : "rvr1960", txt = "“" + DATA[vid][r[0]][r[1]][r[2]].replace(/\n/g, " ") + "” " + refText(r[0], r[1], r[2]) + " (" + ver(vid).code + ")";
         if (navigator.share) navigator.share({text: txt}).catch(function(){}); else { try{ navigator.clipboard.writeText(txt).then(function(){ toast("Versículo copiado"); }); }catch(err){} } }
+      else if (a === "avArch"){ if (avArch.indexOf(x.dataset.id) < 0) avArch.push(x.dataset.id); store.set("avisosArch", avArch); toast("Aviso archivado"); renderFavs(); }
+      else if (a === "avSacar"){ avArch = avArch.filter(function(i){ return i !== x.dataset.id; }); store.set("avisosArch", avArch); renderFavs(); }
+      else if (a === "avVer"){ avVerArch = !avVerArch; renderFavs(); }
       else if (a === "respIr"){ tab("vMore"); renderMore("resp"); }
       else if (a === "respNo"){ store.set("respPospuesto", Date.now()); renderFavs(); }
       else if (a === "planStop"){ plan = null; store.set("plan", null); remSave(); renderFavs(); }
