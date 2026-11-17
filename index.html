@@ -196,6 +196,11 @@ header #btnMic,:root[data-tone="piedra"] header #btnMic{background:var(--nt-bg);
 #player{border-top:1px solid var(--line);background:var(--surface);padding:10px 14px 12px;display:flex;flex-direction:column;gap:8px}
 .pl-top{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
 .pl-top span{flex:1;min-width:0}.pl-top b{color:var(--ink)}
+#plVoice{min-height:34px;padding:0 10px;border:1px solid var(--line);border-radius:999px;font-size:13px;font-weight:700;background:var(--paper)}
+.voz{display:flex;width:100%;align-items:center;gap:12px;min-height:56px;padding:8px 2px;border-bottom:1px solid var(--line);text-align:left}
+.voz .n{flex:1;display:flex;flex-direction:column}.voz .n b{font-size:16px}.voz .n small{font-size:13px;color:var(--muted)}
+.voz .ok{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);flex:none}
+.voz[aria-pressed="true"] .ok{background:var(--nt-bg);border-color:var(--nt-bg);box-shadow:inset 0 0 0 4px var(--surface)}
 #plRate{min-height:34px;padding:0 10px;border:1px solid var(--line);border-radius:999px;font-size:13px;font-weight:700;background:var(--paper)}
 #plClose{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--paper)}
 .pl-track{height:5px;border-radius:3px;background:var(--line);overflow:hidden}.pl-track i{display:block;height:100%;width:0;background:var(--nt-bg)}
@@ -482,7 +487,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     </div>
   </div>
   <div id="player" hidden>
-    <div class="pl-top"><span id="plInfo"></span><button type="button" id="plRate">Velocidad 1x</button><button type="button" id="plClose" aria-label="Cerrar reproductor">✕</button></div>
+    <div class="pl-top"><span id="plInfo"></span><button type="button" id="plVoice">Voz</button><button type="button" id="plRate">Velocidad 1x</button><button type="button" id="plClose" aria-label="Cerrar reproductor">✕</button></div>
     <div class="pl-track" aria-hidden="true"><i id="plBar"></i></div>
     <div class="pl-ctl">
       <button type="button" id="plPrev" aria-label="Versículo anterior"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 6l-8 6 8 6V6z"/><path d="M6 6v12"/></svg></button>
@@ -525,6 +530,12 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
       <div class="grp">Formato</div>
       <div class="chips" id="imgFmt"><button type="button" class="chip" data-f="post" aria-pressed="true">Publicación</button><button type="button" class="chip" data-f="story" aria-pressed="false">Historia</button></div>
       <div class="note-btns"><button type="button" class="btn" id="imgShare">Compartir imagen</button><button type="button" class="more" id="imgSave">Guardar</button></div>
+    </div>
+  </div>
+  <div class="sheet" id="shVoz" role="dialog" aria-label="Elegir voz">
+    <div class="sheet-head"><h2>Elegir voz</h2><button class="icon" data-close aria-label="Cerrar">✕</button></div>
+    <div class="sheet-body"><div id="vozList"></div>
+      <p class="note">Toca una voz para escucharla y elegirla. Si quieres más voces, en el celular entra a <b>Ajustes › Idioma › Texto a voz</b> y descarga otras voces en español de Google.</p>
     </div>
   </div>
   <div class="sheet" id="shQr" role="dialog" aria-label="Código QR de la app">
@@ -1103,9 +1114,11 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
 
   /* ---------- Escuchar ---------- */
   var TTS = window.speechSynthesis, tts = { on:false, b:0, c:0, i:0, rate:1, voice:null };
+  function esVoices(){ return TTS ? TTS.getVoices().filter(function(v){ return /^es/i.test(v.lang); }) : []; }
   function pickVoice(){
     if (!TTS) return null;
-    var vs = TTS.getVoices().filter(function(v){ return /^es/i.test(v.lang); });
+    var vs = esVoices(), saved = store.get("voz", "");
+    for (var s0=0;s0<vs.length;s0++) if (vs[s0].voiceURI === saved) return vs[s0];
     var pref = ["es-US","es-MX","es-419","es-CL","es-ES"];
     for (var p=0;p<pref.length;p++) for (var i=0;i<vs.length;i++) if (vs[i].lang.replace("_","-") === pref[p]) return vs[i];
     return vs[0] || null;
@@ -1126,7 +1139,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     while (tts.i < vs.length && !vs[tts.i]) tts.i++;
     if (tts.i >= vs.length){ tts.on = false; ttsMark(); toast("Terminó " + refText(tts.b, tts.c)); return; }
     var u = new SpeechSynthesisUtterance(vs[tts.i].replace(/\n/g, " "));
-    u.lang = tts.voice ? tts.voice.lang : "es-ES"; if (tts.voice) u.voice = tts.voice; u.rate = tts.rate;
+    u.lang = tts.voice ? tts.voice.lang : "es-ES"; try{ if (tts.voice) u.voice = tts.voice; }catch(e){} u.rate = tts.rate;
     var me = u;
     u.onend = function(){ if (!tts.on || tts.cur !== me) return; tts.i++; ttsSpeak(); };
     u.onerror = function(e){ if (e.error === "interrupted" || e.error === "canceled") return; tts.on = false; ttsMark(); toast("No se pudo leer en voz alta en este celular."); };
@@ -1145,6 +1158,25 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
   var RATES = [1, 1.25, 1.5, 0.8];
   $("plRate").onclick = function(){ var k = (RATES.indexOf(tts.rate) + 1) % RATES.length; tts.rate = RATES[k]; this.textContent = "Velocidad " + String(tts.rate).replace(".", ",") + "x"; if (tts.on){ TTS.cancel(); ttsSpeak(); } };
   $("plClose").onclick = ttsClose;
+  var LANGN = {"es-ES":"España","es-MX":"México","es-US":"Estados Unidos","es-419":"Latinoamérica","es-CL":"Chile","es-AR":"Argentina","es-CO":"Colombia"};
+  function vozName(v, i){ var n = v.name.replace(/Google|Microsoft|Online|\(Natural\)|-/g, " ").replace(/\s+/g, " ").trim(); return n && !/^es[ _-]/i.test(n) ? n.charAt(0).toUpperCase() + n.slice(1) : "Voz " + (i + 1); }
+  function renderVoces(){
+    var vs = esVoices(), cur0 = tts.voice ? tts.voice.voiceURI : "", h = "";
+    if (!vs.length) h = '<p class="note">Este celular no tiene voces en español instaladas. Puedes descargarlas en <b>Ajustes › Idioma › Texto a voz</b>.</p>';
+    vs.forEach(function(v, i){ var l = LANGN[v.lang.replace("_","-")] || v.lang; h += '<button type="button" class="voz" data-u="' + esc(v.voiceURI) + '" aria-pressed="' + (v.voiceURI === cur0) + '"><span class="n"><b>' + esc(vozName(v, i)) + '</b><small>Español · ' + esc(l) + (v.localService ? " · funciona sin internet" : "") + '</small></span><span class="ok" aria-hidden="true"></span></button>'; });
+    $("vozList").innerHTML = h;
+  }
+  $("plVoice").onclick = function(){ renderVoces(); openSheet("shVoz"); };
+  $("vozList").addEventListener("click", function(e){
+    var b = e.target.closest(".voz"); if (!b) return;
+    var v = esVoices().filter(function(x){ return x.voiceURI === b.dataset.u; })[0]; if (!v) return;
+    tts.voice = v; store.set("voz", v.voiceURI); renderVoces();
+    var was = tts.on; TTS.cancel(); tts.on = false;
+    var u = new SpeechSynthesisUtterance("Jehová es mi pastor; nada me faltará."); try{ u.voice = v; }catch(err){} u.lang = v.lang; u.rate = tts.rate;
+    u.onend = function(){ if (was){ tts.on = true; ttsSpeak(); } };
+    TTS.speak(u);
+  });
+
   $("vRead").addEventListener("click", function(e){ if (e.target.closest("#btnListen")){ e.stopPropagation(); ttsStart(0); } }, true);
 
   /* ---------- Imagen del versículo ---------- */
