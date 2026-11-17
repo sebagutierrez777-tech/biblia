@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#f8f9fb">
 <meta name="description" content="12 versiones de la Biblia en español, para leer y comparar sin internet.">
 <link rel="manifest" href="manifest.json">
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="mobile-web-app-capable" content="yes">
@@ -710,6 +711,9 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
       <div class="share-box">
         <button type="button" class="share-main" id="btnShare"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span>Compartir la app con un hermano</span></button>
         <button type="button" class="share-qr" id="btnQr"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 17h4v4h-4"/></svg><span>Mostrar código QR</span></button>
+      </div>
+      <div class="rem-box" id="osBox" hidden>
+        <label class="prom-row" style="margin:0"><input type="checkbox" id="osChk"> <span>Avisos de la iglesia<small id="osInfo">Recibe en tu celular los avisos de IDP Chile.</small></span></label>
       </div>
       <div class="rem-box" id="remBox">
         <label class="prom-row" style="margin:0"><input type="checkbox" id="remChk"> <span>Recordatorio diario de lectura<small id="remInfo">Te avisamos una vez al día qué te toca leer.</small></span></label>
@@ -2080,6 +2084,28 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
   }
   function seeAvisos(){ var ch = false; AVISOS.forEach(function(a){ if (vistos.indexOf(a.id) < 0){ vistos.push(a.id); ch = true; } }); if (ch){ store.set("avisosVistos", vistos); setTimeout(markDot, 1500); } }
 
+
+  /* ---------- Avisos de la iglesia (OneSignal) ---------- */
+  var OS = null, OS_ID = "06abe668-2063-4c3d-a674-a213a5a5db2f";
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(function(O){
+    return O.init({ appId: OS_ID, serviceWorkerPath: "biblia/sw.js", serviceWorkerParam: { scope: "/biblia/" }, notifyButton: { enable: false }, promptOptions: { autoPrompt: false } }).then(function(){
+      OS = O; osSync();
+      O.User.PushSubscription.addEventListener("change", osSync);
+      if ($("vFavs").classList.contains("on")) renderFavs();
+    }).catch(function(){});
+  });
+  function osOn(){ return !!(OS && OS.User.PushSubscription.optedIn); }
+  function osSync(){ if (!OS) return; $("osBox").hidden = false; $("osChk").checked = osOn();
+    $("osInfo").textContent = (window.Notification && Notification.permission === "denied") ? "Están bloqueados. Actívalos en los ajustes del navegador para esta app." : osOn() ? "Activados. Te llegarán los avisos de IDP Chile." : "Recibe en tu celular los avisos de IDP Chile."; }
+  function osActivar(){ if (!OS) return Promise.resolve(false);
+    return OS.Notifications.requestPermission().then(function(){ return OS.User.PushSubscription.optIn(); }).then(function(){ osSync(); if (osOn()) toast("Listo, te llegarán los avisos"); return osOn(); }, function(){ osSync(); return false; }); }
+  $("osChk").onchange = function(){ if (!OS) return; if (this.checked) osActivar(); else { OS.User.PushSubscription.optOut(); toast("Avisos desactivados"); osSync(); } };
+  function osInvitaHtml(){
+    if (!OS || osOn() || store.get("osNo", false) || (window.Notification && Notification.permission === "denied")) return "";
+    return '<div class="resp-av"><p>¿Quieres recibir en tu celular los avisos de la iglesia?</p><button type="button" data-act="osSi">Activar</button><button type="button" data-act="osNo" aria-label="Ahora no" style="color:var(--muted)">✕</button></div>';
+  }
+
   /* ---------- Recordatorio diario ---------- */
   var remOn = store.get("recordatorio", false);
   function remText(){
@@ -2119,7 +2145,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     if (!DATA[cur.v] || !META){ el.innerHTML = '<p class="note">Cargando…</p>'; load(cur.v).then(function(){ if ($("vFavs").classList.contains("on")) renderFavs(); }, function(){ el.innerHTML = '<p class="note">No se pudo cargar la versión.</p>'; }); return; }
     var d = DATA[cur.v], vid = cur.v, r = vddRef();
     if (!ver(vid).books[r[0]] || !d[r[0]][r[1]][r[2]]) vid = "rvr1960";
-    var h = '<h2 class="sec">' + (nombre ? "La Biblia de " + esc(nombre) : "Mi Biblia") + '</h2>' + avisosHtml() + respAvisoHtml(); seeAvisos();
+    var h = '<h2 class="sec">' + (nombre ? "La Biblia de " + esc(nombre) : "Mi Biblia") + '</h2>' + avisosHtml() + osInvitaHtml() + respAvisoHtml(); seeAvisos();
     var vt = DATA[vid] ? DATA[vid][r[0]][r[1]][r[2]] : null;
     if (!DATA[vid]) load(vid).then(function(){ if ($("vFavs").classList.contains("on")) renderFavs(); });
     h += '<section class="vdd" aria-label="Versículo del día"><div class="vdd-h"><img src="logo-emblema.png" alt=""><div><b>Versículo del día</b><span>' + esc(dateTxt()) + '</span></div></div>';
@@ -2174,6 +2200,8 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
       else if (a === "avVaciar"){ if (confirm("¿Eliminar definitivamente todos los avisos archivados?")){ avArch.forEach(function(i){ if (avBorr.indexOf(i) < 0) avBorr.push(i); }); avArch = []; avVerArch = false; store.set("avisosBorrados", avBorr); store.set("avisosArch", avArch); toast("Avisos eliminados"); renderFavs(); } }
       else if (a === "avSacar"){ avArch = avArch.filter(function(i){ return i !== x.dataset.id; }); store.set("avisosArch", avArch); renderFavs(); }
       else if (a === "avVer"){ avVerArch = !avVerArch; renderFavs(); }
+      else if (a === "osSi"){ osActivar().then(function(){ renderFavs(); }); }
+      else if (a === "osNo"){ store.set("osNo", true); toast("Puedes activarlos cuando quieras en Aa"); renderFavs(); }
       else if (a === "respIr"){ tab("vMore"); renderMore("resp"); }
       else if (a === "respNo"){ store.set("respPospuesto", Date.now()); renderFavs(); }
       else if (a === "planStop"){ plan = null; store.set("plan", null); remSave(); renderFavs(); }
