@@ -26,7 +26,7 @@
   --at:#8a4a2c; --at-soft:#f3e5dd; --nt:#2f4d8a; --nt-soft:#dfe6f3;
   --at-bg:#8a4a2c; --nt-bg:#2f4d8a; --on-t:#ffffff; --at-wash:#f7eee8; --nt-wash:#eaeff8;
   --tc:var(--nt); --tc-soft:var(--nt-soft); --tc-bg:var(--nt-bg); --tc-wash:var(--nt-wash);
-  --prom:#f8f0da;
+  --prom:#f8f0da; --hl-a:#f7e08a; --hl-v:#cdeac0; --hl-c:#cfe2f7; --hl-r:#f6d3dc;
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
@@ -34,21 +34,21 @@
     --paper:#14121f; --surface:#1f1c2e; --ink:#ece9f6; --muted:#a09cb8; --line:#34304a;
     --rubric:#ff6b93; --rubric-soft:#3d1c2b; --mark:#7a5c00;
     --head:#b3164a; --head2:#d9541f; --on-head:#ffffff; color-scheme:dark;
-    --at:#e3ad72;--at-soft:#3a2d20;--nt:#aa9cf5;--nt-soft:#2b2648;--at-bg:#8a4a2c;--nt-bg:#3b4a9c;--at-wash:#1f1812;--nt-wash:#181a30;--prom:#29251a;
+    --at:#e3ad72;--at-soft:#3a2d20;--nt:#aa9cf5;--nt-soft:#2b2648;--at-bg:#8a4a2c;--nt-bg:#3b4a9c;--at-wash:#1f1812;--nt-wash:#181a30;--prom:#29251a;--hl-a:#5a4c12;--hl-v:#22452a;--hl-c:#1f3b5c;--hl-r:#55283a;
   }
 }
 :root[data-theme="dark"]{
   --paper:#14121f; --surface:#1f1c2e; --ink:#ece9f6; --muted:#a09cb8; --line:#34304a;
   --rubric:#ff6b93; --rubric-soft:#3d1c2b; --mark:#7a5c00;
   --head:#b3164a; --head2:#d9541f; --on-head:#ffffff; color-scheme:dark;
-  --at:#e3ad72;--at-soft:#3a2d20;--nt:#aa9cf5;--nt-soft:#2b2648;--at-bg:#8a4a2c;--nt-bg:#3b4a9c;--at-wash:#1f1812;--nt-wash:#181a30;--prom:#29251a;
+  --at:#e3ad72;--at-soft:#3a2d20;--nt:#aa9cf5;--nt-soft:#2b2648;--at-bg:#8a4a2c;--nt-bg:#3b4a9c;--at-wash:#1f1812;--nt-wash:#181a30;--prom:#29251a;--hl-a:#5a4c12;--hl-v:#22452a;--hl-c:#1f3b5c;--hl-r:#55283a;
 }
-:root[data-tone="crema"]{--paper:#fdf1d6;--surface:#fffaf0;--ink:#2b1d0e;--muted:#7a6549;--line:#ecd9b0;--rubric:#d9480f;--rubric-soft:#fbdcc6;--mark:#ffd95e;--head:#e8590c;--head2:#f59f00;--on-head:#ffffff;color-scheme:light;--at:#8a4a2c;--at-soft:#f3e5dd;--nt:#2f4d8a;--nt-soft:#dfe6f3;--at-bg:#8a4a2c;--nt-bg:#2f4d8a;--at-wash:#f7eee8;--nt-wash:#eaeff8;--prom:#f8f0da;}
-:root[data-tone="menta"]{--paper:#dff7ea;--surface:#f6fffa;--ink:#0d2a1e;--muted:#4c6f5f;--line:#b9e6cf;--rubric:#0a8f5b;--rubric-soft:#c3f0da;--mark:#fff07a;--head:#0a9d63;--head2:#16b8a6;--on-head:#ffffff;color-scheme:light;--at:#8a4a2c;--at-soft:#f3e5dd;--nt:#2f4d8a;--nt-soft:#dfe6f3;--at-bg:#8a4a2c;--nt-bg:#2f4d8a;--at-wash:#f7eee8;--nt-wash:#eaeff8;--prom:#f8f0da;}
-:root[data-tone="cielo"]{--paper:#dfeeff;--surface:#f7fbff;--ink:#0d1f3a;--muted:#4d6485;--line:#b9d5f7;--rubric:#1565d8;--rubric-soft:#cfe2ff;--mark:#ffe680;--head:#1565d8;--head2:#12b5e5;--on-head:#ffffff;color-scheme:light;--at:#8a4a2c;--at-soft:#f3e5dd;--nt:#2f4d8a;--nt-soft:#dfe6f3;--at-bg:#8a4a2c;--nt-bg:#2f4d8a;--at-wash:#f7eee8;--nt-wash:#eaeff8;--prom:#f8f0da;}
-:root[data-tone="rosa"]{--paper:#ffe3ee;--surface:#fff7fa;--ink:#33101f;--muted:#80566a;--line:#f7bfd4;--rubric:#d6187a;--rubric-soft:#ffd0e3;--mark:#ffe680;--head:#d6187a;--head2:#ff5d5d;--on-head:#ffffff;color-scheme:light;--at:#8a4a2c;--at-soft:#f3e5dd;--nt:#2f4d8a;--nt-soft:#dfe6f3;--at-bg:#8a4a2c;--nt-bg:#2f4d8a;--at-wash:#f7eee8;--nt-wash:#eaeff8;--prom:#f8f0da;}
-:root[data-tone="noche"]{--paper:#0c1124;--surface:#161d38;--ink:#eef1ff;--muted:#99a2c7;--line:#2a3359;--rubric:#ffb020;--rubric-soft:#3b2f10;--mark:#6a4b00;--head:#1b2a6b;--head2:#5a2a8a;--on-head:#ffffff;color-scheme:dark;--at:#e3ad72;--at-soft:#3a2d20;--nt:#aa9cf5;--nt-soft:#2b2648;--at-bg:#8a4a2c;--nt-bg:#3b4a9c;--at-wash:#1f1812;--nt-wash:#181a30;--prom:#29251a;}
-:root[data-tone="piedra"]{--paper:#eceef2;--surface:#f8f9fb;--ink:#1d2230;--muted:#555d70;--line:#d6dae3;--rubric:#2f4d8a;--rubric-soft:#dfe6f3;--mark:#ffe08a;--head:#2f4d8a;--head2:#2f4d8a;--on-head:#ffffff;color-scheme:light;--at:#8a4a2c;--at-soft:#f3e5dd;--nt:#2f4d8a;--nt-soft:#dfe6f3;--at-bg:#8a4a2c;--nt-bg:#2f4d8a;--at-wash:#f7eee8;--nt-wash:#eaeff8;--prom:#f8f0da;}
+:root[data-tone="crema"]{--paper:#fdf1d6;--surface:#fffaf0;--ink:#2b1d0e;--muted:#7a6549;--line:#ecd9b0;--rubric:#d9480f;--rubric-soft:#fbdcc6;--mark:#ffd95e;--head:#e8590c;--head2:#f59f00;--on-head:#ffffff;color-scheme:light;--at:#8a4a2c;--at-soft:#f3e5dd;--nt:#2f4d8a;--nt-soft:#dfe6f3;--at-bg:#8a4a2c;--nt-bg:#2f4d8a;--at-wash:#f7eee8;--nt-wash:#eaeff8;--prom:#f8f0da;--hl-a:#f7e08a;--hl-v:#cdeac0;--hl-c:#cfe2f7;--hl-r:#f6d3dc;}
+:root[data-tone="menta"]{--paper:#dff7ea;--surface:#f6fffa;--ink:#0d2a1e;--muted:#4c6f5f;--line:#b9e6cf;--rubric:#0a8f5b;--rubric-soft:#c3f0da;--mark:#fff07a;--head:#0a9d63;--head2:#16b8a6;--on-head:#ffffff;color-scheme:light;--at:#8a4a2c;--at-soft:#f3e5dd;--nt:#2f4d8a;--nt-soft:#dfe6f3;--at-bg:#8a4a2c;--nt-bg:#2f4d8a;--at-wash:#f7eee8;--nt-wash:#eaeff8;--prom:#f8f0da;--hl-a:#f7e08a;--hl-v:#cdeac0;--hl-c:#cfe2f7;--hl-r:#f6d3dc;}
+:root[data-tone="cielo"]{--paper:#dfeeff;--surface:#f7fbff;--ink:#0d1f3a;--muted:#4d6485;--line:#b9d5f7;--rubric:#1565d8;--rubric-soft:#cfe2ff;--mark:#ffe680;--head:#1565d8;--head2:#12b5e5;--on-head:#ffffff;color-scheme:light;--at:#8a4a2c;--at-soft:#f3e5dd;--nt:#2f4d8a;--nt-soft:#dfe6f3;--at-bg:#8a4a2c;--nt-bg:#2f4d8a;--at-wash:#f7eee8;--nt-wash:#eaeff8;--prom:#f8f0da;--hl-a:#f7e08a;--hl-v:#cdeac0;--hl-c:#cfe2f7;--hl-r:#f6d3dc;}
+:root[data-tone="rosa"]{--paper:#ffe3ee;--surface:#fff7fa;--ink:#33101f;--muted:#80566a;--line:#f7bfd4;--rubric:#d6187a;--rubric-soft:#ffd0e3;--mark:#ffe680;--head:#d6187a;--head2:#ff5d5d;--on-head:#ffffff;color-scheme:light;--at:#8a4a2c;--at-soft:#f3e5dd;--nt:#2f4d8a;--nt-soft:#dfe6f3;--at-bg:#8a4a2c;--nt-bg:#2f4d8a;--at-wash:#f7eee8;--nt-wash:#eaeff8;--prom:#f8f0da;--hl-a:#f7e08a;--hl-v:#cdeac0;--hl-c:#cfe2f7;--hl-r:#f6d3dc;}
+:root[data-tone="noche"]{--paper:#0c1124;--surface:#161d38;--ink:#eef1ff;--muted:#99a2c7;--line:#2a3359;--rubric:#ffb020;--rubric-soft:#3b2f10;--mark:#6a4b00;--head:#1b2a6b;--head2:#5a2a8a;--on-head:#ffffff;color-scheme:dark;--at:#e3ad72;--at-soft:#3a2d20;--nt:#aa9cf5;--nt-soft:#2b2648;--at-bg:#8a4a2c;--nt-bg:#3b4a9c;--at-wash:#1f1812;--nt-wash:#181a30;--prom:#29251a;--hl-a:#5a4c12;--hl-v:#22452a;--hl-c:#1f3b5c;--hl-r:#55283a;}
+:root[data-tone="piedra"]{--paper:#eceef2;--surface:#f8f9fb;--ink:#1d2230;--muted:#555d70;--line:#d6dae3;--rubric:#2f4d8a;--rubric-soft:#dfe6f3;--mark:#ffe08a;--head:#2f4d8a;--head2:#2f4d8a;--on-head:#ffffff;color-scheme:light;--at:#8a4a2c;--at-soft:#f3e5dd;--nt:#2f4d8a;--nt-soft:#dfe6f3;--at-bg:#8a4a2c;--nt-bg:#2f4d8a;--at-wash:#f7eee8;--nt-wash:#eaeff8;--prom:#f8f0da;--hl-a:#f7e08a;--hl-v:#cdeac0;--hl-c:#cfe2f7;--hl-r:#f6d3dc;}
 :root[data-tone="piedra"] header{background:var(--surface);color:var(--ink);border-bottom:1px solid var(--line)}
 :root[data-tone="piedra"] header .pill,:root[data-tone="piedra"] header .icon,:root[data-tone="piedra"] header #btnVer{background:var(--paper);border-color:var(--line);color:var(--ink)}
 :root[data-test="at"]{--tc:var(--at);--tc-soft:var(--at-soft);--tc-bg:var(--at-bg);--tc-wash:var(--at-wash)}
@@ -92,7 +92,7 @@ main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .prom-row input{width:22px;height:22px;margin:0;accent-color:var(--rubric);flex:none}
 .prom-demo{display:inline-block;padding:1px 8px;border-radius:4px;background:var(--prom);font-family:var(--read);font-weight:400}
 .v.fav{border-left-color:var(--rubric)}
-.v.sel{background:var(--rubric-soft)}
+.v.sel{background:var(--rubric-soft);outline:2px solid var(--nt-bg);outline-offset:-1px}
 .v.flash{background:var(--mark)}
 .chap-nav{display:flex;justify-content:space-between;gap:12px;margin-top:28px}
 .chap-nav button{flex:1;min-height:46px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-weight:600;font-size:14px}
@@ -173,6 +173,70 @@ header #btnMic,:root[data-tone="piedra"] header #btnMic{background:var(--nt-bg);
 .qr-body img{width:260px;height:260px;border-radius:16px;background:#fff;padding:10px;box-shadow:0 6px 20px rgba(20,30,60,.12)}
 .qr-t{font-size:17px;line-height:1.45;margin:18px 0 0;max-width:30ch}
 .qr-body .note{padding-top:6px;text-align:center}
+
+
+/* Acciones, resaltados y notas */
+#actions.on{display:flex;flex-direction:column;align-items:stretch;gap:8px}
+.act-r1{display:flex;align-items:center;gap:8px}
+.act-r1 b{flex:1;min-width:0;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dots{display:flex;gap:6px}
+.dots button{width:34px;height:34px;min-height:0!important;padding:0!important;border-radius:50%!important;border:2px solid var(--line)!important}
+.dots .hl-x{background:var(--surface)!important;color:var(--muted);font-size:14px!important}
+.act-r2{display:flex;gap:6px}
+.act-r2 button{flex:1 1 auto;padding:0 6px!important;font-size:13.5px!important}
+.hl-a{background:var(--hl-a)!important}.hl-v{background:var(--hl-v)!important}.hl-c{background:var(--hl-c)!important}.hl-r{background:var(--hl-r)!important}
+.v.reading{outline:2px solid var(--nt-bg);outline-offset:-1px;background:var(--at-soft)}
+.vnote{margin:2px 0 10px 10px;padding:9px 12px;border-radius:10px;background:var(--surface);border:1px solid var(--line);font-family:var(--ui);font-size:14.5px;line-height:1.45;white-space:pre-line}
+.vnote b{color:var(--nt-bg)}
+.listen{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 16px;margin:0 0 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-weight:700;font-size:14.5px;color:var(--ink)}
+#noteTxt{width:100%;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);font:inherit;font-size:16px;padding:12px;resize:vertical}
+.note-v{font-family:var(--read);font-size:17px;line-height:1.55;margin:4px 0 6px}
+.note-btns{display:flex;gap:10px;margin-top:14px}.note-btns .btn{flex:1}.note-btns .more{margin:0;flex:none;width:auto;padding:0 18px}
+/* Reproductor */
+#player{border-top:1px solid var(--line);background:var(--surface);padding:10px 14px 12px;display:flex;flex-direction:column;gap:8px}
+.pl-top{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.pl-top span{flex:1;min-width:0}.pl-top b{color:var(--ink)}
+#plRate{min-height:34px;padding:0 10px;border:1px solid var(--line);border-radius:999px;font-size:13px;font-weight:700;background:var(--paper)}
+#plClose{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--paper)}
+.pl-track{height:5px;border-radius:3px;background:var(--line);overflow:hidden}.pl-track i{display:block;height:100%;width:0;background:var(--nt-bg)}
+.pl-ctl{display:flex;justify-content:center;align-items:center;gap:26px}
+#plPrev,#plNext{width:46px;height:46px;border-radius:50%;background:var(--paper);display:flex;align-items:center;justify-content:center}
+#plPlay{width:58px;height:58px;border-radius:50%;background:var(--nt-bg);color:#fff;display:flex;align-items:center;justify-content:center}
+/* Imagen */
+.img-body canvas{display:block;width:100%;max-width:340px;height:auto;margin:0 auto 6px;border-radius:14px;box-shadow:0 8px 24px rgba(20,25,70,.22)}
+.sws{display:flex;gap:10px}.sw{width:56px;height:56px;border-radius:14px;border:1px solid var(--line)}.sw[aria-pressed="true"]{outline:3px solid var(--ink);outline-offset:2px}
+/* Mi Biblia */
+.vdd{margin-top:12px;border-radius:20px;overflow:hidden;background:var(--surface);border:1px solid var(--line)}
+.vdd-h{display:flex;align-items:center;gap:12px;padding:14px 16px;background:linear-gradient(165deg,#1e3a8a,#5b21b6);color:#fff}
+.vdd-h img{height:40px;width:auto;background:#fff;border-radius:50%;padding:4px}
+.vdd-h div{display:flex;flex-direction:column}.vdd-h b{font-size:13px;letter-spacing:.08em;text-transform:uppercase}.vdd-h span{font-size:14px}
+.vdd-b{padding:16px}
+.vdd-t{margin:0;font-family:var(--read);font-size:20px;line-height:1.5}
+.vdd-r{display:inline-block;margin:10px 0 0;padding:3px 10px;border-radius:999px;color:#fff;font-size:13px;font-weight:700}.vdd-r.at{background:var(--at-bg)}.vdd-r.nt{background:var(--nt-bg)}
+.vdd-btns{display:flex;gap:8px;margin-top:14px}
+.vdd-btns button{flex:1;min-height:46px;border-radius:12px;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;gap:6px}
+.vdd-btns .b1{background:var(--nt-bg);color:#fff}.vdd-btns .b2{border:1px solid var(--line);background:var(--paper)}
+.vdd-read{width:100%;min-height:44px;margin-top:6px;color:var(--nt-bg);font-weight:700}
+.mb-h{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:24px 0 8px}
+.cont{display:flex;flex-direction:column;width:100%;text-align:left;min-height:60px;padding:10px 14px;border-radius:12px;border-left:6px solid}
+.cont.at{background:var(--at-soft);border-color:var(--at-bg)}.cont.nt{background:var(--nt-soft);border-color:var(--nt-bg)}
+.cont .nm{font-size:17px;font-weight:700}.cont .cap{font-size:13px;color:var(--muted)}
+.chips.rec{align-items:center}.chips.rec span{font-size:13px;color:var(--muted)}
+.plan{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.plan-t{display:flex;align-items:center;gap:10px}.plan-t b{flex:1;font-size:17px}
+.racha{background:var(--prom);color:var(--ink);font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px}
+.plan-p{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+.plan-bar{height:10px;border-radius:5px;background:var(--line);overflow:hidden}.plan-bar i{display:block;height:100%;background:var(--nt-bg)}
+.plan-h{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.plan-it{display:flex;align-items:center;gap:10px;min-height:46px;border-bottom:1px solid var(--line)}
+.plan-it label{flex:1;display:flex;align-items:center;gap:12px;font-size:16px;font-weight:600;cursor:pointer}
+.plan-it input{width:22px;height:22px;margin:0;accent-color:var(--nt-bg)}
+.plan-go{min-height:36px;padding:0 14px;border-radius:999px;background:var(--nt-soft);font-weight:700;font-size:14px}
+.plan-x{min-height:40px;color:var(--muted);font-size:14px;font-weight:600}
+.plans{display:flex;flex-direction:column}
+.plan-o{display:flex;flex-direction:column;text-align:left;min-height:62px;padding:8px 2px;border-bottom:1px solid var(--line)}
+.plan-o b{font-size:16px}.plan-o span{font-size:13px;color:var(--muted)}
+.hlr .t{border-radius:6px;padding:2px 6px}
 
 /* Comparar */
 .cmp-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
@@ -293,7 +357,7 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
 <div class="ini-tit"><h1>Biblia Multiversión</h1><p>12 versiones de la Santa Biblia<br>para leer, buscar y comparar</p></div>
 </div>
 <div class="ini-load" aria-hidden="true"><i></i></div>
-<div class="ini-pie2"><span>Versión 1.0</span><span>Desarrollado por <b>DIRCOM Chile</b></span></div>
+<div class="ini-pie2"><span>Versión 1.1</span><span>Desarrollado por <b>DIRCOM Chile</b></span></div>
 </div>
 <div class="ini ini-bien" id="iniBien" role="dialog" aria-modal="true" aria-labelledby="iniBienT" hidden>
 <div class="ini-cab"><img src="logo-emblema.png" alt=""><p>Iglesia de Dios de la Profecía</p></div>
@@ -372,14 +436,31 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
     </section>
 
     <section class="view" id="vCompare" aria-label="Comparar versiones"></section>
-    <section class="view" id="vFavs" aria-label="Favoritos"></section>
+    <section class="view" id="vFavs" aria-label="Mi Biblia"></section>
   </main>
 
   <div id="actions" role="toolbar" aria-label="Acciones del versículo">
-    <b id="actRef"></b>
-    <button id="actFav">Guardar</button>
-    <button id="actCopy">Copiar</button>
-    <button id="actCmp">Comparar</button>
+    <div class="act-r1"><b id="actRef"></b>
+      <div class="dots" id="actDots" role="group" aria-label="Resaltar">
+        <button type="button" data-hl="a" class="hl-a" aria-label="Resaltar en amarillo"></button>
+        <button type="button" data-hl="v" class="hl-v" aria-label="Resaltar en verde"></button>
+        <button type="button" data-hl="c" class="hl-c" aria-label="Resaltar en celeste"></button>
+        <button type="button" data-hl="r" class="hl-r" aria-label="Resaltar en rosado"></button>
+        <button type="button" data-hl="" class="hl-x" aria-label="Quitar resaltado">✕</button>
+      </div>
+    </div>
+    <div class="act-r2">
+      <button id="actFav">Guardar</button><button id="actNote">Nota</button><button id="actImg">Imagen</button><button id="actCopy">Copiar</button><button id="actCmp">Comparar</button>
+    </div>
+  </div>
+  <div id="player" hidden>
+    <div class="pl-top"><span id="plInfo"></span><button type="button" id="plRate">Velocidad 1x</button><button type="button" id="plClose" aria-label="Cerrar reproductor">✕</button></div>
+    <div class="pl-track" aria-hidden="true"><i id="plBar"></i></div>
+    <div class="pl-ctl">
+      <button type="button" id="plPrev" aria-label="Versículo anterior"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 6l-8 6 8 6V6z"/><path d="M6 6v12"/></svg></button>
+      <button type="button" id="plPlay" aria-label="Pausar"></button>
+      <button type="button" id="plNext" aria-label="Versículo siguiente"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 6l8 6-8 6V6z"/><path d="M18 6v12"/></svg></button>
+    </div>
   </div>
 
   <nav aria-label="Secciones">
@@ -387,7 +468,7 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
     <button data-tab="vSearch">Buscar</button>
     <button data-tab="vConc">Concordancia</button>
     <button data-tab="vCompare">Comparar</button>
-    <button data-tab="vFavs">Favoritos</button>
+    <button data-tab="vFavs">Mi Biblia</button>
   </nav>
 
   <div class="sheet" id="shBooks" role="dialog" aria-label="Libro y capítulo">
@@ -397,6 +478,26 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
   <div class="sheet" id="shVers" role="dialog" aria-label="Versiones">
     <div class="sheet-head"><h2>Versiones</h2><button class="icon" data-close aria-label="Cerrar">✕</button></div>
     <div class="sheet-body" id="vrBody"></div>
+  </div>
+  <div class="sheet" id="shNote" role="dialog" aria-label="Nota">
+    <div class="sheet-head"><h2>Nota · <span id="noteRef"></span></h2><button class="icon" data-close aria-label="Cerrar">✕</button></div>
+    <div class="sheet-body">
+      <p class="note-v" id="noteVerse"></p>
+      <label class="grp" for="noteTxt">Tu nota</label>
+      <textarea id="noteTxt" rows="6" placeholder="Lo que Dios te habló con este versículo…"></textarea>
+      <div class="note-btns"><button type="button" class="btn" id="noteSave">Guardar nota</button><button type="button" class="more" id="noteDel">Borrar</button></div>
+      <p class="note">Las notas quedan solo en este celular.</p>
+    </div>
+  </div>
+  <div class="sheet" id="shImg" role="dialog" aria-label="Imagen del versículo">
+    <div class="sheet-head"><h2>Imagen del versículo</h2><button class="icon" data-close aria-label="Cerrar">✕</button></div>
+    <div class="sheet-body img-body">
+      <canvas id="imgCanvas" width="1080" height="1350" role="img" aria-label="Vista previa de la imagen"></canvas>
+      <div class="grp">Fondo</div><div class="sws" id="imgBgs"></div>
+      <div class="grp">Formato</div>
+      <div class="chips" id="imgFmt"><button type="button" class="chip" data-f="post" aria-pressed="true">Publicación</button><button type="button" class="chip" data-f="story" aria-pressed="false">Historia</button></div>
+      <div class="note-btns"><button type="button" class="btn" id="imgShare">Compartir imagen</button><button type="button" class="more" id="imgSave">Guardar</button></div>
+    </div>
   </div>
   <div class="sheet" id="shQr" role="dialog" aria-label="Código QR de la app">
     <div class="sheet-head"><h2>Código QR</h2><button class="icon" data-close aria-label="Cerrar">✕</button></div>
@@ -426,7 +527,7 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
       </div>
       <p class="note">Lila sigue el modo claro u oscuro de tu teléfono.</p>
       <label class="prom-row"><input type="checkbox" id="promChk"> <span>Resaltar suavemente las <span class="prom-demo">promesas de Jesús</span> en el Nuevo Testamento</span></label>
-      <p class="credit">Biblia Multiversión · Versión 1.0<br>Desarrollado por DIRCOM Chile · Iglesia de Dios de la Profecía</p>
+      <p class="credit">Biblia Multiversión · Versión 1.1<br>Desarrollado por DIRCOM Chile · Iglesia de Dios de la Profecía</p>
     </div>
   </div>
   <div class="mic-veil" id="micVeil" hidden>
@@ -511,14 +612,18 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
       return;
     }
     var vs = DATA[cur.v][cur.b][cur.c], html = "", any = false;
+    addRecent(cur.b, cur.c);
+    if (tts.on && (tts.b !== cur.b || tts.c !== cur.c)) ttsPause();
     for (var i=0;i<vs.length;i++){
       if (!vs[i]) continue; any = true;
-      html += '<p class="v' + (favs.indexOf(key(cur.b,cur.c,i)) >= 0 ? " fav" : "") + (promOn && PROM[key(cur.b,cur.c,i)] ? " prom" : "") + '" data-i="' + i + '" tabindex="0"><sup>' + (i+1) + '</sup>' + esc(vs[i]) + '</p>';
+      html += '<p class="v' + (favs.indexOf(key(cur.b,cur.c,i)) >= 0 ? " fav" : "") + (promOn && PROM[key(cur.b,cur.c,i)] ? " prom" : "") + (HL[key(cur.b,cur.c,i)] ? " hl-" + HL[key(cur.b,cur.c,i)] : "") + '" data-i="' + i + '" tabindex="0"><sup>' + (i+1) + '</sup>' + esc(vs[i]) + '</p>' + (NOTES[key(cur.b,cur.c,i)] ? '<div class="vnote"><b>Mi nota ·</b> ' + esc(NOTES[key(cur.b,cur.c,i)]) + '</div>' : '');
     }
     if (!any) html = '<p class="note"><b>' + esc(v.name) + '</b> no trae este pasaje' + (v.books[cur.b] ? "." : ": esta versión solo incluye el Nuevo Testamento.") + ' Cambia de versión con el botón de arriba.</p>';
     var first = cur.b === 0 && cur.c === 0, last = cur.b === 65 && cur.c === META.books[65][1].length - 1;
-    el.innerHTML = head + '<div class="verses">' + html + '</div><div class="chap-nav"><button id="prevC"' + (first ? " disabled" : "") + '>‹ Capítulo anterior</button><button id="nextC"' + (last ? " disabled" : "") + '>Capítulo siguiente ›</button></div>';
+    var lst = (window.speechSynthesis ? '<button type="button" class="listen" id="btnListen"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>Escuchar</button>' : '');
+    el.innerHTML = head + lst + '<div class="verses">' + html + '</div><div class="chap-nav"><button id="prevC"' + (first ? " disabled" : "") + '>‹ Capítulo anterior</button><button id="nextC"' + (last ? " disabled" : "") + '>Capítulo siguiente ›</button></div>';
     $("prevC").onclick = function(){ step(-1); };
+    if (!$("player").hidden) ttsMark();
     $("nextC").onclick = function(){ step(1); };
     var m = $("main");
     if (focusVerse != null){
@@ -924,22 +1029,245 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
     store.set("cmp", cmpSet); renderCompare();
   });
 
-  /* ---------- Favoritos ---------- */
-  function renderFavs(){
-    var el = $("vFavs"), h = '<h2 class="sec">Favoritos</h2>';
-    if (!favs.length){ el.innerHTML = h + '<p class="note">Todavía no guardas versículos. En <b>Leer</b>, toca un versículo y elige <b>Guardar</b>. Quedan en este teléfono y en este navegador.</p>'; return; }
-    var d = DATA[cur.v];
-    var list = favs.map(function(k){ return k.split(".").map(Number); }).sort(function(a,b){ return a[0]-b[0] || a[1]-b[1] || a[2]-b[2]; });
-    list.forEach(function(a){
-      var t = d ? (d[a[0]][a[1]][a[2]] || "Sin texto en " + ver(cur.v).code) : "";
-      h += '<div class="fav-row"><button class="res" data-b="' + a[0] + '" data-c="' + a[1] + '" data-v="' + a[2] + '"><div class="r">' + esc(refText(a[0],a[1],a[2])) + ' · ' + esc(ver(cur.v).code) + '</div><div class="t">' + esc(t) + '</div></button><button class="del" data-k="' + a.join(".") + '" aria-label="Quitar ' + esc(refText(a[0],a[1],a[2])) + '">✕</button></div>';
+  /* ---------- Resaltados y notas ---------- */
+  var HL = store.get("hl", {}), NOTES = store.get("notes", {}), RECENT = store.get("recent", []);
+  var HLN = {a:"Amarillo", v:"Verde", c:"Celeste", r:"Rosado"};
+  function setHl(color){
+    if (sel == null) return;
+    var k = key(cur.b,cur.c,sel);
+    if (color) HL[k] = color; else delete HL[k];
+    store.set("hl", HL); var i = sel; setSel(null); renderReadKeep(i);
+  }
+  function renderReadKeep(i){ var m = $("main"), top = m.scrollTop; renderRead(); m.scrollTop = top; }
+  $("actDots").addEventListener("click", function(e){ var b = e.target.closest("button"); if (b) setHl(b.dataset.hl || null); });
+  var noteKey = null;
+  $("actNote").onclick = function(){
+    if (sel == null) return;
+    noteKey = key(cur.b,cur.c,sel);
+    $("noteRef").textContent = refText(cur.b,cur.c,sel);
+    $("noteTxt").value = NOTES[noteKey] || "";
+    $("noteVerse").textContent = DATA[cur.v][cur.b][cur.c][sel] || "";
+    $("noteDel").hidden = !NOTES[noteKey];
+    setSel(null); openSheet("shNote"); setTimeout(function(){ $("noteTxt").focus(); }, 60);
+  };
+  $("noteSave").onclick = function(){
+    var t = $("noteTxt").value.trim();
+    if (t) NOTES[noteKey] = t; else delete NOTES[noteKey];
+    store.set("notes", NOTES); closeSheets(); toast(t ? "Nota guardada" : "Nota borrada"); renderReadKeep();
+  };
+  $("noteDel").onclick = function(){ delete NOTES[noteKey]; store.set("notes", NOTES); closeSheets(); toast("Nota borrada"); renderReadKeep(); };
+  function addRecent(b, c){
+    RECENT = RECENT.filter(function(r){ return !(r[0] === b && r[1] === c); });
+    RECENT.unshift([b, c]); if (RECENT.length > 8) RECENT.length = 8; store.set("recent", RECENT);
+  }
+
+  /* ---------- Escuchar ---------- */
+  var TTS = window.speechSynthesis, tts = { on:false, b:0, c:0, i:0, rate:1, voice:null };
+  function pickVoice(){
+    if (!TTS) return null;
+    var vs = TTS.getVoices().filter(function(v){ return /^es/i.test(v.lang); });
+    var pref = ["es-US","es-MX","es-419","es-CL","es-ES"];
+    for (var p=0;p<pref.length;p++) for (var i=0;i<vs.length;i++) if (vs[i].lang.replace("_","-") === pref[p]) return vs[i];
+    return vs[0] || null;
+  }
+  if (TTS){ try{ TTS.onvoiceschanged = function(){ tts.voice = pickVoice(); }; }catch(e){} tts.voice = pickVoice(); }
+  function ttsMark(){
+    var nodes = $("vRead").querySelectorAll(".v");
+    for (var k=0;k<nodes.length;k++) nodes[k].classList.toggle("reading", tts.on && cur.b === tts.b && cur.c === tts.c && +nodes[k].dataset.i === tts.i);
+    var n = $("vRead").querySelector(".v.reading"); if (n) n.scrollIntoView({block:"center", behavior:"smooth"});
+    var vs = DATA[cur.v] ? DATA[cur.v][tts.b][tts.c] : [], tot = vs.length;
+    $("plInfo").innerHTML = '<b>' + esc(refText(tts.b, tts.c)) + '</b> · versículo ' + (tts.i + 1) + ' de ' + tot;
+    $("plBar").style.width = tot ? Math.round((tts.i + 1) / tot * 100) + "%" : "0";
+    $("plPlay").setAttribute("aria-label", tts.on ? "Pausar" : "Reproducir");
+    $("plPlay").innerHTML = tts.on ? '<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><rect x="7" y="5" width="3.5" height="14" rx="1" fill="currentColor"/><rect x="13.5" y="5" width="3.5" height="14" rx="1" fill="currentColor"/></svg>' : '<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg>';
+  }
+  function ttsSpeak(){
+    var vs = DATA[cur.v][tts.b][tts.c];
+    while (tts.i < vs.length && !vs[tts.i]) tts.i++;
+    if (tts.i >= vs.length){ tts.on = false; ttsMark(); toast("Terminó " + refText(tts.b, tts.c)); return; }
+    var u = new SpeechSynthesisUtterance(vs[tts.i].replace(/\n/g, " "));
+    u.lang = tts.voice ? tts.voice.lang : "es-ES"; if (tts.voice) u.voice = tts.voice; u.rate = tts.rate;
+    var me = u;
+    u.onend = function(){ if (!tts.on || tts.cur !== me) return; tts.i++; ttsSpeak(); };
+    u.onerror = function(e){ if (e.error === "interrupted" || e.error === "canceled") return; tts.on = false; ttsMark(); toast("No se pudo leer en voz alta en este celular."); };
+    tts.cur = u; ttsMark(); TTS.speak(u);
+  }
+  function ttsStart(i){
+    if (!TTS){ toast("Este navegador no puede leer en voz alta."); return; }
+    TTS.cancel(); tts.on = true; tts.b = cur.b; tts.c = cur.c; tts.i = i || 0;
+    $("player").hidden = false; ttsSpeak();
+  }
+  function ttsPause(){ tts.on = false; tts.cur = null; if (TTS) TTS.cancel(); ttsMark(); }
+  function ttsClose(){ ttsPause(); $("player").hidden = true; ttsMark(); }
+  $("plPlay").onclick = function(){ if (tts.on) ttsPause(); else { if (cur.b !== tts.b || cur.c !== tts.c){ tts.b = cur.b; tts.c = cur.c; tts.i = 0; } tts.on = true; TTS.cancel(); ttsSpeak(); } };
+  $("plPrev").onclick = function(){ tts.i = Math.max(0, tts.i - 1); var on = tts.on; TTS.cancel(); tts.on = true; ttsSpeak(); if (!on) {} };
+  $("plNext").onclick = function(){ tts.i++; TTS.cancel(); tts.on = true; ttsSpeak(); };
+  var RATES = [1, 1.25, 1.5, 0.8];
+  $("plRate").onclick = function(){ var k = (RATES.indexOf(tts.rate) + 1) % RATES.length; tts.rate = RATES[k]; this.textContent = "Velocidad " + String(tts.rate).replace(".", ",") + "x"; if (tts.on){ TTS.cancel(); ttsSpeak(); } };
+  $("plClose").onclick = ttsClose;
+  $("vRead").addEventListener("click", function(e){ if (e.target.closest("#btnListen")){ e.stopPropagation(); ttsStart(0); } }, true);
+
+  /* ---------- Imagen del versículo ---------- */
+  var IMG = { b:0, c:0, v:0, bg:0, fmt:"post" };
+  var BGS = [
+    { n:"Azul y morado", s:["#1e3a8a","#3b2a9e","#5b21b6"], tx:"#ffffff" },
+    { n:"Terracota", s:["#5e2f1c","#8a4a2c","#a85a3a"], tx:"#ffffff" },
+    { n:"Noche", s:["#0c1124","#161d38","#2a3359"], tx:"#ffffff" },
+    { n:"Claro", s:["#f8f9fb","#eef2fa","#dfe6f3"], tx:"#1d2230" }
+  ];
+  var EMBL = new Image(); EMBL.src = "logo-emblema.png";
+  function wrapLines(ctx, text, maxW){
+    var words = text.split(/\s+/), lines = [], line = "";
+    for (var i=0;i<words.length;i++){ var t = line ? line + " " + words[i] : words[i]; if (ctx.measureText(t).width > maxW && line){ lines.push(line); line = words[i]; } else line = t; }
+    if (line) lines.push(line); return lines;
+  }
+  function drawImg(){
+    var cv = $("imgCanvas"), W = 1080, H = IMG.fmt === "story" ? 1920 : 1350;
+    cv.width = W; cv.height = H; var ctx = cv.getContext("2d"), bg = BGS[IMG.bg];
+    var g = ctx.createLinearGradient(0, 0, W * 0.4, H); g.addColorStop(0, bg.s[0]); g.addColorStop(0.55, bg.s[1]); g.addColorStop(1, bg.s[2]);
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    var vers = DATA[IMG.ver] || DATA[cur.v], text = (vers[IMG.b][IMG.c][IMG.v] || "").replace(/\n/g, " ");
+    var ref = refText(IMG.b, IMG.c, IMG.v) + " · " + ver(IMG.ver || cur.v).code;
+    var pad = 110, maxW = W - pad * 2, maxH = H * (IMG.fmt === "story" ? 0.5 : 0.52), size = 74, lines, lh;
+    do { ctx.font = "400 " + size + "px Literata, Georgia, serif"; lines = wrapLines(ctx, "“" + text + "”", maxW); lh = size * 1.42; size -= 2; } while (lines.length * lh > maxH && size > 30);
+    var blockH = lines.length * lh + 40 + 46, y = (H - blockH) / 2 - (IMG.fmt === "story" ? 60 : 40);
+    ctx.fillStyle = bg.tx; ctx.textBaseline = "top"; ctx.textAlign = "left";
+    lines.forEach(function(l, i){ ctx.fillText(l, pad, y + i * lh); });
+    ctx.font = "700 40px Figtree, system-ui, sans-serif"; ctx.globalAlpha = 0.92;
+    ctx.fillText(ref, pad, y + lines.length * lh + 40); ctx.globalAlpha = 1;
+    var eh = 120, fy = H - pad - eh + 20;
+    if (EMBL.complete && EMBL.naturalWidth){ var ew = EMBL.naturalWidth * eh / EMBL.naturalHeight;
+      if (IMG.bg !== 3){ ctx.fillStyle = "rgba(255,255,255,.96)"; ctx.beginPath(); ctx.arc(pad + ew / 2 + 6, fy + eh / 2, eh / 2 + 22, 0, Math.PI * 2); ctx.fill(); }
+      ctx.drawImage(EMBL, pad + 6, fy, ew, eh); }
+    ctx.fillStyle = bg.tx; ctx.font = "700 34px Figtree, system-ui, sans-serif"; ctx.textBaseline = "middle";
+    ctx.fillText("Iglesia de Dios", pad + 150, fy + eh / 2 - 22); ctx.font = "500 34px Figtree, system-ui, sans-serif"; ctx.fillText("de la Profecía", pad + 150, fy + eh / 2 + 22);
+  }
+  function openImg(b, c, v, verId){
+    IMG.b = b; IMG.c = c; IMG.v = v; IMG.ver = verId || cur.v;
+    openSheet("shImg");
+    var go2 = function(){ (document.fonts && document.fonts.load ? Promise.all([document.fonts.load("400 60px Literata"), document.fonts.load("700 40px Figtree")]) : Promise.resolve()).then(drawImg, drawImg); };
+    if (!EMBL.complete) EMBL.onload = go2;
+    load(IMG.ver).then(go2, function(){ toast("No se pudo cargar el texto."); });
+  }
+  (function(){
+    var h = ""; BGS.forEach(function(bg, i){ h += '<button type="button" class="sw" data-i="' + i + '" aria-label="Fondo ' + bg.n + '" aria-pressed="' + (i === 0) + '" style="background:linear-gradient(165deg,' + bg.s[0] + ',' + bg.s[2] + ')"></button>'; });
+    $("imgBgs").innerHTML = h;
+  })();
+  $("imgBgs").addEventListener("click", function(e){ var b = e.target.closest(".sw"); if (!b) return; IMG.bg = +b.dataset.i; var a = $("imgBgs").querySelectorAll(".sw"); for (var i=0;i<a.length;i++) a[i].setAttribute("aria-pressed", a[i] === b); drawImg(); });
+  $("imgFmt").addEventListener("click", function(e){ var b = e.target.closest("button"); if (!b) return; IMG.fmt = b.dataset.f; var a = $("imgFmt").querySelectorAll("button"); for (var i=0;i<a.length;i++) a[i].setAttribute("aria-pressed", a[i] === b); drawImg(); });
+  function imgBlob(cb){ $("imgCanvas").toBlob(function(bl){ cb(bl); }, "image/png"); }
+  function imgName(){ return (refText(IMG.b, IMG.c, IMG.v)).replace(/[^\wáéíóúñ]+/gi, "-") + ".png"; }
+  function imgDownload(bl){ var a = document.createElement("a"); a.href = URL.createObjectURL(bl); a.download = imgName(); document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500); toast("Imagen guardada en Descargas"); }
+  $("imgShare").onclick = function(){
+    imgBlob(function(bl){
+      var f = new File([bl], imgName(), {type:"image/png"});
+      if (navigator.canShare && navigator.canShare({files:[f]})) navigator.share({files:[f], title: refText(IMG.b, IMG.c, IMG.v)}).catch(function(){});
+      else imgDownload(bl);
     });
+  };
+  $("imgSave").onclick = function(){ imgBlob(imgDownload); };
+  $("actImg").onclick = function(){ if (sel == null) return; var i = sel; setSel(null); openImg(cur.b, cur.c, i); };
+
+  /* ---------- Planes de lectura ---------- */
+  function chList(b0, b1){ var l = []; for (var b=b0;b<b1;b++) for (var c=0;c<META.books[b][1].length;c++) l.push([b, c]); return l; }
+  function split(list, n){ var d = []; for (var i=0;i<n;i++) d.push(list.slice(Math.floor(i * list.length / n), Math.floor((i + 1) * list.length / n))); return d; }
+  function zip(a, b){ return a.map(function(x, i){ return x.concat(b[i]); }); }
+  var PLANS = null;
+  function plans(){
+    if (PLANS) return PLANS;
+    var pk = Object.keys(PROM).map(function(k){ return k.split(".").map(Number); }).sort(function(a,b){ return a[0]-b[0] || a[1]-b[1] || a[2]-b[2]; });
+    PLANS = [
+      { id:"nt90", n:"Nuevo Testamento en 90 días", d:"90 días · unos 3 capítulos diarios", days: split(chList(39, 66), 90) },
+      { id:"anio", n:"Biblia completa en un año", d:"365 días · Antiguo y Nuevo Testamento cada día", days: zip(split(chList(0, 39), 365), split(chList(39, 66), 365)) },
+      { id:"salprov", n:"Salmos y Proverbios", d:"31 días · unos salmos y un proverbio diario", days: zip(split(chList(18, 19), 31), split(chList(19, 20), 31)) },
+      { id:"evang", n:"Los cuatro Evangelios", d:"30 días · la vida de Jesús", days: split(chList(39, 43), 30) },
+      { id:"prom", n:"Promesas de Jesús", d:"21 días · las promesas resaltadas en la app", days: split(pk, 21) }
+    ];
+    return PLANS;
+  }
+  var plan = store.get("plan", null);
+  function today(){ var d = new Date(); return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); }
+  function planDef(){ if (!plan) return null; var p = plans().filter(function(x){ return x.id === plan.id; })[0]; return p || null; }
+  function planDay(p){ for (var i=0;i<p.days.length;i++){ for (var j=0;j<p.days[i].length;j++) if (!plan.done[i + "." + j]) return i; } return p.days.length - 1; }
+  function streak(){
+    var set = {}; (plan.dates || []).forEach(function(x){ set[x] = 1; });
+    var d = new Date(), n = 0; if (!set[today()]) d.setDate(d.getDate() - 1);
+    for (;;){ var s = d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); if (!set[s]) break; n++; d.setDate(d.getDate() - 1); }
+    return n;
+  }
+  function itemLabel(it){ return refText(it[0], it[1], it.length > 2 ? it[2] : null); }
+
+  /* ---------- Versículo del día ---------- */
+  var VDD = [[42,3,16],[18,23,1],[22,41,10],[44,8,28],[49,4,13],[23,29,11],[19,3,5],[39,11,28],[5,1,9],[18,46,1],[18,121,2],[22,40,31],[24,3,22],[39,6,33],[49,4,6],[46,5,17],[44,12,2],[47,2,20],[48,2,8],[57,11,1],[58,1,5],[59,5,7],[61,1,9],[42,14,6],[42,14,27],[42,16,33],[18,37,5],[18,91,1],[18,119,105],[18,27,1],[18,34,8],[22,26,3],[22,53,5],[32,6,8],[35,3,17],[33,1,7],[39,5,14],[39,28,20],[40,11,24],[41,1,37],[42,8,12],[42,10,10],[42,15,5],[43,1,8],[44,5,8],[44,10,9],[45,13,4],[45,10,13],[46,12,9],[47,6,9],[48,3,20],[50,3,23],[51,5,16],[54,1,7],[57,13,5],[65,3,20],[18,103,2],[4,31,6],[3,6,24],[18,46,10]];
+  function vddRef(){ var d = new Date(), s = new Date(d.getFullYear(), 0, 0), n = Math.floor((d - s) / 864e5); var r = VDD[n % VDD.length]; return [r[0], r[1] - 1, r[2] - 1]; }
+  function dateTxt(){ var t = new Date().toLocaleDateString("es-CL", {weekday:"long", day:"numeric", month:"long"}); return t.charAt(0).toUpperCase() + t.slice(1); }
+
+  /* ---------- Mi Biblia ---------- */
+  var PLUS = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
+  function renderFavs(){
+    var el = $("vFavs");
+    if (!DATA[cur.v] || !META){ el.innerHTML = '<p class="note">Cargando…</p>'; load(cur.v).then(function(){ if ($("vFavs").classList.contains("on")) renderFavs(); }, function(){ el.innerHTML = '<p class="note">No se pudo cargar la versión.</p>'; }); return; }
+    var d = DATA[cur.v], vid = cur.v, r = vddRef();
+    if (!ver(vid).books[r[0]] || !d[r[0]][r[1]][r[2]]) vid = "rvr1960";
+    var h = '<h2 class="sec">Mi Biblia</h2>';
+    var vt = DATA[vid] ? DATA[vid][r[0]][r[1]][r[2]] : null;
+    if (!DATA[vid]) load(vid).then(function(){ if ($("vFavs").classList.contains("on")) renderFavs(); });
+    h += '<section class="vdd" aria-label="Versículo del día"><div class="vdd-h"><img src="logo-emblema.png" alt=""><div><b>Versículo del día</b><span>' + esc(dateTxt()) + '</span></div></div>';
+    h += '<div class="vdd-b"><p class="vdd-t">“' + esc((vt || "").replace(/\n/g, " ")) + '”</p><p class="vdd-r ' + (r[0] < 39 ? "at" : "nt") + '">' + esc(refText(r[0], r[1], r[2])) + ' · ' + esc(ver(vid).code) + '</p>';
+    h += '<div class="vdd-btns"><button type="button" class="b1" data-act="vddImg">' + PLUS + '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>Crear imagen</button><button type="button" class="b2" data-act="vddShare">' + PLUS + '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Compartir</button></div>';
+    h += '<button type="button" class="vdd-read" data-act="vddRead">Leer ' + esc(refText(r[0], r[1])) + ' completo</button></div></section>';
+    // seguir leyendo
+    var last = RECENT[0] || [cur.b, cur.c];
+    h += '<div class="mb-h">Seguir leyendo</div><button type="button" class="cont ' + (last[0] < 39 ? "at" : "nt") + '" data-b="' + last[0] + '" data-c="' + last[1] + '"><span class="nm">' + esc(refText(last[0], last[1])) + '</span><span class="cap">Donde quedaste la última vez</span></button>';
+    if (RECENT.length > 1){ h += '<div class="chips rec"><span>Recientes:</span>'; RECENT.slice(1, 6).forEach(function(x){ h += '<button type="button" class="chip" data-b="' + x[0] + '" data-c="' + x[1] + '">' + esc(refText(x[0], x[1])) + '</button>'; }); h += '</div>'; }
+    // plan
+    var p = planDef();
+    if (p){
+      var di = planDay(p), tot = 0, dn = 0; p.days.forEach(function(dd, i){ dd.forEach(function(x, j){ tot++; if (plan.done[i + "." + j]) dn++; }); });
+      var pct = Math.round(dn / tot * 100), st = streak();
+      h += '<div class="mb-h">Plan de lectura</div><section class="plan"><div class="plan-t"><b>' + esc(p.n) + '</b>' + (st ? '<span class="racha">Racha: ' + st + (st === 1 ? " día" : " días") + '</span>' : '') + '</div>';
+      h += '<div class="plan-p"><span>Día ' + (di + 1) + ' de ' + p.days.length + '</span><span>' + pct + '%</span></div><div class="plan-bar"><i style="width:' + pct + '%"></i></div><div class="plan-h">Lectura de hoy</div>';
+      p.days[di].forEach(function(it, j){ var k = di + "." + j; h += '<div class="plan-it"><label><input type="checkbox" data-k="' + k + '"' + (plan.done[k] ? " checked" : "") + '><span>' + esc(itemLabel(it)) + '</span></label><button type="button" class="plan-go" data-b="' + it[0] + '" data-c="' + it[1] + '"' + (it.length > 2 ? ' data-v="' + it[2] + '"' : '') + '>Leer</button></div>'; });
+      h += '<button type="button" class="plan-x" data-act="planStop">Cambiar o dejar este plan</button></section>';
+    } else {
+      h += '<div class="mb-h">Planes de lectura</div><div class="plans">';
+      plans().forEach(function(x){ h += '<button type="button" class="plan-o" data-plan="' + x.id + '"><b>' + esc(x.n) + '</b><span>' + esc(x.d) + '</span></button>'; });
+      h += '</div>';
+    }
+    // favoritos
+    h += '<div class="mb-h">Favoritos</div>';
+    if (!favs.length) h += '<p class="note">Todavía no guardas versículos. En <b>Leer</b>, toca un versículo y elige <b>Guardar</b>.</p>';
+    favs.map(function(k){ return k.split(".").map(Number); }).sort(function(a,b){ return a[0]-b[0] || a[1]-b[1] || a[2]-b[2]; }).forEach(function(a){
+      var t = d[a[0]][a[1]][a[2]] || "Sin texto en " + ver(cur.v).code;
+      h += '<div class="fav-row"><button class="res" data-b="' + a[0] + '" data-c="' + a[1] + '" data-v="' + a[2] + '"><div class="r ' + (a[0] < 39 ? "at" : "nt") + '">' + esc(refText(a[0],a[1],a[2])) + '</div><div class="t">' + esc(t) + '</div></button><button class="del" data-k="' + a.join(".") + '" aria-label="Quitar ' + esc(refText(a[0],a[1],a[2])) + '">✕</button></div>';
+    });
+    // resaltados y notas
+    var keys = {}; Object.keys(HL).forEach(function(k){ keys[k] = 1; }); Object.keys(NOTES).forEach(function(k){ keys[k] = 1; });
+    var hk = Object.keys(keys).map(function(k){ return k.split(".").map(Number); }).sort(function(a,b){ return a[0]-b[0] || a[1]-b[1] || a[2]-b[2]; });
+    h += '<div class="mb-h">Resaltados y notas</div>';
+    if (!hk.length) h += '<p class="note">Toca un versículo en <b>Leer</b> y elige un color para resaltarlo, o <b>Nota</b> para escribir algo tuyo.</p>';
+    hk.forEach(function(a){ var k = a.join("."), t = d[a[0]][a[1]][a[2]] || "";
+      h += '<button class="res hlr" data-b="' + a[0] + '" data-c="' + a[1] + '" data-v="' + a[2] + '"><div class="r ' + (a[0] < 39 ? "at" : "nt") + '">' + esc(refText(a[0],a[1],a[2])) + '</div><div class="t' + (HL[k] ? " hl-" + HL[k] : "") + '">' + esc(t) + '</div>' + (NOTES[k] ? '<div class="vnote">' + esc(NOTES[k]) + '</div>' : '') + '</button>'; });
     el.innerHTML = h;
-    if (!d) load(cur.v).then(function(){ if ($("vFavs").classList.contains("on")) renderFavs(); }, function(){});
   }
   $("vFavs").addEventListener("click", function(e){
-    var d = e.target.closest(".del");
-    if (d){ var i = favs.indexOf(d.dataset.k); if (i >= 0) favs.splice(i,1); store.set("favs", favs); renderFavs(); return; }
+    var t = e.target, x;
+    if ((x = t.closest(".del"))){ var i = favs.indexOf(x.dataset.k); if (i >= 0) favs.splice(i,1); store.set("favs", favs); renderFavs(); return; }
+    if ((x = t.closest("[data-act]"))){
+      var r = vddRef(), a = x.dataset.act;
+      if (a === "vddImg") openImg(r[0], r[1], r[2], ver(cur.v).books[r[0]] ? cur.v : "rvr1960");
+      else if (a === "vddRead") go(r[0], r[1], r[2]);
+      else if (a === "vddShare"){ var vid = ver(cur.v).books[r[0]] && DATA[cur.v][r[0]][r[1]][r[2]] ? cur.v : "rvr1960", txt = "“" + DATA[vid][r[0]][r[1]][r[2]].replace(/\n/g, " ") + "” " + refText(r[0], r[1], r[2]) + " (" + ver(vid).code + ")";
+        if (navigator.share) navigator.share({text: txt}).catch(function(){}); else { try{ navigator.clipboard.writeText(txt).then(function(){ toast("Versículo copiado"); }); }catch(err){} } }
+      else if (a === "planStop"){ plan = null; store.set("plan", null); renderFavs(); }
+      return;
+    }
+    if ((x = t.closest(".plan-o"))){ plan = { id: x.dataset.plan, start: today(), done: {}, dates: [] }; store.set("plan", plan); toast("Plan iniciado. ¡Ánimo!"); renderFavs(); return; }
+    if ((x = t.closest('input[type="checkbox"][data-k]'))){
+      if (x.checked){ plan.done[x.dataset.k] = 1; if ((plan.dates || []).indexOf(today()) < 0) plan.dates.push(today()); } else delete plan.done[x.dataset.k];
+      store.set("plan", plan); setTimeout(renderFavs, 250); return;
+    }
+    if ((x = t.closest(".plan-go,.cont,.chip[data-b]"))){ go(+x.dataset.b, +x.dataset.c, x.dataset.v != null ? +x.dataset.v : undefined); return; }
     resClick(e);
   });
 
