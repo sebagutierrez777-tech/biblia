@@ -198,6 +198,8 @@ header #btnMic,:root[data-tone="piedra"] header #btnMic{background:var(--nt-bg);
 .pl-top span{flex:1 0 100%;min-width:0}
 .pl-top #plVoice,.pl-top #plRate{flex:1}.pl-top b{color:var(--ink)}
 #plVoice{min-height:34px;padding:0 10px;border:1px solid var(--line);border-radius:999px;font-size:13px;font-weight:700;background:var(--paper)}
+.voz-g{font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:16px 0 4px}
+.voz .st{font-size:12.5px;font-weight:700;color:var(--nt-bg);white-space:nowrap}
 .voz{display:flex;width:100%;align-items:center;gap:12px;min-height:56px;padding:8px 2px;border-bottom:1px solid var(--line);text-align:left}
 .voz .n{flex:1;display:flex;flex-direction:column}.voz .n b{font-size:16px}.voz .n small{font-size:13px;color:var(--muted)}
 .voz .ok{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);flex:none}
@@ -1136,6 +1138,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     $("plPlay").innerHTML = tts.on ? '<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><rect x="7" y="5" width="3.5" height="14" rx="1" fill="currentColor"/><rect x="13.5" y="5" width="3.5" height="14" rx="1" fill="currentColor"/></svg>' : '<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg>';
   }
   function ttsSpeak(){
+    if (tts.app){ appSpeak(); return; }
     var vs = DATA[cur.v][tts.b][tts.c];
     while (tts.i < vs.length && !vs[tts.i]) tts.i++;
     if (tts.i >= vs.length){ tts.on = false; ttsMark(); toast("Terminó " + refText(tts.b, tts.c)); return; }
@@ -1147,29 +1150,45 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     tts.cur = u; ttsMark(); TTS.speak(u);
   }
   function ttsStart(i){
-    if (!TTS){ toast("Este navegador no puede leer en voz alta."); return; }
-    TTS.cancel(); tts.on = true; tts.b = cur.b; tts.c = cur.c; tts.i = i || 0;
+    if (!TTS && !tts.app){ toast("Este navegador no puede leer en voz alta."); return; }
+    if (TTS) TTS.cancel(); appStop(); appNext = null; tts.on = true; tts.b = cur.b; tts.c = cur.c; tts.i = i || 0;
     $("player").hidden = false; ttsSpeak();
   }
-  function ttsPause(){ tts.on = false; tts.cur = null; if (TTS) TTS.cancel(); ttsMark(); }
+  function ttsPause(){ tts.on = false; tts.cur = null; if (TTS) TTS.cancel(); appStop(); appNext = null; ttsMark(); }
   function ttsClose(){ ttsPause(); $("player").hidden = true; ttsMark(); }
-  $("plPlay").onclick = function(){ if (tts.on) ttsPause(); else { if (cur.b !== tts.b || cur.c !== tts.c){ tts.b = cur.b; tts.c = cur.c; tts.i = 0; } tts.on = true; TTS.cancel(); ttsSpeak(); } };
-  $("plPrev").onclick = function(){ tts.i = Math.max(0, tts.i - 1); var on = tts.on; TTS.cancel(); tts.on = true; ttsSpeak(); if (!on) {} };
-  $("plNext").onclick = function(){ tts.i++; TTS.cancel(); tts.on = true; ttsSpeak(); };
+  function ttsHalt(){ if (TTS) TTS.cancel(); appStop(); appNext = null; }
+  $("plPlay").onclick = function(){ if (tts.on) ttsPause(); else { if (cur.b !== tts.b || cur.c !== tts.c){ tts.b = cur.b; tts.c = cur.c; tts.i = 0; } tts.on = true; ttsHalt(); ttsSpeak(); } };
+  $("plPrev").onclick = function(){ tts.i = Math.max(0, tts.i - 1); ttsHalt(); tts.on = true; ttsSpeak(); };
+  $("plNext").onclick = function(){ tts.i++; ttsHalt(); tts.on = true; ttsSpeak(); };
   var RATES = [1, 1.25, 1.5, 0.8];
-  $("plRate").onclick = function(){ var k = (RATES.indexOf(tts.rate) + 1) % RATES.length; tts.rate = RATES[k]; this.textContent = "Velocidad " + String(tts.rate).replace(".", ",") + "x"; if (tts.on){ TTS.cancel(); ttsSpeak(); } };
+  $("plRate").onclick = function(){ var k = (RATES.indexOf(tts.rate) + 1) % RATES.length; tts.rate = RATES[k]; this.textContent = "Velocidad " + String(tts.rate).replace(".", ",") + "x"; if (tts.app){ appAudio.playbackRate = tts.rate; return; } if (tts.on){ TTS.cancel(); ttsSpeak(); } };
   $("plClose").onclick = ttsClose;
   var LANGN = {"es-ES":"España","es-MX":"México","es-US":"Estados Unidos","es-419":"Latinoamérica","es-CL":"Chile","es-AR":"Argentina","es-CO":"Colombia"};
   function vozName(v, i){ var n = v.name.replace(/Google|Microsoft|Online|\(Natural\)|-/g, " ").replace(/\s+/g, " ").trim(); return n && !/^es[ _-]/i.test(n) ? n.charAt(0).toUpperCase() + n.slice(1) : "Voz " + (i + 1); }
   function renderVoces(){
-    var vs = esVoices(), cur0 = tts.voice ? tts.voice.voiceURI : "", h = "";
-    if (!vs.length) h = '<p class="note">Este celular no tiene voces en español instaladas. Puedes descargarlas en <b>Ajustes › Idioma › Texto a voz</b>.</p>';
+    var vs = esVoices(), cur0 = tts.app ? "" : (tts.voice ? tts.voice.voiceURI : ""), h = '<div class="voz-g">Voces de la app · iguales en todos los celulares</div>';
+    APPV.forEach(function(a){ var have = vzStored.indexOf(a.id) >= 0, busy = vzBusy[a.id];
+      h += '<button type="button" class="voz" data-app="' + a.id + '" aria-pressed="' + (tts.app === a.id) + '"><span class="n"><b>' + esc(a.n) + '</b><small>' + (have ? "Descargada · funciona sin internet" : "Se descarga una vez · unos " + a.mb + " MB") + '</small></span>' + (busy ? '<span class="st">' + esc(busy) + '</span>' : '<span class="ok" aria-hidden="true"></span>') + '</button>'; });
+    h += '<div class="voz-g">Voces del celular</div>';
+    if (!vs.length) h += '<p class="note">Este celular no tiene voces en español instaladas. Puedes descargarlas en <b>Ajustes › Idioma › Texto a voz</b>.</p>';
     vs.forEach(function(v, i){ var l = LANGN[v.lang.replace("_","-")] || v.lang; h += '<button type="button" class="voz" data-u="' + esc(v.voiceURI) + '" aria-pressed="' + (v.voiceURI === cur0) + '"><span class="n"><b>' + esc(vozName(v, i)) + '</b><small>Español · ' + esc(l) + (v.localService ? " · funciona sin internet" : "") + '</small></span><span class="ok" aria-hidden="true"></span></button>'; });
     $("vozList").innerHTML = h;
   }
-  $("plVoice").onclick = function(){ renderVoces(); openSheet("shVoz"); };
+  $("plVoice").onclick = function(){ renderVoces(); openSheet("shVoz"); vzRefresh().then(renderVoces); };
   $("vozList").addEventListener("click", function(e){
     var b = e.target.closest(".voz"); if (!b) return;
+    if (b.dataset.app){
+      var id = b.dataset.app; if (vzBusy[id]) return;
+      var pick = function(){ var was = tts.on; ttsPause(); tts.app = id; store.set("vozApp", id); renderVoces(); toast("Voz elegida"); if (was){ tts.on = true; ttsSpeak(); } };
+      if (vzStored.indexOf(id) >= 0){ pick(); return; }
+      if (!navigator.onLine){ toast("Necesitas internet para descargar esta voz la primera vez."); return; }
+      vzBusy[id] = "Descargando…"; renderVoces();
+      vzLib().then(function(m){ return m.download(id, function(p){ if (p && p.total){ vzBusy[id] = Math.round(p.loaded / p.total * 100) + "%"; renderVoces(); } }); })
+        .then(function(){ delete vzBusy[id]; return vzRefresh(); }).then(function(){ pick(); })
+        .catch(function(){ delete vzBusy[id]; renderVoces(); toast("No se pudo descargar la voz. Intenta con wifi."); });
+      return;
+    }
+    tts.app = ""; store.set("vozApp", "");
     var v = esVoices().filter(function(x){ return x.voiceURI === b.dataset.u; })[0]; if (!v) return;
     tts.voice = v; store.set("voz", v.voiceURI); renderVoces();
     var was = tts.on; TTS.cancel(); tts.on = false;
@@ -1179,6 +1198,40 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
   });
 
   $("vRead").addEventListener("click", function(e){ if (e.target.closest("#btnListen")){ e.stopPropagation(); ttsStart(0); } }, true);
+
+
+  /* Voces de la app (se descargan una vez y funcionan sin internet) */
+  var APPV = [
+    { id:"es_MX-claude-high", n:"Mujer · México", mb:110 },
+    { id:"es_MX-ald-medium", n:"Hombre · México", mb:60 },
+    { id:"es_ES-davefx-medium", n:"Hombre · España", mb:60 }
+  ];
+  var VZ = null, vzStored = [], vzBusy = {}, appAudio = new Audio(), appNext = null;
+  tts.app = store.get("vozApp", "");
+  function vzLib(){ if (!VZ) VZ = import("./voz/entry.js"); return VZ; }
+  function vzRefresh(){ return vzLib().then(function(m){ return m.stored(); }).then(function(l){ vzStored = l || []; }, function(){ vzStored = []; }); }
+  function appSynth(text){ return vzLib().then(function(m){ return m.predict({ text: text, voiceId: tts.app }); }); }
+  function appPrep(i){
+    var vs = DATA[cur.v][tts.b][tts.c]; while (i < vs.length && !vs[i]) i++;
+    if (i >= vs.length) return null;
+    return { i: i, p: appSynth(vs[i].replace(/\n/g, " ")) };
+  }
+  function appSpeak(){
+    var vs = DATA[cur.v][tts.b][tts.c];
+    while (tts.i < vs.length && !vs[tts.i]) tts.i++;
+    if (tts.i >= vs.length){ tts.on = false; ttsMark(); toast("Terminó " + refText(tts.b, tts.c)); return; }
+    var job = (appNext && appNext.i === tts.i) ? appNext : appPrep(tts.i), myI = tts.i, token = {}; tts.cur = token;
+    appNext = null; ttsMark();
+    job.p.then(function(blob){
+      if (!tts.on || tts.cur !== token) return;
+      try{ URL.revokeObjectURL(appAudio.src); }catch(e){}
+      appAudio.src = URL.createObjectURL(blob); appAudio.playbackRate = tts.rate;
+      appAudio.onended = function(){ if (!tts.on || tts.cur !== token) return; tts.i = myI + 1; appSpeak(); };
+      appAudio.play().catch(function(){ tts.on = false; ttsMark(); });
+      appNext = appPrep(myI + 1);
+    }, function(){ tts.on = false; ttsMark(); toast("No se pudo usar la voz de la app. Revisa tu conexión la primera vez."); });
+  }
+  function appStop(){ try{ appAudio.pause(); }catch(e){} }
 
   /* ---------- Imagen del versículo ---------- */
   var IMG = { b:0, c:0, v:0, bg:0, fmt:"post" };

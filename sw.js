@@ -1,5 +1,5 @@
 // Guarda la app en el celular para que funcione sin internet.
-var SHELL = "biblia-shell-v18";
+var SHELL = "biblia-shell-v19";
 var DATA = "biblia-data-v1";
 var FONTS = "biblia-fonts-v1";
 var SHELL_FILES = ["./", "index.html", "meta.json", "manifest.json", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png", "logo-iglesia.png", "logo-emblema.png", "logo-emblema-claro.png", "qr-app.png"];
@@ -9,7 +9,7 @@ self.addEventListener("install", function (e) {
 });
 
 self.addEventListener("activate", function (e) {
-  var keep = [SHELL, DATA, FONTS, "biblia-meta"];
+  var keep = [SHELL, DATA, FONTS, "biblia-meta", "biblia-voz"];
   e.waitUntil(caches.keys().then(function (keys) {
     return Promise.all(keys.filter(function (k) { return keep.indexOf(k) < 0; }).map(function (k) { return caches.delete(k); }));
   }).then(function () { return self.clients.claim(); }));
@@ -42,6 +42,10 @@ self.addEventListener("fetch", function (e) {
   var req = e.request;
   if (req.method !== "GET") return;
   var url = new URL(req.url);
+  if (url.hostname === "cdnjs.cloudflare.com" || url.hostname === "cdn.jsdelivr.net") {
+    e.respondWith(cacheFirst(req, "biblia-voz"));
+    return;
+  }
   if (url.hostname === "fonts.googleapis.com" || url.hostname === "fonts.gstatic.com") {
     e.respondWith(cacheFirst(req, FONTS));
     return;
