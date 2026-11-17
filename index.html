@@ -300,6 +300,13 @@ nav button.dot::after{content:"";display:inline-block;width:8px;height:8px;borde
 .fi-d{font-family:var(--read);font-size:18px;line-height:1.6;margin:14px 0 6px}
 .fi-r{display:flex;flex-wrap:wrap;gap:8px}
 
+.exit-veil{position:fixed;inset:0;z-index:80;background:rgba(10,12,25,.5);display:flex;align-items:center;justify-content:center;padding:24px}
+.exit-box{width:100%;max-width:340px;background:var(--surface);color:var(--ink);border-radius:20px;padding:24px 20px 18px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.exit-box img{height:54px;width:auto;margin-bottom:8px}
+.exit-box p{margin:0 0 18px;font-size:18px;font-weight:700;line-height:1.35}
+.exit-btns{display:flex;gap:10px}.exit-btns button{flex:1;min-height:50px;border-radius:12px;font-weight:700;font-size:16px}
+#exitNo{background:var(--nt-bg);color:#fff}#exitYes{border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+
 /* Comparar */
 .cmp-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
 .cmp-head h2{font-family:var(--read);font-size:24px;font-weight:600;margin:0;flex:1;text-wrap:balance}
@@ -432,7 +439,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
 <div class="ini-tit"><h1>Biblia Multiversión</h1><p>12 versiones de la Santa Biblia<br>para leer, buscar y comparar</p></div>
 </div>
 <div class="ini-load" aria-hidden="true"><i></i></div>
-<div class="ini-pie2"><span>Versión 1.3</span><span>Desarrollado por <b>DIRCOM Chile</b></span></div>
+<div class="ini-pie2"><span>Versión 1.5</span><span>Desarrollado por <b>DIRCOM Chile</b></span></div>
 </div>
 <div class="ini ini-bien" id="iniBien" role="dialog" aria-modal="true" aria-labelledby="iniBienT" hidden>
 <div class="ini-cab"><img src="logo-emblema-claro.png" alt=""><p>Iglesia de Dios de la Profecía</p></div>
@@ -573,6 +580,8 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     <div class="sheet-body img-body">
       <canvas id="imgCanvas" width="1080" height="1350" role="img" aria-label="Vista previa de la imagen"></canvas>
       <div class="grp">Fondo</div><div class="sws" id="imgBgs"></div>
+      <div class="grp">Adorno de fondo</div>
+      <div class="chips" id="imgAd"><button type="button" class="chip" data-a="paloma">Paloma</button><button type="button" class="chip" data-a="cruz">Cruz</button><button type="button" class="chip" data-a="luz">Rayos de luz</button><button type="button" class="chip" data-a="">Sin adorno</button></div>
       <div class="grp">Formato</div>
       <div class="chips" id="imgFmt"><button type="button" class="chip" data-f="post" aria-pressed="true">Publicación</button><button type="button" class="chip" data-f="story" aria-pressed="false">Historia</button></div>
       <div class="note-btns"><button type="button" class="btn" id="imgShare">Compartir imagen</button><button type="button" class="more" id="imgSave">Guardar</button></div>
@@ -623,7 +632,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
       </div>
       <p class="note">Lila sigue el modo claro u oscuro de tu teléfono.</p>
       <label class="prom-row"><input type="checkbox" id="promChk"> <span>Resaltar suavemente las <span class="prom-demo">promesas de Jesús</span> en el Nuevo Testamento</span></label>
-      <p class="credit">Biblia Multiversión · Versión 1.3<br>Desarrollado por DIRCOM Chile · Iglesia de Dios de la Profecía</p>
+      <p class="credit">Biblia Multiversión · Versión 1.5<br>Desarrollado por DIRCOM Chile · Iglesia de Dios de la Profecía</p>
     </div>
   </div>
   <div class="mic-veil" id="micVeil" hidden>
@@ -640,6 +649,13 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     <div class="pp-top"><b id="ppRef"></b><button type="button" id="ppMinus" aria-label="Letra más chica">A−</button><button type="button" id="ppPlus" aria-label="Letra más grande">A+</button><button type="button" id="ppClose" aria-label="Salir del modo púlpito">✕</button></div>
     <div class="pp-body" id="ppBody"></div>
     <div class="pp-nav"><button type="button" id="ppPrev">‹ Anterior</button><button type="button" id="ppNext">Siguiente ›</button></div>
+  </div>
+  <div class="exit-veil" id="exitAsk" hidden>
+    <div class="exit-box" role="alertdialog" aria-modal="true" aria-labelledby="exitT">
+      <img src="logo-emblema.png" alt="">
+      <p id="exitT">¿Seguro que deseas salir de la aplicación?</p>
+      <div class="exit-btns"><button type="button" id="exitNo">Seguir leyendo</button><button type="button" id="exitYes">Salir</button></div>
+    </div>
   </div>
   <div id="toast" role="status"></div>
 </div>
@@ -967,6 +983,27 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
   }
   $("fiBody").addEventListener("click", function(e){ var b = e.target.closest(".chip[data-b]"); if (!b) return; closeSheets(); go(+b.dataset.b, +b.dataset.c, +b.dataset.v); });
   $("vRead").addEventListener("click", function(e){ var b = e.target.closest(".fch"); if (b){ e.stopPropagation(); openFicha(+b.dataset.fi); } }, true);
+
+  /* ---------- Botón atrás ---------- */
+  (function(){
+    var leaving = false;
+    function arm(){ try{ history.pushState({ biblia: 1 }, ""); }catch(e){} }
+    arm();
+    window.addEventListener("popstate", function(){
+      if (leaving) return;
+      var open = document.querySelector(".sheet.on");
+      if (!$("exitAsk").hidden){ $("exitAsk").hidden = true; arm(); return; }
+      if (open){ closeSheets(); arm(); return; }
+      if (!$("pulpit").hidden){ closePulpit(); arm(); return; }
+      if (!$("micVeil").hidden){ micClose(); arm(); return; }
+      if (sel != null){ setSel(null); arm(); return; }
+      var cur0 = document.querySelector(".view.on");
+      if (cur0 && cur0.id !== "vRead"){ tab("vRead"); arm(); return; }
+      $("exitAsk").hidden = false; arm();
+    });
+    $("exitNo").onclick = function(){ $("exitAsk").hidden = true; };
+    $("exitYes").onclick = function(){ leaving = true; $("exitAsk").hidden = true; history.go(-2); setTimeout(function(){ try{ window.close(); }catch(e){} }, 300); };
+  })();
 
   /* ---------- Buscar ---------- */
   function parseRef(q){
@@ -1416,7 +1453,32 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
   function appStop(){ try{ appAudio.pause(); }catch(e){} }
 
   /* ---------- Imagen del versículo ---------- */
-  var IMG = { b:0, c:0, v:0, bg:0, fmt:"post" };
+  var ADS = ["paloma", "cruz", "luz"];
+  var IMG = { b:0, c:0, v:0, bg:0, fmt:"post", ad: ADS[Math.floor(Date.now() / 864e5) % 3] };
+  function drawDove(ctx, x, y, s){
+    ctx.save(); ctx.translate(x, y); ctx.scale(s, s); ctx.beginPath();
+    ctx.moveTo(10, 120); ctx.quadraticCurveTo(60, 104, 112, 106);
+    ctx.quadraticCurveTo(126, 60, 92, 18); ctx.quadraticCurveTo(150, 46, 140, 104);
+    ctx.quadraticCurveTo(160, 52, 196, 30); ctx.quadraticCurveTo(190, 88, 150, 112);
+    ctx.quadraticCurveTo(170, 108, 182, 118); ctx.lineTo(196, 122); ctx.lineTo(182, 128);
+    ctx.quadraticCurveTo(160, 140, 120, 136); ctx.quadraticCurveTo(70, 140, 40, 160);
+    ctx.quadraticCurveTo(46, 138, 10, 120); ctx.closePath(); ctx.fill(); ctx.restore();
+  }
+  var GRAIN = null;
+  function grain(ctx){
+    if (!GRAIN){ GRAIN = document.createElement("canvas"); GRAIN.width = GRAIN.height = 160; var g = GRAIN.getContext("2d"), im = g.createImageData(160, 160);
+      for (var i=0;i<im.data.length;i+=4){ var v = Math.random() * 255; im.data[i] = im.data[i+1] = im.data[i+2] = v; im.data[i+3] = 14; } g.putImageData(im, 0, 0); }
+    ctx.save(); ctx.fillStyle = ctx.createPattern(GRAIN, "repeat"); ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height); ctx.restore();
+  }
+  function adorno(ctx, W, H, light){
+    var col = light ? "rgba(31,42,92," : "rgba(255,255,255,";
+    ctx.save();
+    if (IMG.ad === "cruz"){ ctx.fillStyle = col + (light ? "0.07)" : "0.09)"); var cw = W * 0.09, ch = H * 0.62, cx = W * 0.74, cy = H * 0.12;
+      ctx.fillRect(cx - cw / 2, cy, cw, ch); ctx.fillRect(cx - ch * 0.33, cy + ch * 0.24, ch * 0.66, cw); }
+    else if (IMG.ad === "paloma"){ ctx.fillStyle = col + (light ? "0.08)" : "0.11)"); drawDove(ctx, W * 0.36, H * 0.06, W / 330); }
+    else if (IMG.ad === "luz"){ ctx.translate(W * 0.88, -H * 0.04); for (var k=0;k<9;k++){ ctx.rotate(0.13); ctx.fillStyle = col + (light ? "0.05)" : "0.07)"); ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(-W * 0.06, H * 1.3); ctx.lineTo(W * 0.02, H * 1.3); ctx.closePath(); ctx.fill(); } }
+    ctx.restore();
+  }
   var BGS = [
     { n:"Azul y morado", s:["#1e3a8a","#3b2a9e","#5b21b6"], tx:"#ffffff" },
     { n:"Terracota", s:["#5e2f1c","#8a4a2c","#a85a3a"], tx:"#ffffff" },
@@ -1434,6 +1496,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     cv.width = W; cv.height = H; var ctx = cv.getContext("2d"), bg = BGS[IMG.bg];
     var g = ctx.createLinearGradient(0, 0, W * 0.4, H); g.addColorStop(0, bg.s[0]); g.addColorStop(0.55, bg.s[1]); g.addColorStop(1, bg.s[2]);
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    adorno(ctx, W, H, IMG.bg === 3); grain(ctx);
     var vers = DATA[IMG.ver] || DATA[cur.v], text = (vers[IMG.b][IMG.c][IMG.v] || "").replace(/\n/g, " ");
     var ref = refText(IMG.b, IMG.c, IMG.v) + " · " + ver(IMG.ver || cur.v).code;
     var pad = 110, maxW = W - pad * 2, maxH = H * (IMG.fmt === "story" ? 0.5 : 0.52), size = 74, lines, lh;
@@ -1462,6 +1525,9 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     $("imgBgs").innerHTML = h;
   })();
   $("imgBgs").addEventListener("click", function(e){ var b = e.target.closest(".sw"); if (!b) return; IMG.bg = +b.dataset.i; var a = $("imgBgs").querySelectorAll(".sw"); for (var i=0;i<a.length;i++) a[i].setAttribute("aria-pressed", a[i] === b); drawImg(); });
+  function adSync(){ var a = $("imgAd").querySelectorAll("button"); for (var i=0;i<a.length;i++) a[i].setAttribute("aria-pressed", a[i].dataset.a === IMG.ad); }
+  adSync();
+  $("imgAd").addEventListener("click", function(e){ var b = e.target.closest("button"); if (!b) return; IMG.ad = b.dataset.a; adSync(); drawImg(); });
   $("imgFmt").addEventListener("click", function(e){ var b = e.target.closest("button"); if (!b) return; IMG.fmt = b.dataset.f; var a = $("imgFmt").querySelectorAll("button"); for (var i=0;i<a.length;i++) a[i].setAttribute("aria-pressed", a[i] === b); drawImg(); });
   function imgBlob(cb){ $("imgCanvas").toBlob(function(bl){ cb(bl); }, "image/png"); }
   function imgName(){ return (refText(IMG.b, IMG.c, IMG.v)).replace(/[^\wáéíóúñ]+/gi, "-") + ".png"; }
