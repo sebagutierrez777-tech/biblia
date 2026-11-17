@@ -864,6 +864,19 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
   var nombre = store.get("nombre", ""), holaShown = false, holaClosed = false;
   function N(){ return nombre ? ", " + nombre : ""; }
   function saludoHora(){ var h = new Date().getHours(); return h >= 5 && h < 12 ? "Buenos días" : h >= 12 && h < 20 ? "Buenas tardes" : "Buenas noches"; }
+  function pick(a){ return a[Math.floor(Math.random() * a.length)]; }
+  var holaTxt = null;
+  function holaElegir(ref){
+    var d = new Date(), h = d.getHours(), dom = d.getDay() === 0, n = nombre, T, L;
+    if (h < 5) T = ["Trasnochando, " + n + "?", "Qué bueno buscar a Dios a esta hora, " + n, "Una lectura antes de dormir, " + n];
+    else if (h < 12) T = ["Buenos días, " + n, "Buen día, " + n, "Hola, " + n + ". Que tengas una linda mañana", "Empezamos el día con la Palabra, " + n];
+    else if (h < 20) T = ["Buenas tardes, " + n, "Qué bueno tenerte de vuelta, " + n, "Hola de nuevo, " + n, "Una pausa con la Palabra, " + n];
+    else T = ["Buenas noches, " + n, "Qué bueno tenerte de vuelta, " + n, "Para cerrar el día, " + n, "Hola de nuevo, " + n];
+    if (dom) T = T.concat(["Bendecido domingo, " + n, "Feliz día del Señor, " + n]);
+    L = ["¿Seguimos en " + ref + "?", "Quedaste en " + ref + ". ¿Continuamos?", "Vamos de nuevo con la lectura: " + ref + ".", "Tu lectura te espera en " + ref + ".",
+         "Retomemos donde quedaste: " + ref + ".", "Hoy también hay una palabra para ti en " + ref + ".", "Lámpara es a mis pies tu palabra. Seguimos en " + ref + "."];
+    return { t: pick(T), l: pick(L) };
+  }
   var holaRef = null;
   function holaHtml(){
     if (holaClosed) return "";
@@ -873,15 +886,15 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
       return '<div class="hola" id="hola"><button type="button" class="x" id="holaX" aria-label="Cerrar">✕</button><b>' + saludoHora() + '</b><span>¿Cómo te llamas? Así la app te saluda por tu nombre.</span><form id="holaF"><input id="holaN" type="text" maxlength="30" autocomplete="given-name" placeholder="Tu nombre o apodo" aria-label="Tu nombre o apodo"><button type="submit">Listo</button></form></div>';
     }
     var ref = refText(cur.b, cur.c), p = (typeof planDef === "function") ? planDef() : null, frase;
-    var opts = ["¿Seguimos en " + ref + "?", "Quedaste en " + ref + ". ¿Continuamos?", "Qué bueno tenerte de vuelta. Seguimos en " + ref + ".", "Tu lectura te espera en " + ref + "."];
-    frase = opts[Math.floor(Date.now() / 36e5) % opts.length];
+    if (!holaTxt) holaTxt = holaElegir(ref);
+    frase = holaTxt.l;
     if (p){ var di = planDay(p), pend = p.days[di].filter(function(x, j){ return !plan.done[di + "." + j]; }); if (pend.length) frase += " Hoy en tu plan: " + pend.map(itemLabel).join(", ") + "."; }
-    return '<div class="hola" id="hola"><button type="button" class="x" id="holaX" aria-label="Cerrar">✕</button><b>' + saludoHora() + ', ' + esc(nombre) + '</b><span>' + esc(frase) + '</span></div>';
+    return '<div class="hola" id="hola"><button type="button" class="x" id="holaX" aria-label="Cerrar">✕</button><b>' + esc(holaTxt.t) + '</b><span>' + esc(frase) + '</span></div>';
   }
   function setNombre(v){ nombre = (v || "").trim().slice(0, 30); store.set("nombre", nombre); $("cfgNombre").value = nombre; }
   $("cfgNombre").value = nombre;
-  window.addEventListener("biblia-nombre", function(){ nombre = store.get("nombre", ""); $("cfgNombre").value = nombre; holaClosed = false; holaRef = null; if (META && DATA[cur.v]) renderReadKeep(); });
-  $("cfgNombreOk").onclick = function(){ setNombre($("cfgNombre").value); holaClosed = false; holaRef = null; toast(nombre ? "Listo, " + nombre : "Nombre borrado"); renderReadKeep(); };
+  window.addEventListener("biblia-nombre", function(){ nombre = store.get("nombre", ""); $("cfgNombre").value = nombre; holaClosed = false; holaRef = null; holaTxt = null; if (META && DATA[cur.v]) renderReadKeep(); });
+  $("cfgNombreOk").onclick = function(){ setNombre($("cfgNombre").value); holaClosed = false; holaRef = null; holaTxt = null; toast(nombre ? "Listo, " + nombre : "Nombre borrado"); renderReadKeep(); };
   $("vRead").addEventListener("click", function(e){
     if (e.target.closest("#holaX")){ e.stopPropagation(); holaClosed = true; if (!nombre) store.set("nombreNo", true); var h = $("hola"); if (h) h.remove(); }
   }, true);
