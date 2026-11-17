@@ -212,7 +212,7 @@ header #btnMic,:root[data-tone="piedra"] header #btnMic{background:var(--nt-bg);
 #plPlay{width:58px;height:58px;border-radius:50%;background:var(--nt-bg);color:#fff;display:flex;align-items:center;justify-content:center}
 /* Imagen */
 .img-body canvas{display:block;width:100%;max-width:340px;height:auto;margin:0 auto 6px;border-radius:14px;box-shadow:0 8px 24px rgba(20,25,70,.22)}
-.sws{display:flex;gap:10px}.sw{width:56px;height:56px;border-radius:14px;border:1px solid var(--line)}.sw[aria-pressed="true"]{outline:3px solid var(--ink);outline-offset:2px}
+.sws{display:flex;flex-wrap:wrap;gap:10px}.sw{width:56px;height:56px;border-radius:14px;border:1px solid var(--line)}.sw[aria-pressed="true"]{outline:3px solid var(--ink);outline-offset:2px}
 /* Mi Biblia */
 .vdd{margin-top:12px;border-radius:20px;overflow:hidden;background:var(--surface);border:1px solid var(--line)}
 .vdd-h{display:flex;align-items:center;gap:12px;padding:14px 16px;background:linear-gradient(165deg,#1e3a8a,#5b21b6);color:#fff}
@@ -1475,7 +1475,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     ctx.save(); ctx.fillStyle = ctx.createPattern(GRAIN, "repeat"); ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height); ctx.restore();
   }
   function adorno(ctx, W, H, light){
-    var col = light ? "rgba(31,42,92," : "rgba(255,255,255,";
+    var col = light ? (BGS[IMG.bg].tx === "#4a2a1d" ? "rgba(122,62,40," : "rgba(31,42,92,") : "rgba(255,255,255,";
     ctx.save();
     if (IMG.ad === "cruz"){ ctx.fillStyle = col + (light ? "0.07)" : "0.09)"); var cw = W * 0.09, ch = H * 0.62, cx = W * 0.74, cy = H * 0.12;
       ctx.fillRect(cx - cw / 2, cy, cw, ch); ctx.fillRect(cx - ch * 0.33, cy + ch * 0.24, ch * 0.66, cw); }
@@ -1487,7 +1487,9 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     { n:"Azul y morado", s:["#1e3a8a","#3b2a9e","#5b21b6"], tx:"#ffffff" },
     { n:"Terracota", s:["#5e2f1c","#8a4a2c","#a85a3a"], tx:"#ffffff" },
     { n:"Noche", s:["#0c1124","#161d38","#2a3359"], tx:"#ffffff" },
-    { n:"Claro", s:["#f8f9fb","#eef2fa","#dfe6f3"], tx:"#1d2230" }
+    { n:"Claro", s:["#f8f9fb","#eef2fa","#dfe6f3"], tx:"#1d2230", light:true },
+    { n:"Verde salvia", s:["#33503f","#46664f","#5f7f66"], tx:"#ffffff" },
+    { n:"Terracota suave", s:["#f6e9e0","#efd9ca","#e5c4ae"], tx:"#4a2a1d", light:true }
   ];
   var EMBL = new Image(); EMBL.src = "logo-emblema.png";
   function wrapLines(ctx, text, maxW){
@@ -1500,7 +1502,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     cv.width = W; cv.height = H; var ctx = cv.getContext("2d"), bg = BGS[IMG.bg];
     var g = ctx.createLinearGradient(0, 0, W * 0.4, H); g.addColorStop(0, bg.s[0]); g.addColorStop(0.55, bg.s[1]); g.addColorStop(1, bg.s[2]);
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-    adorno(ctx, W, H, IMG.bg === 3); grain(ctx);
+    adorno(ctx, W, H, !!bg.light); grain(ctx);
     var vers = DATA[IMG.ver] || DATA[cur.v], text = (vers[IMG.b][IMG.c][IMG.v] || "").replace(/\n/g, " ");
     var ref = refText(IMG.b, IMG.c, IMG.v) + " · " + ver(IMG.ver || cur.v).code;
     var pad = 110, maxW = W - pad * 2, maxH = H * (IMG.fmt === "story" ? 0.5 : 0.52), size = 74, lines, lh;
@@ -1512,7 +1514,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     ctx.fillText(ref, pad, y + lines.length * lh + 40); ctx.globalAlpha = 1;
     var eh = 120, fy = H - pad - eh + 20;
     if (EMBL.complete && EMBL.naturalWidth){ var ew = EMBL.naturalWidth * eh / EMBL.naturalHeight;
-      if (IMG.bg !== 3){ ctx.fillStyle = "rgba(255,255,255,.96)"; ctx.beginPath(); ctx.arc(pad + ew / 2 + 6, fy + eh / 2, eh / 2 + 22, 0, Math.PI * 2); ctx.fill(); }
+      if (!bg.light){ ctx.fillStyle = "rgba(255,255,255,.96)"; ctx.beginPath(); ctx.arc(pad + ew / 2 + 6, fy + eh / 2, eh / 2 + 22, 0, Math.PI * 2); ctx.fill(); }
       ctx.drawImage(EMBL, pad + 6, fy, ew, eh); }
     ctx.fillStyle = bg.tx; ctx.font = "700 34px Figtree, system-ui, sans-serif"; ctx.textBaseline = "middle";
     ctx.fillText("Iglesia de Dios", pad + 150, fy + eh / 2 - 22); ctx.font = "500 34px Figtree, system-ui, sans-serif"; ctx.fillText("de la Profecía", pad + 150, fy + eh / 2 + 22);
