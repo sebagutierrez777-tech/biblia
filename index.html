@@ -194,8 +194,9 @@ header #btnMic,:root[data-tone="piedra"] header #btnMic{background:var(--nt-bg);
 .note-btns{display:flex;gap:10px;margin-top:14px}.note-btns .btn{flex:1}.note-btns .more{margin:0;flex:none;width:auto;padding:0 18px}
 /* Reproductor */
 #player{border-top:1px solid var(--line);background:var(--surface);padding:10px 14px 12px;display:flex;flex-direction:column;gap:8px}
-.pl-top{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
-.pl-top span{flex:1;min-width:0}.pl-top b{color:var(--ink)}
+.pl-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13.5px;color:var(--muted)}
+.pl-top span{flex:1 0 100%;min-width:0}
+.pl-top #plVoice,.pl-top #plRate{flex:1}.pl-top b{color:var(--ink)}
 #plVoice{min-height:34px;padding:0 10px;border:1px solid var(--line);border-radius:999px;font-size:13px;font-weight:700;background:var(--paper)}
 .voz{display:flex;width:100%;align-items:center;gap:12px;min-height:56px;padding:8px 2px;border-bottom:1px solid var(--line);text-align:left}
 .voz .n{flex:1;display:flex;flex-direction:column}.voz .n b{font-size:16px}.voz .n small{font-size:13px;color:var(--muted)}
@@ -290,8 +291,8 @@ h2.sec{font-family:var(--read);font-weight:600;font-size:24px;margin:0 0 6px}
 
 nav{display:flex;border-top:1px solid var(--line);background:var(--surface)}
 nav button{flex:1 1 auto;min-width:0;min-height:56px;font-size:15px;font-weight:600;color:var(--muted);border-top:2px solid transparent;padding:0 6px;white-space:nowrap}
-@media (max-width:420px){nav button{font-size:13.5px;padding:0 4px;letter-spacing:-.01em}}
-@media (max-width:370px){nav button{font-size:12.5px;padding:0 2px}}
+@media (max-width:420px){nav button{font-size:15px;padding:0 3px;letter-spacing:-.01em}}
+@media (max-width:370px){nav button{font-size:14px;padding:0 2px}}
 nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubric);background:var(--rubric-soft)}
 nav button[data-tab="vRead"]{color:var(--at);font-weight:800}
 nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-color:var(--at-bg);background:var(--at-soft)}
@@ -487,7 +488,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     </div>
   </div>
   <div id="player" hidden>
-    <div class="pl-top"><span id="plInfo"></span><button type="button" id="plVoice">Voz</button><button type="button" id="plRate">Velocidad 1x</button><button type="button" id="plClose" aria-label="Cerrar reproductor">✕</button></div>
+    <div class="pl-top"><span id="plInfo"></span><button type="button" id="plVoice">Elegir voz</button><button type="button" id="plRate">Velocidad 1x</button><button type="button" id="plClose" aria-label="Cerrar reproductor">✕</button></div>
     <div class="pl-track" aria-hidden="true"><i id="plBar"></i></div>
     <div class="pl-ctl">
       <button type="button" id="plPrev" aria-label="Versículo anterior"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 6l-8 6 8 6V6z"/><path d="M6 6v12"/></svg></button>
