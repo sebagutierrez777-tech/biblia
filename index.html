@@ -177,13 +177,20 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
 .grp{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px}
 .books{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
 .books button{min-height:44px;padding:6px 12px;text-align:left;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-weight:500;font-size:15px}
-.books.at button{background:var(--at-bg);border-color:var(--at-bg);color:var(--on-t);font-weight:600}
-.books.nt button{background:var(--nt-bg);border-color:var(--nt-bg);color:var(--on-t);font-weight:600}
+.books.at button,.books.nt button{border:0;border-left:6px solid;border-radius:10px;color:var(--ink);display:flex;flex-direction:column;justify-content:center;gap:1px;min-height:52px}
+.books.at button{background:var(--at-soft);border-left-color:var(--at-bg)}
+.books.nt button{background:var(--nt-soft);border-left-color:var(--nt-bg)}
+.books button .nm{font-weight:600;font-size:15px}
+.books button .cap{font-size:12px;font-weight:500;color:var(--muted)}
 .books.at button.off,.books.nt button.off{opacity:.45}
-.grp.at,.grp.nt{display:inline-block;font-size:14px;color:var(--on-t);padding:7px 14px;border-radius:999px;margin:16px 0 10px}
-.grp.at{background:var(--at-bg)}.grp.nt{background:var(--nt-bg)}
+.grp.at,.grp.nt{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--ink);letter-spacing:.06em;margin:20px 0 10px}
+.grp.at::before,.grp.nt::before{content:"";flex:none;width:6px;height:22px;border-radius:3px}
+.grp.at::before{background:var(--at-bg)}.grp.nt::before{background:var(--nt-bg)}
+.grp small{font-size:13px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--muted)}
 .books button.cur{border-color:var(--rubric);color:var(--rubric);font-weight:700}
-.books.at button.cur,.books.nt button.cur{color:var(--on-t);font-weight:700;box-shadow:0 0 0 3px var(--paper),0 0 0 5px var(--ink)}
+.books.at button.cur,.books.nt button.cur{box-shadow:inset 0 0 0 2px var(--ink);color:var(--ink)}
+.books.at button.cur{border-left-color:var(--at-bg)}.books.nt button.cur{border-left-color:var(--nt-bg)}
+.books button.cur .nm{font-weight:700}
 .res .r.at,.res .r.nt{display:inline-block;color:var(--on-t);padding:2px 9px;border-radius:999px}
 .res .r.at{background:var(--at-bg)}.res .r.nt{background:var(--nt-bg)}
 .books button.off{opacity:.4}
@@ -509,8 +516,8 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
   function showBooks(){
     var v = ver(cur.v), h = "";
     [["Antiguo Testamento",0,39,"at"],["Nuevo Testamento",39,66,"nt"]].forEach(function(g){
-      h += '<div class="grp ' + g[3] + '">' + g[0] + '</div><div class="books ' + g[3] + '">';
-      for (var b=g[1]; b<g[2]; b++) h += '<button data-b="' + b + '" class="' + (b === cur.b ? "cur" : "") + (v.books[b] ? "" : " off") + '">' + esc(bname(b)) + '</button>';
+      h += '<div class="grp ' + g[3] + '">' + g[0] + ' <small>' + (g[2] - g[1]) + ' libros</small></div><div class="books ' + g[3] + '">';
+      for (var b=g[1]; b<g[2]; b++){ var nc = META.books[b][1].length; h += '<button data-b="' + b + '" class="' + (b === cur.b ? "cur" : "") + (v.books[b] ? "" : " off") + '"><span class="nm">' + esc(bname(b)) + '</span><span class="cap">' + nc + (nc === 1 ? " capítulo" : " capítulos") + '</span></button>'; }
       h += '</div>';
     });
     $("bkTitle").textContent = "Libros"; $("bkBack").hidden = true; $("bkBody").innerHTML = h; $("bkBody").scrollTop = 0;
