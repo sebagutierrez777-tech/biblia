@@ -143,7 +143,9 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
 
 
 /* Voz */
-.mic-in{flex:none;width:46px;height:46px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);display:inline-flex;align-items:center;justify-content:center}
+.mic-in{flex:none;width:46px;height:46px;border:0;border-radius:10px;background:var(--nt-bg);color:#fff;display:inline-flex;align-items:center;justify-content:center}
+header #btnMic,:root[data-tone="piedra"] header #btnMic{background:var(--nt-bg);border-color:var(--nt-bg);color:#fff}
+.mic-in:active,header #btnMic:active{filter:brightness(1.15)}
 .mic-veil{position:absolute;inset:0;z-index:30;background:rgba(10,12,25,.45);display:flex;align-items:flex-end}
 .mic-sheet{width:100%;background:var(--surface);color:var(--ink);border-radius:22px 22px 0 0;padding:26px 22px calc(26px + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
 .mic-dot{width:76px;height:76px;border-radius:50%;background:var(--nt-bg);color:#fff;display:flex;align-items:center;justify-content:center;animation:micPulse 1.4s infinite ease-in-out}
