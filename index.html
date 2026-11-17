@@ -2089,7 +2089,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
   var OS = null, OS_ID = "06abe668-2063-4c3d-a674-a213a5a5db2f";
   window.OneSignalDeferred = window.OneSignalDeferred || [];
   OneSignalDeferred.push(function(O){
-    return O.init({ appId: OS_ID, serviceWorkerPath: "biblia/sw.js", serviceWorkerParam: { scope: "/biblia/" }, notifyButton: { enable: false }, promptOptions: { autoPrompt: false } }).then(function(){
+    return O.init({ appId: OS_ID, serviceWorkerPath: "biblia/push/OneSignalSDKWorker.js", serviceWorkerParam: { scope: "/biblia/push/" }, notifyButton: { enable: false }, promptOptions: { autoPrompt: false } }).then(function(){
       OS = O; osSync();
       O.User.PushSubscription.addEventListener("change", osSync);
       if ($("vFavs").classList.contains("on")) renderFavs();
@@ -2097,7 +2097,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
   });
   function osOn(){ return !!(OS && OS.User.PushSubscription.optedIn); }
   function osSync(){ if (!OS) return; $("osBox").hidden = false; $("osChk").checked = osOn();
-    $("osInfo").textContent = (window.Notification && Notification.permission === "denied") ? "Están bloqueados. Actívalos en los ajustes del navegador para esta app." : osOn() ? "Activados. Te llegarán los avisos de IDP Chile." : "Recibe en tu celular los avisos de IDP Chile."; }
+    $("osInfo").textContent = (window.Notification && Notification.permission === "denied") ? "Están bloqueados. Actívalos en los ajustes del navegador para esta app." : osOn() ? (OS.User.PushSubscription.id ? "Activados. Te llegarán los avisos de IDP Chile." : "Activando… espera unos segundos.") : "Recibe en tu celular los avisos de IDP Chile."; }
   function osActivar(){ if (!OS) return Promise.resolve(false);
     return OS.Notifications.requestPermission().then(function(){ return OS.User.PushSubscription.optIn(); }).then(function(){ osSync(); if (osOn()) toast("Listo, te llegarán los avisos"); return osOn(); }, function(){ osSync(); return false; }); }
   $("osChk").onchange = function(){ if (!OS) return; if (this.checked) osActivar(); else { OS.User.PushSubscription.optOut(); toast("Avisos desactivados"); osSync(); } };

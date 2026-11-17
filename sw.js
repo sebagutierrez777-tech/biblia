@@ -1,7 +1,5 @@
 // Guarda la app en el celular para que funcione sin internet.
-// Avisos de la iglesia por OneSignal (usa este mismo service worker).
-try { importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js"); } catch (e) {}
-var SHELL = "biblia-shell-v37";
+var SHELL = "biblia-shell-v38";
 var DATA = "biblia-data-v1";
 var FONTS = "biblia-fonts-v1";
 var SHELL_FILES = ["./", "index.html", "meta.json", "manifest.json", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png", "logo-iglesia.png", "logo-emblema.png", "logo-emblema-claro.png", "qr-app.png", "intros.json", "fichas.json", "mapas.json", "genealogias.json", "diccionario.json"];
@@ -80,7 +78,6 @@ function mostrarRecordatorio() {
 }
 self.addEventListener("periodicsync", function (e) { if (e.tag === "lectura") e.waitUntil(mostrarRecordatorio()); });
 self.addEventListener("notificationclick", function (e) {
-  if (e.notification.tag !== "lectura") return; // los avisos de OneSignal los abre su propio código
   e.notification.close();
   e.waitUntil(self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(function (list) {
     for (var i = 0; i < list.length; i++) { if ("focus" in list[i]) return list[i].focus(); }
