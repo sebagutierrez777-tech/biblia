@@ -1,8 +1,8 @@
 // Guarda la app en el celular para que funcione sin internet.
-var SHELL = "biblia-shell-v7";
+var SHELL = "biblia-shell-v8";
 var DATA = "biblia-data-v1";
 var FONTS = "biblia-fonts-v1";
-var SHELL_FILES = ["./", "index.html", "meta.json", "manifest.json", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png", "logo-iglesia.png", "logo-emblema.png"];
+var SHELL_FILES = ["./", "index.html", "meta.json", "manifest.json", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png", "logo-iglesia.png", "logo-emblema.png", "qr-app.png"];
 
 self.addEventListener("install", function (e) {
   e.waitUntil(caches.open(SHELL).then(function (c) { return c.addAll(SHELL_FILES); }).then(function () { return self.skipWaiting(); }));

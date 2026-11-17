@@ -156,6 +156,17 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
 #micStop{margin-top:8px;min-height:46px;padding:0 26px;border:1px solid var(--line);border-radius:999px;font-weight:700;background:var(--paper)}
 @media (prefers-reduced-motion:reduce){.mic-dot{animation:none}}
 
+
+/* Compartir */
+.share-box{display:flex;flex-direction:column;gap:8px;margin:4px 0 22px}
+.share-main,.share-qr{display:flex;align-items:center;justify-content:center;gap:10px;min-height:50px;border-radius:12px;font-weight:700;font-size:15px}
+.share-main{background:var(--nt-bg);color:#fff}
+.share-qr{border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.qr-body{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding-top:28px}
+.qr-body img{width:260px;height:260px;border-radius:16px;background:#fff;padding:10px;box-shadow:0 6px 20px rgba(20,30,60,.12)}
+.qr-t{font-size:17px;line-height:1.45;margin:18px 0 0;max-width:30ch}
+.qr-body .note{padding-top:6px;text-align:center}
+
 /* Comparar */
 .cmp-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
 .cmp-head h2{font-family:var(--read);font-size:24px;font-weight:600;margin:0;flex:1;text-wrap:balance}
@@ -312,7 +323,7 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
     <button class="pill" id="btnVer" aria-label="Elegir versión"><span id="verLabel">RVR1960</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     <span class="grow"></span>
     <button class="icon mic-btn" id="btnMic" aria-label="Buscar por voz" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg></button>
-    <button class="icon" id="btnSize" aria-label="Letra y colores">Aa</button>
+    <button class="icon" id="btnSize" aria-label="Letra, colores y compartir">Aa</button>
   </header>
   <div id="tband" aria-hidden="true"></div>
 
@@ -375,9 +386,21 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
     <div class="sheet-head"><h2>Versiones</h2><button class="icon" data-close aria-label="Cerrar">✕</button></div>
     <div class="sheet-body" id="vrBody"></div>
   </div>
-  <div class="sheet" id="shSize" role="dialog" aria-label="Letra y colores">
-    <div class="sheet-head"><h2>Letra y colores</h2><button class="icon" data-close aria-label="Cerrar">✕</button></div>
+  <div class="sheet" id="shQr" role="dialog" aria-label="Código QR de la app">
+    <div class="sheet-head"><h2>Código QR</h2><button class="icon" data-close aria-label="Cerrar">✕</button></div>
+    <div class="sheet-body qr-body">
+      <img src="qr-app.png" alt="Código QR para instalar Biblia Multiversión" width="260" height="260">
+      <p class="qr-t">Que tu hermano abra la <b>cámara</b> del celular y apunte a este código.</p>
+      <p class="note">Se le abre la Biblia Multiversión. Después toca ⋮ y elige <b>Instalar app</b>.</p>
+    </div>
+  </div>
+  <div class="sheet" id="shSize" role="dialog" aria-label="Letra, colores y compartir">
+    <div class="sheet-head"><h2>Letra, colores y compartir</h2><button class="icon" data-close aria-label="Cerrar">✕</button></div>
     <div class="sheet-body">
+      <div class="share-box">
+        <button type="button" class="share-main" id="btnShare"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span>Compartir la app con un hermano</span></button>
+        <button type="button" class="share-qr" id="btnQr"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 17h4v4h-4"/></svg><span>Mostrar código QR</span></button>
+      </div>
       <div class="size-row"><button class="step" id="szMinus" aria-label="Letra más chica">A−</button><output id="szOut">En el principio</output><button class="step" id="szPlus" aria-label="Letra más grande">A+</button></div>
       <div class="grp" style="margin-top:26px">Tono de fondo</div>
       <div class="tones" id="tones">
@@ -823,6 +846,19 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
     $("micVeil").addEventListener("click", function(e){ if (e.target === $("micVeil")) micClose(); });
   }
   window.__spokenRef = function(t){ var r = spokenRef(t); return r ? refText(r.b, r.c, r.v) : null; };
+
+  /* ---------- Compartir ---------- */
+  var APP_URL = "https://sebagutierrez777-tech.github.io/biblia/";
+  var APP_TXT = "Hermano, te comparto la Biblia Multiversión: 12 versiones para leer, buscar y comparar, y funciona sin internet. Ábrela en Chrome y toca ⋮ > Instalar app.";
+  $("btnShare").onclick = function(){
+    if (navigator.share){
+      navigator.share({ title: "Biblia Multiversión", text: APP_TXT, url: APP_URL }).catch(function(){});
+      return;
+    }
+    try{ navigator.clipboard.writeText(APP_TXT + " " + APP_URL).then(function(){ toast("Mensaje copiado. Pégalo en WhatsApp."); }, function(){ toast(APP_URL); }); }
+    catch(e){ toast(APP_URL); }
+  };
+  $("btnQr").onclick = function(){ closeSheets(); openSheet("shQr"); };
 
   /* ---------- Comparar ---------- */
   function renderCompare(){
