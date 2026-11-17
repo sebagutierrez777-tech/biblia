@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#e0245e">
+<meta name="description" content="12 versiones de la Biblia en español, para leer y comparar sin internet.">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Biblia">
+<title>Biblia Multiversión</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
+<style>
+/* Idea: columna de lectura sobre un fondo de color; cabecera en el color fuerte del tono; seis tonos de fondo para elegir. */
+:root{
+  --paper:#f4f1fb; --surface:#ffffff; --ink:#1c1a2b; --muted:#625f78; --line:#ddd7ee;
+  --rubric:#e0245e; --rubric-soft:#fde0ea; --mark:#ffe27a;
+  --head:#e0245e; --head2:#ff7a3d; --on-head:#ffffff;
+  --read:"Literata", Georgia, "Times New Roman", serif;
+  --ui:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fs:19px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#14121f; --surface:#1f1c2e; --ink:#ece9f6; --muted:#a09cb8; --line:#34304a;
+    --rubric:#ff6b93; --rubric-soft:#3d1c2b; --mark:#7a5c00;
+    --head:#b3164a; --head2:#d9541f; --on-head:#ffffff; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#14121f; --surface:#1f1c2e; --ink:#ece9f6; --muted:#a09cb8; --line:#34304a;
+  --rubric:#ff6b93; --rubric-soft:#3d1c2b; --mark:#7a5c00;
+  --head:#b3164a; --head2:#d9541f; --on-head:#ffffff; color-scheme:dark;
+}
+:root[data-tone="crema"]{--paper:#fdf1d6;--surface:#fffaf0;--ink:#2b1d0e;--muted:#7a6549;--line:#ecd9b0;--rubric:#d9480f;--rubric-soft:#fbdcc6;--mark:#ffd95e;--head:#e8590c;--head2:#f59f00;--on-head:#ffffff;color-scheme:light}
+:root[data-tone="menta"]{--paper:#dff7ea;--surface:#f6fffa;--ink:#0d2a1e;--muted:#4c6f5f;--line:#b9e6cf;--rubric:#0a8f5b;--rubric-soft:#c3f0da;--mark:#fff07a;--head:#0a9d63;--head2:#16b8a6;--on-head:#ffffff;color-scheme:light}
+:root[data-tone="cielo"]{--paper:#dfeeff;--surface:#f7fbff;--ink:#0d1f3a;--muted:#4d6485;--line:#b9d5f7;--rubric:#1565d8;--rubric-soft:#cfe2ff;--mark:#ffe680;--head:#1565d8;--head2:#12b5e5;--on-head:#ffffff;color-scheme:light}
+:root[data-tone="rosa"]{--paper:#ffe3ee;--surface:#fff7fa;--ink:#33101f;--muted:#80566a;--line:#f7bfd4;--rubric:#d6187a;--rubric-soft:#ffd0e3;--mark:#ffe680;--head:#d6187a;--head2:#ff5d5d;--on-head:#ffffff;color-scheme:light}
+:root[data-tone="noche"]{--paper:#0c1124;--surface:#161d38;--ink:#eef1ff;--muted:#99a2c7;--line:#2a3359;--rubric:#ffb020;--rubric-soft:#3b2f10;--mark:#6a4b00;--head:#1b2a6b;--head2:#5a2a8a;--on-head:#ffffff;color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--ui);font-size:16px;line-height:1.4;-webkit-text-size-adjust:100%}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--rubric);outline-offset:2px}
+#app{height:100%;display:flex;flex-direction:column;max-width:760px;margin:0 auto;position:relative}
+
+header{display:flex;align-items:center;gap:8px;padding:12px 16px;background:linear-gradient(100deg,var(--head),var(--head2));color:var(--on-head)}
+header .pill,header .icon{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.35);color:var(--on-head)}
+.pill{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-weight:600;white-space:nowrap}
+.pill svg{width:12px;height:12px;flex:none;opacity:.6}
+#btnRef{min-width:0;flex:0 1 auto;overflow:hidden}
+#btnRef span{overflow:hidden;text-overflow:ellipsis}
+header #btnVer{background:var(--on-head);color:var(--head);border-color:var(--on-head)}
+.grow{flex:1}
+.icon{width:40px;height:40px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid var(--line);background:var(--surface)}
+
+main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.view{display:none;padding:20px 16px 32px}
+.view.on{display:block}
+
+/* Lectura */
+.chap-head{display:flex;align-items:baseline;gap:10px;margin:4px 0 18px}
+.chap-head h1{font-family:var(--read);font-weight:600;font-size:28px;line-height:1.15;margin:0;text-wrap:balance;color:var(--rubric)}
+.chap-head small{color:var(--muted);font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.verses{font-family:var(--read);font-size:var(--fs);line-height:1.62;max-width:65ch}
+.v{margin:0;padding:5px 8px 5px 10px;border-left:3px solid transparent;border-radius:4px;white-space:pre-line;cursor:pointer}
+.v sup{font-family:var(--ui);font-size:.62em;font-weight:700;color:var(--rubric);margin-right:.45em;vertical-align:.5em;line-height:0;font-variant-numeric:tabular-nums}
+.v.fav{border-left-color:var(--rubric)}
+.v.sel{background:var(--rubric-soft)}
+.v.flash{background:var(--mark)}
+.chap-nav{display:flex;justify-content:space-between;gap:12px;margin-top:28px}
+.chap-nav button{flex:1;min-height:46px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-weight:600;font-size:14px}
+.chap-nav button:disabled{opacity:.35;cursor:default}
+.note{color:var(--muted);font-size:15px;padding:18px 0;max-width:60ch}
+.note b{color:var(--ink)}
+
+/* Buscar */
+.search-row{display:flex;gap:8px}
+.search-row input{flex:1;min-width:0;height:46px;padding:0 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;font-size:16px}
+.btn{height:46px;padding:0 18px;border-radius:10px;background:linear-gradient(100deg,var(--head),var(--head2));color:var(--on-head);font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
+.chip{min-height:34px;padding:4px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:14px;font-weight:600;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--head);color:var(--on-head);border-color:var(--head)}
+.count{color:var(--muted);font-size:14px;margin:14px 0 6px}
+.res{display:block;width:100%;text-align:left;padding:12px 0;border-bottom:1px solid var(--line)}
+.res .r{font-size:13px;font-weight:700;color:var(--rubric);letter-spacing:.02em}
+.res .t{font-family:var(--read);font-size:16.5px;line-height:1.5;margin-top:2px;white-space:pre-line}
+mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
+.more{margin-top:16px;width:100%;min-height:46px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-weight:600}
+
+/* Comparar */
+.cmp-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.cmp-head h2{font-family:var(--read);font-size:24px;font-weight:600;margin:0;flex:1;text-wrap:balance}
+.step{width:42px;height:42px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:18px;font-weight:700}
+.card{padding:14px 0;border-bottom:1px solid var(--line)}
+.card .code{font-size:13px;font-weight:700;color:var(--rubric);letter-spacing:.04em}
+.card .code span{color:var(--muted);font-weight:500;letter-spacing:0;margin-left:6px}
+.card .t{font-family:var(--read);font-size:17.5px;line-height:1.55;margin-top:4px;white-space:pre-line}
+.card .t.dim{color:var(--muted);font-family:var(--ui);font-size:14px}
+
+/* Favoritos */
+.fav-row{display:flex;gap:10px;align-items:flex-start;border-bottom:1px solid var(--line)}
+.fav-row .res{border:0;flex:1}
+.fav-row .del{flex:none;width:40px;height:40px;margin-top:8px;border-radius:999px;color:var(--muted);font-size:20px}
+h2.sec{font-family:var(--read);font-weight:600;font-size:24px;margin:0 0 6px}
+
+/* Barra de acciones del versículo */
+#actions{display:none;align-items:center;gap:8px;padding:8px 16px;border-top:1px solid var(--line);background:var(--surface)}
+#actions.on{display:flex}
+#actions b{flex:1;min-width:0;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#actions button{min-height:38px;padding:0 12px;border:1px solid var(--line);border-radius:999px;font-size:14px;font-weight:600;background:var(--paper)}
+
+nav{display:flex;border-top:1px solid var(--line);background:var(--surface)}
+nav button{flex:1;min-height:54px;font-size:13px;font-weight:600;color:var(--muted);border-top:2px solid transparent}
+nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubric);background:var(--rubric-soft)}
+
+/* Hojas */
+.sheet{position:absolute;inset:0;z-index:10;display:none;flex-direction:column;background:var(--paper)}
+.sheet.on{display:flex}
+.sheet-head{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.sheet-head h2{flex:1;margin:0;font-size:18px;font-weight:700}
+.sheet-body{flex:1;overflow-y:auto;padding:14px 16px 28px}
+.grp{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px}
+.books{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.books button{min-height:44px;padding:6px 12px;text-align:left;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-weight:500;font-size:15px}
+.books button.cur{border-color:var(--rubric);color:var(--rubric);font-weight:700}
+.books button.off{opacity:.4}
+.nums{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:8px}
+.nums button{height:48px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-weight:600;font-variant-numeric:tabular-nums}
+.nums button.cur{background:var(--head);color:var(--on-head);border-color:var(--head)}
+.ver{display:flex;width:100%;align-items:center;gap:12px;text-align:left;padding:12px 0;border-bottom:1px solid var(--line)}
+.ver .c{flex:none;width:76px;font-weight:700;color:var(--rubric);font-size:14px;letter-spacing:.03em}
+.ver .n{flex:1;font-size:16px}
+.ver .n small{display:block;color:var(--muted);font-size:13px}
+.ver.cur .n{font-weight:700}
+.size-row{display:flex;align-items:center;gap:12px;margin-top:6px}
+.size-row .step{width:56px;height:48px}
+.size-row output{flex:1;text-align:center;font-family:var(--read);font-size:var(--fs)}
+
+
+.tones{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tone{display:flex;flex-direction:column;gap:6px;align-items:stretch;padding:8px;border:2px solid var(--line);border-radius:12px;background:var(--surface);font-size:14px;font-weight:600}
+.tone[aria-pressed="true"]{border-color:var(--rubric)}
+.tone i{display:block;height:44px;border-radius:8px;border:1px solid rgba(0,0,0,.12)}
+#toast{position:absolute;left:50%;bottom:130px;transform:translateX(-50%);z-index:20;background:var(--ink);color:var(--paper);padding:9px 16px;border-radius:999px;font-size:14px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s;max-width:calc(100% - 32px);text-align:center}
+#toast.on{opacity:1}
+@media (prefers-reduced-motion: reduce){#toast{transition:none}}
+@media (max-width:420px){.chap-head h1{font-size:25px}.books{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <button class="pill" id="btnRef" aria-label="Elegir libro y capítulo"><span id="refLabel">Juan 3</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button class="pill" id="btnVer" aria-label="Elegir versión"><span id="verLabel">RVR1960</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <span class="grow"></span>
+    <button class="icon" id="btnSize" aria-label="Letra y colores">Aa</button>
+  </header>
+
+  <main id="main">
+    <section class="view on" id="vRead" aria-label="Lectura"></section>
+
+    <section class="view" id="vSearch" aria-label="Buscar">
+      <form class="search-row" id="searchForm">
+        <input id="q" type="search" placeholder="Palabra, frase o cita (Juan 3:16)" autocomplete="off" enterkeyhint="search" aria-label="Buscar en la Biblia">
+        <button class="btn" type="submit">Buscar</button>
+      </form>
+      <div class="chips" id="scope" role="group" aria-label="Dónde buscar">
+        <button type="button" class="chip" data-s="all" aria-pressed="true">Toda la Biblia</button>
+        <button type="button" class="chip" data-s="ot" aria-pressed="false">Antiguo Testamento</button>
+        <button type="button" class="chip" data-s="nt" aria-pressed="false">Nuevo Testamento</button>
+        <button type="button" class="chip" data-s="book" aria-pressed="false">Este libro</button>
+      </div>
+      <div id="results"><p class="note">Busca en la versión que tienes abierta. No importan las tildes ni las mayúsculas, y con comillas busca la frase exacta. Si escribes una cita como <b>Salmos 23</b> o <b>Juan 3:16</b>, te lleva directo.</p></div>
+    </section>
+
+    <section class="view" id="vCompare" aria-label="Comparar versiones"></section>
+    <section class="view" id="vFavs" aria-label="Favoritos"></section>
+  </main>
+
+  <div id="actions" role="toolbar" aria-label="Acciones del versículo">
+    <b id="actRef"></b>
+    <button id="actFav">Guardar</button>
+    <button id="actCopy">Copiar</button>
+    <button id="actCmp">Comparar</button>
+  </div>
+
+  <nav aria-label="Secciones">
+    <button data-tab="vRead" aria-current="page">Leer</button>
+    <button data-tab="vSearch">Buscar</button>
+    <button data-tab="vCompare">Comparar</button>
+    <button data-tab="vFavs">Favoritos</button>
+  </nav>
+
+  <div class="sheet" id="shBooks" role="dialog" aria-label="Libro y capítulo">
+    <div class="sheet-head"><button class="icon" id="bkBack" aria-label="Volver a los libros" hidden>‹</button><h2 id="bkTitle">Libros</h2><button class="icon" data-close aria-label="Cerrar">✕</button></div>
+    <div class="sheet-body" id="bkBody"></div>
+  </div>
+  <div class="sheet" id="shVers" role="dialog" aria-label="Versiones">
+    <div class="sheet-head"><h2>Versiones</h2><button class="icon" data-close aria-label="Cerrar">✕</button></div>
+    <div class="sheet-body" id="vrBody"></div>
+  </div>
+  <div class="sheet" id="shSize" role="dialog" aria-label="Letra y colores">
+    <div class="sheet-head"><h2>Letra y colores</h2><button class="icon" data-close aria-label="Cerrar">✕</button></div>
+    <div class="sheet-body">
+      <div class="size-row"><button class="step" id="szMinus" aria-label="Letra más chica">A−</button><output id="szOut">En el principio</output><button class="step" id="szPlus" aria-label="Letra más grande">A+</button></div>
+      <div class="grp" style="margin-top:26px">Tono de fondo</div>
+      <div class="tones" id="tones">
+        <button class="tone" data-tone="auto"><i style="background:linear-gradient(135deg,#f4f1fb 55%,#e0245e 55%)"></i>Lila</button>
+        <button class="tone" data-tone="crema"><i style="background:linear-gradient(135deg,#fdf1d6 55%,#e8590c 55%)"></i>Crema</button>
+        <button class="tone" data-tone="menta"><i style="background:linear-gradient(135deg,#dff7ea 55%,#0a9d63 55%)"></i>Menta</button>
+        <button class="tone" data-tone="cielo"><i style="background:linear-gradient(135deg,#dfeeff 55%,#1565d8 55%)"></i>Cielo</button>
+        <button class="tone" data-tone="rosa"><i style="background:linear-gradient(135deg,#ffe3ee 55%,#d6187a 55%)"></i>Rosa</button>
+        <button class="tone" data-tone="noche"><i style="background:linear-gradient(135deg,#0c1124 55%,#ffb020 55%)"></i>Noche</button>
+      </div>
+      <p class="note">Lila sigue el modo claro u oscuro de tu teléfono.</p>
+    </div>
+  </div>
+  <div id="toast" role="status"></div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+  var store = {
+    get: function(k, d){ try{ var v = localStorage.getItem("biblia." + k); return v == null ? d : JSON.parse(v); }catch(e){ return d; } },
+    set: function(k, v){ try{ localStorage.setItem("biblia." + k, JSON.stringify(v)); }catch(e){} }
+  };
+  var META = null, DATA = {}, PENDING = {}, NORM = {};
+  var cur = store.get("pos", {v:"rvr1960", b:42, c:2});
+  var favs = store.get("favs", []);
+  var cmpSet = store.get("cmp", ["rvr1960","ntv","nblh","dhh"]);
+  var fs = store.get("fs", 19);
+  var sel = null, cmpVerse = 0, scope = "all", lastHits = null, shown = 0, lastTerms = [];
+
+  function esc(s){ return s.replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+  function norm(s){ return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }
+  function ver(id){ for (var i=0;i<META.versions.length;i++) if (META.versions[i].id === id) return META.versions[i]; return null; }
+  function bname(b){ return META.books[b][0]; }
+  function refText(b,c,v){ return bname(b) + " " + (c+1) + (v == null ? "" : ":" + (v+1)); }
+  function toast(msg){ var t = $("toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(function(){ t.classList.remove("on"); }, 1900); }
+
+  function EMB(id){ return document.getElementById("d-" + id); }
+  function unpack(b64){
+    var bin = atob(b64.trim()), u = new Uint8Array(bin.length);
+    for (var i=0;i<bin.length;i++) u[i] = bin.charCodeAt(i);
+    var st = new Blob([u]).stream().pipeThrough(new DecompressionStream("gzip"));
+    return new Response(st).text().then(JSON.parse);
+  }
+  function load(id){
+    if (DATA[id]) return Promise.resolve(DATA[id]);
+    if (!PENDING[id]) PENDING[id] = (EMB(id) ? unpack(EMB(id).textContent) : fetch("data/" + id + ".json").then(function(r){
+      if (!r.ok) throw new Error("HTTP " + r.status); return r.json();
+    })).then(function(d){ DATA[id] = d; delete PENDING[id]; return d; }, function(e){ delete PENDING[id]; throw e; });
+    return PENDING[id];
+  }
+
+  /* ---------- Lectura ---------- */
+  function savePos(){ store.set("pos", cur); }
+  function setSel(i){
+    sel = i;
+    var nodes = $("vRead").querySelectorAll(".v");
+    for (var k=0;k<nodes.length;k++) nodes[k].classList.toggle("sel", +nodes[k].dataset.i === i);
+    var bar = $("actions");
+    if (i == null){ bar.classList.remove("on"); return; }
+    bar.classList.add("on");
+    $("actRef").textContent = refText(cur.b, cur.c, i) + " · " + ver(cur.v).code;
+    $("actFav").textContent = favs.indexOf(key(cur.b,cur.c,i)) >= 0 ? "Quitar" : "Guardar";
+  }
+  function key(b,c,v){ return b + "." + c + "." + v; }
+
+  function renderRead(focusVerse){
+    var el = $("vRead"), v = ver(cur.v);
+    $("refLabel").textContent = refText(cur.b, cur.c);
+    $("verLabel").textContent = v.code;
+    setSel(null);
+    var head = '<div class="chap-head"><h1>' + esc(refText(cur.b, cur.c)) + '</h1><small>' + esc(v.code) + '</small></div>';
+    if (!DATA[cur.v]){
+      el.innerHTML = head + '<p class="note">Cargando ' + esc(v.name) + '…</p>';
+      load(cur.v).then(function(){ renderRead(focusVerse); }, function(){
+        el.innerHTML = head + '<p class="note"><b>No se pudo cargar esta versión.</b> Revisa tu conexión y vuelve a intentarlo.</p><button class="more" id="retry">Reintentar</button>';
+        $("retry").onclick = function(){ renderRead(focusVerse); };
+      });
+      return;
+    }
+    var vs = DATA[cur.v][cur.b][cur.c], html = "", any = false;
+    for (var i=0;i<vs.length;i++){
+      if (!vs[i]) continue; any = true;
+      html += '<p class="v' + (favs.indexOf(key(cur.b,cur.c,i)) >= 0 ? " fav" : "") + '" data-i="' + i + '" tabindex="0"><sup>' + (i+1) + '</sup>' + esc(vs[i]) + '</p>';
+    }
+    if (!any) html = '<p class="note"><b>' + esc(v.name) + '</b> no trae este pasaje' + (v.books[cur.b] ? "." : ": esta versión solo incluye el Nuevo Testamento.") + ' Cambia de versión con el botón de arriba.</p>';
+    var first = cur.b === 0 && cur.c === 0, last = cur.b === 65 && cur.c === META.books[65][1].length - 1;
+    el.innerHTML = head + '<div class="verses">' + html + '</div><div class="chap-nav"><button id="prevC"' + (first ? " disabled" : "") + '>‹ Capítulo anterior</button><button id="nextC"' + (last ? " disabled" : "") + '>Capítulo siguiente ›</button></div>';
+    $("prevC").onclick = function(){ step(-1); };
+    $("nextC").onclick = function(){ step(1); };
+    var m = $("main");
+    if (focusVerse != null){
+      var n = el.querySelector('.v[data-i="' + focusVerse + '"]');
+      if (n){ n.scrollIntoView({block:"center"}); n.classList.add("flash"); setTimeout(function(){ n.classList.remove("flash"); }, 1600); return; }
+    }
+    m.scrollTop = 0;
+  }
+  function step(d){
+    var c = cur.c + d, b = cur.b;
+    if (c < 0){ if (b === 0) return; b--; c = META.books[b][1].length - 1; }
+    else if (c >= META.books[b][1].length){ if (b === 65) return; b++; c = 0; }
+    go(b, c);
+  }
+  function go(b, c, v){ cur.b = b; cur.c = c; savePos(); cmpVerse = v || 0; tab("vRead"); renderRead(v); }
+
+  $("vRead").addEventListener("click", function(e){
+    var p = e.target.closest(".v"); if (!p) return;
+    var i = +p.dataset.i; setSel(sel === i ? null : i);
+  });
+  $("vRead").addEventListener("keydown", function(e){
+    if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("v")){ e.preventDefault(); e.target.click(); }
+  });
+  $("actFav").onclick = function(){
+    if (sel == null) return;
+    var k = key(cur.b,cur.c,sel), i = favs.indexOf(k);
+    if (i >= 0){ favs.splice(i,1); toast("Quitado de favoritos"); } else { favs.push(k); toast("Guardado en favoritos"); }
+    store.set("favs", favs);
+    var n = $("vRead").querySelector('.v[data-i="' + sel + '"]'); if (n) n.classList.toggle("fav", i < 0);
+    setSel(null);
+  };
+  $("actCopy").onclick = function(){
+    if (sel == null) return;
+    var text = DATA[cur.v][cur.b][cur.c][sel] + "\n" + refText(cur.b,cur.c,sel) + " (" + ver(cur.v).code + ")";
+    try{ navigator.clipboard.writeText(text).then(function(){ toast("Versículo copiado"); }, function(){ toast("No se pudo copiar aquí"); }); }
+    catch(e){ toast("No se pudo copiar aquí"); }
+    setSel(null);
+  };
+  $("actCmp").onclick = function(){ if (sel == null) return; cmpVerse = sel; setSel(null); tab("vCompare"); };
+
+  /* ---------- Pestañas ---------- */
+  function tab(id){
+    var views = document.querySelectorAll(".view"), btns = document.querySelectorAll("nav button");
+    for (var i=0;i<views.length;i++) views[i].classList.toggle("on", views[i].id === id);
+    for (var j=0;j<btns.length;j++){ if (btns[j].dataset.tab === id) btns[j].setAttribute("aria-current","page"); else btns[j].removeAttribute("aria-current"); }
+    if (id !== "vRead") setSel(null);
+    if (id === "vCompare") renderCompare();
+    if (id === "vFavs") renderFavs();
+    $("main").scrollTop = 0;
+  }
+  document.querySelector("nav").addEventListener("click", function(e){ var b = e.target.closest("button"); if (b) tab(b.dataset.tab); });
+
+  /* ---------- Hojas ---------- */
+  function openSheet(id){ $(id).classList.add("on"); }
+  function closeSheets(){ var s = document.querySelectorAll(".sheet"); for (var i=0;i<s.length;i++) s[i].classList.remove("on"); }
+  document.addEventListener("click", function(e){ if (e.target.closest("[data-close]")) closeSheets(); });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeSheets(); });
+
+  function showBooks(){
+    var v = ver(cur.v), h = "";
+    [["Antiguo Testamento",0,39],["Nuevo Testamento",39,66]].forEach(function(g){
+      h += '<div class="grp">' + g[0] + '</div><div class="books">';
+      for (var b=g[1]; b<g[2]; b++) h += '<button data-b="' + b + '" class="' + (b === cur.b ? "cur" : "") + (v.books[b] ? "" : " off") + '">' + esc(bname(b)) + '</button>';
+      h += '</div>';
+    });
+    $("bkTitle").textContent = "Libros"; $("bkBack").hidden = true; $("bkBody").innerHTML = h; $("bkBody").scrollTop = 0;
+  }
+  function showChapters(b){
+    var n = META.books[b][1].length, h = '<div class="nums">';
+    for (var c=0;c<n;c++) h += '<button data-b="' + b + '" data-c="' + c + '" class="' + (b === cur.b && c === cur.c ? "cur" : "") + '">' + (c+1) + '</button>';
+    $("bkTitle").textContent = bname(b); $("bkBack").hidden = false; $("bkBody").innerHTML = h + '</div>'; $("bkBody").scrollTop = 0;
+  }
+  $("btnRef").onclick = function(){ showBooks(); openSheet("shBooks"); };
+  $("bkBack").onclick = showBooks;
+  $("bkBody").addEventListener("click", function(e){
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.dataset.c != null){ closeSheets(); go(+b.dataset.b, +b.dataset.c); }
+    else if (META.books[+b.dataset.b][1].length === 1){ closeSheets(); go(+b.dataset.b, 0); }
+    else showChapters(+b.dataset.b);
+  });
+
+  $("btnVer").onclick = function(){
+    var h = "";
+    META.versions.forEach(function(v){
+      var nb = v.books.reduce(function(a,x){ return a + x; }, 0);
+      h += '<button class="ver' + (v.id === cur.v ? " cur" : "") + '" data-v="' + v.id + '"><span class="c">' + esc(v.code) + '</span><span class="n">' + esc(v.name) + (nb < 66 ? '<small>Solo Nuevo Testamento</small>' : '') + '</span></button>';
+    });
+    $("vrBody").innerHTML = h; openSheet("shVers");
+  };
+  $("vrBody").addEventListener("click", function(e){
+    var b = e.target.closest("button"); if (!b) return;
+    cur.v = b.dataset.v; savePos(); closeSheets(); lastHits = null;
+    $("results").innerHTML = '<p class="note">Cambiaste de versión. Vuelve a buscar para ver los resultados en ' + esc(ver(cur.v).code) + '.</p>';
+    renderRead();
+  });
+
+  function applyFs(){ document.documentElement.style.setProperty("--fs", fs + "px"); }
+  $("btnSize").onclick = function(){ openSheet("shSize"); };
+  $("szMinus").onclick = function(){ fs = Math.max(15, fs - 1); applyFs(); store.set("fs", fs); };
+  $("szPlus").onclick = function(){ fs = Math.min(30, fs + 1); applyFs(); store.set("fs", fs); };
+
+  var tone = store.get("tone", "auto");
+  function applyTone(){
+    if (tone === "auto") document.documentElement.removeAttribute("data-tone"); else document.documentElement.setAttribute("data-tone", tone);
+    var b = $("tones").querySelectorAll("button"); for (var i=0;i<b.length;i++) b[i].setAttribute("aria-pressed", b[i].dataset.tone === tone ? "true" : "false");
+  }
+  $("tones").addEventListener("click", function(e){ var b = e.target.closest("button"); if (!b) return; tone = b.dataset.tone; store.set("tone", tone); applyTone(); });
+
+  /* ---------- Buscar ---------- */
+  function parseRef(q){
+    var m = /^\s*(.+?)\s+(\d{1,3})(?:\s*[:.,]\s*(\d{1,3}))?\s*$/.exec(q); if (!m) return null;
+    var name = norm(m[1]).replace(/\s+/g," "), found = -1;
+    for (var b=0;b<66;b++){ if (norm(bname(b)) === name){ found = b; break; } }
+    if (found < 0) for (b=0;b<66;b++){ if (norm(bname(b)).indexOf(name) === 0){ found = b; break; } }
+    if (found < 0) return null;
+    var c = +m[2] - 1; if (c < 0 || c >= META.books[found][1].length) return null;
+    var v = m[3] ? +m[3] - 1 : null; if (v != null && (v < 0 || v >= META.books[found][1][c])) v = null;
+    return {b:found, c:c, v:v};
+  }
+  function getNorm(id){
+    if (NORM[id]) return NORM[id];
+    var d = DATA[id], out = [];
+    for (var b=0;b<d.length;b++) for (var c=0;c<d[b].length;c++) for (var v=0;v<d[b][c].length;v++){
+      var t = d[b][c][v]; if (t) out.push([b,c,v,norm(t)]);
+    }
+    return NORM[id] = out;
+  }
+  var VOW = {a:"[aáàä]", e:"[eéèë]", i:"[iíìï]", o:"[oóòö]", u:"[uúùü]", n:"[nñ]"};
+  function hl(text, terms){
+    if (!terms.length) return esc(text);
+    var pat = terms.map(function(t){ return t.replace(/[.*+?^${}()|[\]\\]/g,"\\$&").replace(/[aeioun]/g, function(c){ return VOW[c]; }); }).join("|");
+    var re = new RegExp("(^|[^\\p{L}\\p{N}])(" + pat + ")", "giu"), out = "", last = 0, m;
+    while ((m = re.exec(text))){ if (!m[2]){ re.lastIndex++; continue; } var st = m.index + m[1].length; out += esc(text.slice(last, st)) + "<mark>" + esc(m[2]) + "</mark>"; last = st + m[2].length; }
+    return out + esc(text.slice(last));
+  }
+  function doSearch(){
+    var q = $("q").value.trim(), box = $("results");
+    if (!q){ return; }
+    var r = parseRef(q);
+    if (r){ go(r.b, r.c, r.v); return; }
+    if (norm(q).replace(/[^a-z0-9]/g,"").length < 2){ box.innerHTML = '<p class="note">Escribe al menos dos letras.</p>'; return; }
+    box.innerHTML = '<p class="note">Buscando en ' + esc(ver(cur.v).name) + '…</p>';
+    load(cur.v).then(function(){
+      var phrase = /^".+"$/.test(q) || /^«.+»$/.test(q);
+      var nq = norm(q.replace(/["«»]/g,"")).replace(/\s+/g," ").trim();
+      var terms = phrase ? [nq] : nq.split(" ").filter(Boolean);
+      var all = getNorm(cur.v), hits = [];
+      var res = terms.map(function(t){ return new RegExp("(^|[^a-z0-9])" + t.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")); });
+      for (var i=0;i<all.length;i++){
+        var a = all[i];
+        if (scope === "ot" && a[0] > 38) continue;
+        if (scope === "nt" && a[0] < 39) continue;
+        if (scope === "book" && a[0] !== cur.b) continue;
+        var ok = true; for (var t=0;t<terms.length;t++){ if (!res[t].test(a[3])){ ok = false; break; } }
+        if (ok) hits.push(a);
+      }
+      lastHits = hits; lastTerms = terms; shown = 0; box.innerHTML = "";
+      var c = document.createElement("p"); c.className = "count";
+      c.textContent = hits.length ? hits.length.toLocaleString("es-CL") + (hits.length === 1 ? " versículo" : " versículos") + " en " + ver(cur.v).code : "Sin resultados en " + ver(cur.v).code + ". Prueba con otra palabra o con otra versión.";
+      box.appendChild(c); moreResults();
+    }, function(){ box.innerHTML = '<p class="note"><b>No se pudo cargar la versión.</b> Revisa tu conexión y vuelve a buscar.</p>'; });
+  }
+  function moreResults(){
+    var box = $("results"), old = box.querySelector(".more"); if (old) old.remove();
+    var end = Math.min(lastHits.length, shown + 100), h = "", d = DATA[cur.v];
+    for (var i=shown;i<end;i++){ var a = lastHits[i]; h += '<button class="res" data-b="' + a[0] + '" data-c="' + a[1] + '" data-v="' + a[2] + '"><div class="r">' + esc(refText(a[0],a[1],a[2])) + '</div><div class="t">' + hl(d[a[0]][a[1]][a[2]], lastTerms) + '</div></button>'; }
+    box.insertAdjacentHTML("beforeend", h); shown = end;
+    if (shown < lastHits.length){ var m = document.createElement("button"); m.className = "more"; m.textContent = "Mostrar 100 más"; m.onclick = moreResults; box.appendChild(m); }
+  }
+  $("searchForm").addEventListener("submit", function(e){ e.preventDefault(); $("q").blur(); doSearch(); });
+  $("scope").addEventListener("click", function(e){
+    var b = e.target.closest("button"); if (!b) return; scope = b.dataset.s;
+    var all = $("scope").querySelectorAll("button"); for (var i=0;i<all.length;i++) all[i].setAttribute("aria-pressed", all[i] === b ? "true" : "false");
+    if ($("q").value.trim() && lastHits) doSearch();
+  });
+  function resClick(e){ var b = e.target.closest(".res"); if (b) go(+b.dataset.b, +b.dataset.c, +b.dataset.v); }
+  $("results").addEventListener("click", resClick);
+
+  /* ---------- Comparar ---------- */
+  function renderCompare(){
+    var el = $("vCompare"), nv = META.books[cur.b][1][cur.c];
+    if (cmpVerse >= nv) cmpVerse = 0;
+    var h = '<div class="cmp-head"><button class="step" id="cPrev" aria-label="Versículo anterior"' + (cmpVerse === 0 ? " disabled" : "") + '>‹</button><h2>' + esc(refText(cur.b,cur.c,cmpVerse)) + '</h2><button class="step" id="cNext" aria-label="Versículo siguiente"' + (cmpVerse >= nv-1 ? " disabled" : "") + '>›</button></div>';
+    h += '<div class="chips" role="group" aria-label="Versiones a comparar">';
+    META.versions.forEach(function(v){ h += '<button class="chip" data-v="' + v.id + '" aria-pressed="' + (cmpSet.indexOf(v.id) >= 0) + '">' + esc(v.code) + '</button>'; });
+    h += '</div><div id="cmpCards">';
+    if (!cmpSet.length) h += '<p class="note">Toca las versiones de arriba para compararlas.</p>';
+    META.versions.forEach(function(v){
+      if (cmpSet.indexOf(v.id) < 0) return;
+      var t, dim = false;
+      if (DATA[v.id]){ t = DATA[v.id][cur.b][cur.c][cmpVerse]; if (!t){ dim = true; t = v.books[cur.b] ? "Esta versión une este versículo con otro o no lo trae." : "Esta versión solo incluye el Nuevo Testamento."; } }
+      else { dim = true; t = "Cargando…"; load(v.id).then(function(){ if ($("vCompare").classList.contains("on")) renderCompare(); }, function(){ var n = $("vCompare").querySelector('[data-card="' + v.id + '"] .t'); if (n) n.textContent = "No se pudo cargar. Revisa tu conexión."; }); }
+      h += '<div class="card" data-card="' + v.id + '"><div class="code">' + esc(v.code) + '<span>' + esc(v.name) + '</span></div><div class="t' + (dim ? " dim" : "") + '">' + esc(t) + '</div></div>';
+    });
+    el.innerHTML = h + '</div>';
+    $("cPrev").onclick = function(){ cmpVerse--; renderCompare(); };
+    $("cNext").onclick = function(){ cmpVerse++; renderCompare(); };
+  }
+  $("vCompare").addEventListener("click", function(e){
+    var b = e.target.closest(".chip"); if (!b) return;
+    var i = cmpSet.indexOf(b.dataset.v); if (i >= 0) cmpSet.splice(i,1); else cmpSet.push(b.dataset.v);
+    store.set("cmp", cmpSet); renderCompare();
+  });
+
+  /* ---------- Favoritos ---------- */
+  function renderFavs(){
+    var el = $("vFavs"), h = '<h2 class="sec">Favoritos</h2>';
+    if (!favs.length){ el.innerHTML = h + '<p class="note">Todavía no guardas versículos. En <b>Leer</b>, toca un versículo y elige <b>Guardar</b>. Quedan en este teléfono y en este navegador.</p>'; return; }
+    var d = DATA[cur.v];
+    var list = favs.map(function(k){ return k.split(".").map(Number); }).sort(function(a,b){ return a[0]-b[0] || a[1]-b[1] || a[2]-b[2]; });
+    list.forEach(function(a){
+      var t = d ? (d[a[0]][a[1]][a[2]] || "Sin texto en " + ver(cur.v).code) : "";
+      h += '<div class="fav-row"><button class="res" data-b="' + a[0] + '" data-c="' + a[1] + '" data-v="' + a[2] + '"><div class="r">' + esc(refText(a[0],a[1],a[2])) + ' · ' + esc(ver(cur.v).code) + '</div><div class="t">' + esc(t) + '</div></button><button class="del" data-k="' + a.join(".") + '" aria-label="Quitar ' + esc(refText(a[0],a[1],a[2])) + '">✕</button></div>';
+    });
+    el.innerHTML = h;
+    if (!d) load(cur.v).then(function(){ if ($("vFavs").classList.contains("on")) renderFavs(); }, function(){});
+  }
+  $("vFavs").addEventListener("click", function(e){
+    var d = e.target.closest(".del");
+    if (d){ var i = favs.indexOf(d.dataset.k); if (i >= 0) favs.splice(i,1); store.set("favs", favs); renderFavs(); return; }
+    resClick(e);
+  });
+
+  /* ---------- Inicio ---------- */
+  applyFs(); applyTone();
+  (EMB("meta") ? Promise.resolve(JSON.parse(EMB("meta").textContent)) : fetch("meta.json").then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })).then(function(m){
+    META = m;
+    if (!ver(cur.v)) cur.v = "rvr1960";
+    if (!(cur.b >= 0 && cur.b < 66) || !(cur.c >= 0 && cur.c < META.books[cur.b][1].length)){ cur.b = 42; cur.c = 2; }
+    cmpSet = cmpSet.filter(function(id){ return !!ver(id); });
+    renderRead();
+  }, function(){
+    $("vRead").innerHTML = '<p class="note"><b>No se pudo abrir la Biblia.</b> Revisa tu conexión y recarga la página.</p>';
+  });
+})();
+</script>
+<script>
+/* Instalación como app y lectura sin internet */
+(function(){
+  if (!("serviceWorker" in navigator)) return;
+  var V = ["rvr1960","rvc","rvg","ntv","lbla","nblh","dhh","tla","pdt","bls","bj","bl95"];
+  function warm(){
+    var i = 0;
+    (function next(){
+      if (i >= V.length) return;
+      fetch("data/" + V[i++] + ".json").then(function(r){ return r.blob(); }).catch(function(){}).then(function(){ setTimeout(next, 400); });
+    })();
+  }
+  window.addEventListener("load", function(){
+    navigator.serviceWorker.register("sw.js").then(function(){
+      return navigator.serviceWorker.ready;
+    }).then(function(){
+      var c = navigator.connection;
+      if (c && c.saveData) return;
+      setTimeout(warm, 3000);
+    }).catch(function(){});
+  });
+})();
+</script>
+</body>
+</html>

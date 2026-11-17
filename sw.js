@@ -1,0 +1,56 @@
+// Guarda la app en el celular para que funcione sin internet.
+var SHELL = "biblia-shell-v1";
+var DATA = "biblia-data-v1";
+var FONTS = "biblia-fonts-v1";
+var SHELL_FILES = ["./", "index.html", "meta.json", "manifest.json", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png"];
+
+self.addEventListener("install", function (e) {
+  e.waitUntil(caches.open(SHELL).then(function (c) { return c.addAll(SHELL_FILES); }).then(function () { return self.skipWaiting(); }));
+});
+
+self.addEventListener("activate", function (e) {
+  var keep = [SHELL, DATA, FONTS];
+  e.waitUntil(caches.keys().then(function (keys) {
+    return Promise.all(keys.filter(function (k) { return keep.indexOf(k) < 0; }).map(function (k) { return caches.delete(k); }));
+  }).then(function () { return self.clients.claim(); }));
+});
+
+function cacheFirst(req, name) {
+  return caches.open(name).then(function (c) {
+    return c.match(req, { ignoreSearch: true }).then(function (hit) {
+      if (hit) return hit;
+      return fetch(req).then(function (res) {
+        if (res && (res.ok || res.type === "opaque")) c.put(req, res.clone());
+        return res;
+      });
+    });
+  });
+}
+
+function networkFirst(req, name) {
+  return caches.open(name).then(function (c) {
+    return fetch(req).then(function (res) {
+      if (res && res.ok) c.put(req, res.clone());
+      return res;
+    }).catch(function () {
+      return c.match(req, { ignoreSearch: true }).then(function (hit) { return hit || c.match("index.html"); });
+    });
+  });
+}
+
+self.addEventListener("fetch", function (e) {
+  var req = e.request;
+  if (req.method !== "GET") return;
+  var url = new URL(req.url);
+  if (url.hostname === "fonts.googleapis.com" || url.hostname === "fonts.gstatic.com") {
+    e.respondWith(cacheFirst(req, FONTS));
+    return;
+  }
+  if (url.origin !== self.location.origin) return;
+  if (url.pathname.indexOf("/data/") >= 0) {
+    e.respondWith(cacheFirst(req, DATA));
+    return;
+  }
+  // La app misma: intenta traer la versión nueva y, sin señal, usa la guardada.
+  e.respondWith(networkFirst(req, SHELL));
+});
