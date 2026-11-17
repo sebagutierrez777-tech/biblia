@@ -269,6 +269,27 @@ nav button.dot::after{content:"";display:inline-block;width:8px;height:8px;borde
 .rem-box{margin:0 0 20px}
 .prom-row small{display:block;font-weight:500;font-size:13px;color:var(--muted);margin-top:2px}
 
+.nm-row{display:flex;gap:8px;margin:0 0 18px}.nm-row input{flex:1;min-width:0;height:46px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;font-size:16px;padding:0 12px}
+.hola{position:relative;margin:0 0 16px;padding:16px 46px 16px 16px;border-radius:16px;background:linear-gradient(165deg,#1e3a8a,#5b21b6);color:#fff;animation:holaIn .45s ease}
+.hola b{display:block;font-family:var(--read);font-size:21px;font-weight:600;line-height:1.25}
+.hola span{display:block;margin-top:4px;font-size:15px;line-height:1.45;color:rgba(255,255,255,.9)}
+.hola .x{position:absolute;top:8px;right:8px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.18);color:#fff;font-size:15px}
+.hola form{display:flex;gap:8px;margin-top:10px}.hola input{flex:1;min-width:0;height:44px;border:0;border-radius:10px;padding:0 12px;font:inherit;font-size:16px}
+.hola form button{height:44px;padding:0 16px;border-radius:10px;background:#fff;color:#1e3a8a;font-weight:800}
+@keyframes holaIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.hola{animation:none}}
+.intro{margin:0 0 16px;border-radius:16px;background:var(--surface);border:1px solid var(--line);overflow:hidden}
+.intro summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:14px 16px;font-weight:700;font-size:16px}
+.intro summary::-webkit-details-marker{display:none}
+.intro summary::after{content:"›";margin-left:auto;font-size:22px;color:var(--muted);transition:transform .15s}
+.intro[open] summary::after{transform:rotate(90deg)}
+.intro-b{padding:0 16px 16px;display:flex;flex-direction:column;gap:10px}
+.intro-b p{margin:0;font-size:15.5px;line-height:1.55}
+.intro-dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14.5px}.intro-dl dt{font-weight:700;color:var(--muted)}.intro-dl dd{margin:0}
+.intro-k{border-left:4px solid var(--tc-bg);padding:8px 12px;border-radius:0 10px 10px 0;background:var(--tc-soft);text-align:left;font-family:var(--read);font-size:16.5px;line-height:1.5}
+.intro-k small{display:block;font-family:var(--ui);font-weight:700;font-size:13px;margin-top:4px}
+.intro-note{font-size:12.5px!important;color:var(--muted)}
+
 /* Comparar */
 .cmp-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
 .cmp-head h2{font-family:var(--read);font-size:24px;font-weight:600;margin:0;flex:1;text-wrap:balance}
@@ -383,8 +404,11 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
 .ini-verso p{margin:0;font-family:var(--read);font-style:italic;font-size:18px;line-height:1.5;color:#1b1840}
 .ini-verso b{font-size:14px;color:#5b21b6}
 .ini-pie{margin-top:auto;padding:24px 20px calc(32px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:16px;max-width:560px;align-self:center;width:100%;box-sizing:border-box}
+.ini-pie label.ini-nm{display:block}
 .ini-pie label{display:flex;align-items:center;gap:12px;font-size:15px;color:#4a4870;min-height:44px;cursor:pointer}
-.ini-pie input{width:22px;height:22px;accent-color:#4338ca;margin:0}
+.ini-pie input[type=checkbox]{width:22px;height:22px;accent-color:#4338ca;margin:0}
+.ini-nm{font-size:15px;font-weight:700;color:#33315a;min-height:0!important}.ini-nm small{font-weight:500;color:#4a4870}
+#iniNombre{height:50px;border:1px solid #c9c6e6;border-radius:12px;padding:0 14px;font:inherit;font-size:17px;background:#fff;color:#1b1840}
 .ini-pie button{height:56px;border:0;border-radius:16px;background:#4338ca;color:#fff;font-family:var(--ui);font-size:18px;font-weight:700;cursor:pointer}
 .ini-pie button:active{background:#3730a3}
 @media (prefers-reduced-motion:reduce){.ini-load i{animation:none;width:100%}.ini-splash,.ini-bien{transition:none}}
@@ -398,7 +422,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
 <div class="ini-tit"><h1>Biblia Multiversión</h1><p>12 versiones de la Santa Biblia<br>para leer, buscar y comparar</p></div>
 </div>
 <div class="ini-load" aria-hidden="true"><i></i></div>
-<div class="ini-pie2"><span>Versión 1.2</span><span>Desarrollado por <b>DIRCOM Chile</b></span></div>
+<div class="ini-pie2"><span>Versión 1.3</span><span>Desarrollado por <b>DIRCOM Chile</b></span></div>
 </div>
 <div class="ini ini-bien" id="iniBien" role="dialog" aria-modal="true" aria-labelledby="iniBienT" hidden>
 <div class="ini-cab"><img src="logo-emblema-claro.png" alt=""><p>Iglesia de Dios de la Profecía</p></div>
@@ -408,6 +432,8 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
 <div class="ini-verso"><p>“Lámpara es a mis pies tu palabra, y lumbrera a mi camino.”</p><b>Salmo 119:105</b></div>
 </div>
 <div class="ini-pie">
+<label class="ini-nm" for="iniNombre">¿Cómo te llamas? <small>(opcional, para saludarte)</small></label>
+<input id="iniNombre" type="text" autocomplete="given-name" maxlength="30" placeholder="Tu nombre o apodo">
 <label><input type="checkbox" id="iniNoMas" checked> No volver a mostrar este saludo</label>
 <button type="button" id="iniIr">Comenzar a leer</button>
 </div>
@@ -426,6 +452,8 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
   }, 2200);
   document.getElementById("iniIr").addEventListener("click", function(){
     try{
+      var nm = document.getElementById("iniNombre").value.trim();
+      if (nm){ localStorage.setItem("biblia.nombre", JSON.stringify(nm)); window.dispatchEvent(new Event("biblia-nombre")); }
       if(document.getElementById("iniNoMas").checked) localStorage.setItem("biblia.bienvenidaVista","1");
       else localStorage.removeItem("biblia.bienvenidaVista");
     }catch(e){}
@@ -557,6 +585,8 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
   <div class="sheet" id="shSize" role="dialog" aria-label="Letra, colores y compartir">
     <div class="sheet-head"><h2>Letra, colores y compartir</h2><button class="icon" data-close aria-label="Cerrar">✕</button></div>
     <div class="sheet-body">
+      <label class="grp" for="cfgNombre" style="margin-top:4px">Tu nombre o apodo</label>
+      <div class="nm-row"><input id="cfgNombre" type="text" maxlength="30" autocomplete="given-name" placeholder="¿Cómo te llamas?"><button type="button" class="btn" id="cfgNombreOk">Guardar</button></div>
       <div class="share-box">
         <button type="button" class="share-main" id="btnShare"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span>Compartir la app con un hermano</span></button>
         <button type="button" class="share-qr" id="btnQr"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 17h4v4h-4"/></svg><span>Mostrar código QR</span></button>
@@ -579,7 +609,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
       </div>
       <p class="note">Lila sigue el modo claro u oscuro de tu teléfono.</p>
       <label class="prom-row"><input type="checkbox" id="promChk"> <span>Resaltar suavemente las <span class="prom-demo">promesas de Jesús</span> en el Nuevo Testamento</span></label>
-      <p class="credit">Biblia Multiversión · Versión 1.2<br>Desarrollado por DIRCOM Chile · Iglesia de Dios de la Profecía</p>
+      <p class="credit">Biblia Multiversión · Versión 1.3<br>Desarrollado por DIRCOM Chile · Iglesia de Dios de la Profecía</p>
     </div>
   </div>
   <div class="mic-veil" id="micVeil" hidden>
@@ -680,7 +710,9 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     var lst = (window.speechSynthesis ? '<button type="button" class="listen" id="btnListen"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>Escuchar</button>' : '') + '<button type="button" class="listen" id="btnPulpit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5h16v2"/><path d="M9 20h6"/><path d="M12 5v15"/></svg>Púlpito</button>';
     var tip = store.get("tipVerso", false) ? "" : '<div class="tip" id="tipV"><span>Toca un versículo para guardarlo en <b>Favoritos</b>, resaltarlo con color, escribir una nota o crear una imagen.</span><button type="button" id="tipOk">Entendido</button></div>';
     if (remOn && store.get("remDia", "") !== today()) tip = '<div class="tip" id="remBan"><span>' + esc(remText()) + '</span><button type="button" id="remOk">Ver</button></div>' + tip;
-    el.innerHTML = head + lst + tip + '<div class="verses">' + html + '</div><div class="chap-nav"><button id="prevC"' + (first ? " disabled" : "") + '>‹ Capítulo anterior</button><button id="nextC"' + (last ? " disabled" : "") + '>Capítulo siguiente ›</button></div>';
+    var hola = holaHtml(); if (hola) holaShown = true;
+    if (!INTROS) loadIntros().then(function(){ if ($("vRead").classList.contains("on")) renderReadKeep(); }, function(){});
+    el.innerHTML = hola + head + lst + introHtml() + tip + '<div class="verses">' + html + '</div><div class="chap-nav"><button id="prevC"' + (first ? " disabled" : "") + '>‹ Capítulo anterior</button><button id="nextC"' + (last ? " disabled" : "") + '>Capítulo siguiente ›</button></div>';
     $("prevC").onclick = function(){ step(-1); };
     if ($("remOk")) $("remOk").onclick = function(e){ e.stopPropagation(); store.set("remDia", today()); tab("vFavs"); };
     if ($("tipOk")) $("tipOk").onclick = function(e){ e.stopPropagation(); store.set("tipVerso", true); var t = $("tipV"); if (t) t.remove(); };
@@ -827,6 +859,53 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
   $("fonts").addEventListener("click", function(e){ var b = e.target.closest(".fnt"); if (!b) return; font = b.dataset.f; store.set("font", font); applyFont(); });
   $("btnSize").addEventListener("click", loadFonts);
   applyFont();
+
+  /* ---------- Nombre y saludo ---------- */
+  var nombre = store.get("nombre", ""), holaShown = false, holaClosed = false;
+  function N(){ return nombre ? ", " + nombre : ""; }
+  function saludoHora(){ var h = new Date().getHours(); return h >= 5 && h < 12 ? "Buenos días" : h >= 12 && h < 20 ? "Buenas tardes" : "Buenas noches"; }
+  var holaRef = null;
+  function holaHtml(){
+    if (holaClosed) return "";
+    var here = cur.b + "." + cur.c; if (holaRef && holaRef !== here){ holaClosed = true; return ""; } holaRef = here;
+    if (!nombre){
+      if (store.get("nombreNo", false)) return "";
+      return '<div class="hola" id="hola"><button type="button" class="x" id="holaX" aria-label="Cerrar">✕</button><b>' + saludoHora() + '</b><span>¿Cómo te llamas? Así la app te saluda por tu nombre.</span><form id="holaF"><input id="holaN" type="text" maxlength="30" autocomplete="given-name" placeholder="Tu nombre o apodo" aria-label="Tu nombre o apodo"><button type="submit">Listo</button></form></div>';
+    }
+    var ref = refText(cur.b, cur.c), p = (typeof planDef === "function") ? planDef() : null, frase;
+    var opts = ["¿Seguimos en " + ref + "?", "Quedaste en " + ref + ". ¿Continuamos?", "Qué bueno tenerte de vuelta. Seguimos en " + ref + ".", "Tu lectura te espera en " + ref + "."];
+    frase = opts[Math.floor(Date.now() / 36e5) % opts.length];
+    if (p){ var di = planDay(p), pend = p.days[di].filter(function(x, j){ return !plan.done[di + "." + j]; }); if (pend.length) frase += " Hoy en tu plan: " + pend.map(itemLabel).join(", ") + "."; }
+    return '<div class="hola" id="hola"><button type="button" class="x" id="holaX" aria-label="Cerrar">✕</button><b>' + saludoHora() + ', ' + esc(nombre) + '</b><span>' + esc(frase) + '</span></div>';
+  }
+  function setNombre(v){ nombre = (v || "").trim().slice(0, 30); store.set("nombre", nombre); $("cfgNombre").value = nombre; }
+  $("cfgNombre").value = nombre;
+  window.addEventListener("biblia-nombre", function(){ nombre = store.get("nombre", ""); $("cfgNombre").value = nombre; holaClosed = false; holaRef = null; if (META && DATA[cur.v]) renderReadKeep(); });
+  $("cfgNombreOk").onclick = function(){ setNombre($("cfgNombre").value); holaClosed = false; holaRef = null; toast(nombre ? "Listo, " + nombre : "Nombre borrado"); renderReadKeep(); };
+  $("vRead").addEventListener("click", function(e){
+    if (e.target.closest("#holaX")){ e.stopPropagation(); holaClosed = true; if (!nombre) store.set("nombreNo", true); var h = $("hola"); if (h) h.remove(); }
+  }, true);
+  $("vRead").addEventListener("submit", function(e){
+    if (e.target.id !== "holaF") return; e.preventDefault(); var v = $("holaN").value.trim(); if (!v) return;
+    setNombre(v); toast("¡Hola, " + nombre + "!"); renderReadKeep();
+  });
+
+  /* ---------- Introducción de cada libro ---------- */
+  var INTROS = null;
+  function loadIntros(){ return INTROS ? Promise.resolve(INTROS) : fetch("intros.json").then(function(r){ return r.json(); }).then(function(j){ INTROS = j.libros || []; return INTROS; }); }
+  function introHtml(){
+    if (!INTROS || !INTROS[cur.b]) return "";
+    var x = INTROS[cur.b], n = META.books[cur.b][1].length, k = x.clave, kt = DATA[cur.v][cur.b][k[0]-1] ? DATA[cur.v][cur.b][k[0]-1][k[1]-1] : "";
+    var h = '<details class="intro"' + (cur.c === 0 && !store.get("introVisto." + cur.b, false) ? " open" : "") + ' data-b="' + cur.b + '"><summary>Acerca de ' + esc(bname(cur.b)) + '</summary><div class="intro-b">';
+    h += '<p>' + esc(x.resumen) + '</p><dl class="intro-dl"><dt>Autor</dt><dd>' + esc(x.autor) + '</dd><dt>Época</dt><dd>' + esc(x.fecha) + '</dd><dt>Capítulos</dt><dd>' + n + '</dd></dl>';
+    if (kt) h += '<button type="button" class="intro-k" data-c="' + (k[0]-1) + '" data-v="' + (k[1]-1) + '">“' + esc(kt.replace(/\n/g, " ")) + '”<small>Versículo clave · ' + esc(refText(cur.b, k[0]-1, k[1]-1)) + '</small></button>';
+    h += '<p class="intro-note">Introducción de apoyo de la Biblia Multiversión.</p></div></details>';
+    return h;
+  }
+  $("vRead").addEventListener("click", function(e){
+    var k = e.target.closest(".intro-k"); if (k){ e.stopPropagation(); go(cur.b, +k.dataset.c, +k.dataset.v); return; }
+    var sm = e.target.closest(".intro summary"); if (sm){ store.set("introVisto." + sm.parentNode.dataset.b, true); }
+  }, true);
 
   /* ---------- Buscar ---------- */
   function parseRef(q){
@@ -1448,7 +1527,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     if (!DATA[cur.v] || !META){ el.innerHTML = '<p class="note">Cargando…</p>'; load(cur.v).then(function(){ if ($("vFavs").classList.contains("on")) renderFavs(); }, function(){ el.innerHTML = '<p class="note">No se pudo cargar la versión.</p>'; }); return; }
     var d = DATA[cur.v], vid = cur.v, r = vddRef();
     if (!ver(vid).books[r[0]] || !d[r[0]][r[1]][r[2]]) vid = "rvr1960";
-    var h = '<h2 class="sec">Mi Biblia</h2>' + avisosHtml(); seeAvisos();
+    var h = '<h2 class="sec">' + (nombre ? "La Biblia de " + esc(nombre) : "Mi Biblia") + '</h2>' + avisosHtml(); seeAvisos();
     var vt = DATA[vid] ? DATA[vid][r[0]][r[1]][r[2]] : null;
     if (!DATA[vid]) load(vid).then(function(){ if ($("vFavs").classList.contains("on")) renderFavs(); });
     h += '<section class="vdd" aria-label="Versículo del día"><div class="vdd-h"><img src="logo-emblema.png" alt=""><div><b>Versículo del día</b><span>' + esc(dateTxt()) + '</span></div></div>';
@@ -1457,14 +1536,14 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     h += '<button type="button" class="vdd-read" data-act="vddRead">Leer ' + esc(refText(r[0], r[1])) + ' completo</button></div></section>';
     // seguir leyendo
     var last = RECENT[0] || [cur.b, cur.c];
-    h += '<div class="mb-h">Seguir leyendo</div><button type="button" class="cont ' + (last[0] < 39 ? "at" : "nt") + '" data-b="' + last[0] + '" data-c="' + last[1] + '"><span class="nm">' + esc(refText(last[0], last[1])) + '</span><span class="cap">Donde quedaste la última vez</span></button>';
+    h += '<div class="mb-h">' + (nombre ? "Sigue leyendo, " + esc(nombre) : "Seguir leyendo") + '</div><button type="button" class="cont ' + (last[0] < 39 ? "at" : "nt") + '" data-b="' + last[0] + '" data-c="' + last[1] + '"><span class="nm">' + esc(refText(last[0], last[1])) + '</span><span class="cap">Donde quedaste la última vez</span></button>';
     if (RECENT.length > 1){ h += '<div class="chips rec"><span>Recientes:</span>'; RECENT.slice(1, 6).forEach(function(x){ h += '<button type="button" class="chip" data-b="' + x[0] + '" data-c="' + x[1] + '">' + esc(refText(x[0], x[1])) + '</button>'; }); h += '</div>'; }
     // plan
     var p = planDef();
     if (p){
       var di = planDay(p), tot = 0, dn = 0; p.days.forEach(function(dd, i){ dd.forEach(function(x, j){ tot++; if (plan.done[i + "." + j]) dn++; }); });
       var pct = Math.round(dn / tot * 100), st = streak();
-      h += '<div class="mb-h">Plan de lectura</div><section class="plan"><div class="plan-t"><b>' + esc(p.n) + '</b>' + (st ? '<span class="racha">Racha: ' + st + (st === 1 ? " día" : " días") + '</span>' : '') + '</div>';
+      h += '<div class="mb-h">Plan de lectura</div><section class="plan"><div class="plan-t"><b>' + esc(p.n) + '</b>' + (st ? '<span class="racha">' + (st >= 2 && nombre ? "¡Vas bien, " + esc(nombre) + "! " : "") + 'Racha: ' + st + (st === 1 ? " día" : " días") + '</span>' : '') + '</div>';
       h += '<div class="plan-p"><span>Día ' + (di + 1) + ' de ' + p.days.length + '</span><span>' + pct + '%</span></div><div class="plan-bar"><i style="width:' + pct + '%"></i></div><div class="plan-h">Lectura de hoy</div>';
       p.days[di].forEach(function(it, j){ var k = di + "." + j; h += '<div class="plan-it"><label><input type="checkbox" data-k="' + k + '"' + (plan.done[k] ? " checked" : "") + '><span>' + esc(itemLabel(it)) + '</span></label><button type="button" class="plan-go" data-b="' + it[0] + '" data-c="' + it[1] + '"' + (it.length > 2 ? ' data-v="' + it[2] + '"' : '') + '>Leer</button></div>'; });
       h += '<button type="button" class="plan-x" data-act="planStop">Cambiar o dejar este plan</button></section>';

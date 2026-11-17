@@ -1,0 +1,599 @@
+{
+ "nota": "Introducciones de apoyo de la Biblia Multiversión. Se pueden revisar y corregir aquí.",
+ "libros": [
+  {
+   "autor": "Moisés, según la tradición",
+   "fecha": "Siglos XV a XIII a.C.",
+   "resumen": "Es el libro de los comienzos: la creación, la caída del ser humano, el diluvio y el llamado de Abraham. Sigue la historia de los patriarcas Isaac, Jacob y José, y muestra cómo Dios empieza a formar un pueblo para bendecir por medio de él a todas las naciones.",
+   "clave": [
+    12,
+    3
+   ]
+  },
+  {
+   "autor": "Moisés, según la tradición",
+   "fecha": "Siglos XV a XIII a.C.",
+   "resumen": "Narra la liberación de Israel de la esclavitud en Egipto: la Pascua, el paso del mar Rojo, la entrega de la ley en el Sinaí y la construcción del tabernáculo. Dios se muestra como el que rescata a su pueblo y quiere habitar en medio de él.",
+   "clave": [
+    20,
+    2
+   ]
+  },
+  {
+   "autor": "Moisés, según la tradición",
+   "fecha": "Siglos XV a XIII a.C.",
+   "resumen": "Reúne las instrucciones para los sacerdotes y el pueblo: sacrificios, fiestas y leyes de santidad. Enseña cómo un pueblo pecador puede acercarse a un Dios santo, y anticipa el sacrificio perfecto de Cristo.",
+   "clave": [
+    19,
+    2
+   ]
+  },
+  {
+   "autor": "Moisés, según la tradición",
+   "fecha": "Siglos XV a XIII a.C.",
+   "resumen": "Cuenta los cuarenta años de Israel en el desierto, desde el Sinaí hasta las puertas de Canaán. Muestra la incredulidad y las quejas del pueblo, y también la paciencia y la fidelidad de Dios.",
+   "clave": [
+    6,
+    24
+   ]
+  },
+  {
+   "autor": "Moisés, según la tradición",
+   "fecha": "Siglos XV a XIII a.C.",
+   "resumen": "Son los discursos de despedida de Moisés antes de que Israel entre a la tierra prometida. Repasa la ley y llama a la nueva generación a amar a Dios con todo el corazón y a obedecerle.",
+   "clave": [
+    6,
+    5
+   ]
+  },
+  {
+   "autor": "Josué, según la tradición",
+   "fecha": "Alrededor del siglo XIV a.C.",
+   "resumen": "Relata la entrada a Canaán bajo el liderazgo de Josué, las conquistas y el reparto de la tierra entre las tribus. Dios cumple la promesa que había hecho a Abraham.",
+   "clave": [
+    1,
+    9
+   ]
+  },
+  {
+   "autor": "Desconocido; la tradición lo atribuye a Samuel",
+   "fecha": "Siglos XIV a XI a.C. (los hechos)",
+   "resumen": "Describe un ciclo que se repite: el pueblo se aparta de Dios, sufre opresión, clama, y Dios levanta jueces como Débora, Gedeón y Sansón para librarlo. Muestra lo que pasa cuando cada uno hace lo que bien le parece.",
+   "clave": [
+    21,
+    25
+   ]
+  },
+  {
+   "autor": "Desconocido; la tradición lo atribuye a Samuel",
+   "fecha": "En tiempos de los jueces (los hechos)",
+   "resumen": "Una historia de lealtad y redención: Rut, una mujer moabita, se queda junto a su suegra Noemí y es acogida por Booz. Llega a ser bisabuela del rey David y parte de la genealogía de Jesús.",
+   "clave": [
+    1,
+    16
+   ]
+  },
+  {
+   "autor": "Desconocido; incluye registros de Samuel, Natán y Gad",
+   "fecha": "Siglo XI a.C. (los hechos)",
+   "resumen": "Marca el paso de los jueces a la monarquía: el nacimiento y ministerio de Samuel, el reinado de Saúl y el ascenso de David, el hombre conforme al corazón de Dios.",
+   "clave": [
+    16,
+    7
+   ]
+  },
+  {
+   "autor": "Desconocido; incluye registros de Natán y Gad",
+   "fecha": "Siglo X a.C. (los hechos)",
+   "resumen": "Cuenta el reinado de David: sus victorias, el pacto en que Dios le promete un reino eterno, su pecado con Betsabé y las consecuencias que trajo a su familia.",
+   "clave": [
+    7,
+    16
+   ]
+  },
+  {
+   "autor": "Desconocido; la tradición lo atribuye a Jeremías",
+   "fecha": "Siglos X a IX a.C. (los hechos)",
+   "resumen": "Abarca el reinado de Salomón y la construcción del templo, la división del reino en Israel y Judá, y el ministerio del profeta Elías frente a la idolatría.",
+   "clave": [
+    18,
+    39
+   ]
+  },
+  {
+   "autor": "Desconocido; la tradición lo atribuye a Jeremías",
+   "fecha": "Siglos IX a VI a.C. (los hechos)",
+   "resumen": "Sigue la historia de los dos reinos hasta su caída: Israel ante Asiria en el 722 a.C. y Judá ante Babilonia en el 586 a.C. Incluye el ministerio de Eliseo.",
+   "clave": [
+    6,
+    16
+   ]
+  },
+  {
+   "autor": "Esdras, según la tradición",
+   "fecha": "Siglo V a.C.",
+   "resumen": "Repasa la historia desde Adán hasta el reinado de David, con énfasis en el templo y la adoración. Fue escrito para animar a los que volvieron del exilio a recordar quiénes eran.",
+   "clave": [
+    16,
+    34
+   ]
+  },
+  {
+   "autor": "Esdras, según la tradición",
+   "fecha": "Siglo V a.C.",
+   "resumen": "Recorre la historia desde Salomón hasta el exilio, destacando a los reyes que buscaron a Dios y las reformas espirituales. Su mensaje: cuando el pueblo se humilla y ora, Dios restaura.",
+   "clave": [
+    7,
+    14
+   ]
+  },
+  {
+   "autor": "Esdras",
+   "fecha": "Siglo V a.C.",
+   "resumen": "Narra el regreso de los exiliados desde Babilonia, la reconstrucción del templo y la reforma espiritual dirigida por Esdras, un maestro de la ley.",
+   "clave": [
+    7,
+    10
+   ]
+  },
+  {
+   "autor": "Nehemías",
+   "fecha": "Siglo V a.C.",
+   "resumen": "Cuenta cómo Nehemías dirigió la reconstrucción de los muros de Jerusalén en 52 días, a pesar de la oposición, y cómo el pueblo renovó su pacto con Dios.",
+   "clave": [
+    8,
+    10
+   ]
+  },
+  {
+   "autor": "Desconocido",
+   "fecha": "Siglo V a.C. (los hechos)",
+   "resumen": "En el Imperio persa, Dios protege a los judíos de ser exterminados por medio de la reina Ester y de Mardoqueo. Aunque el nombre de Dios no aparece, su mano se ve en cada detalle.",
+   "clave": [
+    4,
+    14
+   ]
+  },
+  {
+   "autor": "Desconocido",
+   "fecha": "Fecha incierta",
+   "resumen": "Job, un hombre justo, lo pierde casi todo. El libro aborda la gran pregunta del sufrimiento a través de los diálogos con sus amigos, y termina con Dios mismo hablándole a Job.",
+   "clave": [
+    19,
+    25
+   ]
+  },
+  {
+   "autor": "David y otros autores, como Asaf, los hijos de Coré, Moisés y Salomón",
+   "fecha": "Siglos XV a V a.C.",
+   "resumen": "Son 150 cantos y oraciones de alabanza, lamento, confianza y gratitud. Fue el himnario de Israel y sigue siendo el libro de oración de la iglesia.",
+   "clave": [
+    23,
+    1
+   ]
+  },
+  {
+   "autor": "Principalmente Salomón, con aportes de otros sabios",
+   "fecha": "Siglo X a.C. en su mayor parte",
+   "resumen": "Reúne sabiduría práctica para la vida diaria: el trabajo, las palabras, la familia, las amistades y el dinero, todo a partir del temor de Dios.",
+   "clave": [
+    1,
+    7
+   ]
+  },
+  {
+   "autor": "Salomón, según la tradición",
+   "fecha": "Siglo X a.C.",
+   "resumen": "Una reflexión honesta sobre el sentido de la vida \"debajo del sol\". Concluye que lo que realmente permanece es temer a Dios y guardar sus mandamientos.",
+   "clave": [
+    12,
+    13
+   ]
+  },
+  {
+   "autor": "Salomón",
+   "fecha": "Siglo X a.C.",
+   "resumen": "Un poema de amor entre un esposo y su esposa que celebra el amor matrimonial. Muchos lo leen también como una figura del amor de Dios por su pueblo.",
+   "clave": [
+    8,
+    7
+   ]
+  },
+  {
+   "autor": "Isaías",
+   "fecha": "Siglo VIII a.C.",
+   "resumen": "Profecías de juicio y de consuelo para Judá. Anuncia al Mesías, el Siervo sufriente que cargaría con nuestro pecado, y la restauración final de todas las cosas.",
+   "clave": [
+    53,
+    5
+   ]
+  },
+  {
+   "autor": "Jeremías, con la ayuda de su escriba Baruc",
+   "fecha": "Fines del siglo VII y comienzos del VI a.C.",
+   "resumen": "Llamado el profeta llorón, Jeremías advierte a Judá durante años antes de la caída de Jerusalén, sufre rechazo y anuncia un nuevo pacto escrito en el corazón.",
+   "clave": [
+    29,
+    11
+   ]
+  },
+  {
+   "autor": "Jeremías, según la tradición",
+   "fecha": "Siglo VI a.C.",
+   "resumen": "Cinco poemas de dolor por la destrucción de Jerusalén. En medio del llanto aparece una esperanza firme: las misericordias de Dios son nuevas cada mañana.",
+   "clave": [
+    3,
+    22
+   ]
+  },
+  {
+   "autor": "Ezequiel, sacerdote y profeta",
+   "fecha": "Siglo VI a.C.",
+   "resumen": "Escrito desde el exilio en Babilonia. Presenta visiones de la gloria de Dios, anuncia juicio y promete un corazón nuevo, un espíritu nuevo y un pueblo restaurado.",
+   "clave": [
+    36,
+    26
+   ]
+  },
+  {
+   "autor": "Daniel",
+   "fecha": "Siglo VI a.C.",
+   "resumen": "Muestra la fidelidad de Daniel y sus amigos en la corte de Babilonia, y sus visiones sobre los imperios del mundo y el reino eterno de Dios que nunca será destruido.",
+   "clave": [
+    2,
+    44
+   ]
+  },
+  {
+   "autor": "Oseas",
+   "fecha": "Siglo VIII a.C.",
+   "resumen": "Profeta del reino del norte. Su matrimonio con una esposa infiel ilustra el amor fiel de Dios hacia un Israel que lo había abandonado.",
+   "clave": [
+    6,
+    6
+   ]
+  },
+  {
+   "autor": "Joel",
+   "fecha": "Fecha incierta",
+   "resumen": "Una plaga de langostas se convierte en un llamado al arrepentimiento. Promete el derramamiento del Espíritu sobre toda carne, cumplido en Pentecostés.",
+   "clave": [
+    2,
+    28
+   ]
+  },
+  {
+   "autor": "Amós, pastor de Tecoa",
+   "fecha": "Siglo VIII a.C.",
+   "resumen": "Un hombre de campo enviado a denunciar la injusticia social, el abuso de los pobres y la religión vacía en tiempos de prosperidad en Israel.",
+   "clave": [
+    5,
+    24
+   ]
+  },
+  {
+   "autor": "Abdías",
+   "fecha": "Siglo VI a.C. probablemente",
+   "resumen": "El libro más corto del Antiguo Testamento. Anuncia el juicio contra Edom por su crueldad con Judá en el día de su desgracia.",
+   "clave": [
+    1,
+    15
+   ]
+  },
+  {
+   "autor": "Jonás",
+   "fecha": "Siglo VIII a.C.",
+   "resumen": "Un profeta que huye de Dios, es tragado por un gran pez y luego ve a Nínive arrepentirse. Muestra que la misericordia de Dios alcanza a todas las naciones.",
+   "clave": [
+    2,
+    9
+   ]
+  },
+  {
+   "autor": "Miqueas",
+   "fecha": "Siglo VIII a.C.",
+   "resumen": "Combina juicio y esperanza: denuncia la injusticia de los líderes y anuncia que el Mesías nacerá en Belén.",
+   "clave": [
+    6,
+    8
+   ]
+  },
+  {
+   "autor": "Nahum",
+   "fecha": "Siglo VII a.C.",
+   "resumen": "Anuncia la caída de Nínive, la capital de Asiria que había oprimido a muchos pueblos. Dios es lento para la ira, pero justo.",
+   "clave": [
+    1,
+    7
+   ]
+  },
+  {
+   "autor": "Habacuc",
+   "fecha": "Fines del siglo VII a.C.",
+   "resumen": "Un diálogo honesto con Dios sobre el mal y la injusticia. El profeta termina confiando y alabando a Dios aunque todo falte.",
+   "clave": [
+    2,
+    4
+   ]
+  },
+  {
+   "autor": "Sofonías",
+   "fecha": "Siglo VII a.C., en tiempos del rey Josías",
+   "resumen": "Anuncia el día de Jehová como juicio sobre Judá y las naciones, y promete un remanente humilde en el que Dios se alegrará.",
+   "clave": [
+    3,
+    17
+   ]
+  },
+  {
+   "autor": "Hageo",
+   "fecha": "520 a.C.",
+   "resumen": "Anima a los que volvieron del exilio a dejar de postergar la obra y terminar de reconstruir el templo.",
+   "clave": [
+    1,
+    5
+   ]
+  },
+  {
+   "autor": "Zacarías",
+   "fecha": "520 a 480 a.C.",
+   "resumen": "Contemporáneo de Hageo. Visiones de restauración y profecías mesiánicas, como la del Rey que entra a Jerusalén montado en un asno.",
+   "clave": [
+    4,
+    6
+   ]
+  },
+  {
+   "autor": "Malaquías",
+   "fecha": "Siglo V a.C.",
+   "resumen": "Último profeta del Antiguo Testamento. Confronta la frialdad espiritual del pueblo y anuncia al mensajero que prepararía el camino del Señor.",
+   "clave": [
+    4,
+    2
+   ]
+  },
+  {
+   "autor": "Mateo (Leví), antiguo cobrador de impuestos",
+   "fecha": "Alrededor de 60 a 70 d.C.",
+   "resumen": "Presenta a Jesús como el Mesías y Rey prometido, mostrando cómo cumple las profecías del Antiguo Testamento. Incluye el Sermón del Monte y la Gran Comisión.",
+   "clave": [
+    28,
+    19
+   ]
+  },
+  {
+   "autor": "Juan Marcos, compañero de Pedro",
+   "fecha": "Alrededor de 55 a 65 d.C.",
+   "resumen": "El evangelio más breve y lleno de acción. Presenta a Jesús como el Siervo que no vino a ser servido, sino a servir y dar su vida.",
+   "clave": [
+    10,
+    45
+   ]
+  },
+  {
+   "autor": "Lucas, médico y compañero de Pablo",
+   "fecha": "Alrededor de 60 d.C.",
+   "resumen": "Un relato ordenado y cuidadoso de la vida de Jesús. Destaca su compasión por los pobres, las mujeres, los enfermos y los marginados.",
+   "clave": [
+    19,
+    10
+   ]
+  },
+  {
+   "autor": "El apóstol Juan",
+   "fecha": "Alrededor de 85 a 95 d.C.",
+   "resumen": "Muestra que Jesús es el Hijo de Dios a través de sus señales y de sus declaraciones \"Yo soy\", para que el lector crea y tenga vida en su nombre.",
+   "clave": [
+    20,
+    31
+   ]
+  },
+  {
+   "autor": "Lucas",
+   "fecha": "Alrededor de 62 d.C.",
+   "resumen": "La iglesia nace en Pentecostés con el poder del Espíritu Santo, y el evangelio se extiende desde Jerusalén hasta Roma por medio de Pedro, Pablo y muchos otros.",
+   "clave": [
+    1,
+    8
+   ]
+  },
+  {
+   "autor": "El apóstol Pablo",
+   "fecha": "Alrededor de 57 d.C.",
+   "resumen": "La explicación más completa del evangelio: todos pecaron, y somos justificados por la fe en Cristo. Enseña sobre la vida en el Espíritu y el plan de Dios para Israel y las naciones.",
+   "clave": [
+    1,
+    16
+   ]
+  },
+  {
+   "autor": "El apóstol Pablo",
+   "fecha": "Alrededor de 55 d.C.",
+   "resumen": "Corrige divisiones y desórdenes en la iglesia de Corinto. Enseña sobre los dones espirituales, el amor y la resurrección.",
+   "clave": [
+    13,
+    13
+   ]
+  },
+  {
+   "autor": "El apóstol Pablo",
+   "fecha": "Alrededor de 56 d.C.",
+   "resumen": "Una carta muy personal sobre el ministerio y el sufrimiento. Pablo aprende que la gracia de Dios basta y que su poder se perfecciona en la debilidad.",
+   "clave": [
+    12,
+    9
+   ]
+  },
+  {
+   "autor": "El apóstol Pablo",
+   "fecha": "Alrededor de 49 a 55 d.C.",
+   "resumen": "Defiende que la salvación es por gracia mediante la fe, no por las obras de la ley. Habla de la libertad en Cristo y del fruto del Espíritu.",
+   "clave": [
+    2,
+    20
+   ]
+  },
+  {
+   "autor": "El apóstol Pablo, desde la prisión",
+   "fecha": "Alrededor de 60 d.C.",
+   "resumen": "Las riquezas de la gracia en Cristo, la unidad de la iglesia como un solo cuerpo y la armadura de Dios para la batalla espiritual.",
+   "clave": [
+    2,
+    8
+   ]
+  },
+  {
+   "autor": "El apóstol Pablo, desde la prisión",
+   "fecha": "Alrededor de 61 d.C.",
+   "resumen": "Una carta de gozo y gratitud escrita en medio de dificultades. Invita a tener el mismo sentir que hubo en Cristo.",
+   "clave": [
+    4,
+    4
+   ]
+  },
+  {
+   "autor": "El apóstol Pablo, desde la prisión",
+   "fecha": "Alrededor de 60 d.C.",
+   "resumen": "Cristo es supremo sobre toda la creación y suficiente para la fe. Advierte contra enseñanzas que le quitan el centro a Jesús.",
+   "clave": [
+    3,
+    23
+   ]
+  },
+  {
+   "autor": "El apóstol Pablo",
+   "fecha": "Alrededor de 51 d.C.",
+   "resumen": "Anima a una iglesia joven que sufría persecución y enseña sobre la venida del Señor y la esperanza de la resurrección.",
+   "clave": [
+    5,
+    16
+   ]
+  },
+  {
+   "autor": "El apóstol Pablo",
+   "fecha": "Alrededor de 51 a 52 d.C.",
+   "resumen": "Aclara malentendidos sobre el día del Señor y llama a la iglesia a mantenerse firme y a trabajar con perseverancia.",
+   "clave": [
+    3,
+    3
+   ]
+  },
+  {
+   "autor": "El apóstol Pablo a su discípulo Timoteo",
+   "fecha": "Alrededor de 62 a 64 d.C.",
+   "resumen": "Instrucciones para ordenar la vida de la iglesia: la oración, los líderes, la sana doctrina y el ejemplo personal.",
+   "clave": [
+    4,
+    12
+   ]
+  },
+  {
+   "autor": "El apóstol Pablo",
+   "fecha": "Alrededor de 66 a 67 d.C.",
+   "resumen": "La última carta de Pablo antes de su muerte. Anima a Timoteo a mantenerse firme, sufrir como buen soldado y predicar la Palabra.",
+   "clave": [
+    3,
+    16
+   ]
+  },
+  {
+   "autor": "El apóstol Pablo",
+   "fecha": "Alrededor de 63 a 65 d.C.",
+   "resumen": "Instrucciones a Tito para establecer líderes en las iglesias de Creta y vivir una fe que se nota en las buenas obras.",
+   "clave": [
+    2,
+    11
+   ]
+  },
+  {
+   "autor": "El apóstol Pablo",
+   "fecha": "Alrededor de 60 d.C.",
+   "resumen": "Una carta breve en la que Pablo pide a Filemón recibir a Onésimo, su esclavo fugitivo que se había convertido, como a un hermano amado.",
+   "clave": [
+    1,
+    16
+   ]
+  },
+  {
+   "autor": "Desconocido",
+   "fecha": "Antes del 70 d.C.",
+   "resumen": "Muestra que Jesús es superior a los ángeles, a Moisés y al sacerdocio del Antiguo Testamento. Llama a perseverar en la fe, con los héroes de la fe como ejemplo.",
+   "clave": [
+    12,
+    2
+   ]
+  },
+  {
+   "autor": "Santiago, hermano de Jesús",
+   "fecha": "Alrededor de 45 a 50 d.C.",
+   "resumen": "Fe práctica: la fe verdadera se demuestra con obras, con el cuidado de la lengua, la paciencia en la prueba y el amor por los pobres.",
+   "clave": [
+    1,
+    22
+   ]
+  },
+  {
+   "autor": "El apóstol Pedro",
+   "fecha": "Alrededor de 62 a 64 d.C.",
+   "resumen": "Esperanza y firmeza para cristianos que sufren por su fe. Recuerda que somos un pueblo escogido y que nuestra herencia está guardada en los cielos.",
+   "clave": [
+    5,
+    7
+   ]
+  },
+  {
+   "autor": "El apóstol Pedro",
+   "fecha": "Alrededor de 64 a 67 d.C.",
+   "resumen": "Escrita poco antes de su muerte. Advierte contra los falsos maestros y recuerda que el Señor cumplirá la promesa de su venida.",
+   "clave": [
+    3,
+    9
+   ]
+  },
+  {
+   "autor": "El apóstol Juan",
+   "fecha": "Alrededor de 90 d.C.",
+   "resumen": "Da seguridad de la salvación: Dios es luz y Dios es amor, y quien ama a Dios ama también a su hermano.",
+   "clave": [
+    1,
+    9
+   ]
+  },
+  {
+   "autor": "El apóstol Juan",
+   "fecha": "Alrededor de 90 d.C.",
+   "resumen": "Una carta breve que llama a andar en la verdad y en el amor, y a no dar lugar a los falsos maestros.",
+   "clave": [
+    1,
+    6
+   ]
+  },
+  {
+   "autor": "El apóstol Juan",
+   "fecha": "Alrededor de 90 d.C.",
+   "resumen": "Carta a Gayo que elogia su hospitalidad con los que predicaban el evangelio y le advierte sobre un líder orgulloso.",
+   "clave": [
+    1,
+    4
+   ]
+  },
+  {
+   "autor": "Judas, hermano de Santiago",
+   "fecha": "Alrededor de 65 a 80 d.C.",
+   "resumen": "Llama a contender ardientemente por la fe frente a quienes la distorsionan, y termina con una hermosa alabanza a Dios.",
+   "clave": [
+    1,
+    3
+   ]
+  },
+  {
+   "autor": "El apóstol Juan, desde la isla de Patmos",
+   "fecha": "Alrededor de 95 d.C.",
+   "resumen": "La revelación de Jesucristo: mensajes a siete iglesias, el juicio sobre el mal y la victoria final de Cristo con un cielo nuevo y una tierra nueva.",
+   "clave": [
+    21,
+    4
+   ]
+  }
+ ]
+}
