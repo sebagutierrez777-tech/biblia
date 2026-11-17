@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#e0245e">
+<meta name="theme-color" content="#f8f9fb">
 <meta name="description" content="12 versiones de la Biblia en español, para leer y comparar sin internet.">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -26,6 +26,7 @@
   --at:#8a4a2c; --at-soft:#f3e5dd; --nt:#2f4d8a; --nt-soft:#dfe6f3;
   --at-bg:#8a4a2c; --nt-bg:#2f4d8a; --on-t:#ffffff; --at-wash:#f7eee8; --nt-wash:#eaeff8;
   --tc:var(--nt); --tc-soft:var(--nt-soft); --tc-bg:var(--nt-bg); --tc-wash:var(--nt-wash);
+  --prom:#f8f0da;
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
@@ -33,21 +34,21 @@
     --paper:#14121f; --surface:#1f1c2e; --ink:#ece9f6; --muted:#a09cb8; --line:#34304a;
     --rubric:#ff6b93; --rubric-soft:#3d1c2b; --mark:#7a5c00;
     --head:#b3164a; --head2:#d9541f; --on-head:#ffffff; color-scheme:dark;
-    --at:#e3ad72;--at-soft:#3a2d20;--nt:#aa9cf5;--nt-soft:#2b2648;--at-bg:#8a4a2c;--nt-bg:#3b4a9c;--at-wash:#1f1812;--nt-wash:#181a30;
+    --at:#e3ad72;--at-soft:#3a2d20;--nt:#aa9cf5;--nt-soft:#2b2648;--at-bg:#8a4a2c;--nt-bg:#3b4a9c;--at-wash:#1f1812;--nt-wash:#181a30;--prom:#29251a;
   }
 }
 :root[data-theme="dark"]{
   --paper:#14121f; --surface:#1f1c2e; --ink:#ece9f6; --muted:#a09cb8; --line:#34304a;
   --rubric:#ff6b93; --rubric-soft:#3d1c2b; --mark:#7a5c00;
   --head:#b3164a; --head2:#d9541f; --on-head:#ffffff; color-scheme:dark;
-  --at:#e3ad72;--at-soft:#3a2d20;--nt:#aa9cf5;--nt-soft:#2b2648;--at-bg:#8a4a2c;--nt-bg:#3b4a9c;--at-wash:#1f1812;--nt-wash:#181a30;
+  --at:#e3ad72;--at-soft:#3a2d20;--nt:#aa9cf5;--nt-soft:#2b2648;--at-bg:#8a4a2c;--nt-bg:#3b4a9c;--at-wash:#1f1812;--nt-wash:#181a30;--prom:#29251a;
 }
-:root[data-tone="crema"]{--paper:#fdf1d6;--surface:#fffaf0;--ink:#2b1d0e;--muted:#7a6549;--line:#ecd9b0;--rubric:#d9480f;--rubric-soft:#fbdcc6;--mark:#ffd95e;--head:#e8590c;--head2:#f59f00;--on-head:#ffffff;color-scheme:light;--at:#8a4a2c;--at-soft:#f3e5dd;--nt:#2f4d8a;--nt-soft:#dfe6f3;--at-bg:#8a4a2c;--nt-bg:#2f4d8a;--at-wash:#f7eee8;--nt-wash:#eaeff8;}
-:root[data-tone="menta"]{--paper:#dff7ea;--surface:#f6fffa;--ink:#0d2a1e;--muted:#4c6f5f;--line:#b9e6cf;--rubric:#0a8f5b;--rubric-soft:#c3f0da;--mark:#fff07a;--head:#0a9d63;--head2:#16b8a6;--on-head:#ffffff;color-scheme:light;--at:#8a4a2c;--at-soft:#f3e5dd;--nt:#2f4d8a;--nt-soft:#dfe6f3;--at-bg:#8a4a2c;--nt-bg:#2f4d8a;--at-wash:#f7eee8;--nt-wash:#eaeff8;}
-:root[data-tone="cielo"]{--paper:#dfeeff;--surface:#f7fbff;--ink:#0d1f3a;--muted:#4d6485;--line:#b9d5f7;--rubric:#1565d8;--rubric-soft:#cfe2ff;--mark:#ffe680;--head:#1565d8;--head2:#12b5e5;--on-head:#ffffff;color-scheme:light;--at:#8a4a2c;--at-soft:#f3e5dd;--nt:#2f4d8a;--nt-soft:#dfe6f3;--at-bg:#8a4a2c;--nt-bg:#2f4d8a;--at-wash:#f7eee8;--nt-wash:#eaeff8;}
-:root[data-tone="rosa"]{--paper:#ffe3ee;--surface:#fff7fa;--ink:#33101f;--muted:#80566a;--line:#f7bfd4;--rubric:#d6187a;--rubric-soft:#ffd0e3;--mark:#ffe680;--head:#d6187a;--head2:#ff5d5d;--on-head:#ffffff;color-scheme:light;--at:#8a4a2c;--at-soft:#f3e5dd;--nt:#2f4d8a;--nt-soft:#dfe6f3;--at-bg:#8a4a2c;--nt-bg:#2f4d8a;--at-wash:#f7eee8;--nt-wash:#eaeff8;}
-:root[data-tone="noche"]{--paper:#0c1124;--surface:#161d38;--ink:#eef1ff;--muted:#99a2c7;--line:#2a3359;--rubric:#ffb020;--rubric-soft:#3b2f10;--mark:#6a4b00;--head:#1b2a6b;--head2:#5a2a8a;--on-head:#ffffff;color-scheme:dark;--at:#e3ad72;--at-soft:#3a2d20;--nt:#aa9cf5;--nt-soft:#2b2648;--at-bg:#8a4a2c;--nt-bg:#3b4a9c;--at-wash:#1f1812;--nt-wash:#181a30;}
-:root[data-tone="piedra"]{--paper:#eceef2;--surface:#f8f9fb;--ink:#1d2230;--muted:#555d70;--line:#d6dae3;--rubric:#2f4d8a;--rubric-soft:#dfe6f3;--mark:#ffe08a;--head:#2f4d8a;--head2:#2f4d8a;--on-head:#ffffff;color-scheme:light;--at:#8a4a2c;--at-soft:#f3e5dd;--nt:#2f4d8a;--nt-soft:#dfe6f3;--at-bg:#8a4a2c;--nt-bg:#2f4d8a;--at-wash:#f7eee8;--nt-wash:#eaeff8;}
+:root[data-tone="crema"]{--paper:#fdf1d6;--surface:#fffaf0;--ink:#2b1d0e;--muted:#7a6549;--line:#ecd9b0;--rubric:#d9480f;--rubric-soft:#fbdcc6;--mark:#ffd95e;--head:#e8590c;--head2:#f59f00;--on-head:#ffffff;color-scheme:light;--at:#8a4a2c;--at-soft:#f3e5dd;--nt:#2f4d8a;--nt-soft:#dfe6f3;--at-bg:#8a4a2c;--nt-bg:#2f4d8a;--at-wash:#f7eee8;--nt-wash:#eaeff8;--prom:#f8f0da;}
+:root[data-tone="menta"]{--paper:#dff7ea;--surface:#f6fffa;--ink:#0d2a1e;--muted:#4c6f5f;--line:#b9e6cf;--rubric:#0a8f5b;--rubric-soft:#c3f0da;--mark:#fff07a;--head:#0a9d63;--head2:#16b8a6;--on-head:#ffffff;color-scheme:light;--at:#8a4a2c;--at-soft:#f3e5dd;--nt:#2f4d8a;--nt-soft:#dfe6f3;--at-bg:#8a4a2c;--nt-bg:#2f4d8a;--at-wash:#f7eee8;--nt-wash:#eaeff8;--prom:#f8f0da;}
+:root[data-tone="cielo"]{--paper:#dfeeff;--surface:#f7fbff;--ink:#0d1f3a;--muted:#4d6485;--line:#b9d5f7;--rubric:#1565d8;--rubric-soft:#cfe2ff;--mark:#ffe680;--head:#1565d8;--head2:#12b5e5;--on-head:#ffffff;color-scheme:light;--at:#8a4a2c;--at-soft:#f3e5dd;--nt:#2f4d8a;--nt-soft:#dfe6f3;--at-bg:#8a4a2c;--nt-bg:#2f4d8a;--at-wash:#f7eee8;--nt-wash:#eaeff8;--prom:#f8f0da;}
+:root[data-tone="rosa"]{--paper:#ffe3ee;--surface:#fff7fa;--ink:#33101f;--muted:#80566a;--line:#f7bfd4;--rubric:#d6187a;--rubric-soft:#ffd0e3;--mark:#ffe680;--head:#d6187a;--head2:#ff5d5d;--on-head:#ffffff;color-scheme:light;--at:#8a4a2c;--at-soft:#f3e5dd;--nt:#2f4d8a;--nt-soft:#dfe6f3;--at-bg:#8a4a2c;--nt-bg:#2f4d8a;--at-wash:#f7eee8;--nt-wash:#eaeff8;--prom:#f8f0da;}
+:root[data-tone="noche"]{--paper:#0c1124;--surface:#161d38;--ink:#eef1ff;--muted:#99a2c7;--line:#2a3359;--rubric:#ffb020;--rubric-soft:#3b2f10;--mark:#6a4b00;--head:#1b2a6b;--head2:#5a2a8a;--on-head:#ffffff;color-scheme:dark;--at:#e3ad72;--at-soft:#3a2d20;--nt:#aa9cf5;--nt-soft:#2b2648;--at-bg:#8a4a2c;--nt-bg:#3b4a9c;--at-wash:#1f1812;--nt-wash:#181a30;--prom:#29251a;}
+:root[data-tone="piedra"]{--paper:#eceef2;--surface:#f8f9fb;--ink:#1d2230;--muted:#555d70;--line:#d6dae3;--rubric:#2f4d8a;--rubric-soft:#dfe6f3;--mark:#ffe08a;--head:#2f4d8a;--head2:#2f4d8a;--on-head:#ffffff;color-scheme:light;--at:#8a4a2c;--at-soft:#f3e5dd;--nt:#2f4d8a;--nt-soft:#dfe6f3;--at-bg:#8a4a2c;--nt-bg:#2f4d8a;--at-wash:#f7eee8;--nt-wash:#eaeff8;--prom:#f8f0da;}
 :root[data-tone="piedra"] header{background:var(--surface);color:var(--ink);border-bottom:1px solid var(--line)}
 :root[data-tone="piedra"] header .pill,:root[data-tone="piedra"] header .icon,:root[data-tone="piedra"] header #btnVer{background:var(--paper);border-color:var(--line);color:var(--ink)}
 :root[data-test="at"]{--tc:var(--at);--tc-soft:var(--at-soft);--tc-bg:var(--at-bg);--tc-wash:var(--at-wash)}
@@ -84,6 +85,11 @@ main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .verses{font-family:var(--read);font-size:var(--fs);line-height:1.62;max-width:65ch}
 .v{margin:0;padding:5px 8px 5px 10px;border-left:3px solid transparent;border-radius:4px;white-space:pre-line;cursor:pointer}
 .v sup{font-family:var(--ui);font-size:.62em;font-weight:700;color:var(--rubric);margin-right:.45em;vertical-align:.5em;line-height:0;font-variant-numeric:tabular-nums;color:var(--muted)}
+.v.prom{background:var(--prom)}
+.v.prom.sel{background:var(--rubric-soft)}
+.prom-row{display:flex;align-items:center;gap:12px;margin-top:22px;min-height:44px;font-size:15px;font-weight:600;cursor:pointer}
+.prom-row input{width:22px;height:22px;margin:0;accent-color:var(--rubric);flex:none}
+.prom-demo{display:inline-block;padding:1px 8px;border-radius:4px;background:var(--prom);font-family:var(--read);font-weight:400}
 .v.fav{border-left-color:var(--rubric)}
 .v.sel{background:var(--rubric-soft)}
 .v.flash{background:var(--mark)}
@@ -359,6 +365,7 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
         <button class="tone" data-tone="noche"><i style="background:linear-gradient(135deg,#0c1124 55%,#ffb020 55%)"></i>Noche</button>
       </div>
       <p class="note">Lila sigue el modo claro u oscuro de tu teléfono.</p>
+      <label class="prom-row"><input type="checkbox" id="promChk"> <span>Resaltar suavemente las <span class="prom-demo">promesas de Jesús</span> en el Nuevo Testamento</span></label>
     </div>
   </div>
   <div id="toast" role="status"></div>
@@ -377,6 +384,8 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
   var favs = store.get("favs", []);
   var cmpSet = store.get("cmp", ["rvr1960","ntv","nblh","dhh"]);
   var fs = store.get("fs", 19);
+  var PROM = {}; ["39.4.2", "39.4.3", "39.4.4", "39.4.5", "39.4.6", "39.4.7", "39.4.8", "39.4.9", "39.4.10", "39.4.11", "39.5.32", "39.6.6", "39.6.7", "39.9.31", "39.10.27", "39.10.28", "39.15.17", "39.17.18", "39.17.19", "39.18.28", "39.20.21", "39.27.19", "40.8.22", "40.10.23", "40.15.15", "41.5.37", "41.10.8", "41.10.9", "41.10.12", "41.11.31", "41.23.48", "42.2.15", "42.3.13", "42.4.23", "42.5.34", "42.5.36", "42.5.39", "42.5.46", "42.7.11", "42.7.30", "42.7.31", "42.9.9", "42.9.26", "42.9.27", "42.10.24", "42.10.25", "42.11.25", "42.11.45", "42.13.0", "42.13.1", "42.13.2", "42.13.11", "42.13.12", "42.13.13", "42.13.15", "42.13.16", "42.13.17", "42.13.20", "42.13.22", "42.13.25", "42.13.26", "42.14.6", "42.14.15", "42.15.6", "42.15.12", "42.15.21", "42.15.22", "42.15.23", "42.15.32", "43.0.7", "65.1.9", "65.2.4", "65.2.19", "65.2.20", "65.21.11", "65.21.19"].forEach(function(k){ PROM[k] = 1; });
+  var promOn = store.get("promesas", true);
   var sel = null, cmpVerse = 0, scope = "all", lastHits = null, shown = 0, lastTerms = [];
 
   function esc(s){ return s.replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
@@ -410,7 +419,7 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
     var bar = $("actions");
     if (i == null){ bar.classList.remove("on"); return; }
     bar.classList.add("on");
-    $("actRef").textContent = refText(cur.b, cur.c, i) + " · " + ver(cur.v).code;
+    $("actRef").textContent = refText(cur.b, cur.c, i) + " · " + ver(cur.v).code + (PROM[key(cur.b,cur.c,i)] ? " · Promesa" : "");
     $("actFav").textContent = favs.indexOf(key(cur.b,cur.c,i)) >= 0 ? "Quitar" : "Guardar";
   }
   function key(b,c,v){ return b + "." + c + "." + v; }
@@ -433,7 +442,7 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
     var vs = DATA[cur.v][cur.b][cur.c], html = "", any = false;
     for (var i=0;i<vs.length;i++){
       if (!vs[i]) continue; any = true;
-      html += '<p class="v' + (favs.indexOf(key(cur.b,cur.c,i)) >= 0 ? " fav" : "") + '" data-i="' + i + '" tabindex="0"><sup>' + (i+1) + '</sup>' + esc(vs[i]) + '</p>';
+      html += '<p class="v' + (favs.indexOf(key(cur.b,cur.c,i)) >= 0 ? " fav" : "") + (promOn && PROM[key(cur.b,cur.c,i)] ? " prom" : "") + '" data-i="' + i + '" tabindex="0"><sup>' + (i+1) + '</sup>' + esc(vs[i]) + '</p>';
     }
     if (!any) html = '<p class="note"><b>' + esc(v.name) + '</b> no trae este pasaje' + (v.books[cur.b] ? "." : ": esta versión solo incluye el Nuevo Testamento.") + ' Cambia de versión con el botón de arriba.</p>';
     var first = cur.b === 0 && cur.c === 0, last = cur.b === 65 && cur.c === META.books[65][1].length - 1;
@@ -538,6 +547,8 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
 
   function applyFs(){ document.documentElement.style.setProperty("--fs", fs + "px"); }
   $("btnSize").onclick = function(){ openSheet("shSize"); };
+  $("promChk").checked = promOn;
+  $("promChk").addEventListener("change", function(){ promOn = this.checked; store.set("promesas", promOn); if (META && DATA[cur.v]) renderRead(); });
   $("szMinus").onclick = function(){ fs = Math.max(15, fs - 1); applyFs(); store.set("fs", fs); };
   $("szPlus").onclick = function(){ fs = Math.min(30, fs + 1); applyFs(); store.set("fs", fs); };
 
@@ -545,6 +556,10 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
   if (!store.get("tonoPiedraV1", false)){ tone = "piedra"; store.set("tone", tone); store.set("tonoPiedraV1", true); }
   function applyTone(){
     if (tone === "auto") document.documentElement.removeAttribute("data-tone"); else document.documentElement.setAttribute("data-tone", tone);
+    try{
+      var cs = getComputedStyle(document.documentElement), bar = (tone === "piedra" ? cs.getPropertyValue("--surface") : cs.getPropertyValue("--head")).trim();
+      var mt = document.querySelector('meta[name="theme-color"]'); if (mt && bar) mt.setAttribute("content", bar);
+    }catch(e){}
     var b = $("tones").querySelectorAll("button"); for (var i=0;i<b.length;i++) b[i].setAttribute("aria-pressed", b[i].dataset.tone === tone ? "true" : "false");
   }
   $("tones").addEventListener("click", function(e){ var b = e.target.closest("button"); if (!b) return; tone = b.dataset.tone; store.set("tone", tone); applyTone(); });
