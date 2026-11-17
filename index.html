@@ -290,7 +290,7 @@ nav button.dot::after{content:"";display:inline-block;width:8px;height:8px;borde
 .intro-k small{display:block;font-family:var(--ui);font-weight:700;font-size:13px;margin-top:4px}
 .intro-note{font-size:12.5px!important;color:var(--muted)}
 
-.fichas{margin:0 0 16px}
+.fichas .cnt{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 7px;border-radius:999px;background:var(--paper);border:1px solid var(--line);font-size:13px;color:var(--muted)}
 .fichas .fh{font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
 .fichas .fl{display:flex;flex-wrap:wrap;gap:8px}
 .fch{min-height:38px;padding:0 13px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:14.5px;display:inline-flex;align-items:center;gap:6px}
@@ -952,9 +952,9 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
   }
   function fichasHtml(){
     var l = fichasCap(); if (!l.length) return "";
-    var h = '<div class="fichas"><div class="fh">Personajes y lugares de este capítulo</div><div class="fl">';
+    var h = '<details class="intro fichas"><summary>Personajes y lugares <span class="cnt">' + l.length + '</span></summary><div class="intro-b"><div class="fl">';
     l.forEach(function(f){ h += '<button type="button" class="fch ' + f.t + '" data-fi="' + FICHAS.indexOf(f) + '"><i aria-hidden="true"></i>' + esc(f.n) + '</button>'; });
-    return h + '</div></div>';
+    return h + '</div></div></details>';
   }
   function openFicha(i){
     var f = FICHAS[i], h = '<span class="fi-tag ' + f.t + '">' + (f.t === "l" ? "Lugar" : "Personaje") + '</span><p class="fi-d">' + esc(f.d) + '</p><div class="grp">Dónde aparece</div><div class="fi-r">';
