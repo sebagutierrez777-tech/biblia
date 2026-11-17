@@ -397,12 +397,13 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
 /* Presentación y bienvenida */
 .ini{position:fixed;inset:0;z-index:9000;font-family:var(--ui)}
 .ini[hidden]{display:none}
-.ini-splash{background:radial-gradient(120% 80% at 50% 30%,#2b3896 0%,#1f2a7a 45%,#2a1a6e 100%);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:calc(48px + env(safe-area-inset-top)) 28px calc(28px + env(safe-area-inset-bottom));overflow:hidden;transition:opacity .45s ease}
+.ini-splash{background:radial-gradient(90% 55% at 50% 38%,rgba(64,86,190,.45) 0%,rgba(64,86,190,0) 70%),linear-gradient(180deg,#1f2a7a 0%,#1f2a7a 18%,#272479 48%,#3e2380 74%,#5a2185 90%,#6e2078 100%);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:calc(48px + env(safe-area-inset-top)) 28px calc(28px + env(safe-area-inset-bottom));overflow:hidden;transition:opacity .45s ease}
 .ini-c{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center}
 .ini-splash img{width:min(78vw,320px);height:auto}
 .ini-rule{width:56px;height:2px;border-radius:1px;background:rgba(255,255,255,.55)}
 .ini-tit{display:flex;flex-direction:column;gap:8px}
-.ini-tit h1{margin:0;font-family:var(--read);font-weight:600;font-size:32px;line-height:1.15;letter-spacing:.01em}
+.ini-tit h1{margin:0;font-family:var(--read);font-weight:600;font-size:32px;line-height:1.15;letter-spacing:.01em;background:linear-gradient(100deg,#ffffff 0%,#ffffff 38%,#fff3d1 47%,#ffffff 52%,#ffffff 100%);background-size:260% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent;animation:iniShine 2.4s ease-in-out .5s 1 forwards}
+@keyframes iniShine{0%{background-position:100% 0}100%{background-position:0% 0}}
 .ini-tit p{margin:0;font-size:15px;font-weight:500;line-height:1.45;color:rgba(255,255,255,.88)}
 .ini-load{width:140px;height:3px;border-radius:2px;background:rgba(255,255,255,.22);overflow:hidden;margin-bottom:26px}
 .ini-load i{display:block;height:100%;width:40%;border-radius:2px;background:#fff;animation:iniLoad 1.1s ease-in-out infinite}
@@ -428,7 +429,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
 #iniNombre{height:50px;border:1px solid #c9c6e6;border-radius:12px;padding:0 14px;font:inherit;font-size:17px;background:#fff;color:#1b1840}
 .ini-pie button{height:56px;border:0;border-radius:16px;background:#4338ca;color:#fff;font-family:var(--ui);font-size:18px;font-weight:700;cursor:pointer}
 .ini-pie button:active{background:#3730a3}
-@media (prefers-reduced-motion:reduce){.ini-load i{animation:none;width:100%}.ini-splash,.ini-bien{transition:none}}
+@media (prefers-reduced-motion:reduce){.ini-tit h1{animation:none}.ini-load i{animation:none;width:100%}.ini-splash,.ini-bien{transition:none}}
 </style>
 </head>
 <body>
@@ -458,8 +459,9 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
 <script>
 (function(){
   var sp=document.getElementById("iniSplash"), bi=document.getElementById("iniBien");
+  var mt=document.querySelector('meta[name="theme-color"]'); if (mt) mt.setAttribute("content","#1f2a7a");
   function visto(){ try{ return localStorage.getItem("biblia.bienvenidaVista")==="1"; }catch(e){ return false; } }
-  function quitar(el,cb){ el.classList.add("ini-out"); setTimeout(function(){ el.hidden=true; el.remove && el.remove(); cb&&cb(); },450); }
+  function quitar(el,cb){ el.classList.add("ini-out"); setTimeout(function(){ el.hidden=true; el.remove && el.remove(); if (el === sp && window.__barColor && mt) mt.setAttribute("content", window.__barColor); cb&&cb(); },450); }
   setTimeout(function(){
     quitar(sp, function(){
       if(visto()) return;
@@ -858,7 +860,8 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     if (tone === "auto") document.documentElement.removeAttribute("data-tone"); else document.documentElement.setAttribute("data-tone", tone);
     try{
       var cs = getComputedStyle(document.documentElement), bar = (tone === "piedra" ? cs.getPropertyValue("--surface") : cs.getPropertyValue("--head")).trim();
-      var mt = document.querySelector('meta[name="theme-color"]'); if (mt && bar) mt.setAttribute("content", bar);
+      window.__barColor = bar;
+      var mt = document.querySelector('meta[name="theme-color"]'); if (mt && bar && !document.getElementById("iniSplash")) mt.setAttribute("content", bar);
     }catch(e){}
     var b = $("tones").querySelectorAll("button"); for (var i=0;i<b.length;i++) b[i].setAttribute("aria-pressed", b[i].dataset.tone === tone ? "true" : "false");
   }
