@@ -1,6 +1,14 @@
 {
   "avisos": [
     {
+      "id": "2026-11-17-version-1-6",
+      "fecha": "2026-11-17",
+      "titulo": "Llegó la pestaña Más",
+      "texto": "Abajo a la derecha ahora tienes mapas bíblicos, genealogías de Adán a Jesús, un diccionario bíblico y todas las fichas de personajes y lugares. También puedes respaldar tus favoritos y notas para no perderlos.",
+      "enlace": "",
+      "texto_enlace": ""
+    },
+    {
       "id": "2026-11-17-version-1-2",
       "fecha": "2026-11-17",
       "titulo": "Nueva versión de la Biblia Multiversión",
