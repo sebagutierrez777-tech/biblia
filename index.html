@@ -154,6 +154,10 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
 .mic-hint{margin:0;color:var(--muted);font-size:14px;line-height:1.45;max-width:34ch}
 .mic-hint b{color:var(--ink);font-weight:600}
 #micStop{margin-top:8px;min-height:46px;padding:0 26px;border:1px solid var(--line);border-radius:999px;font-weight:700;background:var(--paper)}
+.mic-choices{display:flex;flex-direction:column;gap:8px;width:100%;max-width:340px;margin-top:6px}
+.mic-opt{min-height:52px;border-radius:12px;background:var(--nt-soft);border-left:6px solid var(--nt-bg);font-size:17px;font-weight:700;color:var(--ink);text-align:left;padding:8px 14px}
+.mic-opt small{font-weight:500;font-size:13px;color:var(--muted);margin-left:6px}
+.mic-veil.ask .mic-dot{display:none}
 @media (prefers-reduced-motion:reduce){.mic-dot{animation:none}}
 
 
@@ -421,7 +425,8 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
       <div class="mic-dot" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg></div>
       <p id="micMsg">Te escucho…</p>
       <p id="micTxt" aria-live="polite"></p>
-      <p class="mic-hint" id="micHint">Di un pasaje, como <b>"Juan 3:16"</b> o <b>"Salmo 23"</b>, o una palabra para buscar.</p>
+      <div class="mic-choices" id="micChoices" hidden></div>
+      <p class="mic-hint" id="micHint">Di un pasaje, como <b>"Génesis capítulo 3, versículo 16"</b> o <b>"Salmo 23"</b>, o una palabra para buscar.</p>
       <button type="button" id="micStop">Cancelar</button>
     </div>
   </div>
@@ -772,7 +777,7 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
   var ORD = {primero:1,primera:1,primer:1,"1ra":1,"1a":1,"1era":1,segundo:2,segunda:2,"2da":2,"2a":2,tercero:3,tercera:3,tercer:3,"3ra":3,"3a":3};
   var FILL = {capitulo:1,capitulos:1,versiculo:1,versiculos:1,verso:1,versos:1,de:1,del:1,el:1,la:1,los:1,las:1,a:1,al:1,libro:1,san:1,santo:1,evangelio:1,segun:1,carta:1,epistola:1,apostol:1,llevame:1,ir:1,abre:1,abrir:1,lee:1,leer:1,busca:1,buscar:1,en:1,por:1,favor:1};
   function spokenRef(text){
-    var t = norm(text).replace(/[:.,;]/g, " ").replace(/\s+/g, " ").trim();
+    var t = norm(text).replace(/\bdos puntos\b/g, " : ").replace(/\bpunto\b/g, " : ").replace(/[:.,;]/g, " ").replace(/\s+/g, " ").trim();
     var w = t.split(" "), out = [], i = 0;
     while (i < w.length){
       var x = w[i];
@@ -798,10 +803,32 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
       else { if (nums.length) break; words.push(out[k]); }
     }
     if (!words.length || !nums.length) return null;
+    if (nums.length === 1 && nums[0] >= 10){
+      var bk = parseRef(words.join(" ") + " 1"); if (!bk) return null;
+      var vc = META.books[bk.b][1], n = String(nums[0]), cands = [];
+      if (nums[0] <= vc.length) cands.push({b:bk.b, c:nums[0]-1, v:null});
+      for (var cut=1; cut<n.length; cut++){
+        var cc = +n.slice(0, cut), vv = n.slice(cut);
+        if (vv.charAt(0) === "0" || cc < 1 || cc > vc.length) continue;
+        if (+vv >= 1 && +vv <= vc[cc-1]) cands.push({b:bk.b, c:cc-1, v:+vv-1});
+      }
+      if (!cands.length) return null;
+      if (cands.length === 1) return cands[0];
+      return {choices: cands};
+    }
     var q = words.join(" ") + " " + nums[0] + (nums.length > 1 ? ":" + nums[1] : "");
     return parseRef(q);
   }
-  function micClose(){ $("micVeil").hidden = true; try{ if (rec) rec.abort(); }catch(e){} rec = null; }
+  function micClose(){ $("micVeil").hidden = true; $("micVeil").classList.remove("ask"); $("micChoices").hidden = true; $("micChoices").innerHTML = ""; try{ if (rec) rec.abort(); }catch(e){} rec = null; }
+  function micAsk(heard, list){
+    $("micVeil").hidden = false; $("micVeil").classList.add("ask");
+    $("micMsg").textContent = "¿Cuál quisiste decir?";
+    $("micTxt").textContent = "«" + heard + "»";
+    $("micHint").textContent = "La próxima vez puedes decir «capítulo 3, versículo 16» o «3 dos puntos 16».";
+    var h = ""; list.forEach(function(c, i){ h += '<button type="button" class="mic-opt" data-i="' + i + '">' + esc(refText(c.b, c.c, c.v)) + (c.v == null ? ' <small>capítulo completo</small>' : '') + '</button>'; });
+    $("micChoices").innerHTML = h; $("micChoices").hidden = false;
+    $("micChoices").onclick = function(e){ var b = e.target.closest(".mic-opt"); if (!b) return; var c = list[+b.dataset.i]; micClose(); go(c.b, c.c, c.v); };
+  }
   function micDone(text){
     micClose();
     text = (text || "").trim(); if (!text) return;
@@ -810,6 +837,7 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
       $("ccQ").value = w; tab("vConc"); ccRun(); return;
     }
     var r = spokenRef(text);
+    if (r && r.choices){ micAsk(text, r.choices); return; }
     if (r){ toast("Abriendo " + refText(r.b, r.c, r.v)); go(r.b, r.c, r.v); return; }
     $("q").value = text; tab("vSearch"); doSearch();
   }
@@ -817,7 +845,7 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
     if (!SR) return;
     micMode = mode; micFinal = "";
     $("micMsg").textContent = "Te escucho…"; $("micTxt").textContent = "";
-    $("micHint").innerHTML = mode === "conc" ? 'Di <b>una palabra</b>, por ejemplo <b>"gracia"</b>.' : 'Di un pasaje, como <b>"Juan 3:16"</b> o <b>"Salmo 23"</b>, o una palabra para buscar.';
+    $("micHint").innerHTML = mode === "conc" ? 'Di <b>una palabra</b>, por ejemplo <b>"gracia"</b>.' : 'Di un pasaje, como <b>"Génesis capítulo 3, versículo 16"</b> o <b>"Salmo 23"</b>, o una palabra para buscar.';
     $("micVeil").hidden = false;
     try{
       rec = new SR(); rec.lang = "es-CL"; rec.interimResults = true; rec.maxAlternatives = 1; rec.continuous = false;
@@ -845,7 +873,8 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
     $("micStop").onclick = micClose;
     $("micVeil").addEventListener("click", function(e){ if (e.target === $("micVeil")) micClose(); });
   }
-  window.__spokenRef = function(t){ var r = spokenRef(t); return r ? refText(r.b, r.c, r.v) : null; };
+  window.__spokenRef = function(t){ var r = spokenRef(t); if (r && r.choices) return r.choices.map(function(c){ return refText(c.b, c.c, c.v); }).join(" | "); return r ? refText(r.b, r.c, r.v) : null; };
+  window.__micAsk = micAsk; window.__spoken = spokenRef;
 
   /* ---------- Compartir ---------- */
   var APP_URL = "https://sebagutierrez777-tech.github.io/biblia/";
