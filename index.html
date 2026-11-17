@@ -1217,7 +1217,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
       if (vzStored.indexOf(id) >= 0){ pick(); return; }
       if (!navigator.onLine){ toast("Necesitas internet para descargar esta voz la primera vez."); return; }
       vzBusy[id] = "Descargando…"; renderVoces();
-      vzLib().then(function(m){ return m.download(id, function(p){ if (p && p.total){ vzBusy[id] = Math.round(p.loaded / p.total * 100) + "%"; renderVoces(); } }); })
+      vwCall({cmd:"download", id:id}, function(p){ vzBusy[id] = p + "%"; renderVoces(); })
         .then(function(){ delete vzBusy[id]; return vzRefresh(); }).then(function(){ pick(); })
         .catch(function(){ delete vzBusy[id]; renderVoces(); toast("No se pudo descargar la voz. Intenta con wifi."); });
       return;
@@ -1240,11 +1240,19 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     { id:"es_MX-ald-medium", n:"Hombre · México", mb:60 },
     { id:"es_ES-davefx-medium", n:"Hombre · España", mb:60 }
   ];
-  var VZ = null, vzStored = [], vzBusy = {}, appAudio = new Audio(), appNext = null;
+  var vzStored = [], vzBusy = {}, appAudio = new Audio(), appNext = null;
   tts.app = store.get("vozApp", "");
-  function vzLib(){ if (!VZ) VZ = import("./voz/entry.js"); return VZ; }
-  function vzRefresh(){ return vzLib().then(function(m){ return m.stored(); }).then(function(l){ vzStored = l || []; }, function(){ vzStored = []; }); }
-  function appSynth(text){ return vzLib().then(function(m){ return m.predict({ text: text, voiceId: tts.app }); }); }
+  var VW = null, vwRid = 0, vwCb = {};
+  function vw(){
+    if (!VW){ VW = new Worker("./voz/worker.js", { type: "module" });
+      VW.onmessage = function(e){ var d = e.data, c = vwCb[d.rid]; if (!c) return; if (d.progress != null){ if (c.prog) c.prog(d.progress); return; } delete vwCb[d.rid]; if (d.ok) c.res(d); else c.rej(new Error(d.err)); };
+      VW.onerror = function(){ Object.keys(vwCb).forEach(function(k){ vwCb[k].rej(new Error("worker")); }); vwCb = {}; }; }
+    return VW;
+  }
+  function vwCall(msg, prog){ return new Promise(function(res, rej){ var rid = ++vwRid; vwCb[rid] = {res:res, rej:rej, prog:prog}; msg.rid = rid; vw().postMessage(msg); }); }
+  function vzRefresh(){ return vwCall({cmd:"stored"}).then(function(d){ vzStored = d.list || []; }, function(){ vzStored = []; }); }
+  var synthQ = Promise.resolve();
+  function appSynth(text){ var id = tts.app; var p = synthQ.then(function(){ return vwCall({cmd:"speak", id:id, text:text}); }).then(function(d){ return new Blob([d.buf], {type:"audio/wav"}); }); synthQ = p.catch(function(){}); return p; }
   function appPrep(i){
     var vs = DATA[cur.v][tts.b][tts.c]; while (i < vs.length && !vs[i]) i++;
     if (i >= vs.length) return null;
@@ -1524,7 +1532,11 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     var i = 0;
     (function next(){
       if (i >= V.length) return;
-      fetch("data/" + V[i++] + ".json").then(function(r){ return r.blob(); }).catch(function(){}).then(function(){ setTimeout(next, 400); });
+      var u = "data/" + V[i++] + ".json";
+      caches.open("biblia-data-v1").then(function(c){ return c.match(u, {ignoreSearch:true}); }).then(function(hit){
+        if (hit) return next();
+        fetch(u).then(function(r){ return r.blob(); }).catch(function(){}).then(function(){ setTimeout(next, 400); });
+      }, function(){ setTimeout(next, 400); });
     })();
   }
   window.addEventListener("load", function(){
