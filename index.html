@@ -23,6 +23,8 @@
   --read:"Literata", Georgia, "Times New Roman", serif;
   --ui:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
   --fs:19px;
+  --at:#8a4a2c; --at-soft:#f3e5dd; --nt:#2f4d8a; --nt-soft:#dfe6f3;
+  --tc:var(--nt); --tc-soft:var(--nt-soft);
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
@@ -30,18 +32,25 @@
     --paper:#14121f; --surface:#1f1c2e; --ink:#ece9f6; --muted:#a09cb8; --line:#34304a;
     --rubric:#ff6b93; --rubric-soft:#3d1c2b; --mark:#7a5c00;
     --head:#b3164a; --head2:#d9541f; --on-head:#ffffff; color-scheme:dark;
+    --at:#e3ad72;--at-soft:#3a2d20;--nt:#aa9cf5;--nt-soft:#2b2648;
   }
 }
 :root[data-theme="dark"]{
   --paper:#14121f; --surface:#1f1c2e; --ink:#ece9f6; --muted:#a09cb8; --line:#34304a;
   --rubric:#ff6b93; --rubric-soft:#3d1c2b; --mark:#7a5c00;
   --head:#b3164a; --head2:#d9541f; --on-head:#ffffff; color-scheme:dark;
+  --at:#e3ad72;--at-soft:#3a2d20;--nt:#aa9cf5;--nt-soft:#2b2648;
 }
 :root[data-tone="crema"]{--paper:#fdf1d6;--surface:#fffaf0;--ink:#2b1d0e;--muted:#7a6549;--line:#ecd9b0;--rubric:#d9480f;--rubric-soft:#fbdcc6;--mark:#ffd95e;--head:#e8590c;--head2:#f59f00;--on-head:#ffffff;color-scheme:light}
 :root[data-tone="menta"]{--paper:#dff7ea;--surface:#f6fffa;--ink:#0d2a1e;--muted:#4c6f5f;--line:#b9e6cf;--rubric:#0a8f5b;--rubric-soft:#c3f0da;--mark:#fff07a;--head:#0a9d63;--head2:#16b8a6;--on-head:#ffffff;color-scheme:light}
 :root[data-tone="cielo"]{--paper:#dfeeff;--surface:#f7fbff;--ink:#0d1f3a;--muted:#4d6485;--line:#b9d5f7;--rubric:#1565d8;--rubric-soft:#cfe2ff;--mark:#ffe680;--head:#1565d8;--head2:#12b5e5;--on-head:#ffffff;color-scheme:light}
 :root[data-tone="rosa"]{--paper:#ffe3ee;--surface:#fff7fa;--ink:#33101f;--muted:#80566a;--line:#f7bfd4;--rubric:#d6187a;--rubric-soft:#ffd0e3;--mark:#ffe680;--head:#d6187a;--head2:#ff5d5d;--on-head:#ffffff;color-scheme:light}
-:root[data-tone="noche"]{--paper:#0c1124;--surface:#161d38;--ink:#eef1ff;--muted:#99a2c7;--line:#2a3359;--rubric:#ffb020;--rubric-soft:#3b2f10;--mark:#6a4b00;--head:#1b2a6b;--head2:#5a2a8a;--on-head:#ffffff;color-scheme:dark}
+:root[data-tone="noche"]{--paper:#0c1124;--surface:#161d38;--ink:#eef1ff;--muted:#99a2c7;--line:#2a3359;--rubric:#ffb020;--rubric-soft:#3b2f10;--mark:#6a4b00;--head:#1b2a6b;--head2:#5a2a8a;--on-head:#ffffff;color-scheme:dark;--at:#e3ad72;--at-soft:#3a2d20;--nt:#aa9cf5;--nt-soft:#2b2648;}
+:root[data-tone="piedra"]{--paper:#eceef2;--surface:#f8f9fb;--ink:#1d2230;--muted:#555d70;--line:#d6dae3;--rubric:#2f4d8a;--rubric-soft:#dfe6f3;--mark:#ffe08a;--head:#2f4d8a;--head2:#2f4d8a;--on-head:#ffffff;color-scheme:light}
+:root[data-tone="piedra"] header{background:var(--surface);color:var(--ink);border-bottom:1px solid var(--line)}
+:root[data-tone="piedra"] header .pill,:root[data-tone="piedra"] header .icon,:root[data-tone="piedra"] header #btnVer{background:var(--paper);border-color:var(--line);color:var(--ink)}
+:root[data-test="at"]{--tc:var(--at);--tc-soft:var(--at-soft)}
+:root[data-test="nt"]{--tc:var(--nt);--tc-soft:var(--nt-soft)}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{height:100%;margin:0}
@@ -65,12 +74,14 @@ main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .view.on{display:block}
 
 /* Lectura */
+#tband{height:5px;background:var(--tc);flex:none}
+.test-tag{display:inline-block;background:var(--tc-soft);color:var(--tc);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;border-radius:999px;margin:2px 0 10px}
 .chap-head{display:flex;align-items:baseline;gap:10px;margin:4px 0 18px}
-.chap-head h1{font-family:var(--read);font-weight:600;font-size:28px;line-height:1.15;margin:0;text-wrap:balance;color:var(--rubric)}
+.chap-head h1{font-family:var(--read);font-weight:600;font-size:28px;line-height:1.15;margin:0;text-wrap:balance;color:var(--tc)}
 .chap-head small{color:var(--muted);font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
 .verses{font-family:var(--read);font-size:var(--fs);line-height:1.62;max-width:65ch}
 .v{margin:0;padding:5px 8px 5px 10px;border-left:3px solid transparent;border-radius:4px;white-space:pre-line;cursor:pointer}
-.v sup{font-family:var(--ui);font-size:.62em;font-weight:700;color:var(--rubric);margin-right:.45em;vertical-align:.5em;line-height:0;font-variant-numeric:tabular-nums}
+.v sup{font-family:var(--ui);font-size:.62em;font-weight:700;color:var(--rubric);margin-right:.45em;vertical-align:.5em;line-height:0;font-variant-numeric:tabular-nums;color:var(--tc)}
 .v.fav{border-left-color:var(--rubric)}
 .v.sel{background:var(--rubric-soft)}
 .v.flash{background:var(--mark)}
@@ -93,6 +104,32 @@ main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .res .t{font-family:var(--read);font-size:16.5px;line-height:1.5;margin-top:2px;white-space:pre-line}
 mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
 .more{margin-top:16px;width:100%;min-height:46px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-weight:600}
+
+
+/* Concordancia */
+.cc-modes{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
+.cc-sum{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.cc-big{display:flex;align-items:baseline;gap:10px}
+.cc-big b{font-family:var(--read);font-size:44px;font-weight:600;line-height:1}
+.cc-big span{font-size:16px;font-weight:600}
+.cc-sub{margin:0;color:var(--muted);font-size:14px;line-height:1.4}
+.cc-split{display:flex;justify-content:space-between;font-size:13px;font-weight:700}
+.cc-split .a{color:var(--at)}.cc-split .n{color:var(--nt)}
+.cc-bar{display:flex;gap:3px;height:12px}
+.cc-bar i{display:block;border-radius:6px}
+.cc-forms{display:flex;flex-wrap:wrap;gap:6px}
+.cc-forms span{font-size:13px;padding:4px 10px;border-radius:999px;background:var(--paper);border:1px solid var(--line)}
+.cc-h{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:22px 0 6px}
+.cc-row{display:flex;width:100%;align-items:center;gap:10px;min-height:48px;border-bottom:1px solid var(--line);text-align:left}
+.cc-row .bk{width:112px;flex:none;font-weight:600;font-size:15px}
+.cc-row .tr{flex:1;height:8px;border-radius:4px;background:var(--line);display:flex}
+.cc-row .tr i{display:block;border-radius:4px}
+.cc-row .n{width:34px;text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.cc-row .ch{width:14px;flex:none;color:var(--muted);transition:transform .15s}
+.cc-row[aria-expanded="true"] .ch{transform:rotate(90deg)}
+.cc-row.at .n{color:var(--at)}.cc-row.nt .n{color:var(--nt)}
+.cc-vs{padding:4px 0 10px 12px;border-left:3px solid var(--line);margin:6px 0 8px}
+.cc-vs.at{border-left-color:var(--at)}.cc-vs.nt{border-left-color:var(--nt)}
 
 /* Comparar */
 .cmp-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
@@ -117,7 +154,8 @@ h2.sec{font-family:var(--read);font-weight:600;font-size:24px;margin:0 0 6px}
 #actions button{min-height:38px;padding:0 12px;border:1px solid var(--line);border-radius:999px;font-size:14px;font-weight:600;background:var(--paper)}
 
 nav{display:flex;border-top:1px solid var(--line);background:var(--surface)}
-nav button{flex:1;min-height:54px;font-size:13px;font-weight:600;color:var(--muted);border-top:2px solid transparent}
+nav button{flex:1;min-width:0;min-height:54px;font-size:13px;font-weight:600;color:var(--muted);border-top:2px solid transparent;padding:0 2px}
+@media (max-width:420px){nav button{font-size:11.5px}}
 nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubric);background:var(--rubric-soft)}
 
 /* Hojas */
@@ -129,7 +167,15 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
 .grp{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px}
 .books{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
 .books button{min-height:44px;padding:6px 12px;text-align:left;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-weight:500;font-size:15px}
+.books.at button{background:var(--at-soft);border-color:transparent;border-left:5px solid var(--at)}
+.books.nt button{background:var(--nt-soft);border-color:transparent;border-left:5px solid var(--nt)}
+.grp.at{color:var(--at)}.grp.nt{color:var(--nt)}
+.grp.at,.grp.nt{font-size:13px;display:flex;align-items:center;gap:8px}
+.grp.at::before,.grp.nt::before{content:"";width:12px;height:12px;border-radius:3px;background:currentColor}
 .books button.cur{border-color:var(--rubric);color:var(--rubric);font-weight:700}
+.books.at button.cur{border:2px solid var(--at);border-left-width:5px;color:var(--ink)}
+.books.nt button.cur{border:2px solid var(--nt);border-left-width:5px;color:var(--ink)}
+.res .r.at{color:var(--at)}.res .r.nt{color:var(--nt)}
 .books button.off{opacity:.4}
 .nums{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:8px}
 .nums button{height:48px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-weight:600;font-variant-numeric:tabular-nums}
@@ -235,6 +281,7 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
     <span class="grow"></span>
     <button class="icon" id="btnSize" aria-label="Letra y colores">Aa</button>
   </header>
+  <div id="tband" aria-hidden="true"></div>
 
   <main id="main">
     <section class="view on" id="vRead" aria-label="Lectura"></section>
@@ -253,6 +300,19 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
       <div id="results"><p class="note">Busca en la versión que tienes abierta. No importan las tildes ni las mayúsculas, y con comillas busca la frase exacta. Si escribes una cita como <b>Salmos 23</b> o <b>Juan 3:16</b>, te lleva directo.</p></div>
     </section>
 
+    <section class="view" id="vConc" aria-label="Concordancia">
+      <h2 class="sec">Concordancia</h2>
+      <form class="search-row" id="ccForm">
+        <input id="ccQ" type="search" placeholder="Una palabra, por ejemplo gracia" autocomplete="off" enterkeyhint="search" aria-label="Palabra para la concordancia">
+        <button class="btn" type="submit">Buscar</button>
+      </form>
+      <div class="cc-modes" id="ccMode" role="group" aria-label="Tipo de búsqueda">
+        <button type="button" class="chip" data-m="exact" aria-pressed="true">Palabra exacta</button>
+        <button type="button" class="chip" data-m="prefix" aria-pressed="false">Formas parecidas</button>
+      </div>
+      <div id="ccOut"><p class="note">Escribe una palabra y verás cuántas veces aparece en la versión que tienes abierta, cuánto en el Antiguo y cuánto en el Nuevo Testamento, y en qué libros. Toca un libro para ver sus versículos.</p></div>
+    </section>
+
     <section class="view" id="vCompare" aria-label="Comparar versiones"></section>
     <section class="view" id="vFavs" aria-label="Favoritos"></section>
   </main>
@@ -267,6 +327,7 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
   <nav aria-label="Secciones">
     <button data-tab="vRead" aria-current="page">Leer</button>
     <button data-tab="vSearch">Buscar</button>
+    <button data-tab="vConc">Concordancia</button>
     <button data-tab="vCompare">Comparar</button>
     <button data-tab="vFavs">Favoritos</button>
   </nav>
@@ -285,6 +346,7 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
       <div class="size-row"><button class="step" id="szMinus" aria-label="Letra más chica">A−</button><output id="szOut">En el principio</output><button class="step" id="szPlus" aria-label="Letra más grande">A+</button></div>
       <div class="grp" style="margin-top:26px">Tono de fondo</div>
       <div class="tones" id="tones">
+        <button class="tone" data-tone="piedra"><i style="background:linear-gradient(135deg,#eceef2 55%,#2f4d8a 55%)"></i>Piedra</button>
         <button class="tone" data-tone="auto"><i style="background:linear-gradient(135deg,#f4f1fb 55%,#e0245e 55%)"></i>Lila</button>
         <button class="tone" data-tone="crema"><i style="background:linear-gradient(135deg,#fdf1d6 55%,#e8590c 55%)"></i>Crema</button>
         <button class="tone" data-tone="menta"><i style="background:linear-gradient(135deg,#dff7ea 55%,#0a9d63 55%)"></i>Menta</button>
@@ -354,7 +416,8 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
     $("refLabel").textContent = refText(cur.b, cur.c);
     $("verLabel").textContent = v.code;
     setSel(null);
-    var head = '<div class="chap-head"><h1>' + esc(refText(cur.b, cur.c)) + '</h1><small>' + esc(v.code) + '</small></div>';
+    document.documentElement.setAttribute("data-test", cur.b < 39 ? "at" : "nt");
+    var head = '<span class="test-tag">' + (cur.b < 39 ? "Antiguo Testamento" : "Nuevo Testamento") + '</span><div class="chap-head"><h1>' + esc(refText(cur.b, cur.c)) + '</h1><small>' + esc(v.code) + '</small></div>';
     if (!DATA[cur.v]){
       el.innerHTML = head + '<p class="note">Cargando ' + esc(v.name) + '…</p>';
       load(cur.v).then(function(){ renderRead(focusVerse); }, function(){
@@ -432,8 +495,8 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
 
   function showBooks(){
     var v = ver(cur.v), h = "";
-    [["Antiguo Testamento",0,39],["Nuevo Testamento",39,66]].forEach(function(g){
-      h += '<div class="grp">' + g[0] + '</div><div class="books">';
+    [["Antiguo Testamento",0,39,"at"],["Nuevo Testamento",39,66,"nt"]].forEach(function(g){
+      h += '<div class="grp ' + g[3] + '">' + g[0] + '</div><div class="books ' + g[3] + '">';
       for (var b=g[1]; b<g[2]; b++) h += '<button data-b="' + b + '" class="' + (b === cur.b ? "cur" : "") + (v.books[b] ? "" : " off") + '">' + esc(bname(b)) + '</button>';
       h += '</div>';
     });
@@ -466,6 +529,7 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
     cur.v = b.dataset.v; savePos(); closeSheets(); lastHits = null;
     $("results").innerHTML = '<p class="note">Cambiaste de versión. Vuelve a buscar para ver los resultados en ' + esc(ver(cur.v).code) + '.</p>';
     renderRead();
+    if (ccTerm) ccRun();
   });
 
   function applyFs(){ document.documentElement.style.setProperty("--fs", fs + "px"); }
@@ -473,7 +537,8 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
   $("szMinus").onclick = function(){ fs = Math.max(15, fs - 1); applyFs(); store.set("fs", fs); };
   $("szPlus").onclick = function(){ fs = Math.min(30, fs + 1); applyFs(); store.set("fs", fs); };
 
-  var tone = store.get("tone", "auto");
+  var tone = store.get("tone", "piedra");
+  if (!store.get("tonoPiedraV1", false)){ tone = "piedra"; store.set("tone", tone); store.set("tonoPiedraV1", true); }
   function applyTone(){
     if (tone === "auto") document.documentElement.removeAttribute("data-tone"); else document.documentElement.setAttribute("data-tone", tone);
     var b = $("tones").querySelectorAll("button"); for (var i=0;i<b.length;i++) b[i].setAttribute("aria-pressed", b[i].dataset.tone === tone ? "true" : "false");
@@ -537,7 +602,7 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
   function moreResults(){
     var box = $("results"), old = box.querySelector(".more"); if (old) old.remove();
     var end = Math.min(lastHits.length, shown + 100), h = "", d = DATA[cur.v];
-    for (var i=shown;i<end;i++){ var a = lastHits[i]; h += '<button class="res" data-b="' + a[0] + '" data-c="' + a[1] + '" data-v="' + a[2] + '"><div class="r">' + esc(refText(a[0],a[1],a[2])) + '</div><div class="t">' + hl(d[a[0]][a[1]][a[2]], lastTerms) + '</div></button>'; }
+    for (var i=shown;i<end;i++){ var a = lastHits[i]; h += '<button class="res" data-b="' + a[0] + '" data-c="' + a[1] + '" data-v="' + a[2] + '"><div class="r ' + (a[0] < 39 ? "at" : "nt") + '">' + esc(refText(a[0],a[1],a[2])) + '</div><div class="t">' + hl(d[a[0]][a[1]][a[2]], lastTerms) + '</div></button>'; }
     box.insertAdjacentHTML("beforeend", h); shown = end;
     if (shown < lastHits.length){ var m = document.createElement("button"); m.className = "more"; m.textContent = "Mostrar 100 más"; m.onclick = moreResults; box.appendChild(m); }
   }
@@ -549,6 +614,81 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
   });
   function resClick(e){ var b = e.target.closest(".res"); if (b) go(+b.dataset.b, +b.dataset.c, +b.dataset.v); }
   $("results").addEventListener("click", resClick);
+
+  /* ---------- Concordancia ---------- */
+  var ccMode = "exact", ccTerm = "", ccData = null;
+  /* Formas parecidas: singular, plural, masculino y femenino (santo, santa, santos, santas; amor, amores) */
+  function ccForm(t, prefix){
+    if (!prefix) return [t, ""];
+    if (/[aeo]$/.test(t) && t.length > 3) return [t.slice(0, -1), "(?:a|o|e|as|os|es)"];
+    return [t, "(?:es|s)?"];
+  }
+  function ccHl(text, t, prefix){
+    var f = ccForm(t, prefix), pat = f[0].replace(/[aeioun]/g, function(c){ return VOW[c]; }) + f[1];
+    var re = new RegExp("(^|[^\\p{L}\\p{N}])(" + pat + ")(?![\\p{L}\\p{N}])", "giu"), out = "", last = 0, m;
+    while ((m = re.exec(text))){ var st = m.index + m[1].length; out += esc(text.slice(last, st)) + "<mark>" + esc(m[2]) + "</mark>"; last = st + m[2].length; re.lastIndex = last; }
+    return out + esc(text.slice(last));
+  }
+  function ccRun(){
+    var box = $("ccOut"), raw = $("ccQ").value.trim();
+    var t = norm(raw).replace(/[^a-z0-9\s]/g, "").trim();
+    if (!t){ return; }
+    if (/\s/.test(t)){ box.innerHTML = '<p class="note">La concordancia trabaja con <b>una sola palabra</b>. Para buscar frases usa la pestaña <b>Buscar</b>.</p>'; return; }
+    if (t.length < 2){ box.innerHTML = '<p class="note">Escribe al menos dos letras.</p>'; return; }
+    ccTerm = t;
+    box.innerHTML = '<p class="note">Contando en ' + esc(ver(cur.v).name) + '…</p>';
+    load(cur.v).then(function(){
+      var all = getNorm(cur.v), prefix = ccMode === "prefix";
+      var fm = ccForm(t, prefix), re = new RegExp("(^|[^a-z0-9])(" + fm[0] + fm[1] + ")(?![a-z0-9])", "g");
+      var cnt = [], vs = [], forms = {}, total = 0, nv = 0, at = 0, nt = 0;
+      for (var b=0;b<66;b++){ cnt.push(0); vs.push([]); }
+      for (var i=0;i<all.length;i++){
+        var a = all[i], n = 0, m; re.lastIndex = 0;
+        while ((m = re.exec(a[3]))){ n++; forms[m[2]] = (forms[m[2]] || 0) + 1; }
+        if (n){ cnt[a[0]] += n; vs[a[0]].push([a[1], a[2]]); total += n; nv++; if (a[0] < 39) at += n; else nt += n; }
+      }
+      ccData = { t: t, prefix: prefix, vs: vs };
+      var code = ver(cur.v).code;
+      if (!total){ box.innerHTML = '<p class="note">"' + esc(raw) + '" no aparece en ' + esc(code) + '. Prueba con <b>Formas parecidas</b> o con otra versión.</p>'; return; }
+      var books = []; for (b=0;b<66;b++) if (cnt[b]) books.push(b);
+      var max = 0; books.forEach(function(b){ if (cnt[b] > max) max = cnt[b]; });
+      books.sort(function(x,y){ return cnt[y] - cnt[x] || x - y; });
+      var h = '<div class="cc-sum"><div class="cc-big"><b>' + total.toLocaleString("es-CL") + '</b><span>' + (total === 1 ? "vez" : "veces") + '</span></div>';
+      h += '<p class="cc-sub">en ' + nv.toLocaleString("es-CL") + (nv === 1 ? " versículo" : " versículos") + ' de ' + books.length + (books.length === 1 ? " libro" : " libros") + ' · ' + esc(ver(cur.v).name) + '</p>';
+      h += '<div class="cc-split"><span class="a">Antiguo Testamento · ' + at.toLocaleString("es-CL") + '</span><span class="n">Nuevo · ' + nt.toLocaleString("es-CL") + '</span></div>';
+      h += '<div class="cc-bar" aria-hidden="true">' + (at ? '<i style="flex:' + at + ' 1 0;background:var(--at)"></i>' : '') + (nt ? '<i style="flex:' + nt + ' 1 0;background:var(--nt)"></i>' : '') + '</div>';
+      if (prefix){
+        var fl = Object.keys(forms).sort(function(x,y){ return forms[y] - forms[x]; }).slice(0, 14);
+        h += '<div class="cc-forms" aria-label="Formas encontradas">' + fl.map(function(f){ return '<span>' + esc(f) + ' · ' + forms[f] + '</span>'; }).join("") + '</div>';
+      }
+      h += '</div><div class="cc-h">Libros, de más a menos</div>';
+      books.forEach(function(b){
+        var k = b < 39 ? "at" : "nt";
+        h += '<button type="button" class="cc-row ' + k + '" data-b="' + b + '" aria-expanded="false"><span class="bk">' + esc(bname(b)) + '</span><span class="tr"><i style="width:' + Math.max(3, Math.round(cnt[b] / max * 100)) + '%;background:var(--' + k + ')"></i></span><span class="n">' + cnt[b] + '</span><svg class="ch" viewBox="0 0 12 12" aria-hidden="true"><path d="M4 2l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="cc-vs ' + k + '" data-for="' + b + '" hidden></div>';
+      });
+      box.innerHTML = h;
+    }, function(){ box.innerHTML = '<p class="note"><b>No se pudo cargar la versión.</b> Revisa tu conexión y vuelve a intentarlo.</p>'; });
+  }
+  $("ccForm").addEventListener("submit", function(e){ e.preventDefault(); $("ccQ").blur(); ccRun(); });
+  $("ccMode").addEventListener("click", function(e){
+    var b = e.target.closest("button"); if (!b) return; ccMode = b.dataset.m;
+    var all = $("ccMode").querySelectorAll("button"); for (var i=0;i<all.length;i++) all[i].setAttribute("aria-pressed", all[i] === b ? "true" : "false");
+    if ($("ccQ").value.trim()) ccRun();
+  });
+  $("ccOut").addEventListener("click", function(e){
+    var row = e.target.closest(".cc-row");
+    if (row){
+      var b = +row.dataset.b, box = $("ccOut").querySelector('.cc-vs[data-for="' + b + '"]'), open = row.getAttribute("aria-expanded") === "true";
+      row.setAttribute("aria-expanded", open ? "false" : "true"); box.hidden = open;
+      if (!open && !box.innerHTML && ccData){
+        var d = DATA[cur.v], h = "";
+        ccData.vs[b].forEach(function(cv){ h += '<button class="res" data-b="' + b + '" data-c="' + cv[0] + '" data-v="' + cv[1] + '"><div class="r ' + (b < 39 ? "at" : "nt") + '">' + esc(refText(b, cv[0], cv[1])) + '</div><div class="t">' + ccHl(d[b][cv[0]][cv[1]], ccData.t, ccData.prefix) + '</div></button>'; });
+        box.innerHTML = h;
+      }
+      return;
+    }
+    resClick(e);
+  });
 
   /* ---------- Comparar ---------- */
   function renderCompare(){
