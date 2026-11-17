@@ -1,6 +1,14 @@
 {
   "avisos": [
     {
+      "id": "2026-11-17-version-1-7",
+      "fecha": "2026-11-17",
+      "titulo": "Versión 1.7",
+      "texto": "En Más encontrarás el plan de salvación y un estudio corto de bibliología. Los personajes ahora tienen íconos de su época, a color. Y estos avisos se pueden archivar con la ✕ o deslizándolos hacia la derecha.",
+      "enlace": "",
+      "texto_enlace": ""
+    },
+    {
       "id": "2026-11-17-version-1-6",
       "fecha": "2026-11-17",
       "titulo": "Llegó la pestaña Más",
