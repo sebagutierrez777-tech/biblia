@@ -153,8 +153,81 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
 @media (prefers-reduced-motion: reduce){#toast{transition:none}}
 @media (max-width:420px){.chap-head h1{font-size:25px}.books{grid-template-columns:repeat(2,1fr)}}
 </style>
+<style>
+/* Presentación y bienvenida */
+.ini{position:fixed;inset:0;z-index:9000;font-family:var(--ui)}
+.ini[hidden]{display:none}
+.ini-splash{background:linear-gradient(165deg,#1e3a8a 0%,#3b2a9e 55%,#5b21b6 100%);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;padding:40px 28px calc(48px + env(safe-area-inset-bottom));overflow:hidden;transition:opacity .45s ease}
+.ini-splash::before,.ini-splash::after{content:"";position:absolute;border-radius:50%;background:#a78bfa;opacity:.22;pointer-events:none}
+.ini-splash::before{width:420px;height:420px;right:-200px;bottom:-160px}
+.ini-splash::after{width:260px;height:260px;left:-120px;top:-90px}
+.ini-splash img{position:relative;width:min(82vw,340px);height:auto;filter:drop-shadow(0 10px 24px rgba(10,8,50,.35))}
+.ini-tit{position:relative;text-align:center;display:flex;flex-direction:column;gap:10px}
+.ini-tit h1{margin:0;font-family:var(--read);font-weight:600;font-size:34px;line-height:1.15}
+.ini-tit p{margin:0;font-size:16px;font-weight:500;line-height:1.4}
+.ini-dots{position:relative;display:flex;gap:8px}
+.ini-dots span{width:8px;height:8px;border-radius:50%;background:#fff;animation:iniDot 1.2s infinite ease-in-out}
+.ini-dots span:nth-child(2){animation-delay:.2s}.ini-dots span:nth-child(3){animation-delay:.4s}
+@keyframes iniDot{0%,100%{opacity:.3}50%{opacity:1}}
+.ini-out{opacity:0}
+.ini-bien{background:#f1f0fb;color:#33315a;display:flex;flex-direction:column;overflow-y:auto;transition:opacity .35s ease}
+.ini-cab{background:linear-gradient(165deg,#1e3a8a 0%,#5b21b6 100%);color:#fff;padding:calc(40px + env(safe-area-inset-top)) 28px 72px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.ini-cab img{height:104px;width:auto;filter:drop-shadow(0 6px 14px rgba(10,8,50,.3))}
+.ini-cab p{margin:0;font-size:14px;font-weight:600;letter-spacing:.02em}
+.ini-card{margin:-44px 20px 0;background:#fff;border-radius:24px;padding:30px 24px 26px;box-shadow:0 10px 30px rgba(30,25,90,.14);display:flex;flex-direction:column;gap:18px;max-width:560px;align-self:center;box-sizing:border-box;width:calc(100% - 40px)}
+.ini-card h2{margin:0;font-family:var(--read);font-weight:600;font-size:30px;line-height:1.2;color:#3730a3}
+.ini-card>p{margin:0;font-size:17px;line-height:1.55}
+.ini-verso{background:#ebe7ff;border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:8px}
+.ini-verso p{margin:0;font-family:var(--read);font-style:italic;font-size:18px;line-height:1.5;color:#1b1840}
+.ini-verso b{font-size:14px;color:#5b21b6}
+.ini-pie{margin-top:auto;padding:24px 20px calc(32px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:16px;max-width:560px;align-self:center;width:100%;box-sizing:border-box}
+.ini-pie label{display:flex;align-items:center;gap:12px;font-size:15px;color:#4a4870;min-height:44px;cursor:pointer}
+.ini-pie input{width:22px;height:22px;accent-color:#4338ca;margin:0}
+.ini-pie button{height:56px;border:0;border-radius:16px;background:#4338ca;color:#fff;font-family:var(--ui);font-size:18px;font-weight:700;cursor:pointer}
+.ini-pie button:active{background:#3730a3}
+@media (prefers-reduced-motion:reduce){.ini-dots span{animation:none}.ini-splash,.ini-bien{transition:none}}
+</style>
 </head>
 <body>
+<div class="ini ini-splash" id="iniSplash" role="status" aria-label="Cargando Biblia Multiversión">
+<img src="logo-iglesia.png" alt="Iglesia de Dios de la Profecía">
+<div class="ini-tit"><h1>Biblia Multiversión</h1><p>12 versiones para leer y comparar,<br>aun sin internet</p></div>
+<div class="ini-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+</div>
+<div class="ini ini-bien" id="iniBien" role="dialog" aria-modal="true" aria-labelledby="iniBienT" hidden>
+<div class="ini-cab"><img src="logo-emblema.png" alt=""><p>Iglesia de Dios de la Profecía</p></div>
+<div class="ini-card">
+<h2 id="iniBienT">¡Bienvenido!</h2>
+<p>Esta app es un regalo de nuestra iglesia para que tengas la Palabra siempre a mano, en tu casa, en el trabajo o en el culto. Puedes leer, buscar y comparar 12 versiones, incluso sin internet.</p>
+<div class="ini-verso"><p>“Lámpara es a mis pies tu palabra, y lumbrera a mi camino.”</p><b>Salmo 119:105</b></div>
+</div>
+<div class="ini-pie">
+<label><input type="checkbox" id="iniNoMas" checked> No volver a mostrar este saludo</label>
+<button type="button" id="iniIr">Comenzar a leer</button>
+</div>
+</div>
+<script>
+(function(){
+  var sp=document.getElementById("iniSplash"), bi=document.getElementById("iniBien");
+  function visto(){ try{ return localStorage.getItem("biblia.bienvenidaVista")==="1"; }catch(e){ return false; } }
+  function quitar(el,cb){ el.classList.add("ini-out"); setTimeout(function(){ el.hidden=true; el.remove && el.remove(); cb&&cb(); },450); }
+  setTimeout(function(){
+    quitar(sp, function(){
+      if(visto()) return;
+      bi.hidden=false;
+      document.getElementById("iniIr").focus();
+    });
+  }, 2200);
+  document.getElementById("iniIr").addEventListener("click", function(){
+    try{
+      if(document.getElementById("iniNoMas").checked) localStorage.setItem("biblia.bienvenidaVista","1");
+      else localStorage.removeItem("biblia.bienvenidaVista");
+    }catch(e){}
+    quitar(bi);
+  });
+})();
+</script>
+
 <div id="app">
   <header>
     <button class="pill" id="btnRef" aria-label="Elegir libro y capítulo"><span id="refLabel">Juan 3</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
