@@ -402,7 +402,8 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
 .ini-splash img{width:min(78vw,320px);height:auto}
 .ini-rule{width:56px;height:2px;border-radius:1px;background:rgba(255,255,255,.55)}
 .ini-tit{display:flex;flex-direction:column;gap:8px}
-.ini-tit h1{margin:0;font-family:var(--read);font-weight:600;font-size:32px;line-height:1.15;letter-spacing:.01em;background:linear-gradient(100deg,#ffffff 0%,#ffffff 38%,#fff3d1 47%,#ffffff 52%,#ffffff 100%);background-size:260% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent;animation:iniShine 2.4s ease-in-out .5s 1 forwards}
+.ini-tit h1{margin:0;font-family:var(--read);font-weight:600;font-size:32px;line-height:1.15;letter-spacing:.01em;background:linear-gradient(100deg,#ffffff 0%,#ffffff 34%,#f6d27a 42%,#ffe9a8 46%,#fff8e1 48%,#f2c45a 51%,#ffffff 60%,#ffffff 100%);background-size:280% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 6px rgba(246,210,122,.0));animation:iniShine 2.6s ease-in-out .5s 1 forwards,iniGlow 2.6s ease-in-out .5s 1}
+@keyframes iniGlow{0%,100%{filter:drop-shadow(0 0 0 rgba(246,210,122,0))}50%{filter:drop-shadow(0 0 10px rgba(246,210,122,.55))}}
 @keyframes iniShine{0%{background-position:100% 0}100%{background-position:0% 0}}
 .ini-tit p{margin:0;font-size:15px;font-weight:500;line-height:1.45;color:rgba(255,255,255,.88)}
 .ini-load{width:140px;height:3px;border-radius:2px;background:rgba(255,255,255,.22);overflow:hidden;margin-bottom:26px}
@@ -429,7 +430,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
 #iniNombre{height:50px;border:1px solid #c9c6e6;border-radius:12px;padding:0 14px;font:inherit;font-size:17px;background:#fff;color:#1b1840}
 .ini-pie button{height:56px;border:0;border-radius:16px;background:#4338ca;color:#fff;font-family:var(--ui);font-size:18px;font-weight:700;cursor:pointer}
 .ini-pie button:active{background:#3730a3}
-@media (prefers-reduced-motion:reduce){.ini-tit h1{animation:none}.ini-load i{animation:none;width:100%}.ini-splash,.ini-bien{transition:none}}
+@media (prefers-reduced-motion:reduce){.ini-tit h1{animation:none;filter:none}.ini-load i{animation:none;width:100%}.ini-splash,.ini-bien{transition:none}}
 </style>
 </head>
 <body>
