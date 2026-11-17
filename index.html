@@ -141,6 +141,21 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
 .cc-vs{padding:4px 0 10px 12px;border-left:3px solid var(--line);margin:6px 0 8px}
 .cc-vs.at{border-left-color:var(--at-bg)}.cc-vs.nt{border-left-color:var(--nt-bg)}
 
+
+/* Voz */
+.mic-in{flex:none;width:46px;height:46px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);display:inline-flex;align-items:center;justify-content:center}
+.mic-veil{position:absolute;inset:0;z-index:30;background:rgba(10,12,25,.45);display:flex;align-items:flex-end}
+.mic-sheet{width:100%;background:var(--surface);color:var(--ink);border-radius:22px 22px 0 0;padding:26px 22px calc(26px + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.mic-dot{width:76px;height:76px;border-radius:50%;background:var(--nt-bg);color:#fff;display:flex;align-items:center;justify-content:center;animation:micPulse 1.4s infinite ease-in-out}
+.mic-dot svg{width:34px;height:34px}
+@keyframes micPulse{0%,100%{box-shadow:0 0 0 0 rgba(47,77,138,.45)}50%{box-shadow:0 0 0 16px rgba(47,77,138,0)}}
+#micMsg{margin:4px 0 0;font-size:18px;font-weight:700}
+#micTxt{margin:0;min-height:28px;font-family:var(--read);font-size:20px}
+.mic-hint{margin:0;color:var(--muted);font-size:14px;line-height:1.45;max-width:34ch}
+.mic-hint b{color:var(--ink);font-weight:600}
+#micStop{margin-top:8px;min-height:46px;padding:0 26px;border:1px solid var(--line);border-radius:999px;font-weight:700;background:var(--paper)}
+@media (prefers-reduced-motion:reduce){.mic-dot{animation:none}}
+
 /* Comparar */
 .cmp-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
 .cmp-head h2{font-family:var(--read);font-size:24px;font-weight:600;margin:0;flex:1;text-wrap:balance}
@@ -296,6 +311,7 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
     <button class="pill" id="btnRef" aria-label="Elegir libro y capítulo"><span id="refLabel">Juan 3</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     <button class="pill" id="btnVer" aria-label="Elegir versión"><span id="verLabel">RVR1960</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     <span class="grow"></span>
+    <button class="icon mic-btn" id="btnMic" aria-label="Buscar por voz" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg></button>
     <button class="icon" id="btnSize" aria-label="Letra y colores">Aa</button>
   </header>
   <div id="tband" aria-hidden="true"></div>
@@ -305,7 +321,8 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
 
     <section class="view" id="vSearch" aria-label="Buscar">
       <form class="search-row" id="searchForm">
-        <input id="q" type="search" placeholder="Palabra, frase o cita (Juan 3:16)" autocomplete="off" enterkeyhint="search" aria-label="Buscar en la Biblia">
+        <input id="q" type="search" placeholder="Palabra o cita, ej. Juan 3:16" autocomplete="off" enterkeyhint="search" aria-label="Buscar en la Biblia">
+        <button class="mic-in" type="button" data-mic="search" aria-label="Buscar por voz" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg></button>
         <button class="btn" type="submit">Buscar</button>
       </form>
       <div class="chips" id="scope" role="group" aria-label="Dónde buscar">
@@ -314,13 +331,14 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
         <button type="button" class="chip" data-s="nt" aria-pressed="false">Nuevo Testamento</button>
         <button type="button" class="chip" data-s="book" aria-pressed="false">Este libro</button>
       </div>
-      <div id="results"><p class="note">Busca en la versión que tienes abierta. No importan las tildes ni las mayúsculas, y con comillas busca la frase exacta. Si escribes una cita como <b>Salmos 23</b> o <b>Juan 3:16</b>, te lleva directo.</p></div>
+      <div id="results"><p class="note">Busca en la versión que tienes abierta. No importan las tildes ni las mayúsculas, y con comillas busca la frase exacta. Si escribes una cita como <b>Salmos 23</b> o <b>Juan 3:16</b>, te lleva directo. Con el micrófono también puedes decirla en voz alta.</p></div>
     </section>
 
     <section class="view" id="vConc" aria-label="Concordancia">
       <h2 class="sec">Concordancia</h2>
       <form class="search-row" id="ccForm">
         <input id="ccQ" type="search" placeholder="Una palabra, por ejemplo gracia" autocomplete="off" enterkeyhint="search" aria-label="Palabra para la concordancia">
+        <button class="mic-in" type="button" data-mic="conc" aria-label="Decir la palabra por voz" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg></button>
         <button class="btn" type="submit">Buscar</button>
       </form>
       <div class="cc-modes" id="ccMode" role="group" aria-label="Tipo de búsqueda">
@@ -373,6 +391,15 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
       </div>
       <p class="note">Lila sigue el modo claro u oscuro de tu teléfono.</p>
       <label class="prom-row"><input type="checkbox" id="promChk"> <span>Resaltar suavemente las <span class="prom-demo">promesas de Jesús</span> en el Nuevo Testamento</span></label>
+    </div>
+  </div>
+  <div class="mic-veil" id="micVeil" hidden>
+    <div class="mic-sheet" role="dialog" aria-modal="true" aria-labelledby="micMsg">
+      <div class="mic-dot" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg></div>
+      <p id="micMsg">Te escucho…</p>
+      <p id="micTxt" aria-live="polite"></p>
+      <p class="mic-hint" id="micHint">Di un pasaje, como <b>"Juan 3:16"</b> o <b>"Salmo 23"</b>, o una palabra para buscar.</p>
+      <button type="button" id="micStop">Cancelar</button>
     </div>
   </div>
   <div id="toast" role="status"></div>
@@ -715,6 +742,87 @@ nav button[aria-current="page"]{color:var(--rubric);border-top-color:var(--rubri
     }
     resClick(e);
   });
+
+  /* ---------- Búsqueda por voz ---------- */
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition, rec = null, micMode = "go", micFinal = "";
+  var NUM = {cero:0,un:1,uno:1,una:1,dos:2,tres:3,cuatro:4,cinco:5,seis:6,siete:7,ocho:8,nueve:9,diez:10,once:11,doce:12,trece:13,catorce:14,quince:15,dieciseis:16,diecisiete:17,dieciocho:18,diecinueve:19,veinte:20,veintiun:21,veintiuno:21,veintiuna:21,veintidos:22,veintitres:23,veinticuatro:24,veinticinco:25,veintiseis:26,veintisiete:27,veintiocho:28,veintinueve:29,treinta:30,cuarenta:40,cincuenta:50,sesenta:60,setenta:70,ochenta:80,noventa:90,cien:100,ciento:100};
+  var ORD = {primero:1,primera:1,primer:1,"1ra":1,"1a":1,"1era":1,segundo:2,segunda:2,"2da":2,"2a":2,tercero:3,tercera:3,tercer:3,"3ra":3,"3a":3};
+  var FILL = {capitulo:1,capitulos:1,versiculo:1,versiculos:1,verso:1,versos:1,de:1,del:1,el:1,la:1,los:1,las:1,a:1,al:1,libro:1,san:1,santo:1,evangelio:1,segun:1,carta:1,epistola:1,apostol:1,llevame:1,ir:1,abre:1,abrir:1,lee:1,leer:1,busca:1,buscar:1,en:1,por:1,favor:1};
+  function spokenRef(text){
+    var t = norm(text).replace(/[:.,;]/g, " ").replace(/\s+/g, " ").trim();
+    var w = t.split(" "), out = [], i = 0;
+    while (i < w.length){
+      var x = w[i];
+      if (/^\d+$/.test(x)){ out.push(+x); i++; continue; }
+      if (ORD[x] != null && out.length === 0){ out.push(ORD[x]); i++; continue; }
+      if (NUM[x] != null){
+        var v = NUM[x]; i++;
+        while (i < w.length){
+          var y = w[i];
+          if (y === "y" && i + 1 < w.length && NUM[w[i+1]] != null && NUM[w[i+1]] < 10){ v += NUM[w[i+1]]; i += 2; continue; }
+          if (NUM[y] != null && v >= 100 && NUM[y] < 100){ v += NUM[y]; i++; continue; }
+          if (NUM[y] != null && v % 100 >= 20 && v % 10 === 0 && NUM[y] < 10){ v += NUM[y]; i++; continue; }
+          break;
+        }
+        out.push(v); continue;
+      }
+      if (FILL[x]){ i++; continue; }
+      out.push(x); i++;
+    }
+    var words = [], nums = [];
+    for (var k=0;k<out.length;k++){
+      if (typeof out[k] === "number"){ if (words.length && !(k === 0)) nums.push(out[k]); else words.push(String(out[k])); }
+      else { if (nums.length) break; words.push(out[k]); }
+    }
+    if (!words.length || !nums.length) return null;
+    var q = words.join(" ") + " " + nums[0] + (nums.length > 1 ? ":" + nums[1] : "");
+    return parseRef(q);
+  }
+  function micClose(){ $("micVeil").hidden = true; try{ if (rec) rec.abort(); }catch(e){} rec = null; }
+  function micDone(text){
+    micClose();
+    text = (text || "").trim(); if (!text) return;
+    if (micMode === "conc"){
+      var w = norm(text).replace(/[^a-z0-9\s]/g, "").trim().split(/\s+/)[0] || "";
+      $("ccQ").value = w; tab("vConc"); ccRun(); return;
+    }
+    var r = spokenRef(text);
+    if (r){ toast("Abriendo " + refText(r.b, r.c, r.v)); go(r.b, r.c, r.v); return; }
+    $("q").value = text; tab("vSearch"); doSearch();
+  }
+  function micStart(mode){
+    if (!SR) return;
+    micMode = mode; micFinal = "";
+    $("micMsg").textContent = "Te escucho…"; $("micTxt").textContent = "";
+    $("micHint").innerHTML = mode === "conc" ? 'Di <b>una palabra</b>, por ejemplo <b>"gracia"</b>.' : 'Di un pasaje, como <b>"Juan 3:16"</b> o <b>"Salmo 23"</b>, o una palabra para buscar.';
+    $("micVeil").hidden = false;
+    try{
+      rec = new SR(); rec.lang = "es-CL"; rec.interimResults = true; rec.maxAlternatives = 1; rec.continuous = false;
+      rec.onresult = function(e){
+        var fin = "", tmp = "";
+        for (var i=0;i<e.results.length;i++){ if (e.results[i].isFinal) fin += e.results[i][0].transcript; else tmp += e.results[i][0].transcript; }
+        if (fin) micFinal = fin;
+        $("micTxt").textContent = fin || tmp;
+      };
+      rec.onerror = function(e){
+        var m = e.error === "not-allowed" || e.error === "service-not-allowed" ? "Necesito permiso para usar el micrófono. Actívalo en los ajustes del celular." :
+                e.error === "network" ? "La búsqueda por voz necesita internet en este celular." :
+                e.error === "no-speech" ? "No te escuché. Toca el micrófono e inténtalo de nuevo." : "No se pudo usar el micrófono. Inténtalo de nuevo.";
+        micClose(); toast(m);
+      };
+      rec.onend = function(){ var f = micFinal; if (!$("micVeil").hidden){ if (f) micDone(f); else micClose(); } };
+      rec.start();
+    }catch(e){ micClose(); toast("No se pudo usar el micrófono."); }
+  }
+  if (SR){
+    $("btnMic").hidden = false;
+    var mi = document.querySelectorAll(".mic-in"); for (var mj=0;mj<mi.length;mj++) mi[mj].hidden = false;
+    $("btnMic").onclick = function(){ micStart("go"); };
+    document.addEventListener("click", function(e){ var b = e.target.closest(".mic-in"); if (b) micStart(b.dataset.mic === "conc" ? "conc" : "go"); });
+    $("micStop").onclick = micClose;
+    $("micVeil").addEventListener("click", function(e){ if (e.target === $("micVeil")) micClose(); });
+  }
+  window.__spokenRef = function(t){ var r = spokenRef(t); return r ? refText(r.b, r.c, r.v) : null; };
 
   /* ---------- Comparar ---------- */
   function renderCompare(){
