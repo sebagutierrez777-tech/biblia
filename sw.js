@@ -1,5 +1,5 @@
 // Guarda la app en el celular para que funcione sin internet.
-var SHELL = "biblia-shell-v50";
+var SHELL = "biblia-shell-v51";
 var DATA = "biblia-data-v1";
 var FONTS = "biblia-fonts-v1";
 var SHELL_FILES = ["./", "index.html", "meta.json", "manifest.json", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png", "logo-iglesia.png", "logo-emblema.png", "logo-emblema-claro.png", "qr-app.png", "intros.json", "fichas.json", "mapas.json", "genealogias.json", "diccionario.json", "resumen.json", "curiosidades.json", "juegos.json", "historia.json", "inicio.mp3"];

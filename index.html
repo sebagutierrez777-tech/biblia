@@ -595,6 +595,48 @@ html.simple .act-r2{display:flex!important}
 :root[data-tone="noche"] .ol-ok,:root[data-tone="noche"] .tv-b.good{background:#14532d;color:#dcfce7}
 :root[data-tone="noche"] .tv-b.bad{background:#7f1d1d;color:#fee2e2}
 .hs-seg button{font-size:14px}
+/* ---- v1.10: secciones con color propio ---- */
+#vMore[data-sec=resumen]{--sc:#185fa5}#vMore[data-sec=historia]{--sc:#a8660f}#vMore[data-sec=gen]{--sc:#3b6d11}#vMore[data-sec=dic]{--sc:#534ab7}#vMore[data-sec=biblio]{--sc:#a32d2d}
+#vMore[data-sec] .mas-h{--scx:color-mix(in srgb,var(--sc) 78%,var(--ink));padding:10px 12px;border-radius:16px;background:color-mix(in srgb,var(--sc) 13%,var(--surface));border:1px solid color-mix(in srgb,var(--sc) 30%,transparent)}
+#vMore[data-sec] .mas-h h2,#vMore[data-sec] .mas-h .icon{color:color-mix(in srgb,var(--sc) 78%,var(--ink))}
+#vMore[data-sec] .sv-in{padding:10px 14px;border-radius:12px;background:color-mix(in srgb,var(--sc) 8%,var(--surface));border-left:4px solid var(--sc)}
+#vMore[data-sec] .hs-seg button[aria-pressed="true"]{background:var(--sc);color:#fff}
+.tn{flex:none;width:26px;height:26px;margin-right:10px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-style:normal;font-size:13px;font-weight:800;color:#fff;background:var(--c,var(--gc,var(--sc,#888)))}
+.dic.tc{margin:0 0 10px;border:1px solid color-mix(in srgb,var(--c) 28%,var(--line));border-left:5px solid var(--c);border-radius:14px;background:color-mix(in srgb,var(--c) 6%,var(--surface));padding:0 12px}
+.dic.tc summary{align-items:center;padding:13px 0}.dic.tc summary::after{color:var(--c)}
+.dic.tc[open]{background:color-mix(in srgb,var(--c) 10%,var(--surface))}
+.dic-l{display:flex;align-items:center;gap:10px;margin:18px 0 8px;scroll-margin-top:70px}
+.dic-l b{width:36px;height:36px;border-radius:12px;background:var(--c);color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;font-family:var(--read)}
+.dic-l span{flex:1;height:2px;background:color-mix(in srgb,var(--c) 35%,transparent);border-radius:2px}
+.dic-bar{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 4px}
+.dic-bar button{min-width:36px;height:36px;border-radius:10px;font-weight:800;font-size:15px;color:color-mix(in srgb,var(--c) 80%,var(--ink));background:color-mix(in srgb,var(--c) 14%,var(--surface));border:1px solid color-mix(in srgb,var(--c) 35%,transparent)}
+.cn-g[style*="--g"] b{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--g) 14%,var(--surface));color:color-mix(in srgb,var(--g) 80%,var(--ink));font-size:14px}
+.cn-g[style*="--g"] b small{color:inherit;opacity:.8}
+.cn-g[style*="--g"] .chip{border-color:color-mix(in srgb,var(--g) 38%,var(--line));background:color-mix(in srgb,var(--g) 8%,var(--surface))}
+.rs-bar{display:flex;height:12px;gap:2px;margin:0 0 6px;border-radius:6px;overflow:hidden}.rs-bar i{display:block;min-width:4px}
+.rs-hero{background:linear-gradient(150deg,color-mix(in srgb,var(--g) 72%,#000),var(--g))!important}
+.rs-pos{height:5px;border-radius:3px;background:rgba(255,255,255,.28);margin-top:14px;overflow:hidden}.rs-pos i{display:block;height:100%;background:#fff;border-radius:3px}
+.rs-meta{grid-template-columns:repeat(2,minmax(0,1fr))}
+.rs-meta div{border-color:color-mix(in srgb,var(--g) 30%,var(--line));background:color-mix(in srgb,var(--g) 7%,var(--surface))}
+.rs-meta span{color:color-mix(in srgb,var(--g) 80%,var(--ink))}
+.rs-s[style*="--g"]{border-left:5px solid var(--g)}
+.rs-s[style*="--g"] .rs-l{color:color-mix(in srgb,var(--g) 80%,var(--ink))}
+.rs-s[style*="--g"] .rs-b button::before{background:var(--g);color:#fff}
+.rs-s.cr{border-left:5px solid #b91c1c;background:color-mix(in srgb,#b91c1c 6%,var(--surface))}.rs-s.hoy{border-left:5px solid #15803d;background:color-mix(in srgb,#15803d 6%,var(--surface))}
+.hs-t li{border-left-color:var(--e,#8a4a2c)!important}.hs-t li::before{background:var(--e,#8a4a2c)!important}
+.hs-t .hs-f{display:inline-block;padding:2px 10px;border-radius:999px;background:color-mix(in srgb,var(--e,#888) 16%,var(--surface));color:color-mix(in srgb,var(--e,#888) 80%,var(--ink));margin-bottom:2px}
+.hs-t b{color:color-mix(in srgb,var(--e,#888) 70%,var(--ink))}
+.hs-h{border-left:5px solid var(--c);background:color-mix(in srgb,var(--c) 6%,var(--surface))}
+.hs-h .hs-w{color:color-mix(in srgb,var(--c) 75%,var(--ink));font-weight:700}
+.gen{--at:var(--gc);--nt:var(--gc);border-left:5px solid var(--gc);background:color-mix(in srgb,var(--gc) 5%,var(--surface));border-color:color-mix(in srgb,var(--gc) 30%,var(--line))}
+.gen summary .tn{background:var(--gc)}
+.gen[open] summary{background:color-mix(in srgb,var(--gc) 12%,var(--surface))}
+.gen summary b{color:color-mix(in srgb,var(--gc) 75%,var(--ink))}
+.gen .gl{--at-wash:transparent}
+.tribu{background:color-mix(in srgb,var(--c) 11%,var(--surface))!important;border-left:4px solid var(--c)}
+.tribu b{color:color-mix(in srgb,var(--c) 80%,var(--ink))!important}
+.bb-t{margin:6px 0 4px}
+
 .hs-t{list-style:none;margin:0;padding:0 0 0 8px}
 .hs-t li{position:relative;padding:0 0 18px 22px;border-left:2px solid var(--at,#8a4a2c)}
 .hs-t li.nt{border-left-color:var(--nt,#2f4d8a)}
@@ -661,7 +703,7 @@ html.simple .act-r2{display:flex!important}
 </div>
 <div class="ini-load" aria-hidden="true"><i></i></div>
 <script>(function(){try{if(localStorage.getItem("biblia.sonidoInicio")==="false")return;var a=new Audio("inicio.mp3");a.volume=0.35;var p=a.play();if(p&&p.then)p.then(function(){window.__sonoInicio=true;},function(){});}catch(e){}})();</script>
-<div class="ini-pie2"><span>Versión 1.9</span><span>Desarrollado por <b>DIRCOM Chile</b></span></div>
+<div class="ini-pie2"><span>Versión 2.0</span><span>Desarrollado por <b>DIRCOM Chile</b></span></div>
 </div>
 <div class="ini ini-bien" id="iniBien" role="dialog" aria-modal="true" aria-labelledby="iniBienT" hidden>
 <div class="ini-cab"><img src="logo-emblema-claro.png" alt=""><p>Iglesia de Dios de la Profecía</p></div>
@@ -874,7 +916,7 @@ html.simple .act-r2{display:flex!important}
       </div>
       <p class="note">Lila sigue el modo claro u oscuro de tu teléfono.</p>
       <label class="prom-row"><input type="checkbox" id="promChk"> <span>Resaltar suavemente las <span class="prom-demo">promesas de Jesús</span> en el Nuevo Testamento</span></label>
-      <p class="credit">Biblia Multiversión · Versión 1.9<br>Desarrollado por DIRCOM Chile · Iglesia de Dios de la Profecía</p>
+      <p class="credit">Biblia Multiversión · Versión 2.0<br>Desarrollado por DIRCOM Chile · Iglesia de Dios de la Profecía</p>
     </div>
   </div>
   <div class="mic-veil" id="micVeil" hidden>
@@ -1628,6 +1670,8 @@ html.simple .act-r2{display:flex!important}
   }
 
   /* Bibliología */
+  var GRP_COL = {"Ley o Pentateuco":"#b45309","Libros históricos":"#0f766e","Libros poéticos":"#be185d","Profetas mayores":"#7c3aed","Profetas menores":"#c2410c","Evangelios":"#b91c1c","Libro histórico":"#0369a1","Cartas de Pablo":"#4338ca","Cartas generales":"#15803d","Libro profético":"#a21caf"};
+  var HUES = ["#b45309","#0f766e","#be185d","#7c3aed","#c2410c","#0369a1","#15803d","#b91c1c","#4338ca","#a21caf","#0e7490","#854d0e"];
   var BIBLIO = [
     ["¿Qué es la Biblia?", "Es la palabra de Dios escrita. Aunque son 66 libros, cuenta una sola historia: cómo Dios salva al ser humano por medio de Jesucristo. Jesús mismo enseñó que las Escrituras hablan de él.", [[41,24,27],[42,5,39]]],
     ["Inspiración", "Toda la Escritura es inspirada por Dios; la palabra griega quiere decir «respirada por Dios». Él usó a hombres con su propio estilo y su cultura, y el Espíritu Santo los guió para que escribieran lo que él quería decir.", [[54,3,16],[60,1,21]]],
@@ -1640,10 +1684,23 @@ html.simple .act-r2{display:flex!important}
     ["Antiguo Testamento", "at", [["Ley o Pentateuco", 0, 4], ["Libros históricos", 5, 16], ["Libros poéticos", 17, 21], ["Profetas mayores", 22, 26], ["Profetas menores", 27, 38]]],
     ["Nuevo Testamento", "nt", [["Evangelios", 39, 42], ["Libro histórico", 43, 43], ["Cartas de Pablo", 44, 56], ["Cartas generales", 57, 64], ["Libro profético", 65, 65]]]
   ];
+  var BB_TL = [
+    ["Entre 1400 a. C. y 100 d. C.", "Se escriben los libros", "Unos 40 autores, en hebreo, arameo y griego. Dios los usó y el Espíritu Santo los guió."],
+    ["Siglo III a. C.", "La Septuaginta", "Los judíos de Alejandría traducen el Antiguo Testamento al griego. Era la Biblia que muchos conocían en tiempos de Jesús."],
+    ["Siglos I y II", "Se copian y se reparten las cartas", "Las iglesias copian a mano los evangelios y las cartas, y los leen en sus reuniones."],
+    ["Año 367 y 397", "Se reconoce el Nuevo Testamento", "Atanasio enumera los 27 libros en 367, y el Concilio de Cartago los confirma en 397."],
+    ["Hacia el año 405", "La Vulgata", "Jerónimo traduce la Biblia al latín, y esa versión se usó en Europa por más de mil años."],
+    ["Hacia 1455", "La imprenta", "Gutenberg imprime la Biblia con tipos móviles y los libros dejan de copiarse solo a mano."],
+    ["1569 y 1602", "Reina y Valera", "Casiodoro de Reina publica la Biblia en español en 1569 y Cipriano de Valera la revisa en 1602."],
+    ["1960", "La Reina-Valera 1960", "Es la revisión que usa hasta hoy la mayoría de las iglesias evangélicas de habla hispana."]
+  ];
   function renderBiblio(){
     var h = masHead("Bibliología") + '<p class="sv-in">Un estudio corto sobre la Biblia: qué es, cómo nos llegó y cómo leerla.</p>';
-    BIBLIO.forEach(function(s, i){ h += '<details class="dic"' + (i === 0 ? " open" : "") + '><summary>' + esc(s[0]) + '</summary><p>' + esc(s[1]) + '</p>' + (s[2].length ? refChips(s[2]) : '<div class="fi-r"></div>') + '</details>'; });
-    h += '<div class="grp" style="margin-top:22px">Los 66 libros</div><p class="note" style="padding:0 0 10px">Toca un libro para empezar a leerlo.</p>';
+    $("vMore").dataset.sec = "biblio";
+    BIBLIO.forEach(function(s, i){ h += '<details class="dic tc" style="--c:' + HUES[i % HUES.length] + '"' + (i === 0 ? " open" : "") + '><summary><i class="tn">' + (i + 1) + '</i>' + esc(s[0]) + '</summary><p>' + esc(s[1]) + '</p>' + (s[2].length ? refChips(s[2]) : '<div class="fi-r"></div>') + '</details>'; });
+    h += '<div class="grp" style="margin-top:22px">Cómo nos llegó la Biblia</div><ol class="hs-t bb-t">';
+    BB_TL.forEach(function(x, i){ h += '<li style="--e:' + HUES[(i * 2 + 1) % HUES.length] + '"><span class="hs-f">' + esc(x[0]) + '</span><b>' + esc(x[1]) + '</b><p>' + esc(x[2]) + '</p></li>'; });
+    h += '</ol><div class="grp" style="margin-top:22px">Los 66 libros</div><p class="note" style="padding:0 0 10px">Toca un libro para empezar a leerlo.</p>';
     CANON.forEach(function(t){
       var n = t[2][t[2].length-1][2] - t[2][0][1] + 1;
       h += '<div class="grp ' + t[1] + '">' + t[0] + ' <small>' + n + ' libros</small></div>';
@@ -1655,24 +1712,27 @@ html.simple .act-r2{display:flex!important}
   var RESUMEN = null;
   var rsCur = null;
   function renderResumen(b){
-    var el = $("vMore"); rsCur = b == null ? null : b;
+    var el = $("vMore"); rsCur = b == null ? null : b; el.dataset.sec = "resumen";
     if (!RESUMEN){ el.innerHTML = masHead("Resumen de la Biblia") + '<p class="note">Cargando…</p>';
       Promise.all([getJSON("resumen.json").then(function(j){ RESUMEN = j.libros; }), loadIntros().catch(function(){})]).then(function(){ if (masSub === "resumen") renderResumen(b); }, function(){ el.innerHTML = masHead("Resumen de la Biblia") + '<p class="note">No se pudo cargar. Revisa tu conexión.</p>'; }); return; }
     if (b == null){
       var h = masHead("Resumen de la Biblia") + '<p class="sv-in">Un mini estudio de cada libro: su tema, cómo se ordena, dónde vemos a Cristo y qué nos enseña hoy. Elige un libro.</p>';
+      h += '<div class="rs-bar" aria-hidden="true">'; CANON.forEach(function(t){ t[2].forEach(function(g){ h += '<i style="flex:' + (g[2] - g[1] + 1) + ';background:' + GRP_COL[g[0]] + '"></i>'; }); }); h += '</div>';
       CANON.forEach(function(t){ h += '<div class="grp ' + t[1] + '">' + t[0] + '</div>';
-        t[2].forEach(function(g){ h += '<div class="cn-g"><b>' + esc(g[0]) + '</b><div class="fi-r">'; for (var k = g[1]; k <= g[2]; k++) h += '<button type="button" class="chip" data-rs="' + k + '">' + esc(bname(k)) + '</button>'; h += '</div></div>'; }); });
+        t[2].forEach(function(g){ h += '<div class="cn-g" style="--g:' + GRP_COL[g[0]] + '"><b>' + esc(g[0]) + ' <small>' + (g[2] - g[1] + 1) + '</small></b><div class="fi-r">'; for (var k = g[1]; k <= g[2]; k++) h += '<button type="button" class="chip" data-rs="' + k + '">' + esc(bname(k)) + '</button>'; h += '</div></div>'; }); });
       el.innerHTML = h; return;
     }
     var r = RESUMEN[b], it = INTROS && INTROS[b], nt = b >= 39, grupo = "";
     CANON.forEach(function(t){ t[2].forEach(function(g){ if (b >= g[1] && b <= g[2]) grupo = g[0]; }); });
     var h = '<div class="mas-h"><button type="button" class="icon" data-rs="" aria-label="Volver a la lista de libros">‹</button><h2>Resumen de la Biblia</h2></div>';
-    h += '<div class="rs-hero ' + (nt ? "nt" : "at") + '"><small>Libro ' + (b+1) + ' de 66 · ' + esc(grupo) + '</small><h3>' + esc(bname(b)) + '</h3><p>' + esc(r.tema) + '</p></div>';
-    if (it) h += '<div class="rs-meta"><div><span>Autor</span><b>' + esc(it.autor) + '</b></div><div><span>Fecha</span><b>' + esc(it.fecha) + '</b></div></div>';
-    h += '<div class="rs-s"><span class="rs-l">Bosquejo</span><ol class="rs-b">';
+    var gcol = GRP_COL[grupo] || "#185fa5", caps = META.books[b][1], vers = caps.reduce(function(a, x){ return a + x; }, 0);
+    h = h.replace('<div class="mas-h">', '<div class="mas-h" style="--sc:' + gcol + '">');
+    h += '<div class="rs-hero" style="--g:' + gcol + '"><small>Libro ' + (b+1) + ' de 66 · ' + esc(grupo) + '</small><h3>' + esc(bname(b)) + '</h3><p>' + esc(r.tema) + '</p><div class="rs-pos"><i style="width:' + Math.round((b + 1) / 66 * 100) + '%"></i></div></div>';
+    h += '<div class="rs-meta" style="--g:' + gcol + '">' + (it ? '<div><span>Autor</span><b>' + esc(it.autor) + '</b></div><div><span>Fecha</span><b>' + esc(it.fecha) + '</b></div>' : '') + '<div><span>Capítulos</span><b>' + caps.length + '</b></div><div><span>Versículos</span><b>' + vers.toLocaleString("es-CL") + '</b></div></div>';
+    h += '<div class="rs-s" style="--g:' + gcol + '"><span class="rs-l">Bosquejo</span><ol class="rs-b">';
     r.bosquejo.forEach(function(x){ var c0 = parseInt(String(x[1]).split(/[–:-]/)[0], 10) || 1; h += '<li><button type="button" data-rb="' + b + '" data-rc="' + (c0-1) + '"><span>' + esc(x[0]) + '</span><small>' + (META.books[b][1].length > 1 ? "Cap. " : "Vv. ") + esc(x[1]) + '</small></button></li>'; });
     h += '</ol></div><div class="rs-s cr"><span class="rs-l">Cristo en ' + esc(bname(b)) + '</span><p>' + esc(r.cristo) + '</p></div><div class="rs-s hoy"><span class="rs-l">Para hoy</span><p>' + esc(r.hoy) + '</p></div>';
-    if (it && it.clave){ var x = versoTxt([b, it.clave[0], it.clave[1]]); if (x) h += '<div class="rs-s"><span class="rs-l">Versículo clave</span><blockquote class="rs-q">“' + esc(x.t) + '”</blockquote>' + refChips([[b, it.clave[0], it.clave[1]]]) + '</div>'; }
+    if (it && it.clave){ var x = versoTxt([b, it.clave[0], it.clave[1]]); if (x) h += '<div class="rs-s vc" style="--g:' + gcol + '"><span class="rs-l">Versículo clave</span><blockquote class="rs-q">“' + esc(x.t) + '”</blockquote>' + refChips([[b, it.clave[0], it.clave[1]]]) + '</div>'; }
     h += '<div class="rs-nav">' + (b > 0 ? '<button type="button" class="chip" data-rs="' + (b-1) + '">‹ ' + esc(bname(b-1)) + '</button>' : '<span></span>') + (b < 65 ? '<button type="button" class="chip" data-rs="' + (b+1) + '">' + esc(bname(b+1)) + ' ›</button>' : '') + '</div>';
     h += '<button type="button" class="btn rs-go" data-rb="' + b + '" data-rc="0">Leer ' + esc(bname(b)) + '</button><p class="note">Resumen de apoyo de la Biblia Multiversión.</p>';
     el.innerHTML = h; $("main").scrollTop = 0;
@@ -1980,18 +2040,18 @@ html.simple .act-r2{display:flex!important}
   function renderHistoria(tabh){
     var el = $("vMore");
     if (!HIST){ el.innerHTML = masHead("Historia y arqueología") + '<p class="note">Cargando…</p>'; getJSON("historia.json").then(function(j){ HIST = j; if (masSub === "historia") renderHistoria(tabh); }, function(){ el.innerHTML = masHead("Historia y arqueología") + '<p class="note">No se pudo cargar. Revisa tu conexión.</p>'; }); return; }
-    tabh = tabh || renderHistoria.tab || "tiempo"; renderHistoria.tab = tabh;
+    el.dataset.sec = "historia"; tabh = tabh || renderHistoria.tab || "tiempo"; renderHistoria.tab = tabh;
     var h = masHead("Historia y arqueología") + '<div class="seg hs-seg" role="group" aria-label="Sección"><button type="button" data-hs="tiempo" aria-pressed="' + (tabh === "tiempo") + '">Línea de tiempo</button><button type="button" data-hs="judaismo" aria-pressed="' + (tabh === "judaismo") + '">Judaísmo</button><button type="button" data-hs="hallazgos" aria-pressed="' + (tabh === "hallazgos") + '">Hallazgos</button></div>';
     if (tabh === "tiempo"){
       h += '<p class="sv-in">La historia de la Biblia en doce etapas. Las fechas son aproximadas.</p><ol class="hs-t">';
-      HIST.tiempo.forEach(function(x, i){ h += '<li class="' + (i >= 10 ? "nt" : "") + '"><span class="hs-f">' + esc(x.f) + '</span><b>' + esc(x.t) + '</b><p>' + esc(x.d) + '</p>' + (x.r.length ? refChips(x.r) : "") + '</li>'; });
+      HIST.tiempo.forEach(function(x, i){ h += '<li class="' + (i >= 10 ? "nt" : "") + '" style="--e:' + HUES[i % HUES.length] + '"><span class="hs-f">' + esc(x.f) + '</span><b>' + esc(x.t) + '</b><p>' + esc(x.d) + '</p>' + (x.r.length ? refChips(x.r) : "") + '</li>'; });
       h += '</ol>';
     } else if (tabh === "judaismo"){
       h += '<p class="sv-in">Cómo era el mundo judío cuando llegó Jesús: lo que pasó en los 400 años entre los Testamentos, los grupos religiosos y la vida del templo.</p>';
-      HIST.judaismo.forEach(function(x){ h += '<details class="dic"><summary>' + esc(x.t) + '</summary><p>' + esc(x.d) + '</p>' + (x.r.length ? refChips(x.r) : '<div class="fi-r"></div>') + '</details>'; });
+      HIST.judaismo.forEach(function(x, i){ h += '<details class="dic tc" style="--c:' + HUES[(i + 3) % HUES.length] + '"><summary><i class="tn">' + (i + 1) + '</i>' + esc(x.t) + '</summary><p>' + esc(x.d) + '</p>' + (x.r.length ? refChips(x.r) : '<div class="fi-r"></div>') + '</details>'; });
     } else {
       h += '<p class="sv-in">Descubrimientos que muestran que la Biblia habla de lugares, pueblos y personas reales. La arqueología no es la base de nuestra fe, pero la confirma.</p>';
-      HIST.hallazgos.forEach(function(x){ h += '<div class="cu hs-h" style="--c:#8a6d3b"><span class="cu-i"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6-9 9H5v-6z"/><path d="M3 21h18"/></svg></span><div><b>' + esc(x.t) + '</b><small class="hs-w">' + esc(x.w) + '</small><p>' + esc(x.d) + '</p>' + (x.r.length ? refChips(x.r) : "") + '</div></div>'; });
+      HIST.hallazgos.forEach(function(x, i){ h += '<div class="cu hs-h" style="--c:' + HUES[(i * 5 + 2) % HUES.length] + '"><span class="cu-i"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6-9 9H5v-6z"/><path d="M3 21h18"/></svg></span><div><b>' + esc(x.t) + '</b><small class="hs-w">' + esc(x.w) + '</small><p>' + esc(x.d) + '</p>' + (x.r.length ? refChips(x.r) : "") + '</div></div>'; });
     }
     el.innerHTML = h + '<p class="note">Historia de apoyo de la Biblia Multiversión. Fechas aproximadas.</p>';
   }
@@ -1999,7 +2059,7 @@ html.simple .act-r2{display:flex!important}
   var masSub = null;
   function masHead(t, back){ return '<div class="mas-h"><button type="button" class="icon" data-mas="' + (back || "") + '" aria-label="Volver">‹</button><h2>' + esc(t) + '</h2></div>'; }
   function renderMore(sub, opt){
-    var el = $("vMore"); masSub = sub || null;
+    var el = $("vMore"); masSub = sub || null; delete el.dataset.sec;
     if (mapObj){ try{ mapObj.remove(); }catch(e){} mapObj = null; mapLayer = null; }
     if (!masSub){
       var h = '<h2 class="sec">Más</h2><div class="mas-grid">';
@@ -2127,12 +2187,12 @@ html.simple .act-r2{display:flex!important}
   function fichaIdx(name){ if (!FICHAS) return -1; var n = norm(name); for (var i=0;i<FICHAS.length;i++){ var f = FICHAS[i]; if (f.t !== "p") continue; if (norm(f.n.split(",")[0]) === n || (f.a || []).some(function(a){ return norm(a) === n; })) return i; } return -1; }
   function genName(n, cls){ var fi = fichaIdx(n); return fi >= 0 ? '<button type="button" class="nm" data-fi="'  + fi + '">' + esc(n) + '</button>' : '<span class="nm">' + esc(n) + '</span>'; }
   function renderGen(){
-    var el = $("vMore"); el.innerHTML = masHead("Genealogías") + '<p class="note">Cargando…</p>';
+    var el = $("vMore"); el.dataset.sec = "gen"; el.innerHTML = masHead("Genealogías") + '<p class="note">Cargando…</p>';
     Promise.all([GEN ? GEN : getJSON("genealogias.json").then(function(j){ return GEN = j.genealogias; }), loadFichas().catch(function(){})]).then(function(){
       var h = masHead("Genealogías") + '<p class="note" style="padding-top:0">Toca un nombre subrayado para ver su ficha.</p>';
       GEN.forEach(function(g, gi){
         var nt = g.r[0][0] >= 39;
-        h += '<details class="gen' + (nt ? " nt" : "") + '"' + (gi === 0 ? " open" : "") + '><summary><span><b>' + esc(g.t) + '</b><small>' + esc(g.s) + '</small></span></summary><div class="gen-b">';
+        h += '<details class="gen' + (nt ? " nt" : "") + '" style="--gc:' + HUES[(gi * 3 + 1) % HUES.length] + '"' + (gi === 0 ? " open" : "") + '><summary><i class="tn">' + (gi + 1) + '</i><span><b>' + esc(g.t) + '</b><small>' + esc(g.s) + (g.n ? ' · ' + g.n.length + ' nombres' : '') + '</small></span></summary><div class="gen-b">';
         if (g.n){
           h += '<ol class="gl">';
           g.n.forEach(function(p, i){
@@ -2143,7 +2203,7 @@ html.simple .act-r2{display:flex!important}
           h += '</ol>';
           if (g.f){ h += '<div class="gen-f">'; g.f.forEach(function(n){ h += '<span class="chip">' + esc(n) + '</span>'; }); h += '</div><p class="gen-x" style="margin-left:28px">' + esc(g.fn) + '</p>'; }
         }
-        if (g.g){ h += '<div class="tribus">'; g.g.forEach(function(t){ h += '<div class="tribu"><b>' + esc(t[0]) + '</b>' + t[1].map(function(n){ return '<span>' + genName(n) + '</span>'; }).join("") + '</div>'; }); h += '</div>'; }
+        if (g.g){ h += '<div class="tribus">'; g.g.forEach(function(t, ti){ h += '<div class="tribu" style="--c:' + HUES[ti % HUES.length] + '"><b>' + esc(t[0]) + '</b>' + t[1].map(function(n){ return '<span>' + genName(n) + '</span>'; }).join("") + '</div>'; }); h += '</div>'; }
         if (g.x) h += '<p class="gen-x">' + esc(g.x) + '</p>';
         h += refChips(g.r) + '</div></details>';
       });
@@ -2154,13 +2214,21 @@ html.simple .act-r2{display:flex!important}
   /* Diccionario */
   var DIC = null;
   function renderDic(){
-    var el = $("vMore"); el.innerHTML = masHead("Diccionario bíblico") + '<p class="note">Cargando…</p>';
+    var el = $("vMore"); el.dataset.sec = "dic"; el.innerHTML = masHead("Diccionario bíblico") + '<p class="note">Cargando…</p>';
     (DIC ? Promise.resolve(DIC) : getJSON("diccionario.json").then(function(j){ return DIC = j.terminos; })).then(function(){
-      el.innerHTML = masHead("Diccionario bíblico") + '<input class="mas-q" id="dicQ" type="search" placeholder="Buscar una palabra, como gracia" autocomplete="off" aria-label="Buscar en el diccionario"><div id="dicL"></div><p class="note">Diccionario de apoyo de la Biblia Multiversión, escrito con mirada evangélica pentecostal y wesleyana.</p>';
+      el.innerHTML = masHead("Diccionario bíblico") + '<input class="mas-q" id="dicQ" type="search" placeholder="Buscar una palabra, como gracia" autocomplete="off" aria-label="Buscar en el diccionario"><div id="dicL"></div><p class="note">' + DIC.length + ' términos. Diccionario de apoyo de la Biblia Multiversión, escrito con mirada evangélica pentecostal y wesleyana.</p>';
       function draw(){
-        var q = norm($("dicQ").value.trim()), h = "", n = 0;
-        DIC.forEach(function(t){ if (q && norm(t.t).indexOf(q) < 0 && norm(t.d).indexOf(q) < 0) return; n++; h += '<details class="dic"' + (q && n <= 2 ? " open" : "") + '><summary>' + esc(t.t) + '</summary><p>' + esc(t.d) + '</p>' + refChips(t.r) + '</details>'; });
-        $("dicL").innerHTML = h || '<p class="note">No encontramos esa palabra. Prueba con la Concordancia para verla en toda la Biblia.</p>';
+        var q = norm($("dicQ").value.trim()), h = "", n = 0, last = "", letras = [];
+        var L = DIC.slice().sort(function(a, b){ return a.t.localeCompare(b.t, "es"); });
+        L.forEach(function(t){
+          if (q && norm(t.t).indexOf(q) < 0 && norm(t.d).indexOf(q) < 0) return; n++;
+          var l = norm(t.t).charAt(0).toUpperCase();
+          if (!q && l !== last){ last = l; letras.push(l); h += '<div class="dic-l" id="dl-' + l + '" style="--c:' + HUES[(l.charCodeAt(0) - 65 + 26) % HUES.length] + '"><b>' + l + '</b><span></span></div>'; }
+          h += '<details class="dic tc" style="--c:' + HUES[(norm(t.t).charCodeAt(0) - 65 + 26) % HUES.length] + '"' + (q && n <= 2 ? " open" : "") + '><summary>' + esc(t.t) + '</summary><p>' + esc(t.d) + '</p>' + refChips(t.r) + '</details>';
+        });
+        var bar = letras.length ? '<div class="dic-bar">' + letras.map(function(l){ return '<button type="button" data-dl="' + l + '" style="--c:' + HUES[(l.charCodeAt(0) - 65 + 26) % HUES.length] + '">' + l + '</button>'; }).join("") + '</div>' : "";
+        $("dicL").innerHTML = (q ? '<p class="note" style="padding:0 0 8px">' + n + (n === 1 ? " resultado" : " resultados") + '</p>' : bar) + (h || '<p class="note">No encontramos esa palabra. Prueba con la Concordancia para verla en toda la Biblia.</p>');
+        Array.prototype.forEach.call($("dicL").querySelectorAll("[data-dl]"), function(b){ b.onclick = function(){ var t = $("dl-" + b.dataset.dl); if (t) t.scrollIntoView({ behavior: "smooth", block: "start" }); }; });
       }
       $("dicQ").oninput = draw; draw();
     }, function(){ el.innerHTML = masHead("Diccionario bíblico") + '<p class="note">No se pudo cargar. Revisa tu conexión.</p>'; });
@@ -2484,7 +2552,17 @@ html.simple .act-r2{display:flex!important}
     { n:"Claro", s:["#f8f9fb","#eef2fa","#dfe6f3"], tx:"#1d2230", light:true },
     { n:"Verde salvia", s:["#33503f","#46664f","#5f7f66"], tx:"#ffffff" },
     { n:"Terracota suave", s:["#f6e9e0","#efd9ca","#e5c4ae"], tx:"#4a2a1d", light:true },
-    { n:"Burdeo", s:["#4a0f14","#7f1d1d","#9b2c2c"], tx:"#ffffff" }
+    { n:"Burdeo", s:["#4a0f14","#7f1d1d","#9b2c2c"], tx:"#ffffff" },
+    { n:"Azul marino", s:["#0b1f3a","#14325c","#1e4a85"], tx:"#ffffff" },
+    { n:"Verde bosque", s:["#0f3d2e","#1a5a43","#2a7a5c"], tx:"#ffffff" },
+    { n:"Violeta real", s:["#2e1065","#4c1d95","#6d28d9"], tx:"#ffffff" },
+    { n:"Turquesa mar", s:["#0b4a52","#0f6b73","#1a8f96"], tx:"#ffffff" },
+    { n:"Dorado antiguo", s:["#5a3d0a","#8a5f12","#b8860b"], tx:"#ffffff" },
+    { n:"Atardecer", s:["#4c1d4f","#9d2c4f","#d9662b"], tx:"#ffffff" },
+    { n:"Pizarra", s:["#2b3139","#3d454f","#566170"], tx:"#ffffff" },
+    { n:"Arena", s:["#f7efdc","#efe2c0","#e4d1a2"], tx:"#4a3a12", light:true },
+    { n:"Cielo", s:["#e6f2fb","#cfe5f6","#b3d6ef"], tx:"#12365a", light:true },
+    { n:"Rosa antiguo", s:["#fbe9ee","#f4d3dd","#e9b8c8"], tx:"#5a2336", light:true }
   ];
   var EMBL = new Image(); EMBL.src = "logo-emblema.png";
   function wrapLines(ctx, text, maxW){
