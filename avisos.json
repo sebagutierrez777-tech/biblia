@@ -1,6 +1,14 @@
 {
   "avisos": [
     {
+      "id": "2026-11-18-version-1-8",
+      "fecha": "2026-11-18",
+      "titulo": "Versión 1.8",
+      "texto": "Ahora puedes memorizar versículos por niveles, leer el Resumen de la Biblia con los 66 libros, descubrir curiosidades en Otros y guardar todas las versiones para usar la app sin internet. Buscar y Concordancia quedaron juntas. Y si prefieres letra grande y solo lo básico, activa la Versión sencilla en Aa.",
+      "enlace": "",
+      "texto_enlace": ""
+    },
+    {
       "id": "2026-11-17-version-1-7",
       "fecha": "2026-11-17",
       "titulo": "Versión 1.7",

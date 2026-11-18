@@ -486,6 +486,73 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
 .sv-sig{list-style:none;padding:0}.sv-sig li{display:flex;gap:10px}.sv-ok{flex:none;color:#15803d;margin-top:2px}
 :root[data-tone="noche"] .sv-ok{color:#4ade80}
 .sv-share{width:100%;min-height:52px;margin:10px 0 24px;background:linear-gradient(135deg,#8a6a1c,#b8860b)!important;color:#fff!important;border:0!important}
+.seg{display:flex;padding:4px;border-radius:14px;background:var(--line);margin:0 0 14px}
+.seg button{flex:1;min-height:44px;border-radius:11px;font-size:15.5px;font-weight:700;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--rubric);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+#iniEdad{height:50px;width:140px;border:1px solid #c9c6e6;border-radius:12px;padding:0 14px;font:inherit;font-size:17px;background:#fff;color:#1b1840}
+.ini-simple{background:#fff;border-radius:18px;padding:18px;border:1px solid #c9c6e6;border-bottom:4px solid #d4a72c;display:flex;flex-direction:column;gap:10px}
+.ini-simple b{font-size:19px;color:#1b1840}.ini-simple p{margin:0;font-size:15.5px;line-height:1.5;color:#4a4870}
+.ini-pie .ini-simple .ini-no{background:#fff;color:#1b1840;border:1px solid #c9c6e6}
+html.simple .verses{font-size:max(var(--fs),25px);line-height:1.7}
+html.simple nav button{min-height:66px;font-size:19px}
+html.simple nav button[data-tab="vMore"],html.simple #btnMic,html.simple #btnPulpit,html.simple .intro,html.simple .fichas,html.simple #actDots,html.simple #actNote,html.simple #actImg,html.simple #actCmp,html.simple #actCopy,html.simple #actMemo,html.simple .seg{display:none!important}
+html.simple header .pill{font-size:18px;min-height:48px}
+html.simple #btnListen{font-size:18px;min-height:52px;padding:0 20px}
+html.simple .chap-nav button{min-height:62px;font-size:18.5px}
+html.simple #actFav{min-height:52px;font-size:18px;flex:1}
+.rs-hero{padding:18px;border-radius:18px;color:#fff;background:var(--at-bg,#8a4a2c);margin-bottom:12px}
+.rs-hero.nt{background:var(--nt-bg,#2f4d8a)}
+.rs-hero small{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.rs-hero h3{margin:4px 0 6px;font-family:var(--read);font-size:30px;font-weight:600}
+.rs-hero p{margin:0;font-size:16px;line-height:1.5}
+.rs-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:12px}
+.rs-meta div{padding:10px 12px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.rs-meta span{display:block;font-size:12px;color:var(--muted);font-weight:700}.rs-meta b{font-size:14px;line-height:1.35;display:block;margin-top:2px}
+.rs-s{margin-bottom:12px;padding:14px;border-radius:14px;background:var(--surface);border:1px solid var(--line)}
+.rs-s p{margin:0;font-size:16px;line-height:1.55}
+.rs-l{display:block;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--rubric);margin-bottom:6px}
+.rs-s.cr .rs-l{color:#b91c1c}.rs-s.hoy .rs-l{color:#15803d}
+:root[data-tone="noche"] .rs-s.cr .rs-l{color:#f87171}:root[data-tone="noche"] .rs-s.hoy .rs-l{color:#4ade80}
+.rs-b{margin:0;padding:0;list-style:none;counter-reset:rb}
+.rs-b li{counter-increment:rb}
+.rs-b button{display:flex;width:100%;align-items:center;gap:10px;min-height:44px;padding:6px 0;text-align:left;border-bottom:1px solid var(--line);color:var(--ink)}
+.rs-b li:last-child button{border-bottom:0}
+.rs-b button::before{content:counter(rb);flex:none;width:24px;height:24px;border-radius:50%;background:var(--rubric-soft);color:var(--rubric);font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.rs-b span{flex:1;font-size:15.5px}.rs-b small{color:var(--muted);font-size:13px;white-space:nowrap}
+.rs-q{margin:0 0 4px;font-family:var(--read);font-size:17px;line-height:1.55}
+.rs-nav{display:flex;justify-content:space-between;gap:8px;margin:6px 0 10px}
+.rs-go{width:100%;min-height:50px;margin-bottom:6px}
+.cu{display:flex;gap:12px;padding:14px;border-radius:14px;background:var(--surface);border:1px solid var(--line);margin-bottom:10px}
+.cu-i{flex:none;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--c);background:color-mix(in srgb,var(--c) 14%,transparent)}
+:root[data-tone="noche"] .cu-i svg,:root[data-tone="noche"] .cu b{filter:brightness(1.6)}
+.cu b{display:block;font-size:16.5px;color:var(--c)}.cu p{margin:3px 0 0;font-size:15.5px;line-height:1.5}.cu .fi-r{margin-top:8px}
+.sr-top{padding:16px;border-radius:16px;background:var(--surface);border:1px solid var(--line);margin-bottom:10px}
+.sr-top p{margin:0 0 10px;font-size:15.5px;line-height:1.5}
+.sr-bar{height:10px;border-radius:5px;background:var(--line);overflow:hidden}.sr-bar i{display:block;height:100%;background:#15803d}
+.sr-v{display:flex;align-items:center;gap:12px;padding:11px 2px;border-bottom:1px solid var(--line)}
+.sr-ic{width:30px;height:30px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--line);color:var(--muted);font-weight:800}
+.sr-ic.ok{background:#dcfce7;color:#15803d}
+.sr-n{flex:1}.sr-n b{display:block;font-size:16px}.sr-n small{font-size:13px;color:var(--muted)}
+.sr-st{font-size:13px;font-weight:700;color:var(--muted)}
+.mm-sum{margin:0 0 10px;font-size:15px;color:var(--muted)}.mm-sum b{font-size:20px;color:#15803d}
+.mm{display:flex;align-items:stretch;gap:6px;margin-bottom:8px}
+.mm-go{flex:1;text-align:left;padding:12px 14px;border-radius:14px;background:var(--surface);border:1px solid var(--line);color:var(--ink)}
+.mm-go b{display:block;font-size:16px}.mm-go small{display:block;color:var(--muted);font-size:14px;line-height:1.4;margin:3px 0 6px}
+.mm-lv{font-size:13px;font-weight:800;color:var(--rubric)}
+.mm-x{width:42px;border-radius:14px;color:var(--muted);font-size:15px}
+.mp-card{padding:18px;border-radius:18px;background:var(--surface);border:1px solid var(--line)}
+.mp-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.mp-top b{font-size:16px}
+.mp-top span{font-size:12.5px;font-weight:800;color:var(--rubric);background:var(--rubric-soft);padding:4px 10px;border-radius:999px}
+.mp-t{font-family:var(--read);font-size:max(var(--fs),21px);line-height:1.85;margin:0 0 14px}
+.mp-h{font:inherit;color:var(--rubric);border-bottom:2px dashed var(--rubric);padding:0 1px;min-height:0;letter-spacing:.06em}
+.mp-bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin-bottom:10px}.mp-bar i{display:block;height:100%;background:var(--rubric)}
+.mp-hint{margin:0;font-size:14px;color:var(--muted)}
+.mp-btns{display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap;margin:12px 0}
+.mp-btns .chip[disabled]{opacity:.4}
+.mp-ok{width:100%;min-height:52px}
+.act-r2{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))}
+.act-r2 button{min-height:40px}
+html.simple .act-r2{display:flex!important}
 </style>
 <style>
 /* Presentación y bienvenida */
@@ -535,7 +602,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
 <div class="ini-tit"><h1>Biblia Multiversión</h1><p>12 versiones de la Santa Biblia<br>para leer, buscar y comparar</p></div>
 </div>
 <div class="ini-load" aria-hidden="true"><i></i></div>
-<div class="ini-pie2"><span>Versión 1.7</span><span>Desarrollado por <b>DIRCOM Chile</b></span></div>
+<div class="ini-pie2"><span>Versión 1.8</span><span>Desarrollado por <b>DIRCOM Chile</b></span></div>
 </div>
 <div class="ini ini-bien" id="iniBien" role="dialog" aria-modal="true" aria-labelledby="iniBienT" hidden>
 <div class="ini-cab"><img src="logo-emblema-claro.png" alt=""><p>Iglesia de Dios de la Profecía</p></div>
@@ -547,6 +614,9 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
 <div class="ini-pie">
 <label class="ini-nm" for="iniNombre">¿Cómo te llamas? <small>(opcional, para saludarte)</small></label>
 <input id="iniNombre" type="text" autocomplete="given-name" maxlength="30" placeholder="Tu nombre o apodo">
+<label class="ini-nm" for="iniEdad">¿Cuántos años tienes? <small>(opcional)</small></label>
+<input id="iniEdad" type="number" inputmode="numeric" min="5" max="120" placeholder="Tu edad">
+<div class="ini-simple" id="iniSimple" hidden><b>¿Quieres la versión sencilla?</b><p>Letra más grande, botones grandes y solo lo necesario para leer. Puedes cambiarlo cuando quieras en Aa.</p><button type="button" id="iniSi">Sí, versión sencilla</button><button type="button" class="ini-no" id="iniNo">No, la versión completa</button></div>
 <label><input type="checkbox" id="iniNoMas" checked> No volver a mostrar este saludo</label>
 <button type="button" id="iniIr">Comenzar a leer</button>
 </div>
@@ -564,13 +634,19 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
       document.getElementById("iniIr").focus();
     });
   }, 2200);
+  function simple(v){ try{ localStorage.setItem("biblia.sencillo", v ? "true" : "false"); window.dispatchEvent(new Event("biblia-sencillo")); }catch(e){} quitar(bi); }
+  document.getElementById("iniSi").addEventListener("click", function(){ simple(true); });
+  document.getElementById("iniNo").addEventListener("click", function(){ simple(false); });
   document.getElementById("iniIr").addEventListener("click", function(){
+    var ed = parseInt(document.getElementById("iniEdad").value, 10), box = document.getElementById("iniSimple");
+    try{ if (ed > 0 && ed < 121) localStorage.setItem("biblia.edad", String(ed)); }catch(e){}
     try{
       var nm = document.getElementById("iniNombre").value.trim();
       if (nm){ localStorage.setItem("biblia.nombre", JSON.stringify(nm)); window.dispatchEvent(new Event("biblia-nombre")); }
       if(document.getElementById("iniNoMas").checked) localStorage.setItem("biblia.bienvenidaVista","1");
       else localStorage.removeItem("biblia.bienvenidaVista");
     }catch(e){}
+    if (ed >= 60 && box.hidden){ box.hidden = false; this.hidden = true; box.scrollIntoView({ block: "center", behavior: "smooth" }); document.getElementById("iniSi").focus(); return; }
     quitar(bi);
   });
 })();
@@ -590,6 +666,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     <section class="view on" id="vRead" aria-label="Lectura"></section>
 
     <section class="view" id="vSearch" aria-label="Buscar">
+      <h2 class="sec">Buscar</h2><div class="seg" role="group" aria-label="Tipo de búsqueda"><button type="button" data-go="vSearch" aria-pressed="true">Versículos</button><button type="button" data-go="vConc" aria-pressed="false">Contar una palabra</button></div>
       <form class="search-row" id="searchForm">
         <input id="q" type="search" placeholder="Palabra o cita, ej. Juan 3:16" autocomplete="off" enterkeyhint="search" aria-label="Buscar en la Biblia">
         <button class="mic-in" type="button" data-mic="search" aria-label="Buscar por voz" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg></button>
@@ -604,8 +681,8 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
       <div id="results"><p class="note">Busca en la versión que tienes abierta. No importan las tildes ni las mayúsculas, y con comillas busca la frase exacta. Si escribes una cita como <b>Salmos 23</b> o <b>Juan 3:16</b>, te lleva directo. Con el micrófono también puedes decirla en voz alta.</p></div>
     </section>
 
-    <section class="view" id="vConc" aria-label="Concordancia">
-      <h2 class="sec">Concordancia</h2>
+    <section class="view" id="vConc" aria-label="Contar una palabra">
+      <h2 class="sec">Buscar</h2><div class="seg" role="group" aria-label="Tipo de búsqueda"><button type="button" data-go="vSearch" aria-pressed="false">Versículos</button><button type="button" data-go="vConc" aria-pressed="true">Contar una palabra</button></div>
       <form class="search-row" id="ccForm">
         <input id="ccQ" type="search" placeholder="Una palabra, por ejemplo gracia" autocomplete="off" enterkeyhint="search" aria-label="Palabra para la concordancia">
         <button class="mic-in" type="button" data-mic="conc" aria-label="Decir la palabra por voz" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg></button>
@@ -634,7 +711,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
       </div>
     </div>
     <div class="act-r2">
-      <button id="actFav">♡ Favorito</button><button id="actNote">Nota</button><button id="actImg">Imagen</button><button id="actCopy">Copiar</button><button id="actCmp">Comparar</button>
+      <button id="actFav">♡ Favorito</button><button id="actNote">Nota</button><button id="actImg">Imagen</button><button id="actCopy">Copiar</button><button id="actCmp">Comparar</button><button id="actMemo">Memorizar</button>
     </div>
   </div>
   <div id="player" hidden>
@@ -651,7 +728,6 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     <button data-tab="vFavs">Mi Biblia</button>
     <button data-tab="vRead" aria-current="page">Leer</button>
     <button data-tab="vSearch">Buscar</button>
-    <button data-tab="vConc">Concordancia</button>
     <button data-tab="vMore">Más</button>
   </nav>
 
@@ -712,6 +788,9 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
         <button type="button" class="share-main" id="btnShare"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span>Compartir la app con un hermano</span></button>
         <button type="button" class="share-qr" id="btnQr"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 17h4v4h-4"/></svg><span>Mostrar código QR</span></button>
       </div>
+      <div class="rem-box">
+        <label class="prom-row" style="margin:0"><input type="checkbox" id="cfgSimple"> <span>Versión sencilla<small>Letra más grande, botones grandes y solo lo necesario para leer.</small></span></label>
+      </div>
       <div class="rem-box" id="osBox" hidden>
         <label class="prom-row" style="margin:0"><input type="checkbox" id="osChk"> <span>Avisos de la iglesia<small id="osInfo">Recibe en tu celular los avisos de IDP Chile.</small></span></label>
       </div>
@@ -733,7 +812,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
       </div>
       <p class="note">Lila sigue el modo claro u oscuro de tu teléfono.</p>
       <label class="prom-row"><input type="checkbox" id="promChk"> <span>Resaltar suavemente las <span class="prom-demo">promesas de Jesús</span> en el Nuevo Testamento</span></label>
-      <p class="credit">Biblia Multiversión · Versión 1.7<br>Desarrollado por DIRCOM Chile · Iglesia de Dios de la Profecía</p>
+      <p class="credit">Biblia Multiversión · Versión 1.8<br>Desarrollado por DIRCOM Chile · Iglesia de Dios de la Profecía</p>
     </div>
   </div>
   <div class="mic-veil" id="micVeil" hidden>
@@ -887,19 +966,21 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     catch(e){ toast("No se pudo copiar aquí"); }
     setSel(null);
   };
+  $("actMemo").onclick = function(){ if (sel == null) return; memoAdd(cur.b, cur.c, sel); setSel(null); };
   $("actCmp").onclick = function(){ if (sel == null) return; cmpVerse = sel; setSel(null); tab("vCompare"); };
 
   /* ---------- Pestañas ---------- */
   function tab(id){
     var views = document.querySelectorAll(".view"), btns = document.querySelectorAll("nav button");
     for (var i=0;i<views.length;i++) views[i].classList.toggle("on", views[i].id === id);
-    for (var j=0;j<btns.length;j++){ if (btns[j].dataset.tab === id || (id === "vCompare" && btns[j].dataset.tab === "vMore")) btns[j].setAttribute("aria-current","page"); else btns[j].removeAttribute("aria-current"); }
+    for (var j=0;j<btns.length;j++){ if (btns[j].dataset.tab === id || (id === "vCompare" && btns[j].dataset.tab === "vMore") || (id === "vConc" && btns[j].dataset.tab === "vSearch")) btns[j].setAttribute("aria-current","page"); else btns[j].removeAttribute("aria-current"); }
     if (id !== "vRead") setSel(null);
     if (id === "vCompare") renderCompare();
     if (id === "vFavs") renderFavs();
     if (id === "vMore") renderMore();
     $("main").scrollTop = 0;
   }
+  document.addEventListener("click", function(e){ var g = e.target.closest(".seg [data-go]"); if (g){ tab(g.dataset.go); var f = $(g.dataset.go === "vConc" ? "ccQ" : "q"); if (f && !f.value) f.focus(); } });
   document.querySelector("nav").addEventListener("click", function(e){ var b = e.target.closest("button"); if (b) tab(b.dataset.tab); });
 
   /* ---------- Hojas ---------- */
@@ -1101,6 +1182,8 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
       if (!$("micVeil").hidden){ micClose(); arm(); return; }
       if (sel != null){ setSel(null); arm(); return; }
       var cur0 = document.querySelector(".view.on");
+      if (cur0 && cur0.id === "vMore" && masSub === "memoP"){ renderMore("memo"); arm(); return; }
+      if (cur0 && cur0.id === "vMore" && masSub === "resumen" && document.querySelector(".rs-hero")){ renderMore("resumen"); arm(); return; }
       if (cur0 && cur0.id === "vMore" && masSub){ renderMore(); arm(); return; }
       if (cur0 && cur0.id === "vCompare"){ tab("vMore"); arm(); return; }
       if (cur0 && cur0.id !== "vRead"){ tab("vRead"); arm(); return; }
@@ -1377,11 +1460,15 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
   function svgI(p){ return '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + p + '</svg>'; }
   var MAS = [
     ["salv", "Plan de salvación", "Cómo empezar una vida con Jesús", svgI('<path d="M12 3v18M7 8h10"/>'), "nt"],
+    ["memo", "Memorizar", "Guarda versículos en tu corazón", svgI('<path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/>'), "at"],
+    ["resumen", "Resumen de la Biblia", "Mini estudio de los 66 libros", svgI('<path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M8 7h6M8 11h6M8 15h3"/>'), "at"],
     ["mapa", "Mapas bíblicos", "Los lugares del capítulo que lees", svgI('<path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/>'), "at"],
     ["gen", "Genealogías", "De Adán a Jesús", svgI('<circle cx="12" cy="5" r="2.5"/><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5H6v5M12 11.5h6v5"/>'), "nt"],
     ["dic", "Diccionario bíblico", "Palabras clave de la fe", svgI('<path d="M4 19V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M8 7h7M8 11h5"/>'), "nt"],
     ["biblio", "Bibliología", "Estudio corto sobre la Biblia", svgI('<path d="M7 4h11a2 2 0 0 1 0 4H7"/><path d="M7 4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11V8"/><path d="M9 12h6M9 15.5h4"/>'), "at"],
     ["az", "Personajes y lugares", "Todas las fichas de la A a la Z", svgI('<circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5"/><path d="M17 21s4-3.5 4-7a4 4 0 0 0-8 0c0 3.5 4 7 4 7z"/>'), "at"],
+    ["otros", "Otros", "Curiosidades de la Biblia", svgI('<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5h.01"/>'), "nt"],
+    ["sinred", "Usar sin internet", "Guarda todas las versiones", svgI('<path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"/><path d="M12 19.5h.01"/>'), "at"],
     ["cmp", "Comparar versiones", "Un versículo en varias traducciones", svgI('<rect x="3" y="4" width="7" height="16" rx="1.5"/><rect x="14" y="4" width="7" height="16" rx="1.5"/>'), "at"],
     ["resp", "Respaldo", "Guarda tus favoritos y notas", svgI('<path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 21h14"/>'), "nt"]
   ];
@@ -1486,6 +1573,123 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     });
     $("vMore").innerHTML = h + '<p class="note">Estudio de apoyo de la Biblia Multiversión.</p>';
   }
+  /* ---------- Resumen de la Biblia ---------- */
+  var RESUMEN = null;
+  function renderResumen(b){
+    var el = $("vMore");
+    if (!RESUMEN){ el.innerHTML = masHead("Resumen de la Biblia") + '<p class="note">Cargando…</p>';
+      Promise.all([getJSON("resumen.json").then(function(j){ RESUMEN = j.libros; }), loadIntros().catch(function(){})]).then(function(){ if (masSub === "resumen") renderResumen(b); }, function(){ el.innerHTML = masHead("Resumen de la Biblia") + '<p class="note">No se pudo cargar. Revisa tu conexión.</p>'; }); return; }
+    if (b == null){
+      var h = masHead("Resumen de la Biblia") + '<p class="sv-in">Un mini estudio de cada libro: su tema, cómo se ordena, dónde vemos a Cristo y qué nos enseña hoy. Elige un libro.</p>';
+      CANON.forEach(function(t){ h += '<div class="grp ' + t[1] + '">' + t[0] + '</div>';
+        t[2].forEach(function(g){ h += '<div class="cn-g"><b>' + esc(g[0]) + '</b><div class="fi-r">'; for (var k = g[1]; k <= g[2]; k++) h += '<button type="button" class="chip" data-rs="' + k + '">' + esc(bname(k)) + '</button>'; h += '</div></div>'; }); });
+      el.innerHTML = h; return;
+    }
+    var r = RESUMEN[b], it = INTROS && INTROS[b], nt = b >= 39, grupo = "";
+    CANON.forEach(function(t){ t[2].forEach(function(g){ if (b >= g[1] && b <= g[2]) grupo = g[0]; }); });
+    var h = '<div class="mas-h"><button type="button" class="icon" data-rs="" aria-label="Volver a la lista de libros">‹</button><h2>Resumen de la Biblia</h2></div>';
+    h += '<div class="rs-hero ' + (nt ? "nt" : "at") + '"><small>Libro ' + (b+1) + ' de 66 · ' + esc(grupo) + '</small><h3>' + esc(bname(b)) + '</h3><p>' + esc(r.tema) + '</p></div>';
+    if (it) h += '<div class="rs-meta"><div><span>Autor</span><b>' + esc(it.autor) + '</b></div><div><span>Fecha</span><b>' + esc(it.fecha) + '</b></div></div>';
+    h += '<div class="rs-s"><span class="rs-l">Bosquejo</span><ol class="rs-b">';
+    r.bosquejo.forEach(function(x){ var c0 = parseInt(String(x[1]).split(/[–:-]/)[0], 10) || 1; h += '<li><button type="button" data-rb="' + b + '" data-rc="' + (c0-1) + '"><span>' + esc(x[0]) + '</span><small>' + (META.books[b][1].length > 1 ? "Cap. " : "Vv. ") + esc(x[1]) + '</small></button></li>'; });
+    h += '</ol></div><div class="rs-s cr"><span class="rs-l">Cristo en ' + esc(bname(b)) + '</span><p>' + esc(r.cristo) + '</p></div><div class="rs-s hoy"><span class="rs-l">Para hoy</span><p>' + esc(r.hoy) + '</p></div>';
+    if (it && it.clave){ var x = versoTxt([b, it.clave[0], it.clave[1]]); if (x) h += '<div class="rs-s"><span class="rs-l">Versículo clave</span><blockquote class="rs-q">“' + esc(x.t) + '”</blockquote>' + refChips([[b, it.clave[0], it.clave[1]]]) + '</div>'; }
+    h += '<div class="rs-nav">' + (b > 0 ? '<button type="button" class="chip" data-rs="' + (b-1) + '">‹ ' + esc(bname(b-1)) + '</button>' : '<span></span>') + (b < 65 ? '<button type="button" class="chip" data-rs="' + (b+1) + '">' + esc(bname(b+1)) + ' ›</button>' : '') + '</div>';
+    h += '<button type="button" class="btn rs-go" data-rb="' + b + '" data-rc="0">Leer ' + esc(bname(b)) + '</button><p class="note">Resumen de apoyo de la Biblia Multiversión.</p>';
+    el.innerHTML = h; $("main").scrollTop = 0;
+  }
+
+  /* ---------- Curiosidades ---------- */
+  var CURIO = null;
+  function renderCurio(){
+    var el = $("vMore");
+    if (!CURIO){ el.innerHTML = masHead("¿Sabías que…?") + '<p class="note">Cargando…</p>'; getJSON("curiosidades.json").then(function(j){ CURIO = j.items; if (masSub === "otros") renderCurio(); }, function(){ el.innerHTML = masHead("¿Sabías que…?") + '<p class="note">No se pudo cargar. Revisa tu conexión.</p>'; }); return; }
+    var h = masHead("¿Sabías que…?") + '<p class="sv-in">Datos curiosos de la Biblia, contados sobre el texto de la Reina-Valera 1960.</p>';
+    CURIO.forEach(function(c){ h += '<div class="cu" style="--c:' + c.c + '"><span class="cu-i">' + (ICO_EP[c.i] ? '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + ICO_EP[c.i] + '</svg>' : '') + '</span><div><b>' + esc(c.t) + '</b><p>' + esc(c.d) + '</p>' + (c.r ? refChips([c.r]) : '') + '</div></div>'; });
+    el.innerHTML = h + '<p class="note">Las cifras pueden variar un poco en otras traducciones.</p>';
+  }
+
+  /* ---------- Usar sin internet ---------- */
+  var sinredBusy = false;
+  function verGuardada(v){
+    if (EMB(v.id)) return Promise.resolve(true);
+    if (!window.caches) return Promise.resolve(false);
+    return caches.match(new URL("data/" + v.id + ".json", location.href).href).then(function(r){ return !!r; }, function(){ return false; });
+  }
+  function renderSinRed(){
+    var el = $("vMore"), V = META.versions;
+    Promise.all(V.map(verGuardada)).then(function(ok){
+      if (masSub !== "sinred") return;
+      var n = ok.filter(Boolean).length, h = masHead("Usar sin internet");
+      h += '<div class="sr-top"><p>Tienes <b>' + n + ' de ' + V.length + '</b> versiones guardadas en este teléfono. ' + (n === V.length ? "Ya puedes leer todas sin señal, en el templo o en el campo." : "Guárdalas todas y lee tranquilo aunque no haya señal.") + '</p><div class="sr-bar"><i style="width:' + Math.round(n / V.length * 100) + '%"></i></div></div>';
+      V.forEach(function(v, i){ h += '<div class="sr-v"><span class="sr-ic ' + (ok[i] ? "ok" : "") + '">' + (ok[i] ? "✓" : "↓") + '</span><span class="sr-n"><b>' + esc(v.code) + '</b><small>' + esc(v.name) + '</small></span><span class="sr-st">' + (ok[i] ? "Guardada" : "Falta") + '</span></div>'; });
+      if (n < V.length) h += '<button type="button" class="btn" id="srAll" style="width:100%;min-height:52px;margin-top:16px"' + (sinredBusy ? " disabled" : "") + '>' + (sinredBusy ? "Guardando…" : "Guardar todas las versiones") + '</button><p class="note">Conviene hacerlo con wifi. Son unos 4 a 5 MB por versión.</p>';
+      else h += '<p class="note" style="padding-top:14px">Los mapas necesitan internet para dibujarse, pero todo lo demás funciona sin señal.</p>';
+      el.innerHTML = h;
+      var b = $("srAll"); if (b) b.onclick = function(){
+        sinredBusy = true; b.disabled = true; b.textContent = "Guardando…";
+        try{ navigator.storage && navigator.storage.persist && navigator.storage.persist(); }catch(e){}
+        var falt = V.filter(function(v, i){ return !ok[i]; }), done = 0, err = 0;
+        (function next(){
+          if (!falt.length){ sinredBusy = false; toast(err ? "Faltaron " + err + ". Revisa tu conexión e intenta de nuevo." : "Listo, todas las versiones están guardadas"); if (masSub === "sinred") renderSinRed(); return; }
+          var v = falt.shift(); if ($("srAll")) $("srAll").textContent = "Guardando " + v.code + "… (" + (++done) + ")";
+          load(v.id).then(function(){ return new Promise(function(r){ setTimeout(r, 300); }); }, function(){ err++; }).then(next);
+        })();
+      };
+    });
+  }
+
+  /* ---------- Memorizar ---------- */
+  var MEMO = store.get("memo", []);
+  var MEMO_SUG = [[42,2,15],[18,22,0],[18,118,104],[49,3,12],[44,7,27],[19,2,4],[22,39,30],[39,5,32],[43,0,7],[5,0,8]];
+  function memoKey(b, c, v){ return b + "." + c + "." + v; }
+  function memoFind(k){ for (var i=0;i<MEMO.length;i++) if (MEMO[i].k === k) return MEMO[i]; return null; }
+  function memoAdd(b, c, v){ var k = memoKey(b, c, v); if (!memoFind(k)){ MEMO.push({ k: k, n: 0 }); store.set("memo", MEMO); toast("Agregado a Memorizar"); } else toast("Ya está en tu lista para memorizar"); }
+  function memoTxt(k){ var p = k.split(".").map(Number), x = versoTxt([p[0], p[1]+1, p[2]+1]); return x ? x.t : ""; }
+  var NIVELES = ["Lee y repite", "Faltan algunas palabras", "Faltan muchas palabras", "Solo las iniciales"];
+  function renderMemo(){
+    var el = $("vMore");
+    if (!DATA["rvr1960"]){ el.innerHTML = masHead("Memorizar versículos") + '<p class="note">Cargando…</p>'; load("rvr1960").then(function(){ if (masSub === "memo") renderMemo(); }); return; }
+    var h = masHead("Memorizar versículos") + '<p class="sv-in">Guarda la palabra en tu corazón. Practica en cuatro niveles: cada vez se esconden más palabras.</p>';
+    if (MEMO.length){
+      var hechos = MEMO.filter(function(m){ return m.n >= 4; }).length;
+      h += '<div class="mm-sum"><b>' + hechos + '</b> de ' + MEMO.length + ' memorizados</div>';
+      MEMO.forEach(function(m, i){ var p = m.k.split(".").map(Number);
+        h += '<div class="mm"><button type="button" class="mm-go" data-mp="' + i + '"><b>' + esc(refText(p[0], p[1], p[2])) + '</b><small>' + esc(memoTxt(m.k).slice(0, 70)) + '…</small><span class="mm-lv">' + (m.n >= 4 ? "✓ Memorizado" : "Nivel " + (m.n + 1) + " de 4") + '</span></button><button type="button" class="mm-x" data-md="' + i + '" aria-label="Quitar de la lista">✕</button></div>'; });
+    } else h += '<p class="note" style="padding-top:0">Todavía no tienes versículos. Toca uno de estos para empezar, o mientras lees toca un versículo y elige <b>Memorizar</b>.</p>';
+    h += '<div class="grp" style="margin-top:20px">Sugeridos para empezar</div><div class="fi-r">';
+    MEMO_SUG.forEach(function(r){ var k = memoKey(r[0], r[1], r[2]); if (!memoFind(k)) h += '<button type="button" class="chip" data-ma="' + k + '">+ ' + esc(refText(r[0], r[1], r[2])) + '</button>'; });
+    el.innerHTML = h + '</div>';
+  }
+  var MP = { i: 0, lv: 0, shown: {}, all: false };
+  function renderMemoP(){
+    var m = MEMO[MP.i]; if (!m){ renderMore("memo"); return; }
+    var p = m.k.split(".").map(Number), W = memoTxt(m.k).split(/\s+/), lv = MP.lv;
+    var h = '<div class="mas-h"><button type="button" class="icon" data-mas="memo" aria-label="Volver a Memorizar">‹</button><h2>Practicar</h2></div><div class="mp-card"><div class="mp-top"><b>' + esc(refText(p[0], p[1], p[2])) + '</b><span>Nivel ' + (lv + 1) + ' de 4</span></div><p class="mp-t">';
+    W.forEach(function(w, i){
+      var hide = !MP.all && !MP.shown[i] && (lv === 1 ? i % 4 === 2 : lv === 2 ? i % 2 === 1 || i % 5 === 0 : lv === 3);
+      if (!hide){ h += esc(w) + " "; return; }
+      var core = w.replace(/[.,;:¡!¿?«»“”()]/g, ""), punct = w.slice(core.length);
+      h += '<button type="button" class="mp-h" data-mw="' + i + '" aria-label="Mostrar palabra">' + (lv === 3 ? esc(core.charAt(0)) + "_".repeat(Math.max(1, Math.min(6, core.length - 1))) : "_".repeat(Math.max(3, Math.min(9, core.length)))) + '</button>' + esc(punct) + " ";
+    });
+    h += '</p><div class="mp-bar"><i style="width:' + (lv + 1) * 25 + '%"></i></div><p class="mp-hint">' + esc(NIVELES[lv]) + '. ' + (lv ? "Toca una raya para ver la palabra." : "Léelo en voz alta un par de veces.") + '</p></div>';
+    h += '<div class="mp-btns"><button type="button" class="chip" data-ml="-1"' + (lv ? "" : " disabled") + '>‹ Más fácil</button><button type="button" class="chip" data-mall>' + (MP.all ? "Volver a esconder" : "Mostrar todo") + '</button><button type="button" class="chip" data-ml="1"' + (lv < 3 ? "" : " disabled") + '>Más difícil ›</button></div>';
+    if (lv === 3) h += '<button type="button" class="btn mp-ok" data-mok>¡Lo dije completo!</button>';
+    else h += '<button type="button" class="btn mp-ok" data-ml="1">Ya lo tengo, siguiente nivel</button>';
+    $("vMore").innerHTML = h;
+  }
+  $("vMore").addEventListener("click", function(e){
+    var t;
+    if ((t = e.target.closest("[data-rs]"))){ e.stopPropagation(); masSub = "resumen"; renderResumen(t.dataset.rs === "" ? null : +t.dataset.rs); return; }
+    if ((t = e.target.closest("[data-rb]"))){ e.stopPropagation(); go(+t.dataset.rb, +t.dataset.rc, 0); return; }
+    if ((t = e.target.closest("[data-ma]"))){ e.stopPropagation(); var p = t.dataset.ma.split(".").map(Number); memoAdd(p[0], p[1], p[2]); renderMemo(); return; }
+    if ((t = e.target.closest("[data-md]"))){ e.stopPropagation(); MEMO.splice(+t.dataset.md, 1); store.set("memo", MEMO); renderMemo(); return; }
+    if ((t = e.target.closest("[data-mp]"))){ e.stopPropagation(); MP = { i: +t.dataset.mp, lv: Math.min(MEMO[+t.dataset.mp].n, 3), shown: {}, all: false }; masSub = "memoP"; renderMemoP(); $("main").scrollTop = 0; return; }
+    if ((t = e.target.closest("[data-mw]"))){ e.stopPropagation(); MP.shown[+t.dataset.mw] = 1; renderMemoP(); return; }
+    if ((t = e.target.closest("[data-mall]"))){ e.stopPropagation(); MP.all = !MP.all; renderMemoP(); return; }
+    if ((t = e.target.closest("[data-ml]"))){ e.stopPropagation(); MP.lv = Math.max(0, Math.min(3, MP.lv + +t.dataset.ml)); MP.shown = {}; MP.all = false; var m = MEMO[MP.i]; if (m && MP.lv > m.n){ m.n = MP.lv; store.set("memo", MEMO); } renderMemoP(); return; }
+    if ((t = e.target.closest("[data-mok]"))){ e.stopPropagation(); MEMO[MP.i].n = 4; store.set("memo", MEMO); toast("¡Gloria a Dios! Versículo memorizado"); renderMore("memo"); return; }
+  }, true);
   var masSub = null;
   function masHead(t){ return '<div class="mas-h"><button type="button" class="icon" data-mas="" aria-label="Volver a Más">‹</button><h2>' + esc(t) + '</h2></div>'; }
   function renderMore(sub, opt){
@@ -1503,6 +1707,10 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
     if (sub === "az") return renderAZ();
     if (sub === "resp") return renderResp();
     if (sub === "salv") return renderSalv();
+    if (sub === "memo") return renderMemo();
+    if (sub === "resumen") return renderResumen(opt);
+    if (sub === "otros") return renderCurio();
+    if (sub === "sinred") return renderSinRed();
     if (sub === "biblio") return renderBiblio();
   }
   $("vMore").addEventListener("click", function(e){
@@ -2116,6 +2324,18 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
   }
   function seeAvisos(){ var ch = false; AVISOS.forEach(function(a){ if (vistos.indexOf(a.id) < 0){ vistos.push(a.id); ch = true; } }); if (ch){ store.set("avisosVistos", vistos); setTimeout(markDot, 1500); } }
 
+
+
+  /* ---------- Versión sencilla ---------- */
+  var simple = store.get("sencillo", false);
+  function applySimple(){
+    document.documentElement.classList.toggle("simple", !!simple);
+    var c = $("cfgSimple"); if (c) c.checked = !!simple;
+    if (simple){ var on = document.querySelector(".view.on"); if (on && /^(vConc|vMore|vCompare)$/.test(on.id)) tab("vRead"); }
+  }
+  window.addEventListener("biblia-sencillo", function(){ simple = store.get("sencillo", false); applySimple(); });
+  $("cfgSimple").onchange = function(){ simple = this.checked; store.set("sencillo", simple); applySimple(); toast(simple ? "Versión sencilla activada" : "Versión completa activada"); };
+  applySimple();
 
   /* ---------- Avisos de la iglesia (OneSignal) ---------- */
   var OS = null, OS_ID = "06abe668-2063-4c3d-a674-a213a5a5db2f";
