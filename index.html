@@ -553,6 +553,7 @@ html.simple #actFav{min-height:52px;font-size:18px;flex:1}
 .act-r2{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))}
 .act-r2 button{min-height:40px}
 html.simple .act-r2{display:flex!important}
+.volver{position:sticky;top:8px;z-index:6;box-shadow:0 2px 10px rgba(0,0,0,.12);display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 16px;margin:0 0 12px;border-radius:999px;background:var(--rubric-soft);color:var(--rubric);font-size:15.5px;font-weight:700}
 </style>
 <style>
 /* Presentación y bienvenida */
@@ -923,7 +924,7 @@ html.simple .act-r2{display:flex!important}
     var hola = holaHtml(); if (hola) holaShown = true;
     if (!INTROS) loadIntros().then(function(){ if ($("vRead").classList.contains("on")) renderReadKeep(); }, function(){});
     if (!FICHAS) loadFichas().then(function(){ if ($("vRead").classList.contains("on")) renderReadKeep(); }, function(){});
-    el.innerHTML = hola + head + lst + introHtml() + fichasHtml() + tip + '<div class="verses">' + html + '</div><div class="chap-nav"><button id="prevC"' + (first ? " disabled" : "") + '>‹ Capítulo anterior</button><button id="nextC"' + (last ? " disabled" : "") + '>Capítulo siguiente ›</button></div>';
+    el.innerHTML = (typeof volverA !== "undefined" && volverA ? volverHtml() : "") + hola + head + lst + introHtml() + fichasHtml() + tip + '<div class="verses">' + html + '</div><div class="chap-nav"><button id="prevC"' + (first ? " disabled" : "") + '>‹ Capítulo anterior</button><button id="nextC"' + (last ? " disabled" : "") + '>Capítulo siguiente ›</button></div>';
     $("prevC").onclick = function(){ step(-1); };
     if ($("remOk")) $("remOk").onclick = function(e){ e.stopPropagation(); store.set("remDia", today()); tab("vFavs"); };
     if ($("tipOk")) $("tipOk").onclick = function(e){ e.stopPropagation(); store.set("tipVerso", true); var t = $("tipV"); if (t) t.remove(); };
@@ -1168,6 +1169,19 @@ html.simple .act-r2{display:flex!important}
   $("fiBody").addEventListener("click", function(e){ var mp = e.target.closest("[data-mapa]"); if (mp){ var f = FICHAS[+mp.dataset.mapa]; loadMapas().then(function(){ var p = placeForFicha(f); if (p < 0){ toast("Este lugar todavía no está en el mapa"); return; } closeSheets(); tab("vMore"); renderMore("mapa", { place: p }); }, function(){ toast("Revisa tu conexión"); }); return; } var b = e.target.closest(".chip[data-b]"); if (!b) return; closeSheets(); go(+b.dataset.b, +b.dataset.c, +b.dataset.v); });
   $("vRead").addEventListener("click", function(e){ var b = e.target.closest(".fch"); if (b){ e.stopPropagation(); openFicha(+b.dataset.fi); } }, true);
 
+
+  /* ---------- Volver a Más después de abrir una cita ---------- */
+  var volverA = null;
+  function volverTitulo(v){ if (v.sub === "resumen" && v.opt != null) return "el resumen de " + bname(v.opt); for (var i=0;i<MAS.length;i++) if (MAS[i][0] === v.sub) return MAS[i][1]; return "Más"; }
+  $("vMore").addEventListener("click", function(e){
+    if (!masSub) return;
+    if (e.target.closest("[data-rb], .chip[data-b], [data-cb]")) volverA = { sub: masSub === "memoP" ? "memo" : masSub, opt: masSub === "resumen" ? rsCur : undefined, top: $("main").scrollTop };
+  }, true);
+  function volverHtml(){ return volverA ? '<button type="button" class="volver" data-volver>‹ Volver a ' + esc(volverTitulo(volverA)) + '</button>' : ""; }
+  function volver(){ var v = volverA; volverA = null; if (!v) return false; tab("vMore"); renderMore(v.sub, v.opt); setTimeout(function(){ $("main").scrollTop = v.top || 0; }, 30); return true; }
+  $("vRead").addEventListener("click", function(e){ if (e.target.closest("[data-volver]")){ e.stopPropagation(); volver(); } }, true);
+  document.querySelector("nav").addEventListener("click", function(){ volverA = null; }, true);
+
   /* ---------- Botón atrás ---------- */
   (function(){
     var leaving = false;
@@ -1182,6 +1196,7 @@ html.simple .act-r2{display:flex!important}
       if (!$("micVeil").hidden){ micClose(); arm(); return; }
       if (sel != null){ setSel(null); arm(); return; }
       var cur0 = document.querySelector(".view.on");
+      if (cur0 && cur0.id === "vRead" && volverA){ volver(); arm(); return; }
       if (cur0 && cur0.id === "vMore" && masSub === "memoP"){ renderMore("memo"); arm(); return; }
       if (cur0 && cur0.id === "vMore" && masSub === "resumen" && document.querySelector(".rs-hero")){ renderMore("resumen"); arm(); return; }
       if (cur0 && cur0.id === "vMore" && masSub){ renderMore(); arm(); return; }
@@ -1575,8 +1590,9 @@ html.simple .act-r2{display:flex!important}
   }
   /* ---------- Resumen de la Biblia ---------- */
   var RESUMEN = null;
+  var rsCur = null;
   function renderResumen(b){
-    var el = $("vMore");
+    var el = $("vMore"); rsCur = b == null ? null : b;
     if (!RESUMEN){ el.innerHTML = masHead("Resumen de la Biblia") + '<p class="note">Cargando…</p>';
       Promise.all([getJSON("resumen.json").then(function(j){ RESUMEN = j.libros; }), loadIntros().catch(function(){})]).then(function(){ if (masSub === "resumen") renderResumen(b); }, function(){ el.innerHTML = masHead("Resumen de la Biblia") + '<p class="note">No se pudo cargar. Revisa tu conexión.</p>'; }); return; }
     if (b == null){
