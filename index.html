@@ -1172,12 +1172,12 @@ html.simple .act-r2{display:flex!important}
 
   /* ---------- Volver a Más después de abrir una cita ---------- */
   var volverA = null;
-  function volverTitulo(v){ if (v.sub === "resumen" && v.opt != null) return "el resumen de " + bname(v.opt); for (var i=0;i<MAS.length;i++) if (MAS[i][0] === v.sub) return MAS[i][1]; return "Más"; }
+  function volverTitulo(v){ if (v.sub === "resumen" && v.opt != null) return "al resumen de " + bname(v.opt); for (var i=0;i<MAS.length;i++) if (MAS[i][0] === v.sub) return "a " + MAS[i][1]; return "a Más"; }
   $("vMore").addEventListener("click", function(e){
     if (!masSub) return;
     if (e.target.closest("[data-rb], .chip[data-b], [data-cb]")) volverA = { sub: masSub === "memoP" ? "memo" : masSub, opt: masSub === "resumen" ? rsCur : undefined, top: $("main").scrollTop };
   }, true);
-  function volverHtml(){ return volverA ? '<button type="button" class="volver" data-volver>‹ Volver a ' + esc(volverTitulo(volverA)) + '</button>' : ""; }
+  function volverHtml(){ return volverA ? '<button type="button" class="volver" data-volver>‹ Volver ' + esc(volverTitulo(volverA)) + '</button>' : ""; }
   function volver(){ var v = volverA; volverA = null; if (!v) return false; tab("vMore"); renderMore(v.sub, v.opt); setTimeout(function(){ $("main").scrollTop = v.top || 0; }, 30); return true; }
   $("vRead").addEventListener("click", function(e){ if (e.target.closest("[data-volver]")){ e.stopPropagation(); volver(); } }, true);
   document.querySelector("nav").addEventListener("click", function(){ volverA = null; }, true);
@@ -1697,7 +1697,7 @@ html.simple .act-r2{display:flex!important}
   $("vMore").addEventListener("click", function(e){
     var t;
     if ((t = e.target.closest("[data-rs]"))){ e.stopPropagation(); masSub = "resumen"; renderResumen(t.dataset.rs === "" ? null : +t.dataset.rs); return; }
-    if ((t = e.target.closest("[data-rb]"))){ e.stopPropagation(); go(+t.dataset.rb, +t.dataset.rc, 0); return; }
+    if ((t = e.target.closest("[data-rb]"))){ e.stopPropagation(); go(+t.dataset.rb, +t.dataset.rc); return; }
     if ((t = e.target.closest("[data-ma]"))){ e.stopPropagation(); var p = t.dataset.ma.split(".").map(Number); memoAdd(p[0], p[1], p[2]); renderMemo(); return; }
     if ((t = e.target.closest("[data-md]"))){ e.stopPropagation(); MEMO.splice(+t.dataset.md, 1); store.set("memo", MEMO); renderMemo(); return; }
     if ((t = e.target.closest("[data-mp]"))){ e.stopPropagation(); MP = { i: +t.dataset.mp, lv: Math.min(MEMO[+t.dataset.mp].n, 3), shown: {}, all: false }; masSub = "memoP"; renderMemoP(); $("main").scrollTop = 0; return; }
