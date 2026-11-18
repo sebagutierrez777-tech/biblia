@@ -603,6 +603,14 @@ html.simple .act-r2{display:flex!important}
 .hs-f{display:block;font-size:12.5px;font-weight:800;color:var(--muted);letter-spacing:.03em}
 .hs-t b{display:block;font-size:17px;margin:2px 0 4px}.hs-t p{margin:0 0 6px;font-size:15.5px;line-height:1.55}
 .hs-w{display:block;font-size:13px;color:var(--muted);margin-top:1px}
+.mj-g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.mj-c{aspect-ratio:3/4;border-radius:12px;border:0;background:#0e7490;color:#e0f2fe;display:flex;align-items:center;justify-content:center;padding:5px;text-align:center;transition:transform .2s}
+.mj-c i{font-style:normal;font-size:26px;opacity:.7}
+.mj-c.up{background:var(--surface);border:2px solid #0e7490;color:var(--ink)}
+.mj-c.up span{font-size:12.5px;line-height:1.3;font-weight:600}
+.mj-c.up.nm span{font-family:var(--read);font-size:15px;font-weight:600}
+.mj-c.ok{border-color:#15803d;background:#dcfce7;color:#14532d}
+:root[data-tone="noche"] .mj-c.ok{background:#14532d;color:#dcfce7}
 </style>
 <style>
 /* Presentación y bienvenida */
@@ -1768,13 +1776,14 @@ html.simple .act-r2{display:flex!important}
     ["puzzle", "Puzzle de versículos", "Ordena las palabras del versículo", '<path d="M10 3h4v3a2 2 0 1 0 4 0V3h3v7h-3a2 2 0 1 0 0 4h3v7h-7v-3a2 2 0 1 0-4 0v3H3v-7h3a2 2 0 1 0 0-4H3V3z"/>', "#15803d"],
     ["quien", "¿Quién soy?", "Adivina el personaje con pistas", '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/>', "#b45309"],
     ["trivia", "Trivia bíblica", "Diez preguntas de alternativas", '<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5h.01"/>', "#6d28d9"],
-    ["libros", "Ordena los libros", "Pon los libros en su orden, contra el reloj", '<path d="M4 19V5M9 19V5M14 19l4-14M20 19H3"/>', "#8a4a2c"]
+    ["libros", "Ordena los libros", "Pon los libros en su orden, contra el reloj", '<path d="M4 19V5M9 19V5M14 19l4-14M20 19H3"/>', "#8a4a2c"],
+    ["parejas", "Memoria", "Une cada personaje con lo que hizo", '<rect x="3" y="4" width="8" height="11" rx="1.5"/><rect x="13" y="9" width="8" height="11" rx="1.5"/>', "#0e7490"]
   ];
   var GAME_IDS = GAMES.map(function(g){ return g[0]; });
   function gHead(t){ return masHead(t, "juegos"); }
   function renderJuegos(){
     var h = masHead("Juegos") + '<p class="sv-in">Aprende la Biblia jugando, solo o en familia.</p><div class="jg-l">';
-    GAMES.forEach(function(g){ var sc = g[0] === "memo" ? (MEMO.filter(function(m){ return m.n >= 4; }).length + " memorizados") : JSCORE[g[0]] != null ? (g[0] === "libros" ? "Mejor tiempo: " + JSCORE[g[0]] + " s" : "Récord: " + JSCORE[g[0]]) : "";
+    GAMES.forEach(function(g){ var sc = g[0] === "memo" ? (MEMO.filter(function(m){ return m.n >= 4; }).length + " memorizados") : JSCORE[g[0]] != null ? (g[0] === "libros" ? "Mejor tiempo: " + JSCORE[g[0]] + " s" : g[0] === "parejas" ? "Récord: " + JSCORE[g[0]] + " jugadas" : "Récord: " + JSCORE[g[0]]) : "";
       h += '<button type="button" class="jg" data-mas="' + g[0] + '" style="--c:' + g[4] + '"><span class="jg-i"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + g[3] + '</svg></span><span class="jg-t"><b>' + esc(g[1]) + '</b><small>' + esc(g[2]) + '</small>' + (sc ? '<em>' + esc(sc) + '</em>' : '') + '</span><span class="jg-a">›</span></button>'; });
     $("vMore").innerHTML = h + '</div>';
   }
@@ -1933,6 +1942,35 @@ html.simple .act-r2{display:flex!important}
     else if (t.closest("[data-olnew]")){ olNuevo(); renderLibros(); }
   });
 
+
+  /* Memoria (parejas) */
+  var MJ = null;
+  function mjNuevo(){ var P = shuffle(JUEGOS.parejas).slice(0, 6), cards = [];
+    P.forEach(function(p, i){ cards.push({ p: i, t: p[0], k: "n" }); cards.push({ p: i, t: p[1], k: "h" }); });
+    MJ = { cards: shuffle(cards), open: [], done: {}, moves: 0, lock: false, t0: Date.now() }; }
+  function renderParejas(){
+    if (!gReady()) return gLoading("Memoria", renderParejas);
+    if (!MJ) mjNuevo();
+    var n = Object.keys(MJ.done).length, h = gHead("Memoria") + '<div class="pz-top"><b>Une cada personaje con lo que hizo</b><span>Jugadas: ' + MJ.moves + '</span></div><div class="mj-g">';
+    MJ.cards.forEach(function(c, i){ var up = MJ.open.indexOf(i) >= 0 || MJ.done[c.p];
+      h += '<button type="button" class="mj-c' + (up ? " up" : "") + (MJ.done[c.p] ? " ok" : "") + (c.k === "n" ? " nm" : "") + '" data-mj="' + i + '" aria-label="' + (up ? esc(c.t) : "Carta boca abajo") + '">' + (up ? '<span>' + esc(c.t) + '</span>' : '<i aria-hidden="true">✦</i>') + '</button>'; });
+    h += '</div>';
+    if (n === 6){ var rec = jSave("parejas", MJ.moves, true); h += '<div class="g-win"><b>¡Encontraste las 6 parejas!</b><p>En ' + MJ.moves + ' jugadas y ' + Math.round((Date.now() - MJ.t0) / 1000) + ' segundos.' + (rec ? " ¡Nuevo récord!" : "") + '</p><button type="button" class="btn" data-mjnew>Jugar otra vez</button></div>'; }
+    else h += '<button type="button" class="chip" data-mjnew style="margin-top:12px">Barajar de nuevo</button>';
+    $("vMore").innerHTML = h;
+  }
+  function mjTap(i){
+    if (MJ.lock || MJ.open.indexOf(i) >= 0 || MJ.done[MJ.cards[i].p]) return;
+    MJ.open.push(i);
+    if (MJ.open.length === 2){
+      MJ.moves++; var a = MJ.cards[MJ.open[0]], b = MJ.cards[MJ.open[1]];
+      if (a.p === b.p && a.k !== b.k){ MJ.done[a.p] = 1; MJ.open = []; }
+      else { MJ.lock = true; setTimeout(function(){ MJ.open = []; MJ.lock = false; if (masSub === "parejas") renderParejas(); }, 1100); }
+    }
+    renderParejas();
+  }
+  $("vMore").addEventListener("click", function(e){ if (masSub !== "parejas") return; var b = e.target.closest("[data-mj]"); if (b){ mjTap(+b.dataset.mj); return; } if (e.target.closest("[data-mjnew]")){ mjNuevo(); renderParejas(); } });
+
   /* ---------- Historia y arqueología ---------- */
   var HIST = null;
   function renderHistoria(tabh){
@@ -1979,6 +2017,7 @@ html.simple .act-r2{display:flex!important}
     if (sub === "quien") return renderQuien();
     if (sub === "trivia") return renderTrivia();
     if (sub === "libros") return renderLibros();
+    if (sub === "parejas") return renderParejas();
     if (sub === "resumen") return renderResumen(opt);
     if (sub === "otros") return renderCurio();
     if (sub === "sinred") return renderSinRed();
