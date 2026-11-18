@@ -554,6 +554,55 @@ html.simple #actFav{min-height:52px;font-size:18px;flex:1}
 .act-r2 button{min-height:40px}
 html.simple .act-r2{display:flex!important}
 .volver{position:sticky;top:8px;z-index:6;box-shadow:0 2px 10px rgba(0,0,0,.12);display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 16px;margin:0 0 12px;border-radius:999px;background:var(--rubric-soft);color:var(--rubric);font-size:15.5px;font-weight:700}
+.jg-l{display:flex;flex-direction:column;gap:10px}
+.jg{display:flex;align-items:center;gap:14px;padding:14px;border-radius:16px;background:var(--surface);border:1px solid var(--line);text-align:left;color:var(--ink)}
+.jg-i{flex:none;width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;color:var(--c);background:color-mix(in srgb,var(--c) 14%,transparent)}
+:root[data-tone="noche"] .jg-i svg{filter:brightness(1.6)}
+.jg-t{flex:1}.jg-t b{display:block;font-size:17px}.jg-t small{display:block;font-size:14px;color:var(--muted);line-height:1.4;margin-top:2px}
+.jg-t em{display:inline-block;margin-top:6px;font-style:normal;font-size:12.5px;font-weight:800;color:var(--rubric)}
+.jg-a{font-size:24px;color:var(--muted)}
+.sp-temas{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 0 10px;padding-bottom:2px}.sp-temas::-webkit-scrollbar{display:none}
+.sp-temas .chip{flex:none}
+.sp-g{display:grid;gap:3px;user-select:none;-webkit-user-select:none}
+.sp-c{aspect-ratio:1;border-radius:7px;background:var(--surface);border:1px solid var(--line);font-weight:800;font-size:clamp(14px,4.4vw,19px);color:var(--ink);padding:0;min-height:0}
+.sp-c.s{background:var(--rubric);color:#fff;border-color:var(--rubric)}
+.sp-c.f{background:#dcfce7;color:#166534;border-color:#86efac}
+:root[data-tone="noche"] .sp-c.f{background:#14532d;color:#bbf7d0;border-color:#166534}
+.sp-w{display:flex;flex-wrap:wrap;gap:6px 12px;margin:12px 0 0;font-weight:700;font-size:15px}
+.sp-w .ok{text-decoration:line-through;color:var(--muted)}
+.g-win{margin:14px 0;padding:16px;border-radius:16px;background:var(--surface);border:2px solid #15803d;text-align:center}
+.g-win b{font-size:20px;color:#15803d}.g-win p{margin:6px 0 12px;font-size:15.5px;line-height:1.5}.g-win .btn{min-height:48px;padding:0 22px}
+.g-win.big b{font-size:34px}
+:root[data-tone="noche"] .g-win b{color:#4ade80}
+.g-bad{color:#b91c1c;font-weight:700;font-size:15px}
+.pz-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 10px}.pz-top b{font-size:16px}.pz-top span{font-size:13px;font-weight:800;color:var(--rubric)}
+.pz-a{min-height:90px;padding:12px;border-radius:16px;background:var(--surface);border:2px dashed var(--line);display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;margin-bottom:14px}
+.pz-a.good{border:2px solid #15803d}.pz-a.bad{border:2px solid #b91c1c}
+.pz-ph{color:var(--muted);font-size:15px}
+.pz-pool{display:flex;flex-wrap:wrap;gap:8px}
+.pz-w{min-height:42px;padding:0 12px;border-radius:12px;background:var(--surface);border:1px solid var(--line);font-family:var(--read);font-size:17px;color:var(--ink)}
+.pz-w.on{background:var(--rubric-soft);border-color:transparent}
+.qs-p p{display:flex;gap:10px;margin:0 0 10px;font-size:16px;line-height:1.55;padding:12px;border-radius:14px;background:var(--surface);border:1px solid var(--line)}
+.qs-p span{flex:none;width:24px;height:24px;border-radius:50%;background:#b45309;color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.tv-q{font-family:var(--read);font-size:21px;line-height:1.45;margin:14px 0}
+.tv-o{display:flex;flex-direction:column;gap:8px}
+.tv-b{min-height:52px;padding:10px 14px;border-radius:14px;background:var(--surface);border:1px solid var(--line);text-align:left;font-size:16.5px;font-weight:600;color:var(--ink)}
+.tv-b.good{background:#dcfce7;border-color:#15803d;color:#14532d}.tv-b.bad{background:#fee2e2;border-color:#b91c1c;color:#7f1d1d}
+.tv-b[disabled]{opacity:1}
+.tv-f{font-weight:800;font-size:16px;margin:12px 0 4px}
+.ol-a{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
+.ol-ok{padding:8px 12px;border-radius:10px;background:#dcfce7;color:#14532d;font-weight:700}
+:root[data-tone="noche"] .ol-ok,:root[data-tone="noche"] .tv-b.good{background:#14532d;color:#dcfce7}
+:root[data-tone="noche"] .tv-b.bad{background:#7f1d1d;color:#fee2e2}
+.hs-seg button{font-size:14px}
+.hs-t{list-style:none;margin:0;padding:0 0 0 8px}
+.hs-t li{position:relative;padding:0 0 18px 22px;border-left:2px solid var(--at,#8a4a2c)}
+.hs-t li.nt{border-left-color:var(--nt,#2f4d8a)}
+.hs-t li::before{content:"";position:absolute;left:-8px;top:3px;width:14px;height:14px;border-radius:50%;background:var(--at,#8a4a2c)}
+.hs-t li.nt::before{background:var(--nt,#2f4d8a)}
+.hs-f{display:block;font-size:12.5px;font-weight:800;color:var(--muted);letter-spacing:.03em}
+.hs-t b{display:block;font-size:17px;margin:2px 0 4px}.hs-t p{margin:0 0 6px;font-size:15.5px;line-height:1.55}
+.hs-w{display:block;font-size:13px;color:var(--muted);margin-top:1px}
 </style>
 <style>
 /* Presentación y bienvenida */
@@ -603,7 +652,7 @@ html.simple .act-r2{display:flex!important}
 <div class="ini-tit"><h1>Biblia Multiversión</h1><p>12 versiones de la Santa Biblia<br>para leer, buscar y comparar</p></div>
 </div>
 <div class="ini-load" aria-hidden="true"><i></i></div>
-<div class="ini-pie2"><span>Versión 1.8</span><span>Desarrollado por <b>DIRCOM Chile</b></span></div>
+<div class="ini-pie2"><span>Versión 1.9</span><span>Desarrollado por <b>DIRCOM Chile</b></span></div>
 </div>
 <div class="ini ini-bien" id="iniBien" role="dialog" aria-modal="true" aria-labelledby="iniBienT" hidden>
 <div class="ini-cab"><img src="logo-emblema-claro.png" alt=""><p>Iglesia de Dios de la Profecía</p></div>
@@ -813,7 +862,7 @@ html.simple .act-r2{display:flex!important}
       </div>
       <p class="note">Lila sigue el modo claro u oscuro de tu teléfono.</p>
       <label class="prom-row"><input type="checkbox" id="promChk"> <span>Resaltar suavemente las <span class="prom-demo">promesas de Jesús</span> en el Nuevo Testamento</span></label>
-      <p class="credit">Biblia Multiversión · Versión 1.8<br>Desarrollado por DIRCOM Chile · Iglesia de Dios de la Profecía</p>
+      <p class="credit">Biblia Multiversión · Versión 1.9<br>Desarrollado por DIRCOM Chile · Iglesia de Dios de la Profecía</p>
     </div>
   </div>
   <div class="mic-veil" id="micVeil" hidden>
@@ -1172,7 +1221,7 @@ html.simple .act-r2{display:flex!important}
 
   /* ---------- Volver a Más después de abrir una cita ---------- */
   var volverA = null;
-  function volverTitulo(v){ if (v.sub === "resumen" && v.opt != null) return "al resumen de " + bname(v.opt); for (var i=0;i<MAS.length;i++) if (MAS[i][0] === v.sub) return "a " + MAS[i][1]; return "a Más"; }
+  function volverTitulo(v){ if (v.sub === "resumen" && v.opt != null) return "al resumen de " + bname(v.opt); for (var i=0;i<MAS.length;i++) if (MAS[i][0] === v.sub) return "a " + MAS[i][1]; for (var g=0;g<GAMES.length;g++) if (GAMES[g][0] === v.sub) return "a " + GAMES[g][1]; return "a Más"; }
   $("vMore").addEventListener("click", function(e){
     if (!masSub) return;
     if (e.target.closest("[data-rb], .chip[data-b], [data-cb]")) volverA = { sub: masSub === "memoP" ? "memo" : masSub, opt: masSub === "resumen" ? rsCur : undefined, top: $("main").scrollTop };
@@ -1199,6 +1248,7 @@ html.simple .act-r2{display:flex!important}
       if (cur0 && cur0.id === "vRead" && volverA){ volver(); arm(); return; }
       if (cur0 && cur0.id === "vMore" && masSub === "memoP"){ renderMore("memo"); arm(); return; }
       if (cur0 && cur0.id === "vMore" && masSub === "resumen" && document.querySelector(".rs-hero")){ renderMore("resumen"); arm(); return; }
+      if (cur0 && cur0.id === "vMore" && GAME_IDS.indexOf(masSub) >= 0){ renderMore("juegos"); arm(); return; }
       if (cur0 && cur0.id === "vMore" && masSub){ renderMore(); arm(); return; }
       if (cur0 && cur0.id === "vCompare"){ tab("vMore"); arm(); return; }
       if (cur0 && cur0.id !== "vRead"){ tab("vRead"); arm(); return; }
@@ -1475,8 +1525,9 @@ html.simple .act-r2{display:flex!important}
   function svgI(p){ return '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + p + '</svg>'; }
   var MAS = [
     ["salv", "Plan de salvación", "Cómo empezar una vida con Jesús", svgI('<path d="M12 3v18M7 8h10"/>'), "nt"],
-    ["memo", "Memorizar", "Guarda versículos en tu corazón", svgI('<path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/>'), "at"],
+    ["juegos", "Juegos", "Memorizar, sopa de letras, trivia y más", svgI('<rect x="2" y="7" width="20" height="12" rx="4"/><path d="M7 11v4M5 13h4M15.5 12h.01M18 14h.01"/>'), "at"],
     ["resumen", "Resumen de la Biblia", "Mini estudio de los 66 libros", svgI('<path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M8 7h6M8 11h6M8 15h3"/>'), "at"],
+    ["historia", "Historia y arqueología", "Línea de tiempo, judaísmo y hallazgos", svgI('<path d="M3 21h18M5 21V10M19 21V10M9 21V10M15 21V10M2 10l10-6 10 6z"/>'), "nt"],
     ["mapa", "Mapas bíblicos", "Los lugares del capítulo que lees", svgI('<path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/>'), "at"],
     ["gen", "Genealogías", "De Adán a Jesús", svgI('<circle cx="12" cy="5" r="2.5"/><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5H6v5M12 11.5h6v5"/>'), "nt"],
     ["dic", "Diccionario bíblico", "Palabras clave de la fe", svgI('<path d="M4 19V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M8 7h7M8 11h5"/>'), "nt"],
@@ -1665,8 +1716,8 @@ html.simple .act-r2{display:flex!important}
   var NIVELES = ["Lee y repite", "Faltan algunas palabras", "Faltan muchas palabras", "Solo las iniciales"];
   function renderMemo(){
     var el = $("vMore");
-    if (!DATA["rvr1960"]){ el.innerHTML = masHead("Memorizar versículos") + '<p class="note">Cargando…</p>'; load("rvr1960").then(function(){ if (masSub === "memo") renderMemo(); }); return; }
-    var h = masHead("Memorizar versículos") + '<p class="sv-in">Guarda la palabra en tu corazón. Practica en cuatro niveles: cada vez se esconden más palabras.</p>';
+    if (!DATA["rvr1960"]){ el.innerHTML = masHead("Memorizar versículos", "juegos") + '<p class="note">Cargando…</p>'; load("rvr1960").then(function(){ if (masSub === "memo") renderMemo(); }); return; }
+    var h = masHead("Memorizar versículos", "juegos") + '<p class="sv-in">Guarda la palabra en tu corazón. Practica en cuatro niveles: cada vez se esconden más palabras.</p>';
     if (MEMO.length){
       var hechos = MEMO.filter(function(m){ return m.n >= 4; }).length;
       h += '<div class="mm-sum"><b>' + hechos + '</b> de ' + MEMO.length + ' memorizados</div>';
@@ -1706,8 +1757,205 @@ html.simple .act-r2{display:flex!important}
     if ((t = e.target.closest("[data-ml]"))){ e.stopPropagation(); MP.lv = Math.max(0, Math.min(3, MP.lv + +t.dataset.ml)); MP.shown = {}; MP.all = false; var m = MEMO[MP.i]; if (m && MP.lv > m.n){ m.n = MP.lv; store.set("memo", MEMO); } renderMemoP(); return; }
     if ((t = e.target.closest("[data-mok]"))){ e.stopPropagation(); MEMO[MP.i].n = 4; store.set("memo", MEMO); toast("¡Gloria a Dios! Versículo memorizado"); renderMore("memo"); return; }
   }, true);
+  /* ---------- Juegos ---------- */
+  var JUEGOS = null, JSCORE = store.get("juegos", {});
+  function jSave(k, v, menor){ var b = JSCORE[k]; if (b == null || (menor ? v < b : v > b)){ JSCORE[k] = v; store.set("juegos", JSCORE); return true; } return false; }
+  function loadJuegos(){ return JUEGOS ? Promise.resolve(JUEGOS) : getJSON("juegos.json").then(function(j){ return JUEGOS = j; }); }
+  function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var k = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[k]; a[k] = t; } return a; }
+  var GAMES = [
+    ["memo", "Memorizar versículos", "Esconde palabras por niveles hasta saberlo de memoria", '<path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/>', "#be185d"],
+    ["sopa", "Sopa de letras", "Encuentra apóstoles, profetas, lugares y más", '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>', "#1d4ed8"],
+    ["puzzle", "Puzzle de versículos", "Ordena las palabras del versículo", '<path d="M10 3h4v3a2 2 0 1 0 4 0V3h3v7h-3a2 2 0 1 0 0 4h3v7h-7v-3a2 2 0 1 0-4 0v3H3v-7h3a2 2 0 1 0 0-4H3V3z"/>', "#15803d"],
+    ["quien", "¿Quién soy?", "Adivina el personaje con pistas", '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/>', "#b45309"],
+    ["trivia", "Trivia bíblica", "Diez preguntas de alternativas", '<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5h.01"/>', "#6d28d9"],
+    ["libros", "Ordena los libros", "Pon los libros en su orden, contra el reloj", '<path d="M4 19V5M9 19V5M14 19l4-14M20 19H3"/>', "#8a4a2c"]
+  ];
+  var GAME_IDS = GAMES.map(function(g){ return g[0]; });
+  function gHead(t){ return masHead(t, "juegos"); }
+  function renderJuegos(){
+    var h = masHead("Juegos") + '<p class="sv-in">Aprende la Biblia jugando, solo o en familia.</p><div class="jg-l">';
+    GAMES.forEach(function(g){ var sc = g[0] === "memo" ? (MEMO.filter(function(m){ return m.n >= 4; }).length + " memorizados") : JSCORE[g[0]] != null ? (g[0] === "libros" ? "Mejor tiempo: " + JSCORE[g[0]] + " s" : "Récord: " + JSCORE[g[0]]) : "";
+      h += '<button type="button" class="jg" data-mas="' + g[0] + '" style="--c:' + g[4] + '"><span class="jg-i"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + g[3] + '</svg></span><span class="jg-t"><b>' + esc(g[1]) + '</b><small>' + esc(g[2]) + '</small>' + (sc ? '<em>' + esc(sc) + '</em>' : '') + '</span><span class="jg-a">›</span></button>'; });
+    $("vMore").innerHTML = h + '</div>';
+  }
+  function gLoading(t, fn){ $("vMore").innerHTML = gHead(t) + '<p class="note">Cargando…</p>'; var sub = masSub; Promise.all([loadJuegos(), loadFichas().catch(function(){}), DATA["rvr1960"] ? 0 : load("rvr1960")]).then(function(){ if (masSub === sub) fn(); }, function(){ $("vMore").innerHTML = gHead(t) + '<p class="note">No se pudo cargar. Revisa tu conexión.</p>'; }); }
+  function gReady(){ return JUEGOS && FICHAS && DATA["rvr1960"]; }
+  function rvrTxt(r){ var t = DATA["rvr1960"][r[0]][r[1]-1][r[2]-1] || ""; return t.replace(/\s+/g, " ").trim(); }
+
+  /* Sopa de letras */
+  var SOPA = null;
+  function sopaNueva(tema){
+    var words = shuffle(JUEGOS.sopa[tema]).slice(0, 8), N = 10, G = [], pos = {}, dirs = [[0,1],[1,0],[1,1]];
+    for (var r = 0; r < N; r++){ G.push([]); for (var c = 0; c < N; c++) G[r].push(""); }
+    words.sort(function(a, b){ return b.length - a.length; });
+    var placed = [];
+    words.forEach(function(w){
+      for (var t = 0; t < 200; t++){
+        var d = dirs[Math.floor(Math.random() * dirs.length)], r0 = Math.floor(Math.random() * (N - (d[0] ? w.length - 1 : 0))), c0 = Math.floor(Math.random() * (N - (d[1] ? w.length - 1 : 0))), ok = true;
+        for (var i = 0; i < w.length; i++){ var ch = G[r0 + d[0]*i][c0 + d[1]*i]; if (ch && ch !== w[i]){ ok = false; break; } }
+        if (!ok) continue;
+        var cells = []; for (var i2 = 0; i2 < w.length; i2++){ G[r0 + d[0]*i2][c0 + d[1]*i2] = w[i2]; cells.push((r0 + d[0]*i2) * N + c0 + d[1]*i2); }
+        placed.push({ w: w, cells: cells }); return;
+      }
+    });
+    var AB = "ABCDEFGHIJLMNOPRSTUVZ";
+    for (var r2 = 0; r2 < N; r2++) for (var c2 = 0; c2 < N; c2++) if (!G[r2][c2]) G[r2][c2] = AB[Math.floor(Math.random() * AB.length)];
+    SOPA = { tema: tema, N: N, G: G, words: placed, found: {}, sel: null, t0: Date.now() };
+  }
+  function renderSopa(){
+    if (!gReady()) return gLoading("Sopa de letras", renderSopa);
+    var temas = Object.keys(JUEGOS.sopa);
+    if (!SOPA) sopaNueva(temas[0]);
+    var S = SOPA, done = Object.keys(S.found).length, foundCells = {};
+    S.words.forEach(function(p, i){ if (S.found[i]) p.cells.forEach(function(c){ foundCells[c] = 1; }); });
+    var h = gHead("Sopa de letras") + '<div class="sp-temas">';
+    temas.forEach(function(t){ h += '<button type="button" class="chip" data-st="' + esc(t) + '" aria-pressed="' + (t === S.tema) + '">' + esc(t) + '</button>'; });
+    h += '</div><p class="mp-hint" style="margin:0 0 10px">Toca la primera letra y luego la última de cada palabra.</p><div class="sp-g" style="grid-template-columns:repeat(' + S.N + ',1fr)">';
+    for (var r = 0; r < S.N; r++) for (var c = 0; c < S.N; c++){ var k = r * S.N + c; h += '<button type="button" class="sp-c' + (foundCells[k] ? " f" : "") + (S.sel === k ? " s" : "") + '" data-sc="' + k + '">' + S.G[r][c] + '</button>'; }
+    h += '</div><div class="sp-w">';
+    S.words.forEach(function(p, i){ h += '<span class="' + (S.found[i] ? "ok" : "") + '">' + p.w + '</span>'; });
+    h += '</div>';
+    if (done === S.words.length) h += '<div class="g-win"><b>¡Encontraste todas!</b><p>' + Math.round((Date.now() - S.t0) / 1000) + ' segundos.</p><button type="button" class="btn" data-snew>Jugar otra</button></div>';
+    else h += '<button type="button" class="chip" data-snew style="margin-top:10px">Nueva sopa</button>';
+    $("vMore").innerHTML = h;
+  }
+  function sopaTap(k){
+    var S = SOPA; if (S.sel == null){ S.sel = k; renderSopa(); return; }
+    var a = S.sel, N = S.N; S.sel = null;
+    var r1 = Math.floor(a / N), c1 = a % N, r2 = Math.floor(k / N), c2 = k % N, dr = Math.sign(r2 - r1), dc = Math.sign(c2 - c1), len = Math.max(Math.abs(r2 - r1), Math.abs(c2 - c1)) + 1;
+    if ((r1 !== r2 && c1 !== c2 && Math.abs(r2 - r1) !== Math.abs(c2 - c1)) || a === k){ renderSopa(); return; }
+    var cells = []; for (var i = 0; i < len; i++) cells.push((r1 + dr*i) * N + c1 + dc*i);
+    var key = cells.join(","), rev = cells.slice().reverse().join(",");
+    S.words.forEach(function(p, i){ var pk = p.cells.join(","); if (!S.found[i] && (pk === key || pk === rev)){ S.found[i] = 1; toast(p.w + " ✓"); } });
+    if (Object.keys(S.found).length === S.words.length) jSave("sopa", (JSCORE.sopa || 0) + 1);
+    renderSopa();
+  }
+
+  /* Puzzle de versículos */
+  var PZ = null;
+  function pzNuevo(){ var r = JUEGOS.puzzle[Math.floor(Math.random() * JUEGOS.puzzle.length)], t = rvrTxt(r), w = t.split(" ");
+    if (w.length > 16){ w = w.slice(0, 16); w[w.length-1] = w[w.length-1].replace(/[,;:]$/, "") + "…"; }
+    PZ = { r: r, w: w, pool: shuffle(w.map(function(x, i){ return i; })), put: [], ok: null, racha: PZ ? PZ.racha : 0 }; }
+  function renderPuzzle(){
+    if (!gReady()) return gLoading("Puzzle de versículos", renderPuzzle);
+    if (!PZ) pzNuevo();
+    var h = gHead("Puzzle de versículos") + '<div class="pz-top"><b>' + esc(refText(PZ.r[0], PZ.r[1]-1, PZ.r[2]-1)) + '</b><span>Racha: ' + PZ.racha + '</span></div><div class="pz-a' + (PZ.ok === false ? " bad" : PZ.ok ? " good" : "") + '">';
+    PZ.put.forEach(function(i, n){ h += '<button type="button" class="pz-w on" data-pu="' + n + '">' + esc(PZ.w[i]) + '</button>'; });
+    if (!PZ.put.length) h += '<span class="pz-ph">Toca las palabras en orden…</span>';
+    h += '</div><div class="pz-pool">';
+    PZ.pool.forEach(function(i){ if (PZ.put.indexOf(i) < 0) h += '<button type="button" class="pz-w" data-pp="' + i + '">' + esc(PZ.w[i]) + '</button>'; });
+    h += '</div>';
+    if (PZ.ok) h += '<div class="g-win"><b>¡Muy bien!</b><p>' + esc(PZ.w.join(" ")) + '</p><button type="button" class="btn" data-pnew>Siguiente versículo</button></div>';
+    else if (PZ.ok === false) h += '<p class="g-bad">Casi. Toca una palabra de arriba para devolverla y prueba otra vez.</p>';
+    if (!PZ.ok) h += '<div class="mp-btns"><button type="button" class="chip" data-pclr>Empezar de nuevo</button><button type="button" class="chip" data-pnew>Otro versículo</button></div>';
+    $("vMore").innerHTML = h;
+  }
+  function pzCheck(){ if (PZ.put.length < PZ.w.length){ PZ.ok = null; return; }
+    var txt = PZ.put.map(function(i){ return PZ.w[i]; }).join(" ");
+    PZ.ok = txt === PZ.w.join(" "); if (PZ.ok){ PZ.racha++; jSave("puzzle", PZ.racha); } else PZ.racha = 0; }
+
+  /* ¿Quién soy? */
+  var QS = null;
+  function qsNuevo(){
+    var P = FICHAS.filter(function(f){ return f.t === "p" && f.d && f.d.length > 60; });
+    var f = P[Math.floor(Math.random() * P.length)], nm = f.n.split(",")[0];
+    var names = [nm].concat(f.a || []).filter(function(x){ return x && x.length > 2; });
+    var oculto = f.d;
+    names.forEach(function(n){ oculto = oculto.replace(new RegExp(n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"), "___"); });
+    var pistas = oculto.match(/[^.!?]+[.!?]+/g) || [oculto];
+    var otros = shuffle(P.filter(function(x){ return x.n.split(",")[0] !== nm && x.s === f.s; })).slice(0, 3).map(function(x){ return x.n; });
+    QS = { f: f, pistas: pistas.map(function(s){ return s.trim(); }), n: 1, ops: shuffle([f.n].concat(otros)), res: null, pts: QS ? QS.pts : 0, ronda: QS ? QS.ronda : 0 };
+  }
+  function renderQuien(){
+    if (!gReady()) return gLoading("¿Quién soy?", renderQuien);
+    if (!QS) qsNuevo();
+    var h = gHead("¿Quién soy?") + '<div class="pz-top"><b>Puntos: ' + QS.pts + '</b><span>Pista ' + Math.min(QS.n, QS.pistas.length) + ' de ' + QS.pistas.length + '</span></div><div class="qs-p">';
+    QS.pistas.slice(0, QS.res ? QS.pistas.length : QS.n).forEach(function(p, i){ h += '<p><span>' + (i + 1) + '</span>' + esc(p) + '</p>'; });
+    h += '</div>';
+    if (!QS.res && QS.n < QS.pistas.length) h += '<button type="button" class="chip" data-qmas style="margin-bottom:12px">Otra pista (vale menos)</button>';
+    h += '<div class="tv-o">';
+    QS.ops.forEach(function(o, i){ var cls = QS.res ? (o === QS.f.n ? " good" : o === QS.res ? " bad" : "") : ""; h += '<button type="button" class="tv-b' + cls + '" data-qo="' + i + '"' + (QS.res ? " disabled" : "") + '>' + esc(o) + '</button>'; });
+    h += '</div>';
+    if (QS.res){ var ok = QS.res === QS.f.n; h += '<div class="g-win"><b>' + (ok ? "¡Correcto!" : "Era " + esc(QS.f.n.split(",")[0])) + '</b><p>' + esc(QS.f.d) + '</p><button type="button" class="btn" data-qnew>Otro personaje</button></div>'; }
+    $("vMore").innerHTML = h;
+  }
+
+  /* Trivia */
+  var TV = null;
+  function tvNueva(){ TV = { qs: shuffle(JUEGOS.trivia).slice(0, 10).map(function(q){ return { q: q.q, o: shuffle(q.o), a: q.o[0], r: q.r }; }), i: 0, pts: 0, res: null }; }
+  function renderTrivia(){
+    if (!gReady()) return gLoading("Trivia bíblica", renderTrivia);
+    if (!TV) tvNueva();
+    if (TV.i >= TV.qs.length){
+      var rec = jSave("trivia", TV.pts);
+      $("vMore").innerHTML = gHead("Trivia bíblica") + '<div class="g-win big"><b>' + TV.pts + ' de 10</b><p>' + (TV.pts >= 9 ? "¡Excelente! Conoces muy bien la Palabra." : TV.pts >= 6 ? "¡Muy bien! Sigue leyendo y lo harás perfecto." : "Buen intento. Cada pregunta trae su cita para que la leas.") + (rec ? " ¡Nuevo récord!" : "") + '</p><button type="button" class="btn" data-tnew>Jugar otra vez</button></div>';
+      return;
+    }
+    var q = TV.qs[TV.i], h = gHead("Trivia bíblica") + '<div class="pz-top"><b>Pregunta ' + (TV.i + 1) + ' de 10</b><span>Puntos: ' + TV.pts + '</span></div><div class="mp-bar"><i style="width:' + (TV.i * 10) + '%"></i></div><p class="tv-q">' + esc(q.q) + '</p><div class="tv-o">';
+    q.o.forEach(function(o, i){ var cls = TV.res ? (o === q.a ? " good" : o === TV.res ? " bad" : "") : ""; h += '<button type="button" class="tv-b' + cls + '" data-to="' + i + '"' + (TV.res ? " disabled" : "") + '>' + esc(o) + '</button>'; });
+    h += '</div>';
+    if (TV.res){ h += '<p class="tv-f">' + (TV.res === q.a ? "¡Correcto!" : "La respuesta es: " + esc(q.a)) + '</p>' + (q.r ? refChips([q.r]) : "") + '<button type="button" class="btn mp-ok" data-tnext>' + (TV.i < 9 ? "Siguiente pregunta" : "Ver resultado") + '</button>'; }
+    $("vMore").innerHTML = h;
+  }
+
+  /* Ordena los libros */
+  var OL = null;
+  function olNuevo(){ var s = Math.floor(Math.random() * 61), ids = []; for (var i = 0; i < 6; i++) ids.push(s + i); OL = { ids: ids, pool: shuffle(ids), next: 0, err: 0, t0: Date.now(), fin: null, bad: null }; }
+  function renderLibros(){
+    if (!OL) olNuevo();
+    var h = gHead("Ordena los libros") + '<div class="pz-top"><b>Toca los libros en el orden de la Biblia</b><span>Errores: ' + OL.err + '</span></div><div class="ol-a">';
+    OL.ids.slice(0, OL.next).forEach(function(b, i){ h += '<span class="ol-ok">' + (i + 1) + '. ' + esc(bname(b)) + '</span>'; });
+    h += '</div><div class="tv-o">';
+    OL.pool.forEach(function(b){ if (OL.ids.indexOf(b) >= OL.next) h += '<button type="button" class="tv-b' + (OL.bad === b ? " bad" : "") + '" data-ol="' + b + '">' + esc(bname(b)) + '</button>'; });
+    h += '</div>';
+    if (OL.fin != null){ var rec = OL.err === 0 && jSave("libros", OL.fin, true); h += '<div class="g-win"><b>¡Listo en ' + OL.fin + ' segundos!</b><p>' + (OL.err ? "Con " + OL.err + (OL.err === 1 ? " error." : " errores.") + " Sin errores cuenta para tu récord." : "Sin errores." + (rec ? " ¡Nuevo récord!" : "")) + '</p><button type="button" class="btn" data-olnew>Jugar otra vez</button></div>'; }
+    $("vMore").innerHTML = h;
+  }
+
+  $("vMore").addEventListener("click", function(e){
+    var t = e.target;
+    if (!/^(sopa|puzzle|quien|trivia|libros)$/.test(masSub || "")) return;
+    var b;
+    if ((b = t.closest("[data-st]"))){ sopaNueva(b.dataset.st); renderSopa(); }
+    else if ((b = t.closest("[data-sc]"))) sopaTap(+b.dataset.sc);
+    else if (t.closest("[data-snew]")){ sopaNueva(SOPA.tema); renderSopa(); }
+    else if ((b = t.closest("[data-pp]"))){ PZ.put.push(+b.dataset.pp); pzCheck(); renderPuzzle(); }
+    else if ((b = t.closest("[data-pu]"))){ if (!PZ.ok){ PZ.put.splice(+b.dataset.pu, 1); PZ.ok = null; renderPuzzle(); } }
+    else if (t.closest("[data-pclr]")){ PZ.put = []; PZ.ok = null; renderPuzzle(); }
+    else if (t.closest("[data-pnew]")){ pzNuevo(); renderPuzzle(); }
+    else if (t.closest("[data-qmas]")){ QS.n++; renderQuien(); }
+    else if ((b = t.closest("[data-qo]"))){ if (!QS.res){ QS.res = QS.ops[+b.dataset.qo]; if (QS.res === QS.f.n){ QS.pts += Math.max(1, 4 - QS.n); jSave("quien", QS.pts); } renderQuien(); } }
+    else if (t.closest("[data-qnew]")){ qsNuevo(); renderQuien(); }
+    else if ((b = t.closest("[data-to]"))){ if (!TV.res){ var q = TV.qs[TV.i]; TV.res = q.o[+b.dataset.to]; if (TV.res === q.a) TV.pts++; renderTrivia(); } }
+    else if (t.closest("[data-tnext]")){ TV.i++; TV.res = null; renderTrivia(); $("main").scrollTop = 0; }
+    else if (t.closest("[data-tnew]")){ tvNueva(); renderTrivia(); }
+    else if ((b = t.closest("[data-ol]"))){ var bk = +b.dataset.ol; if (bk === OL.ids[OL.next]){ OL.next++; OL.bad = null; if (OL.next === OL.ids.length) OL.fin = Math.round((Date.now() - OL.t0) / 1000); } else { OL.err++; OL.bad = bk; if (navigator.vibrate) try{ navigator.vibrate(60); }catch(x){} } renderLibros(); }
+    else if (t.closest("[data-olnew]")){ olNuevo(); renderLibros(); }
+  });
+
+  /* ---------- Historia y arqueología ---------- */
+  var HIST = null;
+  function renderHistoria(tabh){
+    var el = $("vMore");
+    if (!HIST){ el.innerHTML = masHead("Historia y arqueología") + '<p class="note">Cargando…</p>'; getJSON("historia.json").then(function(j){ HIST = j; if (masSub === "historia") renderHistoria(tabh); }, function(){ el.innerHTML = masHead("Historia y arqueología") + '<p class="note">No se pudo cargar. Revisa tu conexión.</p>'; }); return; }
+    tabh = tabh || renderHistoria.tab || "tiempo"; renderHistoria.tab = tabh;
+    var h = masHead("Historia y arqueología") + '<div class="seg hs-seg" role="group" aria-label="Sección"><button type="button" data-hs="tiempo" aria-pressed="' + (tabh === "tiempo") + '">Línea de tiempo</button><button type="button" data-hs="judaismo" aria-pressed="' + (tabh === "judaismo") + '">Judaísmo</button><button type="button" data-hs="hallazgos" aria-pressed="' + (tabh === "hallazgos") + '">Hallazgos</button></div>';
+    if (tabh === "tiempo"){
+      h += '<p class="sv-in">La historia de la Biblia en doce etapas. Las fechas son aproximadas.</p><ol class="hs-t">';
+      HIST.tiempo.forEach(function(x, i){ h += '<li class="' + (i >= 10 ? "nt" : "") + '"><span class="hs-f">' + esc(x.f) + '</span><b>' + esc(x.t) + '</b><p>' + esc(x.d) + '</p>' + (x.r.length ? refChips(x.r) : "") + '</li>'; });
+      h += '</ol>';
+    } else if (tabh === "judaismo"){
+      h += '<p class="sv-in">Cómo era el mundo judío cuando llegó Jesús: lo que pasó en los 400 años entre los Testamentos, los grupos religiosos y la vida del templo.</p>';
+      HIST.judaismo.forEach(function(x){ h += '<details class="dic"><summary>' + esc(x.t) + '</summary><p>' + esc(x.d) + '</p>' + (x.r.length ? refChips(x.r) : '<div class="fi-r"></div>') + '</details>'; });
+    } else {
+      h += '<p class="sv-in">Descubrimientos que muestran que la Biblia habla de lugares, pueblos y personas reales. La arqueología no es la base de nuestra fe, pero la confirma.</p>';
+      HIST.hallazgos.forEach(function(x){ h += '<div class="cu hs-h" style="--c:#8a6d3b"><span class="cu-i"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6-9 9H5v-6z"/><path d="M3 21h18"/></svg></span><div><b>' + esc(x.t) + '</b><small class="hs-w">' + esc(x.w) + '</small><p>' + esc(x.d) + '</p>' + (x.r.length ? refChips(x.r) : "") + '</div></div>'; });
+    }
+    el.innerHTML = h + '<p class="note">Historia de apoyo de la Biblia Multiversión. Fechas aproximadas.</p>';
+  }
+  $("vMore").addEventListener("click", function(e){ var b = e.target.closest("[data-hs]"); if (b){ e.stopPropagation(); renderHistoria(b.dataset.hs); } }, true);
   var masSub = null;
-  function masHead(t){ return '<div class="mas-h"><button type="button" class="icon" data-mas="" aria-label="Volver a Más">‹</button><h2>' + esc(t) + '</h2></div>'; }
+  function masHead(t, back){ return '<div class="mas-h"><button type="button" class="icon" data-mas="' + (back || "") + '" aria-label="Volver">‹</button><h2>' + esc(t) + '</h2></div>'; }
   function renderMore(sub, opt){
     var el = $("vMore"); masSub = sub || null;
     if (mapObj){ try{ mapObj.remove(); }catch(e){} mapObj = null; mapLayer = null; }
@@ -1724,6 +1972,13 @@ html.simple .act-r2{display:flex!important}
     if (sub === "resp") return renderResp();
     if (sub === "salv") return renderSalv();
     if (sub === "memo") return renderMemo();
+    if (sub === "juegos") return renderJuegos();
+    if (sub === "historia") return renderHistoria();
+    if (sub === "sopa") return renderSopa();
+    if (sub === "puzzle") return renderPuzzle();
+    if (sub === "quien") return renderQuien();
+    if (sub === "trivia") return renderTrivia();
+    if (sub === "libros") return renderLibros();
     if (sub === "resumen") return renderResumen(opt);
     if (sub === "otros") return renderCurio();
     if (sub === "sinred") return renderSinRed();

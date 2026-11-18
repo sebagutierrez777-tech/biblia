@@ -1,6 +1,14 @@
 {
   "avisos": [
     {
+      "id": "2026-11-18-version-1-9",
+      "fecha": "2026-11-18",
+      "titulo": "Versión 1.9: Juegos e Historia",
+      "texto": "En Más hay dos secciones nuevas. Juegos: memorizar versículos, sopa de letras, puzzle de versículos, ¿Quién soy?, trivia bíblica y ordena los libros. Historia y arqueología: la línea de tiempo de la Biblia, el mundo judío en tiempos de Jesús y los hallazgos que confirman la Escritura.",
+      "enlace": "",
+      "texto_enlace": ""
+    },
+    {
       "id": "2026-11-18-version-1-8",
       "fecha": "2026-11-18",
       "titulo": "Versión 1.8",
