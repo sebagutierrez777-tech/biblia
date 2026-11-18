@@ -660,6 +660,7 @@ html.simple .act-r2{display:flex!important}
 <div class="ini-tit"><h1>Biblia Multiversión</h1><p>12 versiones de la Santa Biblia<br>para leer, buscar y comparar</p></div>
 </div>
 <div class="ini-load" aria-hidden="true"><i></i></div>
+<script>(function(){try{if(localStorage.getItem("biblia.sonidoInicio")==="false")return;var a=new Audio("inicio.mp3");a.volume=0.35;var p=a.play();if(p&&p.then)p.then(function(){window.__sonoInicio=true;},function(){});}catch(e){}})();</script>
 <div class="ini-pie2"><span>Versión 1.9</span><span>Desarrollado por <b>DIRCOM Chile</b></span></div>
 </div>
 <div class="ini ini-bien" id="iniBien" role="dialog" aria-modal="true" aria-labelledby="iniBienT" hidden>
@@ -850,7 +851,7 @@ html.simple .act-r2{display:flex!important}
         <label class="prom-row" style="margin:0"><input type="checkbox" id="cfgSimple"> <span>Versión sencilla<small>Letra más grande, botones grandes y solo lo necesario para leer.</small></span></label>
       </div>
       <div class="rem-box">
-        <label class="prom-row" style="margin:0"><input type="checkbox" id="cfgSonido"> <span>Sonido de inicio<small>Unas campanas suaves al tocar la app por primera vez cada vez que la abres.</small></span></label>
+        <label class="prom-row" style="margin:0"><input type="checkbox" id="cfgSonido"> <span>Sonido de inicio<small>Unas campanas suaves al abrir la app.</small></span></label>
       </div>
       <div class="rem-box" id="osBox" hidden>
         <label class="prom-row" style="margin:0"><input type="checkbox" id="osChk"> <span>Avisos de la iglesia<small id="osInfo">Recibe en tu celular los avisos de IDP Chile.</small></span></label>
@@ -2646,7 +2647,7 @@ html.simple .act-r2{display:flex!important}
     $("cfgSonido").checked = on;
     $("cfgSonido").onchange = function(){ on = this.checked; store.set("sonidoInicio", on); if (on){ try{ var a = new Audio("inicio.mp3"); a.volume = 0.35; a.play().catch(function(){}); }catch(e){} } };
     function play(){ if (done) return; done = true; document.removeEventListener("pointerdown", play, true);
-      if (!on) return; try{ var a = new Audio("inicio.mp3"); a.volume = 0.35; a.play().catch(function(){}); }catch(e){} }
+      if (!on || window.__sonoInicio) return; try{ var a = new Audio("inicio.mp3"); a.volume = 0.35; a.play().catch(function(){}); }catch(e){} }
     document.addEventListener("pointerdown", play, true);
   })();
 
