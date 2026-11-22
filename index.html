@@ -748,6 +748,10 @@ html.simple .act-r2{display:flex!important}
 @keyframes gShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 @keyframes gIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){#vMore[data-sec=juego] *{animation:none!important}}
+.g-rec{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 10px}
+.g-rec span{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-radius:14px;font-size:13px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:color-mix(in srgb,var(--sc,#be185d) 80%,var(--ink));background:color-mix(in srgb,var(--sc,#be185d) 10%,var(--surface));border:1px solid color-mix(in srgb,var(--sc,#be185d) 25%,var(--line))}
+.g-rec span:last-child{color:#a16207;background:color-mix(in srgb,#ca8a04 12%,var(--surface));border-color:color-mix(in srgb,#ca8a04 35%,var(--line))}
+.g-rec b{font-size:20px;letter-spacing:0}
 .jg-share{width:100%;min-height:52px;margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#ca8a04,#b45309);border:0;color:#fff;font-weight:800}
 .jg-lv{display:inline-block;vertical-align:middle;margin-left:4px;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:800;letter-spacing:.02em;background:#dcfce7;color:#166534}.jg-lv.e{background:#ede9fe;color:#5b21b6}
 .jg-niv{margin:0 0 12px}.jg-niv button{font-size:15px;font-weight:700}
@@ -2007,6 +2011,13 @@ html.simple .act-r2{display:flex!important}
   }, true);
   /* ---------- Juegos ---------- */
   var JUEGOS = null, JSCORE = store.get("juegos", {});
+  var JCHG = ["sopa", "puzzle", "libros", "parejas", "hecho", "crono"];
+  function RK(id){ return JK(id) + (JCHG.indexOf(id) >= 0 ? "_p" : ""); }
+  function gRec(id, pts){ var r = JSCORE[RK(id)]; return '<div class="g-rec"><span>Puntos <b>' + pts + '</b></span><span>Récord <b>' + Math.max(r == null ? 0 : r, pts) + '</b></span></div>'; }
+  function jDeck(key, n, ids){ var V = store.get("jVisto", {}), seen = V[key] || [], pool = ids.filter(function(i){ return seen.indexOf(i) < 0; });
+    if (pool.length < n){ seen = []; pool = ids.slice(); }
+    var pick = shuffle(pool).slice(0, n); V[key] = seen.concat(pick); try{ store.set("jVisto", V); }catch(e){} return pick; }
+  function jIdx(L){ return L.map(function(x, i){ return i; }); }
   function jSave(k, v, menor){ var b = JSCORE[k]; if (b == null || (menor ? v < b : v > b)){ JSCORE[k] = v; store.set("juegos", JSCORE); return true; } return false; }
   function loadJuegos(){ return JUEGOS ? Promise.resolve(JUEGOS) : getJSON("juegos.json").then(function(j){ return JUEGOS = j; }); }
   function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var k = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[k]; a[k] = t; } return a; }
@@ -2034,18 +2045,18 @@ html.simple .act-r2{display:flex!important}
     var h = masHead("Juegos") + '<div class="seg jg-niv" role="group" aria-label="Nivel"><button type="button" data-jn="a" aria-pressed="' + (JLVL === "a") + '">Aprendices</button><button type="button" data-jn="e" aria-pressed="' + (JLVL === "e") + '">Experimentados</button></div>';
     h += '<p class="sv-in">' + (JLVL === "a" ? "Para quienes recién comienzan a leer la Biblia. Juegos cortos, con personajes e historias conocidas." : "Para quienes ya conocen la Biblia. Más preguntas, más detalle y menos ayudas.") + '</p><div class="jg-l">';
     JORD[JLVL].forEach(function(id){ var g = GAMES.filter(function(x){ return x[0] === id; })[0], k = JK(id), v = JSCORE[k];
-      var sc = id === "memo" ? (MEMO.filter(function(m){ return m.n >= 4; }).length + " memorizados") : v != null ? (id === "libros" ? "Mejor tiempo: " + v + " s" : id === "parejas" ? "Récord: " + v + " jugadas" : id === "hecho" || id === "crono" ? "Récord: " + v + (v === 1 ? " error" : " errores") : "Récord: " + v + " puntos") : "";
+      var sc = id === "memo" ? (MEMO.filter(function(m){ return m.n >= 4; }).length + " memorizados") : JSCORE[RK(id)] != null ? "Récord: " + JSCORE[RK(id)] + " puntos" : "Sin récord todavía";
       var desc = JLVL === "e" && g[6] ? g[6] : g[2];
       h += '<button type="button" class="jg" data-mas="' + g[0] + '" style="--c:' + g[4] + '"><span class="jg-i"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + g[3] + '</svg></span><span class="jg-t"><b>' + esc(g[1]) + '</b><small>' + esc(desc) + '</small>' + (sc ? '<em>' + esc(sc) + '</em>' : '') + '</span><span class="jg-a">›</span></button>'; });
-    var hay = GAMES.some(function(g){ return JSCORE[g[0]] != null || JSCORE[g[0] + "_e"] != null; });
+    var hay = Object.keys(JSCORE).length > 0;
     h += '</div>' + (hay ? '<button type="button" class="btn jg-share" data-jshare><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM17 6h3v2a3 3 0 0 1-3 3M7 6H4v2a3 3 0 0 0 3 3"/></svg>Compartir mis récords</button>' : '<p class="note">Cuando juegues, aquí podrás compartir tus récords.</p>');
     $("vMore").innerHTML = h;
   }
   function jRecTxt(){
     var L = [];
     [["a", "Aprendices"], ["e", "Experimentados"]].forEach(function(n){ var lin = [];
-      JORD[n[0]].forEach(function(id){ if (id === "memo") return; var g = GAMES.filter(function(x){ return x[0] === id; })[0], k = n[0] === "e" && g[5] === "ae" ? id + "_e" : id, v = JSCORE[k]; if (v == null) return;
-        lin.push("• " + g[1] + ": " + (id === "libros" ? v + " s" : id === "parejas" ? v + " jugadas" : id === "hecho" || id === "crono" ? v + (v === 1 ? " error" : " errores") : v + " puntos")); });
+      JORD[n[0]].forEach(function(id){ if (id === "memo") return; var g = GAMES.filter(function(x){ return x[0] === id; })[0], k = (n[0] === "e" && g[5] === "ae" ? id + "_e" : id) + (JCHG.indexOf(id) >= 0 ? "_p" : ""), v = JSCORE[k]; if (v == null) return;
+        lin.push("• " + g[1] + ": " + v + " puntos"); });
       if (lin.length) L.push(n[1] + "\n" + lin.join("\n")); });
     var mem = MEMO.filter(function(m){ return m.n >= 4; }).length;
     return "Mis récords en Biblia Multiversión" + (nombre ? " (" + nombre + ")" : "") + "\n\n" + L.join("\n\n") + (mem ? "\n\nVersículos memorizados: " + mem : "") + "\n\n¿Te animas a superarme? " + location.origin + location.pathname;
@@ -2083,14 +2094,14 @@ html.simple .act-r2{display:flex!important}
     if (!SOPA || temas.indexOf(SOPA.tema) < 0) sopaNueva(temas[0]);
     var S = SOPA, done = Object.keys(S.found).length, foundCells = {};
     S.words.forEach(function(p, i){ if (S.found[i]) p.cells.forEach(function(c){ foundCells[c] = 1; }); });
-    var h = gHead("Sopa de letras") + '<div class="sp-temas">';
+    var h = gHead("Sopa de letras") + gRec("sopa", SOPA.pts != null ? SOPA.pts : Object.keys(SOPA.found).length * 10) + '<div class="sp-temas">';
     temas.forEach(function(t){ h += '<button type="button" class="chip" data-st="' + esc(t) + '" aria-pressed="' + (t === S.tema) + '">' + esc(t) + '</button>'; });
     h += '</div><p class="mp-hint" style="margin:0 0 10px">Toca la primera letra y luego la última de cada palabra.</p><div class="sp-g" style="grid-template-columns:repeat(' + S.N + ',1fr)">';
     for (var r = 0; r < S.N; r++) for (var c = 0; c < S.N; c++){ var k = r * S.N + c; h += '<button type="button" class="sp-c' + (foundCells[k] ? " f" : "") + (S.sel === k ? " s" : "") + '" data-sc="' + k + '">' + S.G[r][c] + '</button>'; }
     h += '</div><div class="sp-w">';
     S.words.forEach(function(p, i){ h += '<span class="' + (S.found[i] ? "ok" : "") + '">' + p.w + '</span>'; });
     h += '</div>';
-    if (done === S.words.length) h += '<div class="g-win"><b>¡Encontraste todas!</b><p>' + Math.round((Date.now() - S.t0) / 1000) + ' segundos.</p><button type="button" class="btn" data-snew>Jugar otra</button></div>';
+    if (done === S.words.length) h += '<div class="g-win"><b>¡Encontraste todas! ' + S.pts + ' puntos</b><p>' + S.seg + ' segundos. ' + (S.rec ? "¡Nuevo récord!" : "Cada palabra vale 10 puntos y la rapidez suma un bono.") + '</p><button type="button" class="btn" data-snew>Jugar otra</button></div>';
     else h += '<button type="button" class="chip" data-snew style="margin-top:10px">Nueva sopa</button>';
     $("vMore").innerHTML = h;
   }
@@ -2102,20 +2113,20 @@ html.simple .act-r2{display:flex!important}
     var cells = []; for (var i = 0; i < len; i++) cells.push((r1 + dr*i) * N + c1 + dc*i);
     var key = cells.join(","), rev = cells.slice().reverse().join(",");
     S.words.forEach(function(p, i){ var pk = p.cells.join(","); if (!S.found[i] && (pk === key || pk === rev)){ S.found[i] = 1; toast(p.w + " ✓"); } });
-    if (Object.keys(S.found).length === S.words.length) jSave(JK("sopa"), (JSCORE[JK("sopa")] || 0) + 1);
+    if (Object.keys(S.found).length === S.words.length && S.pts == null){ S.seg = Math.round((Date.now() - S.t0) / 1000); S.pts = S.words.length * 10 + Math.max(0, 30 - Math.floor(S.seg / 10)); S.rec = jSave(RK("sopa"), S.pts); }
     renderSopa();
   }
 
   /* Puzzle de versículos */
   var PZ = null;
   function pzNuevo(){ var cap = JLVL === "e" ? 24 : 16, L = JUEGOS.puzzle.filter(function(r){ var n = rvrTxt(r).split(" ").length; return JLVL === "e" ? n > 14 : n <= 14; }); if (!L.length) L = JUEGOS.puzzle;
-    var r = L[Math.floor(Math.random() * L.length)], t = rvrTxt(r), w = t.split(" ");
+    var r = L[jDeck("puzzle" + JLVL, 1, jIdx(L))[0]], t = rvrTxt(r), w = t.split(" ");
     if (w.length > cap){ w = w.slice(0, cap); w[w.length-1] = w[w.length-1].replace(/[,;:]$/, "") + "…"; }
-    PZ = { r: r, w: w, pool: shuffle(w.map(function(x, i){ return i; })), put: [], ok: null, racha: PZ ? PZ.racha : 0 }; }
+    PZ = { r: r, w: w, pool: shuffle(w.map(function(x, i){ return i; })), put: [], ok: null, fail: false, pts: PZ ? PZ.pts : 0 }; }
   function renderPuzzle(){
     if (!gReady()) return gLoading("Puzzle de versículos", renderPuzzle);
     if (!PZ) pzNuevo();
-    var h = gHead("Puzzle de versículos") + '<div class="pz-top"><b>' + esc(refText(PZ.r[0], PZ.r[1]-1, PZ.r[2]-1)) + '</b><span>Racha: ' + PZ.racha + '</span></div><div class="pz-a' + (PZ.ok === false ? " bad" : PZ.ok ? " good" : "") + '">';
+    var h = gHead("Puzzle de versículos") + gRec("puzzle", PZ.pts) + '<div class="pz-top"><b>' + esc(refText(PZ.r[0], PZ.r[1]-1, PZ.r[2]-1)) + '</b><span>' + (PZ.fail ? "Vale 5" : "Vale 10") + '</span></div><div class="pz-a' + (PZ.ok === false ? " bad" : PZ.ok ? " good" : "") + '">';
     PZ.put.forEach(function(i, n){ h += '<button type="button" class="pz-w on" data-pu="' + n + '">' + esc(PZ.w[i]) + '</button>'; });
     if (!PZ.put.length) h += '<span class="pz-ph">Toca las palabras en orden…</span>';
     h += '</div><div class="pz-pool">';
@@ -2128,14 +2139,14 @@ html.simple .act-r2{display:flex!important}
   }
   function pzCheck(){ if (PZ.put.length < PZ.w.length){ PZ.ok = null; return; }
     var txt = PZ.put.map(function(i){ return PZ.w[i]; }).join(" ");
-    PZ.ok = txt === PZ.w.join(" "); if (PZ.ok){ PZ.racha++; jSave(JK("puzzle"), PZ.racha); } else PZ.racha = 0; }
+    PZ.ok = txt === PZ.w.join(" "); if (PZ.ok){ PZ.pts += PZ.fail ? 5 : 10; jSave(RK("puzzle"), PZ.pts); } else PZ.fail = true; }
 
   /* ¿Quién soy? */
   var QS = null;
   function qsNuevo(){
     var P = FICHAS.filter(function(f){ return f.t === "p" && f.d && f.d.length > 60; });
     if (JLVL === "a"){ var FAM = ["noe","abraham","moises","david","jose","daniel","jonas","pedro","pablo","maria","elias","salomon","sanson","ester","rut","josue","goliat","juan el bautista","adan","eva","sara","isaac","jacob","gedeon","samuel","zaqueo","lazaro","marta","nicodemo","tomas"]; var P2 = P.filter(function(f){ return FAM.indexOf(norm(f.n.split(",")[0])) >= 0; }); if (P2.length >= 8) P = P2; }
-    var f = P[Math.floor(Math.random() * P.length)], nm = f.n.split(",")[0];
+    var f = P[jDeck("quien" + JLVL, 1, P.map(function(x){ return FICHAS.indexOf(x); })).map(function(i){ return P.indexOf(FICHAS[i]); })[0]] || P[0], nm = f.n.split(",")[0];
     var names = [nm].concat(f.a || []).filter(function(x){ return x && x.length > 2; });
     var oculto = f.d;
     names.forEach(function(n){ oculto = oculto.replace(new RegExp(n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"), "___"); });
@@ -2146,7 +2157,7 @@ html.simple .act-r2{display:flex!important}
   function renderQuien(){
     if (!gReady()) return gLoading("¿Quién soy?", renderQuien);
     if (!QS) qsNuevo();
-    var h = gHead("¿Quién soy?") + '<div class="pz-top"><b>Puntos: ' + QS.pts + '</b><span>Pista ' + Math.min(QS.n, QS.pistas.length) + ' de ' + QS.pistas.length + '</span></div><div class="qs-p">';
+    var h = gHead("¿Quién soy?") + gRec("quien", QS.pts) + '<div class="pz-top"><b>Vale ' + Math.max(1, 4 - QS.n) + (Math.max(1, 4 - QS.n) === 1 ? " punto" : " puntos") + '</b><span>Pista ' + Math.min(QS.n, QS.pistas.length) + ' de ' + QS.pistas.length + '</span></div><div class="qs-p">';
     QS.pistas.slice(0, QS.res ? QS.pistas.length : QS.n).forEach(function(p, i){ h += '<p><span>' + (i + 1) + '</span>' + esc(p) + '</p>'; });
     h += '</div>';
     if (!QS.res && QS.n < QS.pistas.length) h += '<button type="button" class="chip" data-qmas style="margin-bottom:12px">Otra pista (vale menos)</button>';
@@ -2159,7 +2170,7 @@ html.simple .act-r2{display:flex!important}
 
   /* Trivia */
   var TV = null;
-  function tvNueva(){ TV = { qs: shuffle(JUEGOS.trivia.filter(function(q){ return JLVL === "e" || !q.e; })).slice(0, 10).map(function(q){ return { q: q.q, o: shuffle(q.o), a: q.o[0], r: q.r }; }), i: 0, pts: 0, res: null }; }
+  function tvNueva(){ var ids = jIdx(JUEGOS.trivia).filter(function(i){ return JLVL === "e" || !JUEGOS.trivia[i].e; }); TV = { qs: jDeck("trivia" + JLVL, 10, ids).map(function(i){ return JUEGOS.trivia[i]; }).map(function(q){ return { q: q.q, o: shuffle(q.o), a: q.o[0], r: q.r }; }), i: 0, pts: 0, res: null }; }
   function renderTrivia(){
     if (!gReady()) return gLoading("Trivia bíblica", renderTrivia);
     if (!TV) tvNueva();
@@ -2168,7 +2179,7 @@ html.simple .act-r2{display:flex!important}
       $("vMore").innerHTML = gHead("Trivia bíblica") + '<div class="g-win big"><b>' + TV.pts + ' de 10</b><p>' + (TV.pts >= 9 ? "¡Excelente! Conoces muy bien la Palabra." : TV.pts >= 6 ? "¡Muy bien! Sigue leyendo y lo harás perfecto." : "Buen intento. Cada pregunta trae su cita para que la leas.") + (rec ? " ¡Nuevo récord!" : "") + '</p><button type="button" class="btn" data-tnew>Jugar otra vez</button></div>';
       return;
     }
-    var q = TV.qs[TV.i], h = gHead("Trivia bíblica") + '<div class="pz-top"><b>Pregunta ' + (TV.i + 1) + ' de 10</b><span>Puntos: ' + TV.pts + '</span></div><div class="mp-bar"><i style="width:' + (TV.i * 10) + '%"></i></div><p class="tv-q">' + esc(q.q) + '</p><div class="tv-o">';
+    var q = TV.qs[TV.i], h = gHead("Trivia bíblica") + gRec("trivia", TV.pts) + '<div class="pz-top"><b>Pregunta ' + (TV.i + 1) + ' de 10</b><span>' + JUEGOS.trivia.length + ' preguntas</span></div><div class="mp-bar"><i style="width:' + (TV.i * 10) + '%"></i></div><p class="tv-q">' + esc(q.q) + '</p><div class="tv-o">';
     q.o.forEach(function(o, i){ var cls = TV.res ? (o === q.a ? " good" : o === TV.res ? " bad" : "") : ""; h += '<button type="button" class="tv-b' + cls + '" data-to="' + i + '"' + (TV.res ? " disabled" : "") + '>' + esc(o) + '</button>'; });
     h += '</div>';
     if (TV.res){ h += '<p class="tv-f">' + (TV.res === q.a ? "¡Correcto!" : "La respuesta es: " + esc(q.a)) + '</p>' + (q.r ? refChips([q.r]) : "") + '<button type="button" class="btn mp-ok" data-tnext>' + (TV.i < 9 ? "Siguiente pregunta" : "Ver resultado") + '</button>'; }
@@ -2180,12 +2191,12 @@ html.simple .act-r2{display:flex!important}
   function olNuevo(){ var s = Math.floor(Math.random() * 58), ids = []; for (var i = 0; i < 9; i++) ids.push(s + i); OL = { ids: ids, pool: shuffle(ids), next: 0, err: 0, t0: Date.now(), fin: null, bad: null }; }
   function renderLibros(){
     if (!OL) olNuevo();
-    var h = gHead("Ordena los libros") + '<div class="pz-top"><b>Toca los libros en el orden de la Biblia</b><span>Errores: ' + OL.err + '</span></div><div class="ol-a">';
+    var h = gHead("Ordena los libros") + gRec("libros", OL.pts != null ? OL.pts : OL.next * 10) + '<div class="pz-top"><b>Toca los libros en el orden de la Biblia</b><span>Errores: ' + OL.err + '</span></div><div class="ol-a">';
     OL.ids.slice(0, OL.next).forEach(function(b, i){ h += '<span class="ol-ok">' + (i + 1) + '. ' + esc(bname(b)) + '</span>'; });
     h += '</div><div class="tv-o">';
     OL.pool.forEach(function(b){ if (OL.ids.indexOf(b) >= OL.next) h += '<button type="button" class="tv-b' + (OL.bad === b ? " bad" : "") + '" data-ol="' + b + '">' + esc(bname(b)) + '</button>'; });
     h += '</div>';
-    if (OL.fin != null){ var rec = OL.err === 0 && jSave("libros", OL.fin, true); h += '<div class="g-win"><b>¡Listo en ' + OL.fin + ' segundos!</b><p>' + (OL.err ? "Con " + OL.err + (OL.err === 1 ? " error." : " errores.") + " Sin errores cuenta para tu récord." : "Sin errores." + (rec ? " ¡Nuevo récord!" : "")) + '</p><button type="button" class="btn" data-olnew>Jugar otra vez</button></div>'; }
+    if (OL.fin != null){ if (OL.pts == null){ OL.pts = Math.max(10, 100 - OL.fin - OL.err * 10); OL.rec = jSave(RK("libros"), OL.pts); } var rec = OL.rec; h += '<div class="g-win"><b>¡Listo! ' + OL.pts + ' puntos</b><p>En ' + OL.fin + ' segundos' + (OL.err ? " y con " + OL.err + (OL.err === 1 ? " error." : " errores.") : ", sin errores.") + (rec ? " ¡Nuevo récord!" : "") +'</p><button type="button" class="btn" data-olnew>Jugar otra vez</button></div>'; }
     $("vMore").innerHTML = h;
   }
 
@@ -2213,17 +2224,17 @@ html.simple .act-r2{display:flex!important}
 
   /* Memoria (parejas) con giro y brillo */
   var MJ = null;
-  function mjNuevo(){ var K = JLVL === "e" ? 8 : 6, P = shuffle(JUEGOS.parejas).slice(0, K), cards = [];
+  function mjNuevo(){ var K = JLVL === "e" ? 8 : 6, P = jDeck("parejas", K, jIdx(JUEGOS.parejas)).map(function(i){ return JUEGOS.parejas[i]; }), cards = [];
     P.forEach(function(p, i){ cards.push({ p: i, t: p[0], k: "n" }); cards.push({ p: i, t: p[1], k: "h" }); });
     MJ = { K: K, cards: shuffle(cards), open: [], done: {}, moves: 0, lock: false, t0: Date.now() }; }
   function renderParejas(){
     if (!gReady()) return gLoading("Memoria", renderParejas);
     if (!MJ) mjNuevo();
-    var n = Object.keys(MJ.done).length, h = gHead("Memoria") + '<div class="pz-top"><b>Une cada personaje con lo que hizo</b><span id="mjMv">Jugadas: ' + MJ.moves + '</span></div><div class="mj-g">';
+    var n = Object.keys(MJ.done).length, h = gHead("Memoria") + gRec("parejas", MJ.pts != null ? MJ.pts : Object.keys(MJ.done).length * 10) + '<div class="pz-top"><b>Une cada personaje con lo que hizo</b><span id="mjMv">Jugadas: ' + MJ.moves + '</span></div><div class="mj-g">';
     MJ.cards.forEach(function(c, i){ var up = MJ.open.indexOf(i) >= 0 || MJ.done[c.p];
       h += '<button type="button" class="mj-c' + (up ? " up" : "") + (MJ.done[c.p] ? " ok" : "") + (c.k === "n" ? " nm" : "") + '" data-mj="' + i + '" style="--d:' + ((i * 0.37) % 3).toFixed(2) + 's" aria-label="' + (up ? esc(c.t) : "Carta boca abajo") + '"><span class="mj-in"><span class="mj-f" aria-hidden="true"><i>✦</i></span><span class="mj-b"><span>' + esc(c.t) + '</span></span></span></button>'; });
     h += '</div>';
-    if (n === MJ.K){ var rec = jSave(JK("parejas"), MJ.moves, true); h += '<div class="g-win"><b>¡Encontraste las ' + MJ.K + ' parejas!</b><p>En ' + MJ.moves + ' jugadas y ' + Math.round((Date.now() - MJ.t0) / 1000) + ' segundos.' + (rec ? " ¡Nuevo récord!" : "") + '</p><button type="button" class="btn" data-mjnew>Jugar otra vez</button></div>'; }
+    if (n === MJ.K){ if (MJ.pts == null){ MJ.pts = Math.max(10, 100 - 5 * (MJ.moves - MJ.K)); MJ.rec = jSave(RK("parejas"), MJ.pts); } var rec = MJ.rec; h += '<div class="g-win"><b>¡Encontraste las ' + MJ.K + ' parejas! ' + MJ.pts + ' puntos</b><p>En ' + MJ.moves + ' jugadas y ' + Math.round((Date.now() - MJ.t0) / 1000) + ' segundos.' + (rec ? " ¡Nuevo récord!" : "") + '</p><button type="button" class="btn" data-mjnew>Jugar otra vez</button></div>'; }
     else h += '<button type="button" class="chip" data-mjnew style="margin-top:12px">Barajar de nuevo</button>';
     $("vMore").innerHTML = h;
   }
@@ -2244,16 +2255,16 @@ html.simple .act-r2{display:flex!important}
 
   /* Personaje y hecho */
   var HC = null;
-  function hcNuevo(){ var P = shuffle(JUEGOS.hechos).slice(0, 5); HC = { P: P, R: shuffle(P.map(function(x, i){ return i; })), sel: null, done: {}, err: 0, bad: null }; }
+  function hcNuevo(){ var P = jDeck("hecho", 5, jIdx(JUEGOS.hechos)).map(function(i){ return JUEGOS.hechos[i]; }); HC = { P: P, R: shuffle(P.map(function(x, i){ return i; })), sel: null, done: {}, err: 0, bad: null }; }
   function renderHecho(){
     if (!gReady()) return gLoading("Personaje y hecho", renderHecho);
     if (!HC) hcNuevo();
-    var n = Object.keys(HC.done).length, h = gHead("Personaje y hecho") + '<div class="pz-top"><b>Toca un personaje y luego lo que hizo</b><span>Errores: ' + HC.err + '</span></div><div class="hc-g"><div class="hc-c">';
+    var n = Object.keys(HC.done).length, h = gHead("Personaje y hecho") + gRec("hecho", Math.max(0, Object.keys(HC.done).length * 10 - HC.err * 5)) + '<div class="pz-top"><b>Toca un personaje y luego lo que hizo</b><span>Errores: ' + HC.err + '</span></div><div class="hc-g"><div class="hc-c">';
     HC.P.forEach(function(x, i){ h += '<button type="button" class="hc-b nm' + (HC.done[i] ? " ok" : HC.sel === i ? " s" : "") + '" data-hl="' + i + '"' + (HC.done[i] ? " disabled" : "") + '>' + esc(x[0]) + '</button>'; });
     h += '</div><div class="hc-c">';
     HC.R.forEach(function(i){ h += '<button type="button" class="hc-b' + (HC.done[i] ? " ok" : HC.bad === i ? " bad" : "") + '" data-hr="' + i + '"' + (HC.done[i] ? " disabled" : "") + '>' + esc(HC.P[i][1]) + '</button>'; });
     h += '</div></div>';
-    if (n === 5){ var rec = jSave("hecho", HC.err, true); h += '<div class="g-win"><b>' + (HC.err ? "¡Completado!" : "¡Perfecto, sin errores!") + '</b><p>' + (HC.err ? "Con " + HC.err + (HC.err === 1 ? " error." : " errores.") : "") + (rec ? " ¡Nuevo récord!" : "") + '</p>' + refChips(HC.P.map(function(x){ return x[2]; })) + '<button type="button" class="btn" data-hcnew>Jugar otra</button></div>'; }
+    if (n === 5){ var hp = Math.max(0, 50 - HC.err * 5); if (HC.rec == null) HC.rec = jSave(RK("hecho"), hp); var rec = HC.rec; h += '<div class="g-win"><b>' + (HC.err ? "¡Completado! " : "¡Perfecto, sin errores! ") + hp + ' puntos</b><p>' + (HC.err ? "Con " + HC.err + (HC.err === 1 ? " error." : " errores.") : "") + (rec ? " ¡Nuevo récord!" : "") + '</p>' + refChips(HC.P.map(function(x){ return x[2]; })) + '<button type="button" class="btn" data-hcnew>Jugar otra</button></div>'; }
     else if (HC.sel == null) h += '<p class="mp-hint">Primero elige un nombre de la izquierda.</p>';
     $("vMore").innerHTML = h;
   }
@@ -2264,7 +2275,7 @@ html.simple .act-r2{display:flex!important}
 
   /* Objeto, personaje y dato */
   var TR = null;
-  function trNuevo(){ var L = JUEGOS.trio; TR = { qs: shuffle(L).slice(0, 8).map(function(x){
+  function trNuevo(){ var L = JUEGOS.trio; TR = { qs: jDeck("trio", 8, jIdx(L)).map(function(i){ return L[i]; }).map(function(x){
       var pers = shuffle(L.filter(function(y){ return y[1] !== x[1]; }).map(function(y){ return y[1]; })).filter(function(v, i, a){ return a.indexOf(v) === i; }).slice(0, 3);
       var dat = shuffle(L.filter(function(y){ return y[2] !== x[2]; }).map(function(y){ return y[2]; })).slice(0, 3);
       return { x: x, op1: shuffle([x[1]].concat(pers)), op2: shuffle([x[2]].concat(dat)) }; }), i: 0, step: 0, p1: null, p2: null, pts: 0 }; }
@@ -2272,7 +2283,7 @@ html.simple .act-r2{display:flex!important}
     if (!gReady()) return gLoading("Objeto, personaje y dato", renderTrio);
     if (!TR) trNuevo();
     if (TR.i >= TR.qs.length){ var rec = jSave("trio", TR.pts); $("vMore").innerHTML = gHead("Objeto, personaje y dato") + '<div class="g-win big"><b>' + TR.pts + ' de 16</b><p>' + (TR.pts >= 14 ? "¡Excelente! Conoces muy bien estas historias." : TR.pts >= 9 ? "¡Muy bien! Vas aprendiendo." : "Buen comienzo. Juega otra vez y verás cómo mejoras.") + (rec ? " ¡Nuevo récord!" : "") + '</p><button type="button" class="btn" data-trnew>Jugar otra vez</button></div>'; return; }
-    var q = TR.qs[TR.i], x = q.x, h = gHead("Objeto, personaje y dato") + '<div class="pz-top"><b>Trío ' + (TR.i + 1) + ' de 8</b><span>Puntos: ' + TR.pts + '</span></div><div class="mp-bar"><i style="width:' + (TR.i / 8 * 100) + '%"></i></div>';
+    var q = TR.qs[TR.i], x = q.x, h = gHead("Objeto, personaje y dato") + gRec("trio", TR.pts) + '<div class="pz-top"><b>Trío ' + (TR.i + 1) + ' de 8</b><span>2 puntos por trío</span></div><div class="mp-bar"><i style="width:' + (TR.i / 8 * 100) + '%"></i></div>';
     h += '<div class="tr-row"><span class="tr-p o">' + esc(x[0]) + '</span><span class="tr-p' + (TR.p1 ? (TR.p1 === x[1] ? " good" : " bad") : " q") + '">' + (TR.p1 ? esc(x[1]) : "¿Quién?") + '</span><span class="tr-p' + (TR.p2 ? (TR.p2 === x[2] ? " good" : " bad") : " q") + '">' + (TR.p2 ? esc(x[2]) : "¿Qué dato?") + '</span></div>';
     if (TR.step < 2){ var ops = TR.step === 0 ? q.op1 : q.op2; h += '<p class="tv-q">' + (TR.step === 0 ? "¿Qué personaje va con «" + esc(x[0]) + "»?" : "¿Qué dato completa la historia?") + '</p><div class="tv-o">';
       ops.forEach(function(o, i){ h += '<button type="button" class="tv-b" data-tr="' + i + '">' + esc(o) + '</button>'; }); h += '</div>'; }
@@ -2286,15 +2297,15 @@ html.simple .act-r2{display:flex!important}
 
   /* Cronología */
   var CR = null;
-  function crNuevo(){ var L = JUEGOS.crono, ids = shuffle(L.map(function(x, i){ return i; })).slice(0, 5).sort(function(a, b){ return a - b; }); CR = { ids: ids, pool: shuffle(ids), next: 0, err: 0, bad: null, racha: CR ? CR.racha : 0 }; }
+  function crNuevo(){ var L = JUEGOS.crono, ids = jDeck("crono", 5, jIdx(L)).sort(function(a, b){ return a - b; }); CR = { ids: ids, pool: shuffle(ids), next: 0, err: 0, bad: null, racha: CR ? CR.racha : 0 }; }
   function renderCrono(){
     if (!gReady()) return gLoading("Cronología", renderCrono);
     if (!CR) crNuevo();
-    var L = JUEGOS.crono, h = gHead("Cronología") + '<div class="pz-top"><b>Toca los hechos del más antiguo al más reciente</b><span>Errores: ' + CR.err + '</span></div><ol class="hs-t cr-t">';
+    var L = JUEGOS.crono, h = gHead("Cronología") + gRec("crono", Math.max(0, CR.next * 10 - CR.err * 5)) + '<div class="pz-top"><b>Toca los hechos del más antiguo al más reciente</b><span>Errores: ' + CR.err + '</span></div><ol class="hs-t cr-t">';
     CR.ids.slice(0, CR.next).forEach(function(i, n){ h += '<li style="--e:' + HUES[n * 2 % HUES.length] + '"><b>' + esc(L[i][0]) + '</b>' + refChips([L[i][1]]) + '</li>'; });
     h += '</ol>';
     if (CR.next < CR.ids.length){ h += '<div class="tv-o">'; CR.pool.forEach(function(i){ if (CR.ids.indexOf(i) >= CR.next) h += '<button type="button" class="tv-b' + (CR.bad === i ? " bad" : "") + '" data-cr="' + i + '">' + esc(L[i][0]) + '</button>'; }); h += '</div>'; }
-    else { if (!CR.err){ CR.racha++; } var rec = jSave("crono", CR.err, true); h += '<div class="g-win"><b>' + (CR.err ? "¡Listo!" : "¡Perfecto!") + '</b><p>' + (CR.err ? "Con " + CR.err + (CR.err === 1 ? " error." : " errores.") : "Sin errores.") + (rec ? " ¡Nuevo récord!" : "") + '</p><button type="button" class="btn" data-crnew>Otra ronda</button></div>'; }
+    else { var cp = Math.max(0, 50 - CR.err * 5); if (CR.rec == null) CR.rec = jSave(RK("crono"), cp); var rec = CR.rec; h += '<div class="g-win"><b>' + (CR.err ? "¡Listo! " : "¡Perfecto! ") + cp + ' puntos</b><p>' + (CR.err ? "Con " + CR.err + (CR.err === 1 ? " error." : " errores.") : "Sin errores.") + (rec ? " ¡Nuevo récord!" : "") + '</p><button type="button" class="btn" data-crnew>Otra ronda</button></div>'; }
     $("vMore").innerHTML = h;
   }
   $("vMore").addEventListener("click", function(e){ if (masSub !== "crono") return; var b;
@@ -2304,7 +2315,7 @@ html.simple .act-r2{display:flex!important}
   /* ¿Dónde está? */
   var DN = null;
   function km(a, b){ var R = 6371, t = Math.PI / 180, dl = (b[1] - a[1]) * t, df = (b[2] - a[2]) * t, x = Math.sin(df / 2) * Math.sin(df / 2) + Math.cos(a[1] * t) * Math.cos(b[1] * t) * Math.sin(dl / 2) * Math.sin(dl / 2); return 2 * R * Math.asin(Math.sqrt(x)); }
-  function dnNuevo(){ var L = JUEGOS.donde; DN = { qs: shuffle(L.map(function(x, i){ return i; })).slice(0, 8).map(function(i){
+  function dnNuevo(){ var L = JUEGOS.donde; DN = { qs: jDeck("donde", 8, jIdx(L)).map(function(i){
       var c = L.map(function(y, j){ return [j, km(L[i], y)]; }).filter(function(z){ return z[0] !== i && z[1] > 18; });
       var near = c.filter(function(z){ return z[1] < 650; }); if (near.length < 3) near = c.sort(function(a, b){ return a[1] - b[1]; }).slice(0, 5);
       return { t: i, ops: shuffle([i].concat(shuffle(near).slice(0, 3).map(function(z){ return z[0]; }))) }; }), i: 0, pista: false, quita: [], res: null, pts: 0, map: null }; }
@@ -2315,7 +2326,7 @@ html.simple .act-r2{display:flex!important}
     if (DN.map){ try{ DN.map.remove(); }catch(e){} DN.map = null; }
     var L = JUEGOS.donde;
     if (DN.i >= DN.qs.length){ var rec = jSave("donde", DN.pts); $("vMore").innerHTML = gHead("¿Dónde está?") + '<div class="g-win big"><b>' + DN.pts + ' de 80</b><p>' + (DN.pts >= 64 ? "¡Excelente! Conoces muy bien el mapa bíblico." : DN.pts >= 40 ? "¡Muy bien! Sigue explorando." : "Buen intento. Revisa los Mapas bíblicos en Más y vuelve a jugar.") + (rec ? " ¡Nuevo récord!" : "") + '</p><button type="button" class="btn" data-dnnew>Jugar otra vez</button></div>'; return; }
-    var q = DN.qs[DN.i], x = L[q.t], h = gHead("¿Dónde está?") + '<div class="pz-top"><b>Lugar ' + (DN.i + 1) + ' de 8</b><span>Puntos: ' + DN.pts + '</span></div><p class="tv-q">¿Dónde está <b>' + esc(x[0]) + '</b>?</p><div id="dnMap" class="dn-map"><p class="note">Cargando el mapa…</p></div><div class="dn-ops">';
+    var q = DN.qs[DN.i], x = L[q.t], h = gHead("¿Dónde está?") + gRec("donde", DN.pts) + '<div class="pz-top"><b>Lugar ' + (DN.i + 1) + ' de 8</b><span>Vale ' + dnPts() + '</span></div><p class="tv-q">¿Dónde está <b>' + esc(x[0]) + '</b>?</p><div id="dnMap" class="dn-map"><p class="note">Cargando el mapa…</p></div><div class="dn-ops">';
     q.ops.forEach(function(o, n){ var gone = DN.quita.indexOf(o) >= 0, cls = DN.res != null ? (o === q.t ? " good" : o === DN.res ? " bad" : "") : ""; h += '<button type="button" class="dn-o' + cls + '" data-dn="' + o + '"' + (gone || DN.res != null ? " disabled" : "") + (gone ? ' style="opacity:.3"' : '') + '>' + (n + 1) + (DN.res != null ? '<small>' + esc(L[o][0]) + '</small>' : '') + '</button>'; });
     h += '</div>';
     if (DN.res == null){
@@ -2356,7 +2367,7 @@ html.simple .act-r2{display:flex!important}
     if (!gReady() || !GEN) return gLoading("Completa la genealogía", renderGenea);
     if (!GN) gnNuevo();
     if (GN.i >= GN.qs.length){ var rec = jSave("genea", GN.pts); $("vMore").innerHTML = gHead("Completa la genealogía") + '<div class="g-win big"><b>' + GN.pts + ' de 8</b><p>' + (GN.pts >= 7 ? "¡Excelente! Conoces bien las familias de la Biblia." : "Revisa las Genealogías en Más y vuelve a intentarlo.") + (rec ? " ¡Nuevo récord!" : "") + '</p><button type="button" class="btn" data-gnnew>Jugar otra vez</button></div>'; return; }
-    var q = GN.qs[GN.i], h = gHead("Completa la genealogía") + '<div class="pz-top"><b>' + esc(q.t) + '</b><span>Puntos: ' + GN.pts + '</span></div><div class="mp-bar"><i style="width:' + (GN.i / 8 * 100) + '%"></i></div><ol class="gn-l">';
+    var q = GN.qs[GN.i], h = gHead("Completa la genealogía") + gRec("genea", GN.pts) + '<div class="pz-top"><b>' + esc(q.t) + '</b><span>' + (GN.i + 1) + ' de 8</span></div><div class="mp-bar"><i style="width:' + (GN.i / 8 * 100) + '%"></i></div><ol class="gn-l">';
     q.win.forEach(function(n, i){ var bl = i === q.blank; h += '<li class="' + (bl ? (GN.res == null ? "q" : "good") : "") + '">' + (bl ? (GN.res == null ? "?" : esc(n)) : esc(n)) + '</li>'; });
     h += '</ol><p class="mp-hint">Cada nombre es padre del que sigue.</p>';
     if (GN.res == null){ h += '<div class="tv-o">'; q.ops.forEach(function(o, i){ h += '<button type="button" class="tv-b" data-gn="' + i + '">' + esc(o) + '</button>'; }); h += '</div>'; }
