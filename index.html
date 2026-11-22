@@ -78,6 +78,8 @@ header .pill,header .icon{background:rgba(255,255,255,.2);border-color:rgba(255,
 #btnRef{min-width:0;flex:0 1 auto;overflow:hidden}
 #btnRef span{overflow:hidden;text-overflow:ellipsis}
 header #btnVer{background:var(--on-head);color:var(--head);border-color:var(--on-head)}
+header #btnRef,:root[data-tone] header #btnRef{background:#fde68a;border-color:#facc15;color:#422006;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+header #btnRef svg{color:#92400e}
 .grow{flex:1}
 .icon{width:40px;height:40px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid var(--line);background:var(--surface)}
 
@@ -1124,8 +1126,16 @@ html.simple .act-r2{display:flex!important}
 
   /* ---------- Lectura ---------- */
   function savePos(){ store.set("pos", cur); }
+  var refRaf = 0;
+  function refUpd(){ refRaf = 0; if (!$("vRead").classList.contains("on")) return;
+    var vi = sel;
+    if (vi == null){ var top = $("main").getBoundingClientRect().top + 8, ns = $("vRead").querySelectorAll(".v");
+      for (var k = 0; k < ns.length; k++){ if (ns[k].getBoundingClientRect().bottom > top){ vi = +ns[k].dataset.i; break; } } }
+    $("refLabel").textContent = vi != null && vi > 0 ? refText(cur.b, cur.c, vi) : refText(cur.b, cur.c);
+  }
+  $("main").addEventListener("scroll", function(){ if (!refRaf) refRaf = requestAnimationFrame(refUpd); }, { passive: true });
   function setSel(i){
-    sel = i;
+    sel = i; if (!refRaf) refRaf = requestAnimationFrame(refUpd);
     var nodes = $("vRead").querySelectorAll(".v");
     for (var k=0;k<nodes.length;k++) nodes[k].classList.toggle("sel", +nodes[k].dataset.i === i);
     var bar = $("actions");
