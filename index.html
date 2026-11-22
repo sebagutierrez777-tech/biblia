@@ -3148,7 +3148,7 @@ html.simple .act-r2{display:flex!important}
   var PLUS = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
   /* ---------- Devocional del día ---------- */
   var DEVO = null, devoAbierto = false;
-  function devoHoy(){ if (!DEVO) return null; var i = (new Date().getDate() - 1) % DEVO.length, x = DEVO[i], v = vddRef(); if (x.r[0] === v[0] && x.r[1] - 1 === v[1] && x.r[2] - 1 === v[2]) x = DEVO[(i + 1) % DEVO.length]; return x; }
+  function devoHoy(){ if (!DEVO) return null; var hoyD = new Date(), i = Math.floor((hoyD - new Date(hoyD.getFullYear(), 0, 0)) / 864e5) % DEVO.length, x = DEVO[i], v = vddRef(); if (x.r[0] === v[0] && x.r[1] - 1 === v[1] && x.r[2] - 1 === v[2]) x = DEVO[(i + 1) % DEVO.length]; return x; }
   function devoHtml(){
     if (!DEVO){ getJSON("devocionales.json").then(function(j){ DEVO = j.devocionales; if ($("vFavs").classList.contains("on")) renderFavs(); }, function(){}); return ""; }
     var x = devoHoy(), r = x.r, vid = ver(cur.v).books[r[0]] && DATA[cur.v] ? cur.v : "rvr1960", vt = DATA[vid] ? (DATA[vid][r[0]][r[1]-1][r[2]-1] || "").replace(/\n/g, " ") : "";
