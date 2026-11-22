@@ -689,6 +689,52 @@ html.simple .act-r2{display:flex!important}
 @keyframes mjTw{0%,100%{opacity:.45}50%{opacity:1}}
 @keyframes mjGl{0%{transform:rotateY(180deg) scale(1)}40%{transform:rotateY(180deg) scale(1.08)}100%{transform:rotateY(180deg) scale(1)}}
 @media (prefers-reduced-motion:reduce){.mj-in{transition:none}.mj-f::after,.mj-f::before{animation:none}}
+/* ---- v2.1.1: juegos con color propio ---- */
+#vMore[data-sec=juego] .mp-bar{height:8px;background:color-mix(in srgb,var(--sc) 14%,var(--line))}
+#vMore[data-sec=juego] .mp-bar i{background:linear-gradient(90deg,color-mix(in srgb,var(--sc) 70%,#fff),var(--sc));border-radius:4px;transition:width .4s}
+#vMore[data-sec=juego] .pz-top b{color:color-mix(in srgb,var(--sc) 75%,var(--ink))}
+#vMore[data-sec=juego] .pz-top span{padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--sc) 14%,var(--surface));color:color-mix(in srgb,var(--sc) 80%,var(--ink));font-weight:800;white-space:nowrap}
+#vMore[data-sec=juego] .tv-q{color:color-mix(in srgb,var(--sc) 55%,var(--ink))}
+#vMore[data-sec=juego] .tv-o{counter-reset:op}
+#vMore[data-sec=juego] .tv-b{position:relative;display:flex;align-items:center;gap:12px;border-left:4px solid var(--sc);transition:transform .15s,background .2s}
+#vMore[data-sec=juego] .tv-b:active{transform:scale(.98)}
+#vMore[data-sec=juego] .tv-b::before{counter-increment:op;content:counter(op,upper-alpha);flex:none;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;background:color-mix(in srgb,var(--sc) 15%,var(--surface));color:color-mix(in srgb,var(--sc) 85%,var(--ink))}
+#vMore[data-sec=juego] .tv-b.good{border-left-color:#15803d;animation:gPop .45s}
+#vMore[data-sec=juego] .tv-b.good::before{content:"✓";background:#15803d;color:#fff}
+#vMore[data-sec=juego] .tv-b.bad{border-left-color:#b91c1c;animation:gShake .4s}
+#vMore[data-sec=juego] .tv-b.bad::before{content:"✕";background:#b91c1c;color:#fff}
+#vMore[data-sec=juego] .tv-f{color:color-mix(in srgb,var(--sc) 80%,var(--ink));font-size:17px}
+#vMore[data-sec=juego] .mp-ok{background:var(--sc);border-color:var(--sc)}
+#vMore[data-sec=juego] .g-win{position:relative;overflow:hidden;border:0;background:linear-gradient(160deg,color-mix(in srgb,var(--sc) 16%,var(--surface)),var(--surface));box-shadow:0 0 0 2px var(--sc),0 10px 26px color-mix(in srgb,var(--sc) 25%,transparent);animation:gPop .5s}
+#vMore[data-sec=juego] .g-win::before{content:"✦ ✧ ✦ ✧ ✦";display:block;margin-bottom:4px;font-size:15px;letter-spacing:6px;color:#ca8a04;animation:mjTw 1.6s ease-in-out infinite}
+#vMore[data-sec=juego] .g-win b{color:color-mix(in srgb,var(--sc) 85%,var(--ink))}
+#vMore[data-sec=juego] .g-win .btn{background:var(--sc);border-color:var(--sc)}
+#vMore[data-sec=juego] .sp-temas .chip[aria-pressed="true"]{background:var(--sc);border-color:var(--sc);color:#fff}
+#vMore[data-sec=juego] .sp-c{transition:background .2s,transform .15s}
+#vMore[data-sec=juego] .sp-c.s{background:var(--sc);border-color:var(--sc);color:#fff;transform:scale(1.08)}
+#vMore[data-sec=juego] .sp-c.f{background:color-mix(in srgb,var(--sc) 20%,var(--surface));border-color:color-mix(in srgb,var(--sc) 45%,transparent);color:color-mix(in srgb,var(--sc) 85%,var(--ink));animation:gPop .35s}
+#vMore[data-sec=juego] .sp-w span{padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--sc) 10%,var(--surface))}
+#vMore[data-sec=juego] .sp-w .ok{background:color-mix(in srgb,var(--sc) 22%,var(--surface))}
+#vMore[data-sec=juego] .pz-a{border-color:color-mix(in srgb,var(--sc) 40%,var(--line));background:color-mix(in srgb,var(--sc) 5%,var(--surface))}
+#vMore[data-sec=juego] .pz-a.good{border:2px solid #15803d;animation:gPop .45s}#vMore[data-sec=juego] .pz-a.bad{border:2px solid #b91c1c;animation:gShake .4s}
+#vMore[data-sec=juego] .pz-w{border-color:color-mix(in srgb,var(--sc) 35%,var(--line));box-shadow:0 2px 0 color-mix(in srgb,var(--sc) 30%,transparent);transition:transform .12s}
+#vMore[data-sec=juego] .pz-w:active{transform:translateY(2px);box-shadow:none}
+#vMore[data-sec=juego] .pz-w.on{background:var(--sc);color:#fff;border-color:var(--sc);animation:gPop .25s}
+#vMore[data-sec=juego] .qs-p p{border-left:4px solid var(--sc);background:color-mix(in srgb,var(--sc) 6%,var(--surface));animation:gIn .35s}
+#vMore[data-sec=juego] .qs-p span{background:var(--sc)}
+#vMore[data-sec=juego] .ol-ok{background:color-mix(in srgb,var(--sc) 16%,var(--surface));color:color-mix(in srgb,var(--sc) 85%,var(--ink));border-left:4px solid var(--sc);animation:gIn .3s}
+#vMore[data-sec=juego] .hc-b.s{border-color:var(--sc);background:color-mix(in srgb,var(--sc) 12%,var(--surface));transform:scale(1.03)}
+#vMore[data-sec=juego] .hc-b.ok{animation:gPop .4s}#vMore[data-sec=juego] .hc-b.bad{animation:gShake .4s}
+#vMore[data-sec=juego] .tr-p.good{animation:gPop .4s}#vMore[data-sec=juego] .tr-p.bad{animation:gShake .4s}
+#vMore[data-sec=juego] .chip[data-qmas],#vMore[data-sec=juego] .mp-btns .chip{border-color:color-mix(in srgb,var(--sc) 40%,var(--line));color:color-mix(in srgb,var(--sc) 85%,var(--ink))}
+#vMore[data-sec=juego] .jg{position:relative;overflow:hidden;border-left:5px solid var(--c);background:linear-gradient(110deg,color-mix(in srgb,var(--c) 9%,var(--surface)),var(--surface) 60%);transition:transform .15s}
+#vMore[data-sec=juego] .jg:active{transform:scale(.98)}
+#vMore[data-sec=juego] .jg-i{background:var(--c);color:#fff;box-shadow:0 4px 10px color-mix(in srgb,var(--c) 35%,transparent)}
+#vMore[data-sec=juego] .jg-t em{color:var(--c)}
+@keyframes gPop{0%{transform:scale(1)}40%{transform:scale(1.05)}100%{transform:scale(1)}}
+@keyframes gShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes gIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){#vMore[data-sec=juego] *{animation:none!important}}
 .jg-lv{display:inline-block;vertical-align:middle;margin-left:4px;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:800;letter-spacing:.02em;background:#dcfce7;color:#166534}.jg-lv.e{background:#ede9fe;color:#5b21b6}
 .jg-niv{margin:0 0 12px}.jg-niv button{font-size:15px;font-weight:700}
 .jg-niv button[aria-pressed="true"]{background:var(--rubric);color:#fff}
@@ -2310,7 +2356,8 @@ html.simple .act-r2{display:flex!important}
   var masSub = null;
   function masHead(t, back){ return '<div class="mas-h"><button type="button" class="icon" data-mas="' + (back || "") + '" aria-label="Volver">‹</button><h2>' + esc(t) + '</h2></div>'; }
   function renderMore(sub, opt){
-    var el = $("vMore"); masSub = sub || null; delete el.dataset.sec;
+    var el = $("vMore"); masSub = sub || null; delete el.dataset.sec; el.style.removeProperty("--sc");
+    var gm = GAMES.filter(function(g){ return g[0] === sub; })[0]; if (gm || sub === "juegos"){ el.dataset.sec = "juego"; el.style.setProperty("--sc", gm ? gm[4] : "#be185d"); }
     if (mapObj){ try{ mapObj.remove(); }catch(e){} mapObj = null; mapLayer = null; }
     if (DN && DN.map){ try{ DN.map.remove(); }catch(e){} DN.map = null; }
     if (!masSub){
