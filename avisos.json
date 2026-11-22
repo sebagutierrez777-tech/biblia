@@ -1,6 +1,14 @@
 {
  "avisos": [
   {
+   "id": "2026-11-22-version-2-1",
+   "fecha": "2026-11-22",
+   "titulo": "Versión 2.1: devocional, juegos y búsqueda",
+   "texto": "En Mi Biblia tienes un devocional cada día, que puedes compartir. Los juegos ahora se dividen en Aprendices y Experimentados, con cinco juegos nuevos: Objeto, personaje y dato; Personaje y hecho; Cronología; ¿Dónde está?, y Completa la genealogía. Al buscar algo como «Arca de Noé», verás lo que pasó, dónde leerlo, los personajes y los hallazgos relacionados. Y en Aa puedes poner tu foto junto a tu nombre.",
+   "enlace": "",
+   "texto_enlace": ""
+  },
+  {
    "id": "2026-11-18-version-2-0",
    "fecha": "2026-11-18",
    "titulo": "Versión 2.0: más color",

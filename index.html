@@ -225,6 +225,24 @@ header #btnMic,:root[data-tone="piedra"] header #btnMic{background:var(--nt-bg);
 .vdd-btns{display:flex;gap:8px;margin-top:14px}
 .vdd-btns button{flex:1;min-height:46px;border-radius:12px;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;gap:6px}
 .vdd-btns .b1{background:var(--nt-bg);color:#fff}.vdd-btns .b2{border:1px solid var(--line);background:var(--paper)}
+.tm{margin:0 0 16px;padding:14px;border-radius:18px;background:var(--surface);border:1px solid color-mix(in srgb,#185fa5 30%,var(--line));border-top:5px solid #185fa5}
+.tm-h{display:flex;flex-direction:column}.tm-h small{font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb,#185fa5 80%,var(--ink))}.tm-h b{font-family:var(--read);font-size:22px;font-weight:600;margin:2px 0}.tm-h span{font-size:14px;color:var(--muted);font-weight:700}
+.tm-d{margin:8px 0 12px;font-size:16px;line-height:1.6}
+.tm-btns{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.tm-btns .btn{min-height:44px;padding:0 16px;background:#185fa5}
+.tm-l{margin:14px 0 6px;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tm-hz{display:flex;flex-direction:column;width:100%;text-align:left;padding:10px 12px;margin-bottom:6px;border-radius:12px;border-left:4px solid #a8660f;background:color-mix(in srgb,#a8660f 8%,var(--surface))}.tm-hz b{font-size:15.5px}.tm-hz small{font-size:13px;color:var(--muted)}
+.hs-h.flash{animation:hzF 1.6s}@keyframes hzF{0%,40%{box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 45%,transparent)}100%{box-shadow:none}}
+.devo{margin-top:12px;border-radius:20px;overflow:hidden;background:var(--surface);border:1px solid color-mix(in srgb,#b45309 30%,var(--line))}
+.devo-h{display:flex;width:100%;align-items:center;gap:12px;padding:14px 16px;text-align:left;background:linear-gradient(160deg,#b45309,#c2410c 55%,#9d2c4f);color:#fff}
+.devo-ic{flex:none;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center}
+.devo-t{flex:1;display:flex;flex-direction:column}.devo-t small{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.9}.devo-t b{font-family:var(--read);font-size:20px;font-weight:600;margin-top:2px}
+.devo-a{font-size:26px;line-height:1}
+.devo-p{margin:0;padding:12px 16px 14px;font-size:16px;line-height:1.5;cursor:pointer}
+.devo-b{padding:14px 16px 16px}.devo-b>p{margin:0 0 12px;font-size:16.5px;line-height:1.65}
+.devo-v{margin:0 0 12px;padding:10px 14px;border-left:4px solid #b45309;border-radius:0;background:color-mix(in srgb,#b45309 7%,var(--surface));font-family:var(--read);font-size:17px;line-height:1.55}
+.devo-v cite{display:block;margin-top:6px;font-family:var(--ui);font-style:normal;font-size:13px;font-weight:800;color:color-mix(in srgb,#b45309 80%,var(--ink))}
+.devo-o{padding:12px 14px;border-radius:14px;background:color-mix(in srgb,#9d2c4f 8%,var(--surface))}.devo-o b{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb,#9d2c4f 80%,var(--ink))}.devo-o p{margin:4px 0 0;font-size:16px;line-height:1.55;font-style:italic}
+.devo .vdd-btns .b1{background:#b45309}
 .vdd-read{width:100%;min-height:44px;margin-top:6px;color:var(--nt-bg);font-weight:700}
 .mb-h{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:24px 0 8px}
 .cont{display:flex;flex-direction:column;width:100%;text-align:left;min-height:60px;padding:10px 14px;border-radius:12px;border-left:6px solid}
@@ -323,6 +341,14 @@ nav button.dot::after{content:"";display:inline-block;width:8px;height:8px;borde
 .fav-row .res{border:0;flex:1}
 .fav-row .del{flex:none;width:40px;height:40px;margin-top:8px;border-radius:999px;color:var(--muted);font-size:20px}
 h2.sec{font-family:var(--read);font-weight:600;font-size:24px;margin:0 0 6px}
+h2.sec.con-ft{display:flex;align-items:center;gap:10px}
+.ft-sec{flex:none;width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--surface);box-shadow:0 0 0 2px var(--rubric)}
+.ft-mini{width:28px;height:28px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:6px}
+.ft-row{display:flex;gap:12px;align-items:flex-start;margin:12px 0 4px}
+.ft-row b{display:block;font-size:15px}.ft-row small{display:block;font-size:13px;color:var(--muted);line-height:1.4;margin:2px 0 8px}
+.ft-av{flex:none;width:56px;height:56px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--rubric-soft);color:var(--rubric);font-weight:800;font-size:22px;border:2px solid var(--line)}
+.ft-av img{width:100%;height:100%;object-fit:cover}
+.ft-btns{display:flex;gap:8px}.ft-btns label{cursor:pointer}
 
 /* Barra de acciones del versículo */
 #actions{display:none;align-items:center;gap:8px;padding:8px 16px;border-top:1px solid var(--line);background:var(--surface)}
@@ -645,13 +671,52 @@ html.simple .act-r2{display:flex!important}
 .hs-f{display:block;font-size:12.5px;font-weight:800;color:var(--muted);letter-spacing:.03em}
 .hs-t b{display:block;font-size:17px;margin:2px 0 4px}.hs-t p{margin:0 0 6px;font-size:15.5px;line-height:1.55}
 .hs-w{display:block;font-size:13px;color:var(--muted);margin-top:1px}
-.mj-g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
-.mj-c{aspect-ratio:3/4;border-radius:12px;border:0;background:#0e7490;color:#e0f2fe;display:flex;align-items:center;justify-content:center;padding:5px;text-align:center;transition:transform .2s}
-.mj-c i{font-style:normal;font-size:26px;opacity:.7}
-.mj-c.up{background:var(--surface);border:2px solid #0e7490;color:var(--ink)}
-.mj-c.up span{font-size:12.5px;line-height:1.3;font-weight:600}
-.mj-c.up.nm span{font-family:var(--read);font-size:15px;font-weight:600}
-.mj-c.ok{border-color:#15803d;background:#dcfce7;color:#14532d}
+.mj-g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.mj-c{aspect-ratio:3/4;border:0;padding:0;background:none;perspective:900px;-webkit-tap-highlight-color:transparent}
+.mj-in{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.22,.9,.25,1)}
+.mj-c.up .mj-in{transform:rotateY(180deg)}
+.mj-f,.mj-b{position:absolute;inset:0;border-radius:13px;-webkit-backface-visibility:hidden;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;padding:5px;text-align:center;overflow:hidden}
+.mj-f{background:radial-gradient(circle at 30% 22%,#38bdf8 0,#0e7490 48%,#0b3d52 100%);color:#fde68a;box-shadow:inset 0 0 0 2px rgba(255,255,255,.28),0 3px 8px rgba(8,47,73,.3)}
+.mj-f::before{content:"";position:absolute;inset:0;background-image:radial-gradient(1.4px 1.4px at 18% 26%,#fff,transparent),radial-gradient(1px 1px at 74% 18%,#fff,transparent),radial-gradient(1.6px 1.6px at 62% 72%,#fef9c3,transparent),radial-gradient(1px 1px at 28% 80%,#fff,transparent),radial-gradient(1.2px 1.2px at 86% 52%,#fff,transparent);animation:mjTw 2.6s ease-in-out infinite;animation-delay:var(--d,0s)}
+.mj-f::after{content:"";position:absolute;top:-20%;bottom:-20%;width:45%;left:-60%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.65),transparent);transform:skewX(-12deg);animation:mjSh 3.6s ease-in-out infinite;animation-delay:var(--d,0s)}
+.mj-f i{position:relative;font-style:normal;font-size:28px;text-shadow:0 0 10px rgba(253,230,138,.9)}
+.mj-b{transform:rotateY(180deg);background:var(--surface);border:2px solid #0e7490;color:var(--ink)}
+.mj-b span{font-size:12.5px;line-height:1.3;font-weight:600}
+.mj-c.nm .mj-b span{font-family:var(--read);font-size:15px;font-weight:600}
+.mj-c.ok .mj-b{border-color:#ca8a04;background:linear-gradient(150deg,#fffbeb,#fde68a);color:#713f12;box-shadow:0 0 0 3px rgba(250,204,21,.35),0 0 18px rgba(250,204,21,.55);animation:mjGl .9s ease-out}
+.mj-c.ok .mj-b::after{content:"✦  ✧  ✦";position:absolute;top:4px;left:0;right:0;font-size:10px;letter-spacing:2px;color:#ca8a04;animation:mjTw 1.8s ease-in-out infinite}
+@keyframes mjSh{0%,55%{left:-60%}85%,100%{left:120%}}
+@keyframes mjTw{0%,100%{opacity:.45}50%{opacity:1}}
+@keyframes mjGl{0%{transform:rotateY(180deg) scale(1)}40%{transform:rotateY(180deg) scale(1.08)}100%{transform:rotateY(180deg) scale(1)}}
+@media (prefers-reduced-motion:reduce){.mj-in{transition:none}.mj-f::after,.mj-f::before{animation:none}}
+.jg-lv{display:inline-block;vertical-align:middle;margin-left:4px;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:800;letter-spacing:.02em;background:#dcfce7;color:#166534}.jg-lv.e{background:#ede9fe;color:#5b21b6}
+.jg-niv{margin:0 0 12px}.jg-niv button{font-size:15px;font-weight:700}
+.jg-niv button[aria-pressed="true"]{background:var(--rubric);color:#fff}
+.hc-g{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:8px}
+.hc-c{display:flex;flex-direction:column;gap:8px}
+.hc-b{min-height:62px;padding:8px 10px;border-radius:12px;background:var(--surface);border:1px solid var(--line);font-size:14.5px;line-height:1.3;text-align:left;color:var(--ink)}
+.hc-b.nm{font-family:var(--read);font-size:16px;font-weight:600}
+.hc-b.s{border:2px solid #0f766e;background:color-mix(in srgb,#0f766e 12%,var(--surface))}
+.hc-b.ok{background:#dcfce7;border-color:#15803d;color:#14532d}.hc-b.bad{background:#fee2e2;border-color:#b91c1c;color:#7f1d1d}
+.tr-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:4px 0 12px}
+.tr-p{min-height:64px;padding:8px;border-radius:12px;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:700;font-size:14px;line-height:1.3;background:var(--surface);border:1px solid var(--line)}
+.tr-p.o{background:#c2410c;color:#fff;border-color:#c2410c;font-family:var(--read);font-size:16px}
+.tr-p.q{border-style:dashed;color:var(--muted)}.tr-p.good{background:#dcfce7;border-color:#15803d;color:#14532d}.tr-p.bad{background:#fee2e2;border-color:#b91c1c;color:#7f1d1d}
+.cr-t{margin:0 0 12px}.cr-t b{font-size:16px}
+.dn-map{height:300px;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#dbeafe;margin-bottom:10px}
+.dn-pin{display:flex;width:34px;height:34px;border-radius:50%;align-items:center;justify-content:center;background:#0369a1;color:#fff;font-weight:800;font-size:16px;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.35)}
+.dn-pin.good{background:#15803d}.dn-pin.bad{background:#b91c1c}
+.dn-ops{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.dn-o{min-height:50px;border-radius:12px;background:#0369a1;color:#fff;font-weight:800;font-size:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
+.dn-o small{font-size:11px;font-weight:600;margin-top:2px}
+.dn-o.good{background:#15803d}.dn-o.bad{background:#b91c1c}.dn-o[disabled]{cursor:default}
+.dn-v{font-size:13px;font-weight:800;color:#0369a1;align-self:center}
+.dn-pista{padding:10px 14px;border-radius:12px;background:color-mix(in srgb,#0369a1 9%,var(--surface));border-left:4px solid #0369a1;font-size:15.5px;line-height:1.5}
+.gn-l{list-style:none;margin:0 0 6px;padding:0;display:flex;flex-direction:column;align-items:center;gap:4px}
+.gn-l li{min-width:62%;padding:10px 14px;border-radius:12px;text-align:center;font-family:var(--read);font-size:18px;font-weight:600;background:color-mix(in srgb,#3b6d11 10%,var(--surface));border:1px solid color-mix(in srgb,#3b6d11 30%,var(--line))}
+.gn-l li+li::before{content:"↓";display:block;margin:-30px 0 8px;font-family:var(--ui);font-size:15px;color:var(--muted)}
+.gn-l li{margin-top:0}.gn-l li+li{margin-top:22px}
+.gn-l li.q{border:2px dashed #3b6d11;color:#3b6d11}.gn-l li.good{background:#dcfce7;border-color:#15803d;color:#14532d}.gn-l li.bad{background:#fee2e2;border-color:#b91c1c;color:#7f1d1d}
 :root[data-tone="noche"] .mj-c.ok{background:#14532d;color:#dcfce7}
 </style>
 <style>
@@ -703,7 +768,7 @@ html.simple .act-r2{display:flex!important}
 </div>
 <div class="ini-load" aria-hidden="true"><i></i></div>
 <script>(function(){try{if(localStorage.getItem("biblia.sonidoInicio")==="false")return;var a=new Audio("inicio.mp3");a.volume=0.35;var p=a.play();if(p&&p.then)p.then(function(){window.__sonoInicio=true;},function(){});}catch(e){}})();</script>
-<div class="ini-pie2"><span>Versión 2.0</span><span>Desarrollado por <b>DIRCOM Chile</b></span></div>
+<div class="ini-pie2"><span>Versión 2.1</span><span>Desarrollado por <b>DIRCOM Chile</b></span></div>
 </div>
 <div class="ini ini-bien" id="iniBien" role="dialog" aria-modal="true" aria-labelledby="iniBienT" hidden>
 <div class="ini-cab"><img src="logo-emblema-claro.png" alt=""><p>Iglesia de Dios de la Profecía</p></div>
@@ -885,6 +950,7 @@ html.simple .act-r2{display:flex!important}
     <div class="sheet-body">
       <label class="grp" for="cfgNombre" style="margin-top:4px">Tu nombre o apodo</label>
       <div class="nm-row"><input id="cfgNombre" type="text" maxlength="30" autocomplete="given-name" placeholder="¿Cómo te llamas?"><button type="button" class="btn" id="cfgNombreOk">Guardar</button></div>
+      <div class="ft-row"><span class="ft-av" id="cfgFotoV" aria-hidden="true"></span><div><b>Tu foto</b><small>Se ve pequeña junto a tu nombre y solo queda guardada en este teléfono.</small><div class="ft-btns"><label class="chip" for="cfgFoto">Elegir foto</label><button type="button" class="chip" id="cfgFotoX">Quitar</button></div></div><input type="file" id="cfgFoto" accept="image/*" hidden></div>
       <div class="share-box">
         <button type="button" class="share-main" id="btnShare"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span>Compartir la app con un hermano</span></button>
         <button type="button" class="share-qr" id="btnQr"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 17h4v4h-4"/></svg><span>Mostrar código QR</span></button>
@@ -916,7 +982,7 @@ html.simple .act-r2{display:flex!important}
       </div>
       <p class="note">Lila sigue el modo claro u oscuro de tu teléfono.</p>
       <label class="prom-row"><input type="checkbox" id="promChk"> <span>Resaltar suavemente las <span class="prom-demo">promesas de Jesús</span> en el Nuevo Testamento</span></label>
-      <p class="credit">Biblia Multiversión · Versión 2.0<br>Desarrollado por DIRCOM Chile · Iglesia de Dios de la Profecía</p>
+      <p class="credit">Biblia Multiversión · Versión 2.1<br>Desarrollado por DIRCOM Chile · Iglesia de Dios de la Profecía</p>
     </div>
   </div>
   <div class="mic-veil" id="micVeil" hidden>
@@ -1208,11 +1274,23 @@ html.simple .act-r2{display:flex!important}
     if (!holaTxt) holaTxt = holaElegir(ref);
     frase = holaTxt.l;
     if (p){ var di = planDay(p), pend = p.days[di].filter(function(x, j){ return !plan.done[di + "." + j]; }); if (pend.length) frase += " Hoy en tu plan: " + pend.map(itemLabel).join(", ") + "."; }
-    return '<div class="hola" id="hola"><button type="button" class="x" id="holaX" aria-label="Cerrar">✕</button><b>' + esc(holaTxt.t) + '</b><span>' + esc(frase) + '</span></div>';
+    return '<div class="hola" id="hola"><button type="button" class="x" id="holaX" aria-label="Cerrar">✕</button><b>' + fotoHtml() + esc(holaTxt.t) + '</b><span>' + esc(frase) + '</span></div>';
   }
   function setNombre(v){ nombre = (v || "").trim().slice(0, 30); store.set("nombre", nombre); $("cfgNombre").value = nombre; }
   $("cfgNombre").value = nombre;
   window.addEventListener("biblia-nombre", function(){ nombre = store.get("nombre", ""); $("cfgNombre").value = nombre; holaClosed = false; holaRef = null; holaTxt = null; if (META && DATA[cur.v]) renderReadKeep(); });
+  /* Foto de perfil (solo en este teléfono) */
+  var foto = store.get("foto", "");
+  function fotoHtml(cls){ return foto ? '<img class="' + (cls || "ft-mini") + '" src="' + foto + '" alt="">' : ""; }
+  function fotoPintar(){ var v = $("cfgFotoV"); v.innerHTML = foto ? '<img src="' + foto + '" alt="">' : (nombre ? esc(nombre.charAt(0).toUpperCase()) : "+"); $("cfgFotoX").style.display = foto ? "" : "none"; }
+  $("cfgFoto").onchange = function(){ var f = this.files && this.files[0]; if (!f) return; var rd = new FileReader();
+    rd.onload = function(){ var im = new Image(); im.onload = function(){ var S = 160, c = document.createElement("canvas"); c.width = c.height = S; var k = Math.min(im.width, im.height), x = c.getContext("2d");
+        x.drawImage(im, (im.width - k) / 2, (im.height - k) / 2, k, k, 0, 0, S, S);
+        try{ foto = c.toDataURL("image/jpeg", 0.82); store.set("foto", foto); fotoPintar(); toast("Foto guardada"); if ($("vFavs").classList.contains("on")) renderFavs(); renderReadKeep(); }catch(e){ toast("No se pudo guardar la foto"); } };
+      im.onerror = function(){ toast("No se pudo leer esa imagen"); }; im.src = rd.result; };
+    rd.readAsDataURL(f); this.value = ""; };
+  $("cfgFotoX").onclick = function(){ foto = ""; store.set("foto", ""); fotoPintar(); toast("Foto quitada"); if ($("vFavs").classList.contains("on")) renderFavs(); renderReadKeep(); };
+  fotoPintar();
   $("cfgNombreOk").onclick = function(){ setNombre($("cfgNombre").value); holaClosed = false; holaRef = null; holaTxt = null; toast(nombre ? "Listo, " + nombre : "Nombre borrado"); renderReadKeep(); };
   $("vRead").addEventListener("click", function(e){
     if (e.target.closest("#holaX")){ e.stopPropagation(); holaClosed = true; if (!nombre) store.set("nombreNo", true); var h = $("hola"); if (h) h.remove(); }
@@ -1339,6 +1417,35 @@ html.simple .act-r2{display:flex!important}
     while ((m = re.exec(text))){ if (!m[2]){ re.lastIndex++; continue; } var st = m.index + m[1].length; out += esc(text.slice(last, st)) + "<mark>" + esc(m[2]) + "</mark>"; last = st + m[2].length; }
     return out + esc(text.slice(last));
   }
+  /* ---------- Búsqueda enlazada: temas, fichas y hallazgos ---------- */
+  var TEMAS = null;
+  function loadTemas(){ return TEMAS ? Promise.resolve(TEMAS) : getJSON("temas.json").then(function(j){ return TEMAS = j.temas; }); }
+  function temaPanel(q){
+    var nq = " " + norm(q).replace(/[^a-z0-9ñ ]/g, " ").replace(/\s+/g, " ").trim() + " ", core = nq.trim(), best = null, bs = 0;
+    if (core.length < 3) return "";
+    (TEMAS || []).forEach(function(t){ t.k.forEach(function(k){ var sc = k === core ? 3 : (k.length >= 4 && nq.indexOf(" " + k + " ") >= 0) ? 2 + k.length / 100 : (core.length >= 4 && k.indexOf(core) === 0) ? 1 : 0; if (sc > bs){ bs = sc; best = t; } }); });
+    var fis = [];
+    function addF(name){ if (!FICHAS) return; var n = norm(name); for (var i = 0; i < FICHAS.length; i++){ var f = FICHAS[i]; if (norm(f.n.split(",")[0]) === n || (f.a || []).some(function(x){ return norm(x) === n; })){ if (fis.indexOf(i) < 0) fis.push(i); return; } } }
+    if (best) best.f.forEach(addF);
+    if (FICHAS) FICHAS.forEach(function(f, i){ [f.n.split(",")[0]].concat(f.a || []).forEach(function(nm){ var k = norm(nm); if (k.length >= 3 && (k === core || nq.indexOf(" " + k + " ") >= 0) && fis.indexOf(i) < 0) fis.push(i); }); });
+    fis = fis.slice(0, 4);
+    var hz = best ? best.h.slice() : [];
+    if (HIST) HIST.hallazgos.forEach(function(x, i){ if (core.length >= 4 && norm(x.t).indexOf(core) >= 0 && hz.indexOf(i) < 0) hz.push(i); });
+    if (!best && !fis.length && !hz.length) return "";
+    var h = '<section class="tm">';
+    if (best){ var b = best.c[0], cap = refText(b, best.c[1] - 1) + (best.c[2] > best.c[1] ? "–" + best.c[2] : "");
+      h += '<div class="tm-h"><small>Lo que pasó</small><b>' + esc(best.t) + '</b><span>' + esc(cap) + '</span></div><p class="tm-d">' + esc(best.d) + '</p>';
+      h += '<div class="tm-btns"><button type="button" class="btn" data-tmr="' + b + "." + (best.c[1] - 1) + '">Leer ' + esc(cap) + '</button><button type="button" class="chip" data-tms="' + b + '">Resumen de ' + esc(bname(b)) + '</button></div>'; }
+    if (fis.length){ h += '<div class="tm-l">Personajes y lugares</div><div class="fl">'; fis.forEach(function(i){ var f = FICHAS[i]; h += '<button type="button" class="fch ' + f.t + '" data-fi="' + i + '">' + icoF(f) + esc(f.n) + '</button>'; }); h += '</div>'; }
+    if (hz.length && HIST){ h += '<div class="tm-l">Historia y arqueología</div>'; hz.slice(0, 2).forEach(function(i){ var x = HIST.hallazgos[i]; h += '<button type="button" class="tm-hz" data-tmh="' + i + '"><b>' + esc(x.t) + '</b><small>' + esc(x.w) + '</small></button>'; }); }
+    return h + '</section>';
+  }
+  $("results").addEventListener("click", function(e){ var t = e.target, x;
+    if ((x = t.closest("[data-fi]"))){ e.stopPropagation(); openFicha(+x.dataset.fi); return; }
+    if ((x = t.closest("[data-tmr]"))){ e.stopPropagation(); var p = x.dataset.tmr.split("."); go(+p[0], +p[1], 0); return; }
+    if ((x = t.closest("[data-tms]"))){ e.stopPropagation(); tab("vMore"); renderMore("resumen", +x.dataset.tms); return; }
+    if ((x = t.closest("[data-tmh]"))){ e.stopPropagation(); var hi = +x.dataset.tmh; tab("vMore"); renderHistoria.tab = "hallazgos"; renderMore("historia"); setTimeout(function(){ var el = $("hz-" + hi); if (el){ el.scrollIntoView({ block: "start" }); el.classList.add("flash"); } }, 60); return; }
+  }, true);
   function doSearch(){
     var q = $("q").value.trim(), box = $("results");
     if (!q){ return; }
@@ -1346,7 +1453,7 @@ html.simple .act-r2{display:flex!important}
     if (r){ go(r.b, r.c, r.v); return; }
     if (norm(q).replace(/[^a-z0-9]/g,"").length < 2){ box.innerHTML = '<p class="note">Escribe al menos dos letras.</p>'; return; }
     box.innerHTML = '<p class="note">Buscando en ' + esc(ver(cur.v).name) + '…</p>';
-    load(cur.v).then(function(){
+    Promise.all([load(cur.v), loadTemas().catch(function(){}), loadFichas().catch(function(){}), HIST ? 0 : getJSON("historia.json").then(function(j){ HIST = j; }, function(){})]).then(function(){
       var phrase = /^".+"$/.test(q) || /^«.+»$/.test(q);
       var nq = norm(q.replace(/["«»]/g,"")).replace(/\s+/g," ").trim();
       var terms = phrase ? [nq] : nq.split(" ").filter(Boolean);
@@ -1360,7 +1467,7 @@ html.simple .act-r2{display:flex!important}
         var ok = true; for (var t=0;t<terms.length;t++){ if (!res[t].test(a[3])){ ok = false; break; } }
         if (ok) hits.push(a);
       }
-      lastHits = hits; lastTerms = terms; shown = 0; box.innerHTML = "";
+      lastHits = hits; lastTerms = terms; shown = 0; box.innerHTML = temaPanel(q);
       var c = document.createElement("p"); c.className = "count";
       c.textContent = hits.length ? hits.length.toLocaleString("es-CL") + (hits.length === 1 ? " versículo" : " versículos") + " en " + ver(cur.v).code : "Sin resultados en " + ver(cur.v).code + ". Prueba con otra palabra o con otra versión.";
       box.appendChild(c); moreResults();
@@ -1834,31 +1941,44 @@ html.simple .act-r2{display:flex!important}
   function jSave(k, v, menor){ var b = JSCORE[k]; if (b == null || (menor ? v < b : v > b)){ JSCORE[k] = v; store.set("juegos", JSCORE); return true; } return false; }
   function loadJuegos(){ return JUEGOS ? Promise.resolve(JUEGOS) : getJSON("juegos.json").then(function(j){ return JUEGOS = j; }); }
   function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var k = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[k]; a[k] = t; } return a; }
+  var JLVL = store.get("jNivel", "a") === "e" ? "e" : "a";
   var GAMES = [
-    ["memo", "Memorizar versículos", "Esconde palabras por niveles hasta saberlo de memoria", '<path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/>', "#be185d"],
-    ["sopa", "Sopa de letras", "Encuentra apóstoles, profetas, lugares y más", '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>', "#1d4ed8"],
-    ["puzzle", "Puzzle de versículos", "Ordena las palabras del versículo", '<path d="M10 3h4v3a2 2 0 1 0 4 0V3h3v7h-3a2 2 0 1 0 0 4h3v7h-7v-3a2 2 0 1 0-4 0v3H3v-7h3a2 2 0 1 0 0-4H3V3z"/>', "#15803d"],
-    ["quien", "¿Quién soy?", "Adivina el personaje con pistas", '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/>', "#b45309"],
-    ["trivia", "Trivia bíblica", "Diez preguntas de alternativas", '<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5h.01"/>', "#6d28d9"],
-    ["libros", "Ordena los libros", "Pon los libros en su orden, contra el reloj", '<path d="M4 19V5M9 19V5M14 19l4-14M20 19H3"/>', "#8a4a2c"],
-    ["parejas", "Memoria", "Une cada personaje con lo que hizo", '<rect x="3" y="4" width="8" height="11" rx="1.5"/><rect x="13" y="9" width="8" height="11" rx="1.5"/>', "#0e7490"]
+    ["memo", "Memorizar versículos", "Esconde palabras por niveles hasta saberlo de memoria", '<path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/>', "#be185d", "ae", "Practica hasta el nivel 4 y repásalos"],
+    ["sopa", "Sopa de letras", "Animales, oficios, el nacimiento de Jesús y más", '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>', "#1d4ed8", "ae", "Reyes, jueces, tribus y viajes de Pablo, con diagonales"],
+    ["puzzle", "Puzzle de versículos", "Ordena las palabras de un versículo corto", '<path d="M10 3h4v3a2 2 0 1 0 4 0V3h3v7h-3a2 2 0 1 0 0 4h3v7h-7v-3a2 2 0 1 0-4 0v3H3v-7h3a2 2 0 1 0 0-4H3V3z"/>', "#15803d", "ae", "Versículos largos, palabra por palabra"],
+    ["quien", "¿Quién soy?", "Adivina personajes muy conocidos con pistas", '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/>', "#b45309", "ae", "Todos los personajes, también los menos conocidos"],
+    ["trivia", "Trivia bíblica", "Diez preguntas básicas de alternativas", '<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5h.01"/>', "#6d28d9", "ae", "Diez preguntas, con las más difíciles incluidas"],
+    ["libros", "Ordena los libros", "Pon los libros en su orden, contra el reloj", '<path d="M4 19V5M9 19V5M14 19l4-14M20 19H3"/>', "#8a4a2c", "e", "Pon nueve libros en su orden, contra el reloj"],
+    ["parejas", "Memoria", "Seis parejas: une cada personaje con lo que hizo", '<rect x="3" y="4" width="8" height="11" rx="1.5"/><rect x="13" y="9" width="8" height="11" rx="1.5"/>', "#0e7490", "ae", "Ocho parejas para mentes rápidas"],
+    ["trio", "Objeto, personaje y dato", "Arca, Noé, 40 días: arma cada trío", '<circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M9 11l6-4M9 13l6 4"/>', "#c2410c", "a"],
+    ["hecho", "Personaje y hecho", "Une cada personaje con lo que hizo", '<path d="M4 7h7M4 12h7M4 17h7M13 7l7 10M13 17l7-10"/>', "#0f766e", "a"],
+    ["crono", "Cronología", "Ordena los hechos de la historia bíblica", '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', "#a21caf", "e"],
+    ["donde", "¿Dónde está?", "Encuentra el lugar en el mapa; las pistas restan puntos", '<path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/>', "#0369a1", "e"],
+    ["genea", "Completa la genealogía", "Llena el nombre que falta en la línea", '<path d="M12 3v5M12 8l-6 5M12 8l6 5M6 13v5M18 13v5"/>', "#3b6d11", "e"]
   ];
+  var JORD = { a: ["trio", "hecho", "sopa", "parejas", "quien", "puzzle", "trivia", "memo"], e: ["trivia", "crono", "donde", "genea", "libros", "sopa", "puzzle", "quien", "parejas", "memo"] };
   var GAME_IDS = GAMES.map(function(g){ return g[0]; });
-  function gHead(t){ return masHead(t, "juegos"); }
+  function JK(id){ var g = GAMES.filter(function(x){ return x[0] === id; })[0]; return JLVL === "e" && g && g[5] === "ae" ? id + "_e" : id; }
+  function gHead(t){ return masHead(t, "juegos").replace("</h2>", ' <small class="jg-lv ' + JLVL + '">' + (JLVL === "e" ? "Experimentados" : "Aprendices") + '</small></h2>'); }
+  function setNivel(l){ if (l === JLVL) return; JLVL = l; store.set("jNivel", l); SOPA = PZ = QS = TV = MJ = OL = HC = TR = CR = DN = GN = null; renderJuegos(); }
   function renderJuegos(){
-    var h = masHead("Juegos") + '<p class="sv-in">Aprende la Biblia jugando, solo o en familia.</p><div class="jg-l">';
-    GAMES.forEach(function(g){ var sc = g[0] === "memo" ? (MEMO.filter(function(m){ return m.n >= 4; }).length + " memorizados") : JSCORE[g[0]] != null ? (g[0] === "libros" ? "Mejor tiempo: " + JSCORE[g[0]] + " s" : g[0] === "parejas" ? "Récord: " + JSCORE[g[0]] + " jugadas" : "Récord: " + JSCORE[g[0]]) : "";
-      h += '<button type="button" class="jg" data-mas="' + g[0] + '" style="--c:' + g[4] + '"><span class="jg-i"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + g[3] + '</svg></span><span class="jg-t"><b>' + esc(g[1]) + '</b><small>' + esc(g[2]) + '</small>' + (sc ? '<em>' + esc(sc) + '</em>' : '') + '</span><span class="jg-a">›</span></button>'; });
+    var h = masHead("Juegos") + '<div class="seg jg-niv" role="group" aria-label="Nivel"><button type="button" data-jn="a" aria-pressed="' + (JLVL === "a") + '">Aprendices</button><button type="button" data-jn="e" aria-pressed="' + (JLVL === "e") + '">Experimentados</button></div>';
+    h += '<p class="sv-in">' + (JLVL === "a" ? "Para quienes recién comienzan a leer la Biblia. Juegos cortos, con personajes e historias conocidas." : "Para quienes ya conocen la Biblia. Más preguntas, más detalle y menos ayudas.") + '</p><div class="jg-l">';
+    JORD[JLVL].forEach(function(id){ var g = GAMES.filter(function(x){ return x[0] === id; })[0], k = JK(id), v = JSCORE[k];
+      var sc = id === "memo" ? (MEMO.filter(function(m){ return m.n >= 4; }).length + " memorizados") : v != null ? (id === "libros" ? "Mejor tiempo: " + v + " s" : id === "parejas" ? "Récord: " + v + " jugadas" : id === "hecho" || id === "crono" ? "Récord: " + v + (v === 1 ? " error" : " errores") : "Récord: " + v + " puntos") : "";
+      var desc = JLVL === "e" && g[6] ? g[6] : g[2];
+      h += '<button type="button" class="jg" data-mas="' + g[0] + '" style="--c:' + g[4] + '"><span class="jg-i"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + g[3] + '</svg></span><span class="jg-t"><b>' + esc(g[1]) + '</b><small>' + esc(desc) + '</small>' + (sc ? '<em>' + esc(sc) + '</em>' : '') + '</span><span class="jg-a">›</span></button>'; });
     $("vMore").innerHTML = h + '</div>';
   }
-  function gLoading(t, fn){ $("vMore").innerHTML = gHead(t) + '<p class="note">Cargando…</p>'; var sub = masSub; Promise.all([loadJuegos(), loadFichas().catch(function(){}), DATA["rvr1960"] ? 0 : load("rvr1960")]).then(function(){ if (masSub === sub) fn(); }, function(){ $("vMore").innerHTML = gHead(t) + '<p class="note">No se pudo cargar. Revisa tu conexión.</p>'; }); }
+  $("vMore").addEventListener("click", function(e){ var b = e.target.closest("[data-jn]"); if (b && masSub === "juegos"){ e.stopPropagation(); setNivel(b.dataset.jn); } }, true);
+  function gLoading(t, fn){ $("vMore").innerHTML = gHead(t) + '<p class="note">Cargando…</p>'; var sub = masSub; Promise.all([loadJuegos(), loadFichas().catch(function(){}), DATA["rvr1960"] ? 0 : load("rvr1960"), GEN ? 0 : getJSON("genealogias.json").then(function(j){ GEN = j.genealogias; }, function(){})]).then(function(){ if (masSub === sub) fn(); }, function(){ $("vMore").innerHTML = gHead(t) + '<p class="note">No se pudo cargar. Revisa tu conexión.</p>'; }); }
   function gReady(){ return JUEGOS && FICHAS && DATA["rvr1960"]; }
   function rvrTxt(r){ var t = DATA["rvr1960"][r[0]][r[1]-1][r[2]-1] || ""; return t.replace(/\s+/g, " ").trim(); }
 
   /* Sopa de letras */
   var SOPA = null;
   function sopaNueva(tema){
-    var words = shuffle(JUEGOS.sopa[tema]).slice(0, 8), N = 10, G = [], pos = {}, dirs = [[0,1],[1,0],[1,1]];
+    var ex = JLVL === "e", words = shuffle(JUEGOS.sopa[tema]).slice(0, ex ? 9 : 6), N = ex ? 11 : 10, G = [], pos = {}, dirs = ex ? [[0,1],[1,0],[1,1]] : [[0,1],[1,0]];
     for (var r = 0; r < N; r++){ G.push([]); for (var c = 0; c < N; c++) G[r].push(""); }
     words.sort(function(a, b){ return b.length - a.length; });
     var placed = [];
@@ -1877,8 +1997,8 @@ html.simple .act-r2{display:flex!important}
   }
   function renderSopa(){
     if (!gReady()) return gLoading("Sopa de letras", renderSopa);
-    var temas = Object.keys(JUEGOS.sopa);
-    if (!SOPA) sopaNueva(temas[0]);
+    var temas = Object.keys(JUEGOS.sopa).filter(function(t){ return (JUEGOS.sopaNivel[t] || "a") === JLVL; });
+    if (!SOPA || temas.indexOf(SOPA.tema) < 0) sopaNueva(temas[0]);
     var S = SOPA, done = Object.keys(S.found).length, foundCells = {};
     S.words.forEach(function(p, i){ if (S.found[i]) p.cells.forEach(function(c){ foundCells[c] = 1; }); });
     var h = gHead("Sopa de letras") + '<div class="sp-temas">';
@@ -1900,14 +2020,15 @@ html.simple .act-r2{display:flex!important}
     var cells = []; for (var i = 0; i < len; i++) cells.push((r1 + dr*i) * N + c1 + dc*i);
     var key = cells.join(","), rev = cells.slice().reverse().join(",");
     S.words.forEach(function(p, i){ var pk = p.cells.join(","); if (!S.found[i] && (pk === key || pk === rev)){ S.found[i] = 1; toast(p.w + " ✓"); } });
-    if (Object.keys(S.found).length === S.words.length) jSave("sopa", (JSCORE.sopa || 0) + 1);
+    if (Object.keys(S.found).length === S.words.length) jSave(JK("sopa"), (JSCORE[JK("sopa")] || 0) + 1);
     renderSopa();
   }
 
   /* Puzzle de versículos */
   var PZ = null;
-  function pzNuevo(){ var r = JUEGOS.puzzle[Math.floor(Math.random() * JUEGOS.puzzle.length)], t = rvrTxt(r), w = t.split(" ");
-    if (w.length > 16){ w = w.slice(0, 16); w[w.length-1] = w[w.length-1].replace(/[,;:]$/, "") + "…"; }
+  function pzNuevo(){ var cap = JLVL === "e" ? 24 : 16, L = JUEGOS.puzzle.filter(function(r){ var n = rvrTxt(r).split(" ").length; return JLVL === "e" ? n > 14 : n <= 14; }); if (!L.length) L = JUEGOS.puzzle;
+    var r = L[Math.floor(Math.random() * L.length)], t = rvrTxt(r), w = t.split(" ");
+    if (w.length > cap){ w = w.slice(0, cap); w[w.length-1] = w[w.length-1].replace(/[,;:]$/, "") + "…"; }
     PZ = { r: r, w: w, pool: shuffle(w.map(function(x, i){ return i; })), put: [], ok: null, racha: PZ ? PZ.racha : 0 }; }
   function renderPuzzle(){
     if (!gReady()) return gLoading("Puzzle de versículos", renderPuzzle);
@@ -1925,12 +2046,13 @@ html.simple .act-r2{display:flex!important}
   }
   function pzCheck(){ if (PZ.put.length < PZ.w.length){ PZ.ok = null; return; }
     var txt = PZ.put.map(function(i){ return PZ.w[i]; }).join(" ");
-    PZ.ok = txt === PZ.w.join(" "); if (PZ.ok){ PZ.racha++; jSave("puzzle", PZ.racha); } else PZ.racha = 0; }
+    PZ.ok = txt === PZ.w.join(" "); if (PZ.ok){ PZ.racha++; jSave(JK("puzzle"), PZ.racha); } else PZ.racha = 0; }
 
   /* ¿Quién soy? */
   var QS = null;
   function qsNuevo(){
     var P = FICHAS.filter(function(f){ return f.t === "p" && f.d && f.d.length > 60; });
+    if (JLVL === "a"){ var FAM = ["noe","abraham","moises","david","jose","daniel","jonas","pedro","pablo","maria","elias","salomon","sanson","ester","rut","josue","goliat","juan el bautista","adan","eva","sara","isaac","jacob","gedeon","samuel","zaqueo","lazaro","marta","nicodemo","tomas"]; var P2 = P.filter(function(f){ return FAM.indexOf(norm(f.n.split(",")[0])) >= 0; }); if (P2.length >= 8) P = P2; }
     var f = P[Math.floor(Math.random() * P.length)], nm = f.n.split(",")[0];
     var names = [nm].concat(f.a || []).filter(function(x){ return x && x.length > 2; });
     var oculto = f.d;
@@ -1955,12 +2077,12 @@ html.simple .act-r2{display:flex!important}
 
   /* Trivia */
   var TV = null;
-  function tvNueva(){ TV = { qs: shuffle(JUEGOS.trivia).slice(0, 10).map(function(q){ return { q: q.q, o: shuffle(q.o), a: q.o[0], r: q.r }; }), i: 0, pts: 0, res: null }; }
+  function tvNueva(){ TV = { qs: shuffle(JUEGOS.trivia.filter(function(q){ return JLVL === "e" || !q.e; })).slice(0, 10).map(function(q){ return { q: q.q, o: shuffle(q.o), a: q.o[0], r: q.r }; }), i: 0, pts: 0, res: null }; }
   function renderTrivia(){
     if (!gReady()) return gLoading("Trivia bíblica", renderTrivia);
     if (!TV) tvNueva();
     if (TV.i >= TV.qs.length){
-      var rec = jSave("trivia", TV.pts);
+      var rec = jSave(JK("trivia"), TV.pts);
       $("vMore").innerHTML = gHead("Trivia bíblica") + '<div class="g-win big"><b>' + TV.pts + ' de 10</b><p>' + (TV.pts >= 9 ? "¡Excelente! Conoces muy bien la Palabra." : TV.pts >= 6 ? "¡Muy bien! Sigue leyendo y lo harás perfecto." : "Buen intento. Cada pregunta trae su cita para que la leas.") + (rec ? " ¡Nuevo récord!" : "") + '</p><button type="button" class="btn" data-tnew>Jugar otra vez</button></div>';
       return;
     }
@@ -1973,7 +2095,7 @@ html.simple .act-r2{display:flex!important}
 
   /* Ordena los libros */
   var OL = null;
-  function olNuevo(){ var s = Math.floor(Math.random() * 61), ids = []; for (var i = 0; i < 6; i++) ids.push(s + i); OL = { ids: ids, pool: shuffle(ids), next: 0, err: 0, t0: Date.now(), fin: null, bad: null }; }
+  function olNuevo(){ var s = Math.floor(Math.random() * 58), ids = []; for (var i = 0; i < 9; i++) ids.push(s + i); OL = { ids: ids, pool: shuffle(ids), next: 0, err: 0, t0: Date.now(), fin: null, bad: null }; }
   function renderLibros(){
     if (!OL) olNuevo();
     var h = gHead("Ordena los libros") + '<div class="pz-top"><b>Toca los libros en el orden de la Biblia</b><span>Errores: ' + OL.err + '</span></div><div class="ol-a">';
@@ -1997,7 +2119,7 @@ html.simple .act-r2{display:flex!important}
     else if (t.closest("[data-pclr]")){ PZ.put = []; PZ.ok = null; renderPuzzle(); }
     else if (t.closest("[data-pnew]")){ pzNuevo(); renderPuzzle(); }
     else if (t.closest("[data-qmas]")){ QS.n++; renderQuien(); }
-    else if ((b = t.closest("[data-qo]"))){ if (!QS.res){ QS.res = QS.ops[+b.dataset.qo]; if (QS.res === QS.f.n){ QS.pts += Math.max(1, 4 - QS.n); jSave("quien", QS.pts); } renderQuien(); } }
+    else if ((b = t.closest("[data-qo]"))){ if (!QS.res){ QS.res = QS.ops[+b.dataset.qo]; if (QS.res === QS.f.n){ QS.pts += Math.max(1, 4 - QS.n); jSave(JK("quien"), QS.pts); } renderQuien(); } }
     else if (t.closest("[data-qnew]")){ qsNuevo(); renderQuien(); }
     else if ((b = t.closest("[data-to]"))){ if (!TV.res){ var q = TV.qs[TV.i]; TV.res = q.o[+b.dataset.to]; if (TV.res === q.a) TV.pts++; renderTrivia(); } }
     else if (t.closest("[data-tnext]")){ TV.i++; TV.res = null; renderTrivia(); $("main").scrollTop = 0; }
@@ -2007,33 +2129,162 @@ html.simple .act-r2{display:flex!important}
   });
 
 
-  /* Memoria (parejas) */
+  /* Memoria (parejas) con giro y brillo */
   var MJ = null;
-  function mjNuevo(){ var P = shuffle(JUEGOS.parejas).slice(0, 6), cards = [];
+  function mjNuevo(){ var K = JLVL === "e" ? 8 : 6, P = shuffle(JUEGOS.parejas).slice(0, K), cards = [];
     P.forEach(function(p, i){ cards.push({ p: i, t: p[0], k: "n" }); cards.push({ p: i, t: p[1], k: "h" }); });
-    MJ = { cards: shuffle(cards), open: [], done: {}, moves: 0, lock: false, t0: Date.now() }; }
+    MJ = { K: K, cards: shuffle(cards), open: [], done: {}, moves: 0, lock: false, t0: Date.now() }; }
   function renderParejas(){
     if (!gReady()) return gLoading("Memoria", renderParejas);
     if (!MJ) mjNuevo();
-    var n = Object.keys(MJ.done).length, h = gHead("Memoria") + '<div class="pz-top"><b>Une cada personaje con lo que hizo</b><span>Jugadas: ' + MJ.moves + '</span></div><div class="mj-g">';
+    var n = Object.keys(MJ.done).length, h = gHead("Memoria") + '<div class="pz-top"><b>Une cada personaje con lo que hizo</b><span id="mjMv">Jugadas: ' + MJ.moves + '</span></div><div class="mj-g">';
     MJ.cards.forEach(function(c, i){ var up = MJ.open.indexOf(i) >= 0 || MJ.done[c.p];
-      h += '<button type="button" class="mj-c' + (up ? " up" : "") + (MJ.done[c.p] ? " ok" : "") + (c.k === "n" ? " nm" : "") + '" data-mj="' + i + '" aria-label="' + (up ? esc(c.t) : "Carta boca abajo") + '">' + (up ? '<span>' + esc(c.t) + '</span>' : '<i aria-hidden="true">✦</i>') + '</button>'; });
+      h += '<button type="button" class="mj-c' + (up ? " up" : "") + (MJ.done[c.p] ? " ok" : "") + (c.k === "n" ? " nm" : "") + '" data-mj="' + i + '" style="--d:' + ((i * 0.37) % 3).toFixed(2) + 's" aria-label="' + (up ? esc(c.t) : "Carta boca abajo") + '"><span class="mj-in"><span class="mj-f" aria-hidden="true"><i>✦</i></span><span class="mj-b"><span>' + esc(c.t) + '</span></span></span></button>'; });
     h += '</div>';
-    if (n === 6){ var rec = jSave("parejas", MJ.moves, true); h += '<div class="g-win"><b>¡Encontraste las 6 parejas!</b><p>En ' + MJ.moves + ' jugadas y ' + Math.round((Date.now() - MJ.t0) / 1000) + ' segundos.' + (rec ? " ¡Nuevo récord!" : "") + '</p><button type="button" class="btn" data-mjnew>Jugar otra vez</button></div>'; }
+    if (n === MJ.K){ var rec = jSave(JK("parejas"), MJ.moves, true); h += '<div class="g-win"><b>¡Encontraste las ' + MJ.K + ' parejas!</b><p>En ' + MJ.moves + ' jugadas y ' + Math.round((Date.now() - MJ.t0) / 1000) + ' segundos.' + (rec ? " ¡Nuevo récord!" : "") + '</p><button type="button" class="btn" data-mjnew>Jugar otra vez</button></div>'; }
     else h += '<button type="button" class="chip" data-mjnew style="margin-top:12px">Barajar de nuevo</button>';
     $("vMore").innerHTML = h;
   }
+  function mjEl(i){ return document.querySelector('#vMore [data-mj="' + i + '"]'); }
   function mjTap(i){
     if (MJ.lock || MJ.open.indexOf(i) >= 0 || MJ.done[MJ.cards[i].p]) return;
-    MJ.open.push(i);
+    MJ.open.push(i); var el = mjEl(i); if (el){ el.classList.add("up"); el.setAttribute("aria-label", MJ.cards[i].t); }
     if (MJ.open.length === 2){
-      MJ.moves++; var a = MJ.cards[MJ.open[0]], b = MJ.cards[MJ.open[1]];
-      if (a.p === b.p && a.k !== b.k){ MJ.done[a.p] = 1; MJ.open = []; }
-      else { MJ.lock = true; setTimeout(function(){ MJ.open = []; MJ.lock = false; if (masSub === "parejas") renderParejas(); }, 1100); }
+      MJ.moves++; if ($("mjMv")) $("mjMv").textContent = "Jugadas: " + MJ.moves;
+      var ia = MJ.open[0], ib = MJ.open[1], a = MJ.cards[ia], b = MJ.cards[ib];
+      if (a.p === b.p && a.k !== b.k){ MJ.done[a.p] = 1; MJ.open = []; MJ.lock = true;
+        setTimeout(function(){ [ia, ib].forEach(function(x){ var e = mjEl(x); if (e) e.classList.add("ok"); }); MJ.lock = false;
+          if (Object.keys(MJ.done).length === MJ.K) setTimeout(function(){ if (masSub === "parejas") renderParejas(); }, 900); }, 520); }
+      else { MJ.lock = true; setTimeout(function(){ [ia, ib].forEach(function(x){ var e = mjEl(x); if (e){ e.classList.remove("up"); e.setAttribute("aria-label", "Carta boca abajo"); } }); MJ.open = []; MJ.lock = false; }, 1150); }
     }
-    renderParejas();
   }
   $("vMore").addEventListener("click", function(e){ if (masSub !== "parejas") return; var b = e.target.closest("[data-mj]"); if (b){ mjTap(+b.dataset.mj); return; } if (e.target.closest("[data-mjnew]")){ mjNuevo(); renderParejas(); } });
+
+  /* Personaje y hecho */
+  var HC = null;
+  function hcNuevo(){ var P = shuffle(JUEGOS.hechos).slice(0, 5); HC = { P: P, R: shuffle(P.map(function(x, i){ return i; })), sel: null, done: {}, err: 0, bad: null }; }
+  function renderHecho(){
+    if (!gReady()) return gLoading("Personaje y hecho", renderHecho);
+    if (!HC) hcNuevo();
+    var n = Object.keys(HC.done).length, h = gHead("Personaje y hecho") + '<div class="pz-top"><b>Toca un personaje y luego lo que hizo</b><span>Errores: ' + HC.err + '</span></div><div class="hc-g"><div class="hc-c">';
+    HC.P.forEach(function(x, i){ h += '<button type="button" class="hc-b nm' + (HC.done[i] ? " ok" : HC.sel === i ? " s" : "") + '" data-hl="' + i + '"' + (HC.done[i] ? " disabled" : "") + '>' + esc(x[0]) + '</button>'; });
+    h += '</div><div class="hc-c">';
+    HC.R.forEach(function(i){ h += '<button type="button" class="hc-b' + (HC.done[i] ? " ok" : HC.bad === i ? " bad" : "") + '" data-hr="' + i + '"' + (HC.done[i] ? " disabled" : "") + '>' + esc(HC.P[i][1]) + '</button>'; });
+    h += '</div></div>';
+    if (n === 5){ var rec = jSave("hecho", HC.err, true); h += '<div class="g-win"><b>' + (HC.err ? "¡Completado!" : "¡Perfecto, sin errores!") + '</b><p>' + (HC.err ? "Con " + HC.err + (HC.err === 1 ? " error." : " errores.") : "") + (rec ? " ¡Nuevo récord!" : "") + '</p>' + refChips(HC.P.map(function(x){ return x[2]; })) + '<button type="button" class="btn" data-hcnew>Jugar otra</button></div>'; }
+    else if (HC.sel == null) h += '<p class="mp-hint">Primero elige un nombre de la izquierda.</p>';
+    $("vMore").innerHTML = h;
+  }
+  $("vMore").addEventListener("click", function(e){ if (masSub !== "hecho") return; var b;
+    if ((b = e.target.closest("[data-hl]"))){ HC.sel = +b.dataset.hl; HC.bad = null; renderHecho(); }
+    else if ((b = e.target.closest("[data-hr]"))){ if (HC.sel == null){ toast("Primero elige un personaje"); return; } var r = +b.dataset.hr; if (r === HC.sel){ HC.done[r] = 1; HC.sel = null; HC.bad = null; } else { HC.err++; HC.bad = r; if (navigator.vibrate) try{ navigator.vibrate(60); }catch(x){} } renderHecho(); }
+    else if (e.target.closest("[data-hcnew]")){ hcNuevo(); renderHecho(); } });
+
+  /* Objeto, personaje y dato */
+  var TR = null;
+  function trNuevo(){ var L = JUEGOS.trio; TR = { qs: shuffle(L).slice(0, 8).map(function(x){
+      var pers = shuffle(L.filter(function(y){ return y[1] !== x[1]; }).map(function(y){ return y[1]; })).filter(function(v, i, a){ return a.indexOf(v) === i; }).slice(0, 3);
+      var dat = shuffle(L.filter(function(y){ return y[2] !== x[2]; }).map(function(y){ return y[2]; })).slice(0, 3);
+      return { x: x, op1: shuffle([x[1]].concat(pers)), op2: shuffle([x[2]].concat(dat)) }; }), i: 0, step: 0, p1: null, p2: null, pts: 0 }; }
+  function renderTrio(){
+    if (!gReady()) return gLoading("Objeto, personaje y dato", renderTrio);
+    if (!TR) trNuevo();
+    if (TR.i >= TR.qs.length){ var rec = jSave("trio", TR.pts); $("vMore").innerHTML = gHead("Objeto, personaje y dato") + '<div class="g-win big"><b>' + TR.pts + ' de 16</b><p>' + (TR.pts >= 14 ? "¡Excelente! Conoces muy bien estas historias." : TR.pts >= 9 ? "¡Muy bien! Vas aprendiendo." : "Buen comienzo. Juega otra vez y verás cómo mejoras.") + (rec ? " ¡Nuevo récord!" : "") + '</p><button type="button" class="btn" data-trnew>Jugar otra vez</button></div>'; return; }
+    var q = TR.qs[TR.i], x = q.x, h = gHead("Objeto, personaje y dato") + '<div class="pz-top"><b>Trío ' + (TR.i + 1) + ' de 8</b><span>Puntos: ' + TR.pts + '</span></div><div class="mp-bar"><i style="width:' + (TR.i / 8 * 100) + '%"></i></div>';
+    h += '<div class="tr-row"><span class="tr-p o">' + esc(x[0]) + '</span><span class="tr-p' + (TR.p1 ? (TR.p1 === x[1] ? " good" : " bad") : " q") + '">' + (TR.p1 ? esc(x[1]) : "¿Quién?") + '</span><span class="tr-p' + (TR.p2 ? (TR.p2 === x[2] ? " good" : " bad") : " q") + '">' + (TR.p2 ? esc(x[2]) : "¿Qué dato?") + '</span></div>';
+    if (TR.step < 2){ var ops = TR.step === 0 ? q.op1 : q.op2; h += '<p class="tv-q">' + (TR.step === 0 ? "¿Qué personaje va con «" + esc(x[0]) + "»?" : "¿Qué dato completa la historia?") + '</p><div class="tv-o">';
+      ops.forEach(function(o, i){ h += '<button type="button" class="tv-b" data-tr="' + i + '">' + esc(o) + '</button>'; }); h += '</div>'; }
+    else { var ok = TR.p1 === x[1] && TR.p2 === x[2]; h += '<p class="tv-f">' + (ok ? "¡Trío completo!" : "El trío correcto es: " + esc(x[0]) + ", " + esc(x[1]) + " y " + esc(x[2]).toLowerCase()) + '</p>' + refChips([x[3]]) + '<button type="button" class="btn mp-ok" data-trnext>' + (TR.i < 7 ? "Siguiente trío" : "Ver resultado") + '</button>'; }
+    $("vMore").innerHTML = h;
+  }
+  $("vMore").addEventListener("click", function(e){ if (masSub !== "trio") return; var b;
+    if ((b = e.target.closest("[data-tr]"))){ var q = TR.qs[TR.i]; if (TR.step === 0){ TR.p1 = q.op1[+b.dataset.tr]; if (TR.p1 === q.x[1]) TR.pts++; TR.step = 1; } else { TR.p2 = q.op2[+b.dataset.tr]; if (TR.p2 === q.x[2]) TR.pts++; TR.step = 2; } renderTrio(); }
+    else if (e.target.closest("[data-trnext]")){ TR.i++; TR.step = 0; TR.p1 = TR.p2 = null; renderTrio(); $("main").scrollTop = 0; }
+    else if (e.target.closest("[data-trnew]")){ trNuevo(); renderTrio(); } });
+
+  /* Cronología */
+  var CR = null;
+  function crNuevo(){ var L = JUEGOS.crono, ids = shuffle(L.map(function(x, i){ return i; })).slice(0, 5).sort(function(a, b){ return a - b; }); CR = { ids: ids, pool: shuffle(ids), next: 0, err: 0, bad: null, racha: CR ? CR.racha : 0 }; }
+  function renderCrono(){
+    if (!gReady()) return gLoading("Cronología", renderCrono);
+    if (!CR) crNuevo();
+    var L = JUEGOS.crono, h = gHead("Cronología") + '<div class="pz-top"><b>Toca los hechos del más antiguo al más reciente</b><span>Errores: ' + CR.err + '</span></div><ol class="hs-t cr-t">';
+    CR.ids.slice(0, CR.next).forEach(function(i, n){ h += '<li style="--e:' + HUES[n * 2 % HUES.length] + '"><b>' + esc(L[i][0]) + '</b>' + refChips([L[i][1]]) + '</li>'; });
+    h += '</ol>';
+    if (CR.next < CR.ids.length){ h += '<div class="tv-o">'; CR.pool.forEach(function(i){ if (CR.ids.indexOf(i) >= CR.next) h += '<button type="button" class="tv-b' + (CR.bad === i ? " bad" : "") + '" data-cr="' + i + '">' + esc(L[i][0]) + '</button>'; }); h += '</div>'; }
+    else { if (!CR.err){ CR.racha++; } var rec = jSave("crono", CR.err, true); h += '<div class="g-win"><b>' + (CR.err ? "¡Listo!" : "¡Perfecto!") + '</b><p>' + (CR.err ? "Con " + CR.err + (CR.err === 1 ? " error." : " errores.") : "Sin errores.") + (rec ? " ¡Nuevo récord!" : "") + '</p><button type="button" class="btn" data-crnew>Otra ronda</button></div>'; }
+    $("vMore").innerHTML = h;
+  }
+  $("vMore").addEventListener("click", function(e){ if (masSub !== "crono") return; var b;
+    if ((b = e.target.closest("[data-cr]"))){ var i = +b.dataset.cr; if (i === CR.ids[CR.next]){ CR.next++; CR.bad = null; } else { CR.err++; CR.bad = i; if (navigator.vibrate) try{ navigator.vibrate(60); }catch(x){} } renderCrono(); }
+    else if (e.target.closest("[data-crnew]")){ crNuevo(); renderCrono(); } });
+
+  /* ¿Dónde está? */
+  var DN = null;
+  function km(a, b){ var R = 6371, t = Math.PI / 180, dl = (b[1] - a[1]) * t, df = (b[2] - a[2]) * t, x = Math.sin(df / 2) * Math.sin(df / 2) + Math.cos(a[1] * t) * Math.cos(b[1] * t) * Math.sin(dl / 2) * Math.sin(dl / 2); return 2 * R * Math.asin(Math.sqrt(x)); }
+  function dnNuevo(){ var L = JUEGOS.donde; DN = { qs: shuffle(L.map(function(x, i){ return i; })).slice(0, 8).map(function(i){
+      var c = L.map(function(y, j){ return [j, km(L[i], y)]; }).filter(function(z){ return z[0] !== i && z[1] > 18; });
+      var near = c.filter(function(z){ return z[1] < 650; }); if (near.length < 3) near = c.sort(function(a, b){ return a[1] - b[1]; }).slice(0, 5);
+      return { t: i, ops: shuffle([i].concat(shuffle(near).slice(0, 3).map(function(z){ return z[0]; }))) }; }), i: 0, pista: false, quita: [], res: null, pts: 0, map: null }; }
+  function dnPts(){ return 10 - (DN.pista ? 3 : 0) - (DN.quita.length ? 3 : 0); }
+  function renderDonde(){
+    if (!gReady()) return gLoading("¿Dónde está?", renderDonde);
+    if (!DN) dnNuevo();
+    if (DN.map){ try{ DN.map.remove(); }catch(e){} DN.map = null; }
+    var L = JUEGOS.donde;
+    if (DN.i >= DN.qs.length){ var rec = jSave("donde", DN.pts); $("vMore").innerHTML = gHead("¿Dónde está?") + '<div class="g-win big"><b>' + DN.pts + ' de 80</b><p>' + (DN.pts >= 64 ? "¡Excelente! Conoces muy bien el mapa bíblico." : DN.pts >= 40 ? "¡Muy bien! Sigue explorando." : "Buen intento. Revisa los Mapas bíblicos en Más y vuelve a jugar.") + (rec ? " ¡Nuevo récord!" : "") + '</p><button type="button" class="btn" data-dnnew>Jugar otra vez</button></div>'; return; }
+    var q = DN.qs[DN.i], x = L[q.t], h = gHead("¿Dónde está?") + '<div class="pz-top"><b>Lugar ' + (DN.i + 1) + ' de 8</b><span>Puntos: ' + DN.pts + '</span></div><p class="tv-q">¿Dónde está <b>' + esc(x[0]) + '</b>?</p><div id="dnMap" class="dn-map"><p class="note">Cargando el mapa…</p></div><div class="dn-ops">';
+    q.ops.forEach(function(o, n){ var gone = DN.quita.indexOf(o) >= 0, cls = DN.res != null ? (o === q.t ? " good" : o === DN.res ? " bad" : "") : ""; h += '<button type="button" class="dn-o' + cls + '" data-dn="' + o + '"' + (gone || DN.res != null ? " disabled" : "") + (gone ? ' style="opacity:.3"' : '') + '>' + (n + 1) + (DN.res != null ? '<small>' + esc(L[o][0]) + '</small>' : '') + '</button>'; });
+    h += '</div>';
+    if (DN.res == null){
+      h += '<div class="mp-btns"><button type="button" class="chip" data-dnp' + (DN.pista ? " disabled" : "") + '>Pista (−3)</button><button type="button" class="chip" data-dnq' + (DN.quita.length ? " disabled" : "") + '>Quitar dos (−3)</button><span class="dn-v">Vale ' + dnPts() + ' puntos</span></div>';
+      if (DN.pista) h += '<p class="dn-pista">' + esc(x[3]) + '</p>';
+    } else { var ok = DN.res === q.t; h += '<p class="tv-f">' + (ok ? "¡Correcto! +" + DN.got + " puntos" : "No era ese. " + esc(x[0]) + " es el número " + (q.ops.indexOf(q.t) + 1) + ".") + '</p><p class="dn-pista">' + esc(x[3]) + '</p>' + refChips([x[4]]) + '<button type="button" class="btn mp-ok" data-dnnext>' + (DN.i < 7 ? "Siguiente lugar" : "Ver resultado") + '</button>'; }
+    $("vMore").innerHTML = h;
+    loadLeaflet().then(function(Lf){
+      var box = $("dnMap"); if (!box || masSub !== "donde") return; box.innerHTML = "";
+      var m = Lf.map(box, { zoomControl: true, attributionControl: true, scrollWheelZoom: false }); DN.map = m;
+      Lf.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 12, attribution: "© OpenStreetMap" }).addTo(m);
+      var pts = [];
+      q.ops.forEach(function(o, n){ if (DN.quita.indexOf(o) >= 0) return; var y = L[o], cls = DN.res != null ? (o === q.t ? " good" : o === DN.res ? " bad" : "") : "";
+        var mk = Lf.marker([y[1], y[2]], { icon: Lf.divIcon({ className: "", html: '<span class="dn-pin' + cls + '">' + (n + 1) + '</span>', iconSize: [34, 34], iconAnchor: [17, 17] }) }).addTo(m);
+        if (DN.res == null) mk.on("click", function(){ dnAns(o); }); else mk.bindTooltip(y[0], { permanent: true, direction: "top", offset: [0, -16] });
+        pts.push([y[1], y[2]]); });
+      m.fitBounds(pts, { padding: [40, 40], maxZoom: 9 });
+    }, function(){ var box = $("dnMap"); if (box) box.innerHTML = '<p class="note">El mapa necesita internet. Conéctate y vuelve a intentarlo.</p>'; });
+  }
+  function dnAns(o){ var q = DN.qs[DN.i]; if (DN.res != null) return; DN.res = o; DN.got = o === q.t ? dnPts() : 0; DN.pts += DN.got; renderDonde(); }
+  $("vMore").addEventListener("click", function(e){ if (masSub !== "donde") return; var b;
+    if ((b = e.target.closest("[data-dn]"))) dnAns(+b.dataset.dn);
+    else if (e.target.closest("[data-dnp]")){ if (!DN.pista){ DN.pista = true; renderDonde(); } }
+    else if (e.target.closest("[data-dnq]")){ if (!DN.quita.length){ var q = DN.qs[DN.i]; DN.quita = shuffle(q.ops.filter(function(o){ return o !== q.t; })).slice(0, 2); renderDonde(); } }
+    else if (e.target.closest("[data-dnnext]")){ DN.i++; DN.pista = false; DN.quita = []; DN.res = null; renderDonde(); $("main").scrollTop = 0; }
+    else if (e.target.closest("[data-dnnew]")){ dnNuevo(); renderDonde(); } });
+
+  /* Completa la genealogía */
+  var GN = null;
+  function gnRonda(){
+    var Ls = GEN.filter(function(g){ return g.n && g.n.length >= 6; }), g = Ls[Math.floor(Math.random() * Ls.length)], names = g.n.map(function(p){ return p[0]; });
+    var st = Math.floor(Math.random() * (names.length - 4)), win = names.slice(st, st + 5), blank = 1 + Math.floor(Math.random() * 4), ans = win[blank];
+    var pool = names.filter(function(n){ return win.indexOf(n) < 0; }); if (pool.length < 3) GEN.forEach(function(o){ (o.n || []).forEach(function(p){ if (win.indexOf(p[0]) < 0 && pool.indexOf(p[0]) < 0) pool.push(p[0]); }); });
+    return { t: g.t, win: win, blank: blank, ops: shuffle([ans].concat(shuffle(pool).slice(0, 3))), r: g.r };
+  }
+  function gnNuevo(){ GN = { qs: [0,1,2,3,4,5,6,7].map(gnRonda), i: 0, res: null, pts: 0 }; }
+  function renderGenea(){
+    if (!gReady() || !GEN) return gLoading("Completa la genealogía", renderGenea);
+    if (!GN) gnNuevo();
+    if (GN.i >= GN.qs.length){ var rec = jSave("genea", GN.pts); $("vMore").innerHTML = gHead("Completa la genealogía") + '<div class="g-win big"><b>' + GN.pts + ' de 8</b><p>' + (GN.pts >= 7 ? "¡Excelente! Conoces bien las familias de la Biblia." : "Revisa las Genealogías en Más y vuelve a intentarlo.") + (rec ? " ¡Nuevo récord!" : "") + '</p><button type="button" class="btn" data-gnnew>Jugar otra vez</button></div>'; return; }
+    var q = GN.qs[GN.i], h = gHead("Completa la genealogía") + '<div class="pz-top"><b>' + esc(q.t) + '</b><span>Puntos: ' + GN.pts + '</span></div><div class="mp-bar"><i style="width:' + (GN.i / 8 * 100) + '%"></i></div><ol class="gn-l">';
+    q.win.forEach(function(n, i){ var bl = i === q.blank; h += '<li class="' + (bl ? (GN.res == null ? "q" : "good") : "") + '">' + (bl ? (GN.res == null ? "?" : esc(n)) : esc(n)) + '</li>'; });
+    h += '</ol><p class="mp-hint">Cada nombre es padre del que sigue.</p>';
+    if (GN.res == null){ h += '<div class="tv-o">'; q.ops.forEach(function(o, i){ h += '<button type="button" class="tv-b" data-gn="' + i + '">' + esc(o) + '</button>'; }); h += '</div>'; }
+    else h += '<p class="tv-f">' + (GN.res === q.win[q.blank] ? "¡Correcto!" : "Era " + esc(q.win[q.blank]) + ".") + '</p>' + refChips(q.r.slice(0, 2)) + '<button type="button" class="btn mp-ok" data-gnnext>' + (GN.i < 7 ? "Siguiente" : "Ver resultado") + '</button>';
+    $("vMore").innerHTML = h;
+  }
+  $("vMore").addEventListener("click", function(e){ if (masSub !== "genea") return; var b;
+    if ((b = e.target.closest("[data-gn]"))){ var q = GN.qs[GN.i]; GN.res = q.ops[+b.dataset.gn]; if (GN.res === q.win[q.blank]) GN.pts++; renderGenea(); }
+    else if (e.target.closest("[data-gnnext]")){ GN.i++; GN.res = null; renderGenea(); $("main").scrollTop = 0; }
+    else if (e.target.closest("[data-gnnew]")){ gnNuevo(); renderGenea(); } });
 
   /* ---------- Historia y arqueología ---------- */
   var HIST = null;
@@ -2051,7 +2302,7 @@ html.simple .act-r2{display:flex!important}
       HIST.judaismo.forEach(function(x, i){ h += '<details class="dic tc" style="--c:' + HUES[(i + 3) % HUES.length] + '"><summary><i class="tn">' + (i + 1) + '</i>' + esc(x.t) + '</summary><p>' + esc(x.d) + '</p>' + (x.r.length ? refChips(x.r) : '<div class="fi-r"></div>') + '</details>'; });
     } else {
       h += '<p class="sv-in">Descubrimientos que muestran que la Biblia habla de lugares, pueblos y personas reales. La arqueología no es la base de nuestra fe, pero la confirma.</p>';
-      HIST.hallazgos.forEach(function(x, i){ h += '<div class="cu hs-h" style="--c:' + HUES[(i * 5 + 2) % HUES.length] + '"><span class="cu-i"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6-9 9H5v-6z"/><path d="M3 21h18"/></svg></span><div><b>' + esc(x.t) + '</b><small class="hs-w">' + esc(x.w) + '</small><p>' + esc(x.d) + '</p>' + (x.r.length ? refChips(x.r) : "") + '</div></div>'; });
+      HIST.hallazgos.forEach(function(x, i){ h += '<div class="cu hs-h" id="hz-' + i + '" style="--c:' + HUES[(i * 5 + 2) % HUES.length] + '"><span class="cu-i"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6-9 9H5v-6z"/><path d="M3 21h18"/></svg></span><div><b>' + esc(x.t) + '</b><small class="hs-w">' + esc(x.w) + '</small><p>' + esc(x.d) + '</p>' + (x.r.length ? refChips(x.r) : "") + '</div></div>'; });
     }
     el.innerHTML = h + '<p class="note">Historia de apoyo de la Biblia Multiversión. Fechas aproximadas.</p>';
   }
@@ -2061,6 +2312,7 @@ html.simple .act-r2{display:flex!important}
   function renderMore(sub, opt){
     var el = $("vMore"); masSub = sub || null; delete el.dataset.sec;
     if (mapObj){ try{ mapObj.remove(); }catch(e){} mapObj = null; mapLayer = null; }
+    if (DN && DN.map){ try{ DN.map.remove(); }catch(e){} DN.map = null; }
     if (!masSub){
       var h = '<h2 class="sec">Más</h2><div class="mas-grid">';
       MAS.forEach(function(m){ h += '<button type="button" class="mas-it ' + m[4] + '" data-mas="' + m[0] + '"><span class="ic">' + m[3] + '</span><b>' + esc(m[1]) + '</b><small>' + esc(m[2]) + '</small></button>'; });
@@ -2082,6 +2334,11 @@ html.simple .act-r2{display:flex!important}
     if (sub === "trivia") return renderTrivia();
     if (sub === "libros") return renderLibros();
     if (sub === "parejas") return renderParejas();
+    if (sub === "hecho") return renderHecho();
+    if (sub === "trio") return renderTrio();
+    if (sub === "crono") return renderCrono();
+    if (sub === "donde") return renderDonde();
+    if (sub === "genea") return renderGenea();
     if (sub === "resumen") return renderResumen(opt);
     if (sub === "otros") return renderCurio();
     if (sub === "sinred") return renderSinRed();
@@ -2795,18 +3052,34 @@ html.simple .act-r2{display:flex!important}
 
   /* ---------- Mi Biblia ---------- */
   var PLUS = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
+  /* ---------- Devocional del día ---------- */
+  var DEVO = null, devoAbierto = false;
+  function devoHoy(){ if (!DEVO) return null; var i = (new Date().getDate() - 1) % DEVO.length, x = DEVO[i], v = vddRef(); if (x.r[0] === v[0] && x.r[1] - 1 === v[1] && x.r[2] - 1 === v[2]) x = DEVO[(i + 1) % DEVO.length]; return x; }
+  function devoHtml(){
+    if (!DEVO){ getJSON("devocionales.json").then(function(j){ DEVO = j.devocionales; if ($("vFavs").classList.contains("on")) renderFavs(); }, function(){}); return ""; }
+    var x = devoHoy(), r = x.r, vid = ver(cur.v).books[r[0]] && DATA[cur.v] ? cur.v : "rvr1960", vt = DATA[vid] ? (DATA[vid][r[0]][r[1]-1][r[2]-1] || "").replace(/\n/g, " ") : "";
+    var h = '<section class="devo' + (devoAbierto ? " on" : "") + '" aria-label="Devocional del día"><button type="button" class="devo-h" data-act="devoTog" aria-expanded="' + devoAbierto + '"><span class="devo-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M5.6 5.6l2.1 2.1M3 12h3M18 12h3M16.3 7.7l2.1-2.1"/><path d="M7 16a5 5 0 0 1 10 0"/><path d="M3 20h18"/></svg></span><span class="devo-t"><small>Devocional del día</small><b>' + esc(x.t) + '</b></span><span class="devo-a">' + (devoAbierto ? "−" : "+") + '</span></button>';
+    if (devoAbierto){
+      h += '<div class="devo-b">' + (vt ? '<blockquote class="devo-v">“' + esc(vt) + '”<cite>' + esc(refText(r[0], r[1]-1, r[2]-1)) + '</cite></blockquote>' : '') + '<p>' + esc(x.d) + '</p><div class="devo-o"><b>Oración</b><p>' + esc(x.o) + '</p></div>';
+      h += '<div class="vdd-btns"><button type="button" class="b1" data-act="devoShare">' + PLUS + '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Compartir</button><button type="button" class="b2" data-act="devoRead">Leer el pasaje</button></div></div>';
+    } else h += '<p class="devo-p" data-act="devoTog">' + esc(x.c) + '</p>';
+    return h + '</section>';
+  }
+  function devoShare(){ var x = devoHoy(), txt = "Devocional del día: " + x.t + "\n\n" + x.c + "\n" + refText(x.r[0], x.r[1]-1, x.r[2]-1) + "\n\nBiblia Multiversión: " + location.origin + location.pathname;
+    if (navigator.share) navigator.share({ text: txt }).catch(function(){}); else { try{ navigator.clipboard.writeText(txt).then(function(){ toast("Devocional copiado"); }); }catch(e){} } }
   function renderFavs(){
     var el = $("vFavs");
     if (!DATA[cur.v] || !META){ el.innerHTML = '<p class="note">Cargando…</p>'; load(cur.v).then(function(){ if ($("vFavs").classList.contains("on")) renderFavs(); }, function(){ el.innerHTML = '<p class="note">No se pudo cargar la versión.</p>'; }); return; }
     var d = DATA[cur.v], vid = cur.v, r = vddRef();
     if (!ver(vid).books[r[0]] || !d[r[0]][r[1]][r[2]]) vid = "rvr1960";
-    var h = '<h2 class="sec">' + (nombre ? "La Biblia de " + esc(nombre) : "Mi Biblia") + '</h2>' + avisosHtml() + osInvitaHtml() + respAvisoHtml(); seeAvisos();
+    var h = '<h2 class="sec' + (foto ? " con-ft" : "") + '">' + fotoHtml("ft-sec") + (nombre ? "La Biblia de " + esc(nombre) : "Mi Biblia") + '</h2>' + avisosHtml() + osInvitaHtml() + respAvisoHtml(); seeAvisos();
     var vt = DATA[vid] ? DATA[vid][r[0]][r[1]][r[2]] : null;
     if (!DATA[vid]) load(vid).then(function(){ if ($("vFavs").classList.contains("on")) renderFavs(); });
     h += '<section class="vdd" aria-label="Versículo del día"><div class="vdd-h"><img src="logo-emblema.png" alt=""><div><b>Versículo del día</b><span>' + esc(dateTxt()) + '</span></div></div>';
     h += '<div class="vdd-b"><p class="vdd-t">“' + esc((vt || "").replace(/\n/g, " ")) + '”</p><p class="vdd-r ' + (r[0] < 39 ? "at" : "nt") + '">' + esc(refText(r[0], r[1], r[2])) + ' · ' + esc(ver(vid).code) + '</p>';
     h += '<div class="vdd-btns"><button type="button" class="b1" data-act="vddImg">' + PLUS + '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>Crear imagen</button><button type="button" class="b2" data-act="vddShare">' + PLUS + '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Compartir</button></div>';
     h += '<button type="button" class="vdd-read" data-act="vddRead">Leer ' + esc(refText(r[0], r[1])) + ' completo</button></div></section>';
+    h += devoHtml();
     // seguir leyendo
     var last = RECENT[0] || [cur.b, cur.c];
     h += '<div class="mb-h">' + (nombre ? "Sigue leyendo, " + esc(nombre) : "Seguir leyendo") + '</div><button type="button" class="cont ' + (last[0] < 39 ? "at" : "nt") + '" data-b="' + last[0] + '" data-c="' + last[1] + '"><span class="nm">' + esc(refText(last[0], last[1])) + '</span><span class="cap">Donde quedaste la última vez</span></button>';
@@ -2848,6 +3121,9 @@ html.simple .act-r2{display:flex!important}
       var r = vddRef(), a = x.dataset.act;
       if (a === "vddImg") openImg(r[0], r[1], r[2], ver(cur.v).books[r[0]] ? cur.v : "rvr1960");
       else if (a === "vddRead") go(r[0], r[1], r[2]);
+      else if (a === "devoTog"){ devoAbierto = !devoAbierto; renderFavs(); }
+      else if (a === "devoShare") devoShare();
+      else if (a === "devoRead"){ var dx = devoHoy(); go(dx.r[0], dx.r[1]-1, dx.r[2]-1); }
       else if (a === "vddShare"){ var vid = ver(cur.v).books[r[0]] && DATA[cur.v][r[0]][r[1]][r[2]] ? cur.v : "rvr1960", txt = "“" + DATA[vid][r[0]][r[1]][r[2]].replace(/\n/g, " ") + "” " + refText(r[0], r[1], r[2]) + " (" + ver(vid).code + ")";
         if (navigator.share) navigator.share({text: txt}).catch(function(){}); else { try{ navigator.clipboard.writeText(txt).then(function(){ toast("Versículo copiado"); }); }catch(err){} } }
       else if (a === "avArch") avArchivar(x.dataset.id);
