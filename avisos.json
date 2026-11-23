@@ -1,68 +1,76 @@
 {
- "avisos": [
-  {
-   "id": "2026-11-23-version-2-2",
-   "fecha": "2026-11-23",
-   "titulo": "Versión 2.2: lectura en paralelo y tablet",
-   "texto": "Ahora puedes leer un capítulo en dos versiones a la vez: toca el botón de la versión y elige «Leer en paralelo con». En tablet o con el celular girado se ve en dos columnas. La app quedó adaptada para tablet, el diccionario bíblico creció a 176 palabras, los 40 hallazgos de arqueología tienen imagen y puedes verlas en pantalla completa tocándolas. Además, puedes compartir tu versículo y el devocional juntos en un solo mensaje.",
-   "enlace": "",
-   "texto_enlace": ""
-  },
-  {
-   "id": "2026-11-22-version-2-1",
-   "fecha": "2026-11-22",
-   "titulo": "Versión 2.1: devocional, juegos y búsqueda",
-   "texto": "En Mi Biblia tienes un devocional cada día, que puedes compartir. Los juegos ahora se dividen en Aprendices y Experimentados, con cinco juegos nuevos: Objeto, personaje y dato; Personaje y hecho; Cronología; ¿Dónde está?, y Completa la genealogía. Al buscar algo como «Arca de Noé», verás lo que pasó, dónde leerlo, los personajes y los hallazgos relacionados. Y en Aa puedes poner tu foto junto a tu nombre.",
-   "enlace": "",
-   "texto_enlace": ""
-  },
-  {
-   "id": "2026-11-18-version-2-0",
-   "fecha": "2026-11-18",
-   "titulo": "Versión 2.0: más color",
-   "texto": "Cada sección de Más tiene ahora su propio color: Resumen de la Biblia, Historia y arqueología, Genealogías, Diccionario y Bibliología. El diccionario se ordena por letras, el resumen de cada libro muestra sus capítulos y versículos, y Bibliología cuenta cómo nos llegó la Biblia. Además, hay 10 fondos nuevos para las imágenes de versículos.",
-   "enlace": "",
-   "texto_enlace": ""
-  },
-  {
-   "id": "2026-11-18-version-1-9",
-   "fecha": "2026-11-18",
-   "titulo": "Versión 1.9: Juegos e Historia",
-   "texto": "En Más hay dos secciones nuevas. Juegos: memorizar versículos, sopa de letras, puzzle de versículos, ¿Quién soy?, trivia bíblica y ordena los libros. Historia y arqueología: la línea de tiempo de la Biblia, el mundo judío en tiempos de Jesús y los hallazgos que confirman la Escritura.",
-   "enlace": "",
-   "texto_enlace": ""
-  },
-  {
-   "id": "2026-11-18-version-1-8",
-   "fecha": "2026-11-18",
-   "titulo": "Versión 1.8",
-   "texto": "Ahora puedes memorizar versículos por niveles, leer el Resumen de la Biblia con los 66 libros, descubrir curiosidades en Otros y guardar todas las versiones para usar la app sin internet. Buscar y Concordancia quedaron juntas. Y si prefieres letra grande y solo lo básico, activa la Versión sencilla en Aa.",
-   "enlace": "",
-   "texto_enlace": ""
-  },
-  {
-   "id": "2026-11-17-version-1-7",
-   "fecha": "2026-11-17",
-   "titulo": "Versión 1.7",
-   "texto": "En Más encontrarás el plan de salvación y un estudio corto de bibliología. Los personajes ahora tienen íconos de su época, a color. Y estos avisos se pueden archivar con la ✕ o deslizándolos hacia la derecha.",
-   "enlace": "",
-   "texto_enlace": ""
-  },
-  {
-   "id": "2026-11-17-version-1-6",
-   "fecha": "2026-11-17",
-   "titulo": "Llegó la pestaña Más",
-   "texto": "Abajo a la derecha ahora tienes mapas bíblicos, genealogías de Adán a Jesús, un diccionario bíblico y todas las fichas de personajes y lugares. También puedes respaldar tus favoritos y notas para no perderlos.",
-   "enlace": "",
-   "texto_enlace": ""
-  },
-  {
-   "id": "2026-11-17-version-1-2",
-   "fecha": "2026-11-17",
-   "titulo": "Nueva versión de la Biblia Multiversión",
-   "texto": "Ahora puedes activar un recordatorio diario de lectura (en Aa) y usar el modo púlpito para leer con letra grande en el culto. Compártela con tus hermanos.",
-   "enlace": "",
-   "texto_enlace": ""
-  }
- ]
+"avisos": [
+{
+"id": "2026-11-23-version-2-3",
+"fecha": "2026-11-23",
+"titulo": "Versión 2.3: reto del día, ranking y premios",
+"texto": "En Más → Juegos tienes el Reto del día: 5 preguntas nuevas cada día, las mismas para todos, con una sola oportunidad. Juega cada día para mantener tu racha 🔥 y comparte tu resultado. Entra al Ranking con tu nombre y tu iglesia para competir con otros hermanos, en la tabla de la semana y en la total. Gana medallas, trofeos y diamantes 💎, y busca el premio máximo: la paloma dorada 🕊️. Además, con el botón de sol y luna, arriba, cambias entre modo día y noche, y en ¿Sabías que…? hay 11 curiosidades nuevas de arqueología.",
+"enlace": "",
+"texto_enlace": ""
+},
+{
+"id": "2026-11-23-version-2-2",
+"fecha": "2026-11-23",
+"titulo": "Versión 2.2: lectura en paralelo y tablet",
+"texto": "Ahora puedes leer un capítulo en dos versiones a la vez: toca el botón de la versión y elige «Leer en paralelo con». En tablet o con el celular girado se ve en dos columnas. La app quedó adaptada para tablet, el diccionario bíblico creció a 176 palabras, los 40 hallazgos de arqueología tienen imagen y puedes verlas en pantalla completa tocándolas. Además, puedes compartir tu versículo y el devocional juntos en un solo mensaje.",
+"enlace": "",
+"texto_enlace": ""
+},
+{
+"id": "2026-11-22-version-2-1",
+"fecha": "2026-11-22",
+"titulo": "Versión 2.1: devocional, juegos y búsqueda",
+"texto": "En Mi Biblia tienes un devocional cada día, que puedes compartir. Los juegos ahora se dividen en Aprendices y Experimentados, con cinco juegos nuevos: Objeto, personaje y dato; Personaje y hecho; Cronología; ¿Dónde está?, y Completa la genealogía. Al buscar algo como «Arca de Noé», verás lo que pasó, dónde leerlo, los personajes y los hallazgos relacionados. Y en Aa puedes poner tu foto junto a tu nombre.",
+"enlace": "",
+"texto_enlace": ""
+},
+{
+"id": "2026-11-18-version-2-0",
+"fecha": "2026-11-18",
+"titulo": "Versión 2.0: más color",
+"texto": "Cada sección de Más tiene ahora su propio color: Resumen de la Biblia, Historia y arqueología, Genealogías, Diccionario y Bibliología. El diccionario se ordena por letras, el resumen de cada libro muestra sus capítulos y versículos, y Bibliología cuenta cómo nos llegó la Biblia. Además, hay 10 fondos nuevos para las imágenes de versículos.",
+"enlace": "",
+"texto_enlace": ""
+},
+{
+"id": "2026-11-18-version-1-9",
+"fecha": "2026-11-18",
+"titulo": "Versión 1.9: Juegos e Historia",
+"texto": "En Más hay dos secciones nuevas. Juegos: memorizar versículos, sopa de letras, puzzle de versículos, ¿Quién soy?, trivia bíblica y ordena los libros. Historia y arqueología: la línea de tiempo de la Biblia, el mundo judío en tiempos de Jesús y los hallazgos que confirman la Escritura.",
+"enlace": "",
+"texto_enlace": ""
+},
+{
+"id": "2026-11-18-version-1-8",
+"fecha": "2026-11-18",
+"titulo": "Versión 1.8",
+"texto": "Ahora puedes memorizar versículos por niveles, leer el Resumen de la Biblia con los 66 libros, descubrir curiosidades en Otros y guardar todas las versiones para usar la app sin internet. Buscar y Concordancia quedaron juntas. Y si prefieres letra grande y solo lo básico, activa la Versión sencilla en Aa.",
+"enlace": "",
+"texto_enlace": ""
+},
+{
+"id": "2026-11-17-version-1-7",
+"fecha": "2026-11-17",
+"titulo": "Versión 1.7",
+"texto": "En Más encontrarás el plan de salvación y un estudio corto de bibliología. Los personajes ahora tienen íconos de su época, a color. Y estos avisos se pueden archivar con la ✕ o deslizándolos hacia la derecha.",
+"enlace": "",
+"texto_enlace": ""
+},
+{
+"id": "2026-11-17-version-1-6",
+"fecha": "2026-11-17",
+"titulo": "Llegó la pestaña Más",
+"texto": "Abajo a la derecha ahora tienes mapas bíblicos, genealogías de Adán a Jesús, un diccionario bíblico y todas las fichas de personajes y lugares. También puedes respaldar tus favoritos y notas para no perderlos.",
+"enlace": "",
+"texto_enlace": ""
+},
+{
+"id": "2026-11-17-version-1-2",
+"fecha": "2026-11-17",
+"titulo": "Nueva versión de la Biblia Multiversión",
+"texto": "Ahora puedes activar un recordatorio diario de lectura (en Aa) y usar el modo púlpito para leer con letra grande en el culto. Compártela con tus hermanos.",
+"enlace": "",
+"texto_enlace": ""
+}
+]
 }
