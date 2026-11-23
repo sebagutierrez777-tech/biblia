@@ -896,6 +896,8 @@ header #btnRef svg{color:#7a6334}
 .lb-cap{position:absolute;left:0;right:0;bottom:0;padding:28px 18px calc(16px + env(safe-area-inset-bottom));background:linear-gradient(transparent,rgba(0,0,0,.78));color:#f4efe4;display:flex;flex-direction:column;gap:3px;transition:opacity .2s}
 .lb-cap b{font-size:18px}.lb-cap small{font-size:13px;opacity:.85}.lb-cap a{color:#f4efe4}.lb-n{font-size:12px;font-weight:700;opacity:.7}
 .lb.lb-clean button,.lb.lb-clean .lb-cap{opacity:0;pointer-events:none}.lb.lb-clean .lb-x{opacity:.5;pointer-events:auto}
+.cfg-g{margin:26px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line);font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}.cfg-g:first-child{margin-top:4px}
+#shSize .rem-box{margin-top:14px}#shSize .prom-row+.rem-box{margin-top:16px}
 </style>
 <style>
 /* Presentación y bienvenida */
@@ -937,6 +939,7 @@ header #btnRef svg{color:#7a6334}
 .ini-pie button{height:56px;border:0;border-radius:16px;background:#4338ca;color:#fff;font-family:var(--ui);font-size:18px;font-weight:700;cursor:pointer}
 .ini-pie button:active{background:#3730a3}
 @media (prefers-reduced-motion:reduce){.ini-logo::after{animation:none;opacity:0}.ini-tit h1{animation:none;filter:none}.ini-load i{animation:none;width:100%}.ini-splash,.ini-bien{transition:none}}
+#shSize .rem-box{margin-top:14px}#shSize .prom-row+.rem-box{margin-top:16px}
 </style>
 </head>
 <body>
@@ -962,7 +965,7 @@ header #btnRef svg{color:#7a6334}
 <input id="iniNombre" type="text" autocomplete="given-name" maxlength="30" placeholder="Tu nombre o apodo">
 <label class="ini-nm" for="iniEdad">¿Cuántos años tienes? <small>(opcional)</small></label>
 <input id="iniEdad" type="number" inputmode="numeric" min="5" max="120" placeholder="Tu edad">
-<div class="ini-simple" id="iniSimple" hidden><b>¿Quieres la versión sencilla?</b><p>Letra más grande, botones grandes y solo lo necesario para leer. Puedes cambiarlo cuando quieras en Aa.</p><button type="button" id="iniSi">Sí, versión sencilla</button><button type="button" class="ini-no" id="iniNo">No, la versión completa</button></div>
+<div class="ini-simple" id="iniSimple" hidden><b>¿Quieres la versión sencilla?</b><p>Letra más grande, botones grandes y solo lo necesario para leer. Puedes cambiarlo cuando quieras en Ajustes (la rueda de arriba).</p><button type="button" id="iniSi">Sí, versión sencilla</button><button type="button" class="ini-no" id="iniNo">No, la versión completa</button></div>
 <label><input type="checkbox" id="iniNoMas" checked> No volver a mostrar este saludo</label>
 <button type="button" id="iniIr">Comenzar a leer</button>
 </div>
@@ -1004,7 +1007,7 @@ header #btnRef svg{color:#7a6334}
     <button class="pill" id="btnVer" aria-label="Elegir versión"><span id="verLabel">RVR1960</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     <span class="grow"></span>
     <button class="icon mic-btn" id="btnMic" aria-label="Buscar por voz" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg></button>
-    <button class="icon" id="btnSize" aria-label="Letra, colores y compartir">Aa</button>
+    <button class="icon" id="btnSize" aria-label="Ajustes"><svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
   </header>
   <div id="tband" aria-hidden="true"></div>
 
@@ -1125,28 +1128,10 @@ header #btnRef svg{color:#7a6334}
       <p class="note">Se le abre la Biblia Multiversión. Después toca ⋮ y elige <b>Instalar app</b>.</p>
     </div>
   </div>
-  <div class="sheet" id="shSize" role="dialog" aria-label="Letra, colores y compartir">
-    <div class="sheet-head"><h2>Letra, colores y compartir</h2><button class="icon" data-close aria-label="Cerrar">✕</button></div>
+  <div class="sheet" id="shSize" role="dialog" aria-label="Ajustes">
+    <div class="sheet-head"><h2>Ajustes</h2><button class="icon" data-close aria-label="Cerrar">✕</button></div>
     <div class="sheet-body">
-      <label class="grp" for="cfgNombre" style="margin-top:4px">Tu nombre o apodo</label>
-      <div class="nm-row"><input id="cfgNombre" type="text" maxlength="30" autocomplete="given-name" placeholder="¿Cómo te llamas?"><button type="button" class="btn" id="cfgNombreOk">Guardar</button></div>
-      <div class="ft-row"><span class="ft-av" id="cfgFotoV" aria-hidden="true"></span><div><b>Tu foto</b><small>Se ve pequeña junto a tu nombre y solo queda guardada en este teléfono.</small><div class="ft-btns"><label class="chip" for="cfgFoto">Elegir foto</label><button type="button" class="chip" id="cfgFotoX">Quitar</button></div></div><input type="file" id="cfgFoto" accept="image/*" hidden></div>
-      <div class="share-box">
-        <button type="button" class="share-main" id="btnShare"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span>Compartir la app con un hermano</span></button>
-        <button type="button" class="share-qr" id="btnQr"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 17h4v4h-4"/></svg><span>Mostrar código QR</span></button>
-      </div>
-      <div class="rem-box">
-        <label class="prom-row" style="margin:0"><input type="checkbox" id="cfgSimple"> <span>Versión sencilla<small>Letra más grande, botones grandes y solo lo necesario para leer.</small></span></label>
-      </div>
-      <div class="rem-box">
-        <label class="prom-row" style="margin:0"><input type="checkbox" id="cfgSonido"> <span>Sonido de inicio<small>Unas campanas suaves al abrir la app.</small></span></label>
-      </div>
-      <div class="rem-box" id="osBox" hidden>
-        <label class="prom-row" style="margin:0"><input type="checkbox" id="osChk"> <span>Avisos de la iglesia<small id="osInfo">Recibe en tu celular los avisos de IDP Chile.</small></span></label>
-      </div>
-      <div class="rem-box" id="remBox">
-        <label class="prom-row" style="margin:0"><input type="checkbox" id="remChk"> <span>Recordatorio diario del devocional<small id="remInfo">Te avisamos una vez al día para que leas tu devocional.</small></span></label>
-      </div>
+      <h3 class="cfg-g">Lectura</h3>
       <div class="size-row"><button class="step" id="szMinus" aria-label="Letra más chica">A−</button><output id="szOut">En el principio</output><button class="step" id="szPlus" aria-label="Letra más grande">A+</button></div>
       <div class="grp" style="margin-top:26px">Tipo de letra</div>
       <div class="fonts" id="fonts"></div>
@@ -1171,6 +1156,28 @@ header #btnRef svg{color:#7a6334}
       </div>
       <p class="note">Lila sigue el modo claro u oscuro de tu teléfono. Noche, Bosque, Vino y Grafito son oscuros, para leer de noche.</p>
       <label class="prom-row"><input type="checkbox" id="promChk"> <span>Resaltar suavemente las <span class="prom-demo">promesas de Jesús</span> en el Nuevo Testamento</span></label>
+      <div class="rem-box">
+        <label class="prom-row" style="margin:0"><input type="checkbox" id="cfgSimple"> <span>Versión sencilla<small>Letra más grande, botones grandes y solo lo necesario para leer.</small></span></label>
+      </div>
+      <h3 class="cfg-g">Tu perfil</h3>
+      <label class="grp" for="cfgNombre" style="margin-top:4px">Tu nombre o apodo</label>
+      <div class="nm-row"><input id="cfgNombre" type="text" maxlength="30" autocomplete="given-name" placeholder="¿Cómo te llamas?"><button type="button" class="btn" id="cfgNombreOk">Guardar</button></div>
+      <div class="ft-row"><span class="ft-av" id="cfgFotoV" aria-hidden="true"></span><div><b>Tu foto</b><small>Se ve pequeña junto a tu nombre y solo queda guardada en este teléfono.</small><div class="ft-btns"><label class="chip" for="cfgFoto">Elegir foto</label><button type="button" class="chip" id="cfgFotoX">Quitar</button></div></div><input type="file" id="cfgFoto" accept="image/*" hidden></div>
+      <h3 class="cfg-g">Notificaciones y sonido</h3>
+      <div class="rem-box" id="osBox" hidden>
+        <label class="prom-row" style="margin:0"><input type="checkbox" id="osChk"> <span>Notificaciones<small id="osInfo">Una vez al día, a las 10:00, te invitamos a leer el devocional. También recibes los avisos de IDP Chile.</small></span></label>
+      </div>
+      <div class="rem-box" id="remBox" hidden>
+        <label class="prom-row" style="margin:0"><input type="checkbox" id="remChk"> <span>Recordatorio diario del devocional<small id="remInfo">Te avisamos una vez al día para que leas tu devocional.</small></span></label>
+      </div>
+      <div class="rem-box">
+        <label class="prom-row" style="margin:0"><input type="checkbox" id="cfgSonido"> <span>Sonido de inicio<small>Unas campanas suaves al abrir la app.</small></span></label>
+      </div>
+      <h3 class="cfg-g">Compartir la app</h3>
+      <div class="share-box">
+        <button type="button" class="share-main" id="btnShare"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span>Compartir la app con un hermano</span></button>
+        <button type="button" class="share-qr" id="btnQr"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 17h4v4h-4"/></svg><span>Mostrar código QR</span></button>
+      </div>
       <p class="credit">Biblia Multiversión · Versión 2.2<br>Desarrollado por DIRCOM Chile · Iglesia de Dios de la Profecía</p>
     </div>
   </div>
@@ -3301,7 +3308,7 @@ header #btnRef svg{color:#7a6334}
   }
 
   /* ---------- Recordatorio diario ---------- */
-  var remOn = store.get("recordatorio", false);
+  var remOn = false; if (store.get("recordatorio", false)){ store.set("recordatorio", false); try{ navigator.serviceWorker && navigator.serviceWorker.ready.then(function(reg){ if (reg.periodicSync) reg.periodicSync.unregister("lectura"); }); }catch(e){} }
   function remText(dt){
     var x = devoHoy(dt);
     return x ? "Tu devocional de hoy: «" + x.t + "». " + x.c : "Tu devocional de hoy te espera. Regálate unos minutos con Dios.";
@@ -3437,7 +3444,7 @@ header #btnRef svg{color:#7a6334}
       else if (a === "avSacar"){ avArch = avArch.filter(function(i){ return i !== x.dataset.id; }); store.set("avisosArch", avArch); renderFavs(); }
       else if (a === "avVer"){ avVerArch = !avVerArch; renderFavs(); }
       else if (a === "osSi"){ osActivar().then(function(){ renderFavs(); }); }
-      else if (a === "osNo"){ store.set("osNo", true); toast("Puedes activarlos cuando quieras en Aa"); renderFavs(); }
+      else if (a === "osNo"){ store.set("osNo", true); toast("Puedes activarlos cuando quieras en Ajustes"); renderFavs(); }
       else if (a === "respIr"){ tab("vMore"); renderMore("resp"); }
       else if (a === "respNo"){ store.set("respPospuesto", Date.now()); renderFavs(); }
       else if (a === "planStop"){ plan = null; store.set("plan", null); remSave(); renderFavs(); }
