@@ -2847,8 +2847,8 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     var t = rkTotal(), w = semId(), sp = rkSemPts(), last = store.get("rkLast", {});
     var bb = prTop(); if (last.t === t && last.w === w && last.s === sp && last.n === RKP.n && last.l === RKP.l && last.b === bb) return Promise.resolve();
     return rkToken().then(function(a){
-      var conB = Date.now() > store.get("rkNoB", 0);
-      function g(path, d){ if (conB) d.b = bb; return rkGuardar(path, d).catch(function(e){ if (!conB) throw e; store.set("rkNoB", Date.now() + 864e5); delete d.b; return rkGuardar(path, d); }); }
+      var conB = Date.now() > store.get("rkNoB2", 0);
+      function g(path, d){ if (conB) d.b = bb; return rkGuardar(path, d).catch(function(e){ if (!conB) throw e; store.set("rkNoB2", Date.now() + 864e5); delete d.b; return rkGuardar(path, d); }); }
       return g("/jugadores/" + a.uid, { n: RKP.n, l: RKP.l, t: t }).then(function(){ return sp > 0 ? g("/semanas/" + w + "/jugadores/" + a.uid, { n: RKP.n, l: RKP.l, s: sp }) : 0; });
     }).then(function(){ store.set("rkLast", { t: t, w: w, s: sp, n: RKP.n, l: RKP.l, b: bb }); RKC = {}; });
   }
