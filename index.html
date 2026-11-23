@@ -868,6 +868,34 @@ header #btnRef svg{color:#7a6334}
   #vFavs>.vdd,#vFavs>.devo{grid-column:auto;margin-top:0}
   .hz-g{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
+.vr-t{margin:16px 0 4px;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}.vr-t:first-child{margin-top:0}
+.vr-par{margin-top:18px;padding-top:4px;border-top:2px solid var(--line)}.vr-s{margin:0 0 10px;font-size:13px;color:var(--muted)}
+.vr-chips{display:flex;flex-wrap:wrap;gap:8px}.vr-chips button{min-height:38px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:700;font-size:14px}.vr-chips button[aria-pressed=true]{background:var(--nt-bg);border-color:var(--nt-bg);color:#fff}
+.par-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 12px}.par-bar span{font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px}.par-a{background:color-mix(in srgb,var(--nt-bg) 14%,var(--surface));color:var(--ink)}.par-b{background:color-mix(in srgb,#4f7a6a 16%,var(--surface));color:var(--ink)}
+.par-bar button{margin-left:auto;font-size:13px;font-weight:700;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--muted)}
+.verses.par{max-width:70ch}.verses.par .v{margin-top:6px}
+.vp{margin:2px 0 8px 10px;padding:3px 8px 4px 10px;border-left:2px solid color-mix(in srgb,#4f7a6a 55%,var(--line));font-size:.88em;line-height:1.55;color:color-mix(in srgb,var(--ink) 78%,var(--paper));white-space:pre-line;cursor:pointer}
+.vp sup{display:none}.vp i{opacity:.7;font-size:.9em}.vp-h{display:none}
+@media (min-width:700px) and (orientation:landscape),(min-width:900px){
+  #vRead.par-on{padding-left:max(28px,calc((100% - 1120px)/2));padding-right:max(28px,calc((100% - 1120px)/2))}
+  .verses.par{max-width:none;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:28px;align-items:start}
+  .verses.par>*{grid-column:1/-1}
+  .verses.par .v{grid-column:1;margin-top:0}
+  .verses.par .vp{grid-column:2;margin:0;padding:5px 8px 5px 10px;border-left:3px solid transparent;font-size:1em;color:var(--ink)}
+  .verses.par .vp sup{display:inline;font-family:var(--ui);font-size:.62em;font-weight:700;margin-right:.45em;vertical-align:.5em;line-height:0;color:var(--muted)}
+  .verses.par .vp-h{display:block;grid-column:auto;font-family:var(--ui);font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);padding:0 10px 8px;border-bottom:1px solid var(--line);margin-bottom:8px}
+  .verses.par .vnote{grid-column:1/-1}
+  .verses.par .v.sel+.vp{background:color-mix(in srgb,var(--nt-bg) 8%,transparent)}
+}
+@media (max-width:480px){#btnVer.par #verLabel{font-size:12.5px;letter-spacing:-.01em}}
+.hz-f img{cursor:zoom-in}
+.lb{position:fixed;inset:0;z-index:95;background:#0d0c0a;display:flex;align-items:center;justify-content:center;animation:shrF .2s ease}
+.lb-img{max-width:100%;max-height:100%;object-fit:contain;user-select:none}
+.lb button{position:absolute;color:#fff;background:rgba(255,255,255,.12);border:0;border-radius:999px;width:46px;height:46px;font-size:26px;line-height:1;display:flex;align-items:center;justify-content:center;transition:opacity .2s}
+.lb-x{top:calc(12px + env(safe-area-inset-top));right:12px;font-size:18px!important}.lb-p{left:10px;top:50%;transform:translateY(-50%)}.lb-s{right:10px;top:50%;transform:translateY(-50%)}
+.lb-cap{position:absolute;left:0;right:0;bottom:0;padding:28px 18px calc(16px + env(safe-area-inset-bottom));background:linear-gradient(transparent,rgba(0,0,0,.78));color:#f4efe4;display:flex;flex-direction:column;gap:3px;transition:opacity .2s}
+.lb-cap b{font-size:18px}.lb-cap small{font-size:13px;opacity:.85}.lb-cap a{color:#f4efe4}.lb-n{font-size:12px;font-weight:700;opacity:.7}
+.lb.lb-clean button,.lb.lb-clean .lb-cap{opacity:0;pointer-events:none}.lb.lb-clean .lb-x{opacity:.5;pointer-events:auto}
 </style>
 <style>
 /* Presentación y bienvenida */
@@ -1247,7 +1275,7 @@ header #btnRef svg{color:#7a6334}
   function renderRead(focusVerse){
     var el = $("vRead"), v = ver(cur.v);
     $("refLabel").textContent = refText(cur.b, cur.c);
-    $("verLabel").textContent = v.code;
+    verLbl();
     setSel(null);
     document.documentElement.setAttribute("data-test", cur.b < 39 ? "at" : "nt");
     var head = '<span class="test-tag">' + (cur.b < 39 ? "Antiguo Testamento" : "Nuevo Testamento") + '</span><div class="chap-head"><h1>' + esc(refText(cur.b, cur.c)) + '</h1><small>' + esc(v.code) + '</small></div>';
@@ -1259,12 +1287,17 @@ header #btnRef svg{color:#7a6334}
       });
       return;
     }
+    var pv = parOk() ? par : null, pvs = null;
+    if (pv && !bookData(pv, cur.b) && ver(pv).books[cur.b]){
+      loadBook(pv, cur.b).then(function(){ if ($("vRead").classList.contains("on")) renderReadKeep(); }, function(){});
+    }
+    if (pv) pvs = (bookData(pv, cur.b) || [])[cur.c] || [];
     var vs = bookData(cur.v, cur.b)[cur.c], html = "", any = false;
     addRecent(cur.b, cur.c);
     if (tts.on && (tts.b !== cur.b || tts.c !== cur.c)) ttsPause();
     for (var i=0;i<vs.length;i++){
       if (!vs[i]) continue; any = true;
-      html += '<p class="v' + (favs.indexOf(key(cur.b,cur.c,i)) >= 0 ? " fav" : "") + (promOn && PROM[key(cur.b,cur.c,i)] ? " prom" : "") + (HL[key(cur.b,cur.c,i)] ? " hl-" + HL[key(cur.b,cur.c,i)] : "") + '" data-i="' + i + '" tabindex="0"><sup>' + (i+1) + '</sup>' + esc(vs[i]) + '</p>' + (NOTES[key(cur.b,cur.c,i)] ? '<div class="vnote"><b>Mi nota ·</b> ' + esc(NOTES[key(cur.b,cur.c,i)]) + '</div>' : '');
+      html += '<p class="v' + (favs.indexOf(key(cur.b,cur.c,i)) >= 0 ? " fav" : "") + (promOn && PROM[key(cur.b,cur.c,i)] ? " prom" : "") + (HL[key(cur.b,cur.c,i)] ? " hl-" + HL[key(cur.b,cur.c,i)] : "") + '" data-i="' + i + '" tabindex="0"><sup>' + (i+1) + '</sup>' + esc(vs[i]) + '</p>' + (pv ? '<p class="vp" data-i="' + i + '"><sup>' + (i+1) + '</sup>' + (pvs[i] ? esc(pvs[i]) : (ver(pv).books[cur.b] ? (bookData(pv, cur.b) ? '<i>(no está en esta versión)</i>' : '…') : '<i>' + esc(ver(pv).code) + ' solo trae el Nuevo Testamento</i>')) + '</p>' : '') + (NOTES[key(cur.b,cur.c,i)] ? '<div class="vnote"><b>Mi nota ·</b> ' + esc(NOTES[key(cur.b,cur.c,i)]) + '</div>' : '');
     }
     if (!any) html = '<p class="note"><b>' + esc(v.name) + '</b> no trae este pasaje' + (v.books[cur.b] ? "." : ": esta versión solo incluye el Nuevo Testamento.") + ' Cambia de versión con el botón de arriba.</p>';
     var first = cur.b === 0 && cur.c === 0, last = cur.b === 65 && cur.c === META.books[65][1].length - 1;
@@ -1274,8 +1307,10 @@ header #btnRef svg{color:#7a6334}
     var hola = holaHtml(); if (hola) holaShown = true;
     if (!INTROS) loadIntros().then(function(){ if ($("vRead").classList.contains("on")) renderReadKeep(); }, function(){});
     if (!FICHAS) loadFichas().then(function(){ if ($("vRead").classList.contains("on")) renderReadKeep(); }, function(){});
-    el.innerHTML = (typeof volverA !== "undefined" && volverA ? volverHtml() : "") + hola + head + lst + introHtml() + fichasHtml() + tip + '<div class="verses">' + html + '</div><div class="chap-nav"><button id="prevC"' + (first ? " disabled" : "") + '>‹ Capítulo anterior</button><button id="nextC"' + (last ? " disabled" : "") + '>Capítulo siguiente ›</button></div>';
+    el.innerHTML = (typeof volverA !== "undefined" && volverA ? volverHtml() : "") + hola + head + lst + introHtml() + fichasHtml() + tip + (pv ? '<div class="par-bar"><span class="par-a">' + esc(v.code) + '</span><span class="par-b">' + esc(ver(pv).code) + '</span><button type="button" id="parOff">Salir del paralelo</button></div>' : '') + '<div class="verses' + (pv ? ' par' : '') + '">' + (pv ? '<div class="vp-h a">' + esc(v.name) + '</div><div class="vp-h b">' + esc(ver(pv).name) + '</div>' : '') + html + '</div><div class="chap-nav"><button id="prevC"' + (first ? " disabled" : "") + '>‹ Capítulo anterior</button><button id="nextC"' + (last ? " disabled" : "") + '>Capítulo siguiente ›</button></div>';
     $("prevC").onclick = function(){ step(-1); };
+    el.classList.toggle("par-on", !!pv);
+    if ($("parOff")) $("parOff").onclick = function(e){ e.stopPropagation(); setPar(null); };
     if ($("remOk")) $("remOk").onclick = function(e){ e.stopPropagation(); store.set("remDia", today()); tab("vFavs"); };
     if ($("tipOk")) $("tipOk").onclick = function(e){ e.stopPropagation(); store.set("tipVerso", true); var t = $("tipV"); if (t) t.remove(); };
     if (!$("player").hidden) ttsMark();
@@ -1296,7 +1331,7 @@ header #btnRef svg{color:#7a6334}
   function go(b, c, v){ cur.b = b; cur.c = c; savePos(); cmpVerse = v || 0; tab("vRead"); renderRead(v); }
 
   $("vRead").addEventListener("click", function(e){
-    var p = e.target.closest(".v"); if (!p) return;
+    var p = e.target.closest(".v, .vp"); if (!p) return;
     var i = +p.dataset.i; setSel(sel === i ? null : i);
   });
   $("vRead").addEventListener("keydown", function(e){
@@ -1363,16 +1398,25 @@ header #btnRef svg{color:#7a6334}
     else showChapters(+b.dataset.b);
   });
 
-  $("btnVer").onclick = function(){
-    var h = "";
+  var par = store.get("par", null);
+  function parOk(){ return par && par !== cur.v && META.versions.some(function(v){ return v.id === par; }); }
+  function verLbl(){ var p = parOk(); $("verLabel").textContent = ver(cur.v).code + (p ? "+" + ver(par).code : ""); $("btnVer").classList.toggle("par", !!p); }
+  function renderVers(){
+    var h = '<p class="vr-t">Versión principal</p>';
     META.versions.forEach(function(v){
       var nb = v.books.reduce(function(a,x){ return a + x; }, 0);
       h += '<button class="ver' + (v.id === cur.v ? " cur" : "") + '" data-v="' + v.id + '"><span class="c">' + esc(v.code) + '</span><span class="n">' + esc(v.name) + (nb < 66 ? '<small>Solo Nuevo Testamento</small>' : '') + '</span></button>';
     });
-    $("vrBody").innerHTML = h; openSheet("shVers");
-  };
+    h += '<div class="vr-par"><p class="vr-t">Leer en paralelo con</p><p class="vr-s">Muestra el capítulo completo en dos versiones a la vez. En tablet o con el celular girado se ve en dos columnas.</p><div class="vr-chips"><button type="button" data-par=""' + (parOk() ? "" : ' aria-pressed="true"') + '>Ninguna</button>';
+    META.versions.forEach(function(v){ if (v.id !== cur.v) h += '<button type="button" data-par="' + v.id + '"' + (parOk() && par === v.id ? ' aria-pressed="true"' : "") + '>' + esc(v.code) + '</button>'; });
+    $("vrBody").innerHTML = h + '</div></div>';
+  }
+  $("btnVer").onclick = function(){ renderVers(); openSheet("shVers"); };
+  function setPar(id){ par = id || null; store.set("par", par); verLbl(); renderReadKeep(); }
   $("vrBody").addEventListener("click", function(e){
-    var b = e.target.closest("button"); if (!b) return;
+    var pb = e.target.closest("[data-par]");
+    if (pb){ closeSheets(); setPar(pb.dataset.par); return; }
+    var b = e.target.closest("button"); if (!b || !b.dataset.v) return;
     cur.v = b.dataset.v; savePos(); closeSheets(); lastHits = null;
     $("results").innerHTML = '<p class="note">Cambiaste de versión. Vuelve a buscar para ver los resultados en ' + esc(ver(cur.v).code) + '.</p>';
     renderRead();
@@ -2510,6 +2554,31 @@ header #btnRef svg{color:#7a6334}
     }
     el.innerHTML = h + '<p class="note">Historia de apoyo de la Biblia Multiversión. Fechas aproximadas.</p>';
   }
+
+  // Visor de fotos a pantalla completa (hallazgos)
+  var lbI = 0, lbX = null;
+  function lbList(){ return (HIST && HIST.hallazgos || []).map(function(x, i){ return { x: x, i: i }; }).filter(function(o){ return o.x.img; }); }
+  function lbShow(){ var L = lbList(), o = L[lbI], el = $("lb"); if (!o || !el) return;
+    el.querySelector(".lb-img").src = o.x.img; el.querySelector(".lb-img").alt = o.x.t;
+    el.querySelector(".lb-t").textContent = o.x.t; el.querySelector(".lb-w").textContent = o.x.w || "";
+    el.querySelector(".lb-c").innerHTML = 'Foto: <a href="' + o.x.src + '" target="_blank" rel="noopener">' + esc(o.x.cred) + '</a>';
+    el.querySelector(".lb-n").textContent = (lbI + 1) + " de " + L.length; }
+  function lbOpen(i){ var L = lbList(); lbI = Math.max(0, L.findIndex(function(o){ return o.i === i; }));
+    var el = document.createElement("div"); el.id = "lb"; el.className = "lb"; el.setAttribute("role", "dialog"); el.setAttribute("aria-label", "Foto en pantalla completa");
+    el.innerHTML = '<button type="button" class="lb-x" aria-label="Cerrar">✕</button><button type="button" class="lb-p" aria-label="Anterior">‹</button><img class="lb-img" alt=""><button type="button" class="lb-s" aria-label="Siguiente">›</button><div class="lb-cap"><span class="lb-n"></span><b class="lb-t"></b><small class="lb-w"></small><small class="lb-c"></small></div>';
+    document.body.appendChild(el); lbShow();
+    try{ if (el.requestFullscreen) el.requestFullscreen().catch(function(){}); }catch(e){}
+    el.addEventListener("click", function(e){
+      if (e.target.closest(".lb-x")) lbClose(); else if (e.target.closest(".lb-p")) lbGo(-1); else if (e.target.closest(".lb-s")) lbGo(1);
+      else if (e.target === el || e.target.classList.contains("lb-img")) el.classList.toggle("lb-clean"); });
+    el.addEventListener("touchstart", function(e){ lbX = e.touches[0].clientX; }, { passive: true });
+    el.addEventListener("touchend", function(e){ if (lbX == null) return; var d = e.changedTouches[0].clientX - lbX; lbX = null; if (Math.abs(d) > 50) lbGo(d < 0 ? 1 : -1); });
+  }
+  function lbGo(d){ var n = lbList().length; lbI = (lbI + d + n) % n; lbShow(); }
+  function lbClose(){ var el = $("lb"); if (!el) return; try{ if (document.fullscreenElement) document.exitFullscreen(); }catch(e){} el.remove(); }
+  document.addEventListener("keydown", function(e){ if (!$("lb")) return; if (e.key === "Escape") lbClose(); else if (e.key === "ArrowRight") lbGo(1); else if (e.key === "ArrowLeft") lbGo(-1); });
+  document.addEventListener("fullscreenchange", function(){ if (!document.fullscreenElement && $("lb") && $("lb").dataset.fs) lbClose(); if (document.fullscreenElement && $("lb")) $("lb").dataset.fs = 1; });
+  $("vMore").addEventListener("click", function(e){ var f = e.target.closest(".hz-f img"); if (!f) return; var w = f.closest(".hz-w"), c = w && w.querySelector("[id^=hz-]"); if (c) lbOpen(+c.id.slice(3)); });
   $("vMore").addEventListener("click", function(e){ var b = e.target.closest("[data-hs]"); if (b){ e.stopPropagation(); renderHistoria(b.dataset.hs); } }, true);
   var masSub = null;
   function masHead(t, back){ return '<div class="mas-h"><button type="button" class="icon" data-mas="' + (back || "") + '" aria-label="Volver">‹</button><h2>' + esc(t) + '</h2></div>'; }
