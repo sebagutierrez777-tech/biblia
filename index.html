@@ -1041,6 +1041,14 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
 .du-turno.yo{background:color-mix(in srgb,#4f46e5 14%,var(--surface));color:#4338ca;animation:rtPulse 1.8s ease-in-out infinite}
 :root[data-modo="noche"] .du-turno.yo{color:#c7d2fe}
 .du-mj .mj-c[disabled]{opacity:.92}
+
+.nb{margin:4px 0 18px;padding:16px;border-radius:18px;background:var(--surface);border:1px solid var(--line)}
+.nb-h{display:flex;gap:12px;align-items:center}.nb-h>span{font-size:34px}.nb-h b{display:block;font-size:18px}.nb-h small{color:var(--muted);font-size:14px}
+.nb-p{color:var(--muted);margin:10px 0 4px}.nb-l{text-align:center;font-weight:700;margin:14px 0 0;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.08em}
+.nb-code{gap:4px!important;margin:8px 0 10px!important}.nb-code i{width:34px!important;height:46px!important;font-size:24px!important}.nb-code em{font-style:normal;align-self:center;color:var(--muted);font-weight:800}
+.nb-u{text-align:center;font-size:14px;margin:4px 0 8px}
+.nb-r{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}.nb-r summary{font-weight:700;cursor:pointer;padding:6px 0}.nb-r p{color:var(--muted);font-size:14px;margin:6px 0}
+.nb-r .du-row input{letter-spacing:.12em}
 </style>
 <style>
 /* Presentación y bienvenida */
@@ -2608,7 +2616,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     h += '</div><h3 class="pv-h">Medallas <small>bronce, plata y oro en cada juego</small></h3><div class="pv-m">';
     L.forEach(function(id){ var g = GAMES.filter(function(x){ return x[0] === id; })[0], n = prNivelMed(id, l), U = PR_UM[l][id], v = JSCORE[prKey(id, l)];
       h += '<button type="button" class="pv-r" data-mas="' + id + '" data-pvl="' + l + '"><span class="pv-md">' + [1, 2, 3].map(function(k){ return '<i class="' + (n >= k ? "on" : "") + '">' + ["🥉", "🥈", "🥇"][k - 1] + '</i>'; }).join("") + '</span><span class="pv-n"><b>' + esc(g[1]) + '</b><small>' + (n === 3 ? "¡Oro conseguido!" : "Próxima: " + ["bronce", "plata", "oro"][n] + " con " + U[n] + " " + U[3]) + (v != null ? " · récord " + v : "") + '</small></span></button>'; });
-    h += '</div><p class="note">Los premios se guardan en este teléfono. Tu premio más alto aparece junto a tu nombre en el ranking.</p>';
+    h += '</div><p class="note">Tu premio más alto aparece junto a tu nombre en el ranking. Para no perder tus premios si cambias de celular, activa el respaldo en la nube en Más → Respaldo.</p>';
     el.innerHTML = h;
   }
   $("vMore").addEventListener("click", function(e){
@@ -3603,7 +3611,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
   }
 
   /* Respaldo */
-  var RESP_FUERA = ["recordatorio", "remDia", "vozApp", "voz"];
+  var RESP_FUERA = ["recordatorio", "remDia", "vozApp", "voz", "rkLast", "rkEx", "rkNoB2", "nubeHash", "nubeUlt"];
   function respDatos(){ var o = {}; for (var i=0;i<localStorage.length;i++){ var k = localStorage.key(i); if (k.indexOf("biblia.") !== 0) continue; var s = k.slice(7); if (RESP_FUERA.indexOf(s) >= 0) continue; o[s] = localStorage.getItem(k); } return o; }
   function respCuenta(){ return { f: favs.length, n: Object.keys(NOTES).length, h: Object.keys(HL).length }; }
   function respArchivo(ext){
@@ -3611,18 +3619,81 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     var txt = JSON.stringify({ app: "Biblia Multiversión", tipo: "respaldo", fecha: d.toISOString(), datos: respDatos() });
     return new File([txt], "biblia-respaldo-" + f + "." + ext, { type: ext === "txt" ? "text/plain" : "application/json" });
   }
+  function respAplicar(D){
+    Object.keys(D).forEach(function(k){
+      var v = D[k], mine = localStorage.getItem("biblia." + k);
+      try{
+        if (mine != null && (k === "favs" || k === "recent" || k === "prVistos" || k === "rkRep")){ var a = JSON.parse(mine) || [], b = JSON.parse(v) || []; b.forEach(function(x){ if (a.indexOf(x) < 0) a.push(x); }); v = JSON.stringify(a); }
+        else if (mine != null && (k === "hl" || k === "notes")){ v = JSON.stringify(Object.assign(JSON.parse(mine), JSON.parse(v))); }
+        else if (mine != null && k === "juegos"){ var m = JSON.parse(mine) || {}, n = JSON.parse(v) || {}; Object.keys(n).forEach(function(x){ if (m[x] == null || n[x] > m[x]) m[x] = n[x]; }); v = JSON.stringify(m); }
+        else if (mine != null && k === "jStats"){ var s1 = JSON.parse(mine) || {}, s2 = JSON.parse(v) || {}; Object.keys(s2).forEach(function(x){ if (typeof s2[x] === "number" && typeof s1[x] === "number"){ if (x !== "rn" && x !== "ult") s1[x] = Math.max(s1[x], s2[x]); else if (s2.rd >= (s1.rd || "")) s1[x] = s2[x]; } else if (s1[x] == null) s1[x] = s2[x]; }); if (s2.rd && s2.rd > (s1.rd || "")) s1.rd = s2.rd; v = JSON.stringify(s1); }
+        localStorage.setItem("biblia." + k, v);
+      }catch(e){}
+    });
+  }
+  /* Respaldo en la nube (Firebase) */
+  function nubeFmt(c){ return c ? c.slice(0, 4) + "-" + c.slice(4) : ""; }
+  function nubeHashTxt(t){ var h = 0; for (var i = 0; i < t.length; i++){ h = (h * 31 + t.charCodeAt(i)) | 0; } return String(h); }
+  function nubeSubir(forzar){
+    var c = store.get("nubeCod", ""); if (!c) return Promise.resolve(false);
+    var datos = respDatos(); delete datos.nubeCod; var txt = JSON.stringify(datos), hs = nubeHashTxt(txt);
+    if (!forzar && hs === store.get("nubeHash", "")) return Promise.resolve(false);
+    if (txt.length > 850000) return Promise.reject({ grande: 1 });
+    return fsSet("/respaldos/" + c, { d: txt, c: Date.now(), v: 1 }, false).catch(function(){ return fsSet("/respaldos/" + c, { d: txt, c: Date.now(), v: 1 }, true); }).then(function(){ store.set("nubeHash", hs); store.set("nubeUlt", Date.now()); return true; });
+  }
+  function nubeCrear(){
+    var c = ""; for (var i = 0; i < 8; i++) c += DU_ABC[Math.floor(Math.random() * DU_ABC.length)];
+    store.set("nubeCod", c);
+    return nubeSubir(true).catch(function(e){ store.set("nubeCod", ""); throw e; });
+  }
+  function nubeRecuperar(c){
+    c = (c || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+    if (c.length !== 8) return Promise.reject({ msg: "El código tiene 8 letras o números." });
+    return rkToken().then(function(){ return fsReq("GET", "/respaldos/" + c); }).then(function(d){
+      if (!d) throw { msg: "No encontramos un respaldo con ese código. Revísalo." };
+      var f = fsOut(d.fields), D = JSON.parse(f.d || "{}");
+      respAplicar(D); store.set("nubeCod", c); store.set("nubeHash", ""); store.set("nubeUlt", f.c || Date.now()); store.set("rkLast", {}); store.set("rkEx", {});
+      return f;
+    });
+  }
+  document.addEventListener("visibilitychange", function(){ if (document.hidden && store.get("nubeCod", "") && Date.now() - store.get("nubeUlt", 0) > 3 * 3600e3) nubeSubir(false).catch(function(){}); });
+  setTimeout(function(){ if (store.get("nubeCod", "") && Date.now() - store.get("nubeUlt", 0) > 24 * 3600e3) nubeSubir(false).catch(function(){}); }, 8000);
+  function nubeHtml(){
+    var c = store.get("nubeCod", ""), u = store.get("nubeUlt", 0);
+    var h = '<div class="nb"><div class="nb-h"><span aria-hidden="true">☁️</span><div><b>Respaldo en la nube</b><small>' + (c ? "Activado. Se guarda solo cuando cierras la app." : "Guarda todo con un código y recupéralo en cualquier celular.") + '</small></div></div>';
+    if (c){
+      h += '<p class="nb-l">Tu código de respaldo</p><div class="du-code nb-code">' + nubeFmt(c).split("").map(function(x){ return x === "-" ? '<em>–</em>' : '<i>' + x + '</i>'; }).join("") + '</div>';
+      h += '<p class="note" style="text-align:center">Anótalo o guárdalo en un lugar seguro. Quien tenga este código puede ver y recuperar tus datos.</p>';
+      h += '<p class="nb-u">' + (u ? "Último respaldo: " + new Date(u).toLocaleString("es-CL", { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" }) : "Todavía sin respaldar") + '</p>';
+      h += '<div class="rk-acc"><button type="button" class="btn ghost" id="nbAhora">Respaldar ahora</button><button type="button" class="btn ghost" id="nbCopiar">Guardar el código</button></div>';
+    } else h += '<p class="nb-p">Incluye favoritos, resaltados, notas, plan de lectura, récords, premios, racha y ajustes.</p><button type="button" class="btn du-share" id="nbCrear">Activar respaldo en la nube</button>';
+    h += '<details class="nb-r"' + (c ? '' : '') + '><summary>Recuperar con un código</summary><p>Si cambiaste de celular, escribe tu código y tus datos vuelven a este teléfono.</p><div class="du-box du-row"><input id="nbCod" maxlength="9" autocomplete="off" autocapitalize="characters" placeholder="ABCD-EFGH" aria-label="Código de respaldo"><button type="button" class="btn" id="nbRec">Recuperar</button></div><p class="du-msg" id="nbMsg" hidden></p></details></div>';
+    return h;
+  }
+  function nubeEnlazar(){
+    var b;
+    if ((b = $("nbCrear"))) b.onclick = function(){ var t = this; t.disabled = true; t.textContent = "Creando tu respaldo…"; nubeCrear().then(function(){ toast("Respaldo en la nube activado"); renderResp(); }, function(e){ t.disabled = false; t.textContent = "Activar respaldo en la nube"; toast(e && e.grande ? "Tus datos son muy grandes para la nube. Usa el respaldo en archivo." : "No se pudo crear. Revisa tu conexión."); }); };
+    if ((b = $("nbAhora"))) b.onclick = function(){ var t = this; t.disabled = true; t.textContent = "Respaldando…"; nubeSubir(true).then(function(){ toast("Respaldo guardado en la nube"); renderResp(); }, function(){ t.disabled = false; t.textContent = "Respaldar ahora"; toast("No se pudo respaldar. Revisa tu conexión."); }); };
+    if ((b = $("nbCopiar"))) b.onclick = function(){ var t = "Mi código de respaldo de Biblia Multiversión: " + nubeFmt(store.get("nubeCod", "")) + "\nNo lo compartas con nadie."; if (navigator.share) navigator.share({ text: t }).catch(function(){}); else { try{ navigator.clipboard.writeText(t).then(function(){ toast("Código copiado"); }); }catch(e){} } };
+    if ((b = $("nbRec"))) b.onclick = function(){
+      var m = $("nbMsg"), v = $("nbCod").value, t = this;
+      if (!t.dataset.ok){ t.dataset.ok = "1"; t.textContent = "Confirmar"; m.className = "du-msg ok"; m.textContent = "Tus datos del respaldo se sumarán a los de este teléfono. Toca Confirmar para seguir."; m.hidden = false; return; }
+      t.disabled = true; t.textContent = "Recuperando…";
+      nubeRecuperar(v).then(function(){ toast("¡Datos recuperados!"); setTimeout(function(){ location.reload(); }, 900); }, function(e){ t.disabled = false; t.dataset.ok = ""; t.textContent = "Recuperar"; m.className = "du-msg"; m.textContent = e && e.msg ? e.msg : "No se pudo conectar. Revisa tu internet."; m.hidden = false; });
+    };
+  }
   function respHecho(){ store.set("ultimoRespaldo", Date.now()); toast("Respaldo listo"); if (masSub === "resp") renderResp(); }
   function renderResp(){
     var c = respCuenta(), u = store.get("ultimoRespaldo", 0);
     var canShare = false; try{ canShare = !!(navigator.canShare && navigator.canShare({ files: [respArchivo("txt")] })); }catch(e){}
-    var h = masHead("Respaldo") + '<div class="resp"><p>Tus favoritos, resaltados, notas, plan de lectura y ajustes viven solo en este teléfono. Si se pierde o cambias de celular, con un respaldo los recuperas.</p>';
+    var h = masHead("Respaldo") + nubeHtml() + '<div class="resp"><div class="grp">Respaldo en archivo</div><p>También puedes guardar una copia como archivo, en WhatsApp, correo o Drive.</p>';
     h += '<div class="resp-sum"><div><b>' + c.f + '</b><span>Favoritos</span></div><div><b>' + c.h + '</b><span>Resaltados</span></div><div><b>' + c.n + '</b><span>Notas</span></div></div>';
     h += '<p class="note" style="padding:4px 0 8px">' + (u ? "Último respaldo: " + new Date(u).toLocaleDateString("es-CL", { day: "numeric", month: "long", year: "numeric" }) + "." : "Todavía no has hecho un respaldo.") + '</p>';
     if (canShare) h += '<button type="button" class="btn" id="rpShare">Enviar respaldo (WhatsApp, correo, Drive)</button>';
     h += '<button type="button" class="btn' + (canShare ? " sec2" : "") + '" id="rpDown">Descargar respaldo</button>';
     h += '<div class="grp" style="margin-top:22px">Recuperar</div><p>¿Tienes un respaldo guardado? Elígelo y tus datos vuelven a este teléfono. Lo que ya tienes aquí se mantiene y se suma.</p><button type="button" class="btn sec2" id="rpIn">Recuperar desde un archivo</button><input type="file" id="rpFile" accept=".json,.txt,application/json,text/plain" hidden>';
     h += '<p class="note">Te lo recordaremos cada mes en Mi Biblia.</p></div>';
-    $("vMore").innerHTML = h;
+    $("vMore").innerHTML = h; nubeEnlazar();
     if (canShare) $("rpShare").onclick = function(){ navigator.share({ files: [respArchivo("txt")], title: "Respaldo Biblia Multiversión" }).then(respHecho, function(){}); };
     $("rpDown").onclick = function(){ var f = respArchivo("json"), a = document.createElement("a"); a.href = URL.createObjectURL(f); a.download = f.name; document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500); respHecho(); };
     $("rpIn").onclick = function(){ $("rpFile").click(); };
@@ -3632,14 +3703,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
         var j; try{ j = JSON.parse(t); }catch(e){ j = null; }
         if (!j || j.tipo !== "respaldo" || !j.datos){ toast("Ese archivo no es un respaldo de la app"); return; }
         if (!confirm("¿Recuperar el respaldo del " + new Date(j.fecha).toLocaleDateString("es-CL") + "? Se sumará a lo que ya tienes.")) return;
-        Object.keys(j.datos).forEach(function(k){
-          var v = j.datos[k], mine = localStorage.getItem("biblia." + k);
-          try{
-            if (mine != null && (k === "favs" || k === "recent")){ var a = JSON.parse(mine), b = JSON.parse(v); b.forEach(function(x){ if (a.indexOf(x) < 0) a.push(x); }); v = JSON.stringify(a); }
-            else if (mine != null && (k === "hl" || k === "notes")){ v = JSON.stringify(Object.assign(JSON.parse(mine), JSON.parse(v))); }
-            localStorage.setItem("biblia." + k, v);
-          }catch(e){}
-        });
+        respAplicar(j.datos);
         store.set("ultimoRespaldo", Date.now());
         toast("Respaldo recuperado"); setTimeout(function(){ location.reload(); }, 900);
       }, function(){ toast("No se pudo leer el archivo"); });
