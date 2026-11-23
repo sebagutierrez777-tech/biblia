@@ -3337,6 +3337,7 @@ header #btnRef svg{color:#7a6334}
     if (!(cur.b >= 0 && cur.b < 66) || !(cur.c >= 0 && cur.c < META.books[cur.b][1].length)){ cur.b = 42; cur.c = 2; }
     cmpSet = cmpSet.filter(function(id){ return !!ver(id); });
     renderRead(); loadAvisos(); remSave();
+    if (/[?&]devo=1/.test(location.search)){ devoAbierto = true; tab("vFavs"); try{ history.replaceState(history.state, "", location.pathname); }catch(e){} }
   }, function(){
     $("vRead").innerHTML = '<p class="note"><b>No se pudo abrir la Biblia.</b> Revisa tu conexión y recarga la página.</p>';
   });
