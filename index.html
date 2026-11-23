@@ -2211,7 +2211,7 @@ header #btnRef svg{color:#7a6334}
         lin.push("• " + g[1] + ": " + v + " puntos"); });
       if (lin.length) L.push(n[1] + "\n" + lin.join("\n")); });
     var mem = MEMO.filter(function(m){ return m.n >= 4; }).length;
-    return "Mis récords en Biblia Multiversión" + (nombre ? " (" + nombre + ")" : "") + "\n\n" + L.join("\n\n") + (mem ? "\n\nVersículos memorizados: " + mem : "") + "\n\n¿Te animas a superarme? " + location.origin + location.pathname;
+    return "Mis récords en Biblia Multiversión" + (nombre ? " (" + nombre + ")" : "") + "\n\n" + L.join("\n\n") + (mem ? "\n\nVersículos memorizados: " + mem : "") + "\n\n¿Te animas a superarme? Juega en Biblia Multiversión · IDP Chile";
   }
   $("vMore").addEventListener("click", function(e){ if (masSub !== "juegos" || !e.target.closest("[data-jshare]")) return; var t = jRecTxt();
     if (navigator.share) navigator.share({ text: t }).catch(function(){}); else { try{ navigator.clipboard.writeText(t).then(function(){ toast("Récords copiados"); }); }catch(x){} } });
@@ -3111,11 +3111,16 @@ header #btnRef svg{color:#7a6334}
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
     adorno(ctx, W, H, !!bg.light); grain(ctx);
     var vbk = bookData(IMG.ver, IMG.b) || bookData(cur.v, IMG.b) || [], text = ((vbk[IMG.c] || [])[IMG.v] || "").replace(/\n/g, " ");
-    var ref = refText(IMG.b, IMG.c, IMG.v) + " · " + ver(IMG.ver || cur.v).code;
-    var pad = 110, maxW = W - pad * 2, maxH = H * (IMG.fmt === "story" ? 0.5 : 0.52), size = 74, lines, lh;
-    do { ctx.font = "400 " + size + "px Literata, Georgia, serif"; lines = wrapLines(ctx, "“" + text + "”", maxW); lh = size * 1.42; size -= 2; } while (lines.length * lh > maxH && size > 30);
-    var blockH = lines.length * lh + 40 + 46, y = (H - blockH) / 2 - (IMG.fmt === "story" ? 60 : 40);
+    var ref = refText(IMG.b, IMG.c, IMG.v) + " · " + ver(IMG.ver || cur.v).code, DV = IMG.devo;
+    if (DV){ text = DV.c; ref = "Lectura: " + refText(IMG.b, IMG.c, IMG.v); }
+    var pad = 110, maxW = W - pad * 2, maxH = H * (IMG.fmt === "story" ? 0.5 : 0.52) * (IMG.devo ? 0.7 : 1), size = 74, lines, lh;
+    do { ctx.font = "400 " + size + "px Literata, Georgia, serif"; lines = wrapLines(ctx, IMG.devo ? text : "“" + text + "”", maxW); lh = size * 1.42; size -= 2; } while (lines.length * lh > maxH && size > 30);
+    var blockH = lines.length * lh + 40 + 46 + (DV ? 150 : 0), y = (H - blockH) / 2 - (IMG.fmt === "story" ? 60 : 40);
     ctx.fillStyle = bg.tx; ctx.textBaseline = "top"; ctx.textAlign = "left";
+    if (DV){ ctx.globalAlpha = 0.85; ctx.font = "700 30px Figtree, system-ui, sans-serif"; ctx.fillText("DEVOCIONAL DEL DÍA", pad, y); ctx.globalAlpha = 1;
+      ctx.font = "700 58px Literata, Georgia, serif"; var tl = wrapLines(ctx, DV.t, maxW); tl.slice(0, 2).forEach(function(l, i){ ctx.fillText(l, pad, y + 46 + i * 66); });
+      y += 46 + Math.min(tl.length, 2) * 66 + 38; ctx.globalAlpha = 0.5; ctx.fillRect(pad, y - 20, 90, 4); ctx.globalAlpha = 1;
+      ctx.font = "400 " + (size + 2) + "px Literata, Georgia, serif"; }
     lines.forEach(function(l, i){ ctx.fillText(l, pad, y + i * lh); });
     ctx.font = "700 40px Figtree, system-ui, sans-serif"; ctx.globalAlpha = 0.92;
     ctx.fillText(ref, pad, y + lines.length * lh + 40); ctx.globalAlpha = 1;
@@ -3126,8 +3131,8 @@ header #btnRef svg{color:#7a6334}
     ctx.fillStyle = bg.tx; ctx.font = "700 34px Figtree, system-ui, sans-serif"; ctx.textBaseline = "middle";
     ctx.fillText("Iglesia de Dios", pad + 150, fy + eh / 2 - 22); ctx.font = "500 34px Figtree, system-ui, sans-serif"; ctx.fillText("de la Profecía", pad + 150, fy + eh / 2 + 22);
   }
-  function openImg(b, c, v, verId){
-    IMG.b = b; IMG.c = c; IMG.v = v; IMG.ver = verId || cur.v;
+  function openImg(b, c, v, verId, devo){
+    IMG.b = b; IMG.c = c; IMG.v = v; IMG.ver = verId || cur.v; IMG.devo = devo || null;
     openSheet("shImg");
     var go2 = function(){ (document.fonts && document.fonts.load ? Promise.all([document.fonts.load("400 60px Literata"), document.fonts.load("700 40px Figtree")]) : Promise.resolve()).then(drawImg, drawImg); };
     if (!EMBL.complete) EMBL.onload = go2;
@@ -3143,7 +3148,7 @@ header #btnRef svg{color:#7a6334}
   $("imgAd").addEventListener("click", function(e){ var b = e.target.closest("button"); if (!b) return; IMG.ad = b.dataset.a; adSync(); drawImg(); });
   $("imgFmt").addEventListener("click", function(e){ var b = e.target.closest("button"); if (!b) return; IMG.fmt = b.dataset.f; var a = $("imgFmt").querySelectorAll("button"); for (var i=0;i<a.length;i++) a[i].setAttribute("aria-pressed", a[i] === b); drawImg(); });
   function imgBlob(cb){ $("imgCanvas").toBlob(function(bl){ cb(bl); }, "image/png"); }
-  function imgName(){ return (refText(IMG.b, IMG.c, IMG.v)).replace(/[^\wáéíóúñ]+/gi, "-") + ".png"; }
+  function imgName(){ return (IMG.devo ? "devocional-" + IMG.devo.t : refText(IMG.b, IMG.c, IMG.v)).replace(/[^\wáéíóúñ]+/gi, "-") + ".png"; }
   function imgDownload(bl){ var a = document.createElement("a"); a.href = URL.createObjectURL(bl); a.download = imgName(); document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500); toast("Imagen guardada en Descargas"); }
   $("imgShare").onclick = function(){
     imgBlob(function(bl){
@@ -3338,14 +3343,14 @@ header #btnRef svg{color:#7a6334}
     var h = '<section class="devo' + (devoAbierto ? " on" : "") + '" aria-label="Devocional del día"><button type="button" class="devo-h" data-act="devoTog" aria-expanded="' + devoAbierto + '"><span class="devo-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M5.6 5.6l2.1 2.1M3 12h3M18 12h3M16.3 7.7l2.1-2.1"/><path d="M7 16a5 5 0 0 1 10 0"/><path d="M3 20h18"/></svg></span><span class="devo-t"><small>Devocional del día</small><b>' + esc(x.t) + '</b></span><span class="devo-a">' + (devoAbierto ? "−" : "+") + '</span></button>';
     if (devoAbierto){
       h += '<div class="devo-b">' + (vt ? '<blockquote class="devo-v">“' + esc(vt) + '”<cite>' + esc(refText(r[0], r[1]-1, r[2]-1)) + '</cite></blockquote>' : '') + '<p>' + esc(x.d) + '</p><div class="devo-o"><b>Oración</b><p>' + esc(x.o) + '</p></div>';
-      h += '<div class="vdd-btns"><button type="button" class="b1" data-act="devoShare">' + PLUS + '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Compartir</button><button type="button" class="b2" data-act="devoRead">Leer el pasaje</button></div></div>';
+      h += '<div class="vdd-btns"><button type="button" class="b1" data-act="devoImg">' + PLUS + '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>Crear imagen</button><button type="button" class="b2" data-act="devoShare">' + PLUS + '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Compartir</button></div><button type="button" class="vdd-read" data-act="devoRead">Leer el pasaje completo</button></div>';
     } else h += '<p class="devo-p" data-act="devoTog">' + esc(x.c) + '</p>';
     return h + '</section>';
   }
   function vddTxt(){ var r = vddRef(), vid = ver(cur.v).books[r[0]] && bookData(cur.v, r[0]) && bookData(cur.v, r[0])[r[1]][r[2]] ? cur.v : "rvr1960", bk = bookData(vid, r[0]) || bookData(cur.v, r[0]); if (!bk) return "";
     return "“" + bk[r[1]][r[2]].replace(/\n/g, " ") + "”\n" + refText(r[0], r[1], r[2]) + " (" + ver(vid).code + ")"; }
   function devoTxt(){ var x = DEVO && devoHoy(); return x ? x.t + "\n" + x.c + "\nLectura: " + refText(x.r[0], x.r[1]-1, x.r[2]-1) : ""; }
-  function shareTxt(k){ var url = "\n\nBiblia Multiversión: " + location.origin + location.pathname, v = vddTxt(), d = devoTxt();
+  function shareTxt(k){ var url = "\n\nBiblia Multiversión · IDP Chile", v = vddTxt(), d = devoTxt();
     if (k === "v") return "Versículo del día\n\n" + v + url;
     if (k === "d") return "Devocional del día: " + d + url;
     return "Mi día con Dios · " + dateTxt() + "\n\nVersículo del día\n" + v + "\n\nDevocional\n" + d + url; }
@@ -3418,10 +3423,11 @@ header #btnRef svg{color:#7a6334}
     if ((x = t.closest(".del"))){ var i = favs.indexOf(x.dataset.k); if (i >= 0) favs.splice(i,1); store.set("favs", favs); renderFavs(); return; }
     if ((x = t.closest("[data-act]"))){
       var r = vddRef(), a = x.dataset.act;
-      if (a === "vddImg") openImg(r[0], r[1], r[2], ver(cur.v).books[r[0]] ? cur.v : "rvr1960");
+      if (a === "vddImg") openImg(r[0], r[1], r[2], ver(cur.v).books[r[0]] ? cur.v : "rvr1960", null);
       else if (a === "vddRead") go(r[0], r[1], r[2]);
       else if (a === "devoTog"){ devoAbierto = !devoAbierto; renderFavs(); }
       else if (a === "devoShare") shareMenu();
+      else if (a === "devoImg"){ var dx = devoHoy(); if (dx) openImg(dx.r[0], dx.r[1]-1, dx.r[2]-1, ver(cur.v).books[dx.r[0]] ? cur.v : "rvr1960", dx); }
       else if (a === "devoRead"){ var dx = devoHoy(); go(dx.r[0], dx.r[1]-1, dx.r[2]-1); }
       else if (a === "vddShare") shareMenu();
       else if (a === "avArch") avArchivar(x.dataset.id);
