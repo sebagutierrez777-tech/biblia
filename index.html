@@ -2548,7 +2548,7 @@ header #btnRef svg{color:#7a6334}
     } else {
       h += '<p class="sv-in">Descubrimientos que muestran que la Biblia habla de lugares, pueblos y personas reales. La arqueología no es la base de nuestra fe, pero la confirma.</p>';
       h += '<div class="hz-g">';
-      HIST.hallazgos.forEach(function(x, i){ h += '<div class="hz-w">' + (x.img ? '<figure class="hz-f" style="--c:' + HUES[(i * 5 + 2) % HUES.length] + '"><img src="' + x.img + '" alt="' + esc(x.t) + '" loading="lazy" decoding="async"><figcaption>Foto: <a href="' + x.src + '" target="_blank" rel="noopener">' + esc(x.cred) + '</a></figcaption></figure>' : '') + '<div class="cu hs-h' + (x.img ? " con-f" : "") + '" id="hz-' + i + '" style="--c:' + HUES[(i * 5 + 2) % HUES.length] + '"><span class="cu-i"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6-9 9H5v-6z"/><path d="M3 21h18"/></svg></span><div><b>' + esc(x.t) + '</b><small class="hs-w">' + esc(x.w) + '</small><p>' + esc(x.d) + '</p>' + (x.r.length ? refChips(x.r) : "") + '</div></div>' + '</div>'; });
+      HIST.hallazgos.forEach(function(x, i){ h += '<div class="hz-w">' + (x.img ? '<figure class="hz-f" style="--c:' + HUES[(i * 5 + 2) % HUES.length] + '"><img src="' + x.img + '" alt="' + esc(x.t) + '" loading="lazy" decoding="async"><figcaption>' + (x.src ? 'Foto: <a href="' + x.src + '" target="_blank" rel="noopener">' + esc(x.cred) + '</a>' : esc(x.cred)) + '</figcaption></figure>' : '') + '<div class="cu hs-h' + (x.img ? " con-f" : "") + '" id="hz-' + i + '" style="--c:' + HUES[(i * 5 + 2) % HUES.length] + '"><span class="cu-i"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6-9 9H5v-6z"/><path d="M3 21h18"/></svg></span><div><b>' + esc(x.t) + '</b><small class="hs-w">' + esc(x.w) + '</small><p>' + esc(x.d) + '</p>' + (x.r.length ? refChips(x.r) : "") + '</div></div>' + '</div>'; });
       h += '</div>';
       if (HIST.fuenteHallazgos) h += '<p class="note" style="margin-top:14px">' + esc(HIST.fuenteHallazgos) + '</p>';
     }
@@ -2561,7 +2561,7 @@ header #btnRef svg{color:#7a6334}
   function lbShow(){ var L = lbList(), o = L[lbI], el = $("lb"); if (!o || !el) return;
     el.querySelector(".lb-img").src = o.x.img; el.querySelector(".lb-img").alt = o.x.t;
     el.querySelector(".lb-t").textContent = o.x.t; el.querySelector(".lb-w").textContent = o.x.w || "";
-    el.querySelector(".lb-c").innerHTML = 'Foto: <a href="' + o.x.src + '" target="_blank" rel="noopener">' + esc(o.x.cred) + '</a>';
+    el.querySelector(".lb-c").innerHTML = o.x.src ? 'Foto: <a href="' + o.x.src + '" target="_blank" rel="noopener">' + esc(o.x.cred) + '</a>' : esc(o.x.cred);
     el.querySelector(".lb-n").textContent = (lbI + 1) + " de " + L.length; }
   function lbOpen(i){ var L = lbList(); lbI = Math.max(0, L.findIndex(function(o){ return o.i === i; }));
     var el = document.createElement("div"); el.id = "lb"; el.className = "lb"; el.setAttribute("role", "dialog"); el.setAttribute("aria-label", "Foto en pantalla completa");
