@@ -1063,7 +1063,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
 .es-lt{font-weight:700;margin:10px 0 2px!important}.es-ld{font-size:15px!important;color:var(--muted)}
 .es-m{font-style:italic;margin-bottom:10px!important}
 .es-ayu{color:var(--muted);font-size:14px;margin:8px 0}
-.es-il{display:flex;flex-wrap:wrap;gap:6px}
+.es-il{display:flex;flex-wrap:wrap;gap:6px}.es-il.hb{direction:rtl}.es-il.hb .g,.es-det.hb .g{font-family:"SBL Hebrew","Ezra SIL","Noto Serif Hebrew","Times New Roman",serif;font-size:22px}.es-il.hb .t,.es-il.hb .e{direction:ltr}
 .es-w{display:flex;flex-direction:column;align-items:center;padding:6px 8px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);min-width:54px}
 .es-w .g{font-size:19px;line-height:1.3}.es-w .t{font-size:11px;color:var(--muted)}.es-w .e{font-size:13px;font-weight:600;color:var(--rubric);margin-top:2px}
 .es-w.on{border-color:var(--rubric);box-shadow:0 0 0 1px var(--rubric) inset}
@@ -2504,7 +2504,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     var c = el.cloneNode(true);
     c.querySelectorAll(".leer-b,.leer-big,button,.fi-r,.chip,figcaption,svg,img,.es-cr,.es-il,.es-det,.es-k .g,.tn,.es-seg,.es-cred,.es-ver,.es-ayu,script,style" + (quitar ? "," + quitar : "")).forEach(function(x){ x.remove(); });
     c.querySelectorAll("p,b,li,blockquote,summary,h2,h3,cite,small,strong,.es-lab,.es-lt").forEach(function(x){ x.appendChild(document.createTextNode(". ")); });
-    return (c.textContent || "").replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, "").replace(/[«»“”"]/g, "").replace(/\s+/g, " ").replace(/([.!?:;,])\s*\.\s/g, "$1 ").replace(/\.\s*\./g, ".").trim();
+    return (c.textContent || "").replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, "").replace(/[\u0370-\u03FF\u1F00-\u1FFF\u0590-\u05FF]+/g, "").replace(/[«»“”"]/g, "").replace(/\s+/g, " ").replace(/([.!?:;,])\s*\.\s/g, "$1 ").replace(/\.\s*\./g, ".").trim();
   }
   function leerTexto(btn, txt){
     if (LEER.btn === btn){ leerParar(); return; }
@@ -2546,11 +2546,38 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
   }, true);
   /* ---------- Estudio profundo (piloto: Juan) ---------- */
   var EST = { libros: {}, D: {}, G: {}, tab: "est", b: 0, c: 0, v: 0, w: null };
-  var EST_DAT = { 45: ["estudio/1corintios.json"], 46: ["estudio/2corintios.json"], 51: ["estudio/1tesalonicenses.json"], 52: ["estudio/2tesalonicenses.json"], 53: ["estudio/1timoteo.json"], 54: ["estudio/2timoteo.json"], 55: ["estudio/tito.json"], 56: ["estudio/filemon.json"], 60: ["estudio/2pedro.json"], 62: ["estudio/2juan.json"], 63: ["estudio/3juan.json"], 64: ["estudio/judas.json"], 65: ["estudio/apocalipsis.json"], 39: ["estudio/mateo.json"], 41: ["estudio/lucas.json"], 40: ["estudio/marcos.json"], 42: ["estudio/juan.json"], 43: ["estudio/hechos.json"], 44: ["estudio/romanos.json"], 48: ["estudio/efesios.json"], 47: ["estudio/galatas.json"], 49: ["estudio/filipenses.json"], 50: ["estudio/colosenses.json"], 57: ["estudio/hebreos.json"], 58: ["estudio/santiago.json"], 59: ["estudio/1pedro.json"], 61: ["estudio/1juan.json"] };
-  var EST_AUT = { 39: "mateo", 40: "marcos", 41: "lucas", 42: "juan", 43: "lucas", 57: "libro", 58: "libro", 59: "pedro", 60: "pedro", 61: "juan", 62: "juan", 63: "juan", 64: "libro", 65: "juan" };
+  var EST_HB = [0];
+  var EST_DAT = { 0: ["estudio/genesis.json"], 45: ["estudio/1corintios.json"], 46: ["estudio/2corintios.json"], 51: ["estudio/1tesalonicenses.json"], 52: ["estudio/2tesalonicenses.json"], 53: ["estudio/1timoteo.json"], 54: ["estudio/2timoteo.json"], 55: ["estudio/tito.json"], 56: ["estudio/filemon.json"], 60: ["estudio/2pedro.json"], 62: ["estudio/2juan.json"], 63: ["estudio/3juan.json"], 64: ["estudio/judas.json"], 65: ["estudio/apocalipsis.json"], 39: ["estudio/mateo.json"], 41: ["estudio/lucas.json"], 40: ["estudio/marcos.json"], 42: ["estudio/juan.json"], 43: ["estudio/hechos.json"], 44: ["estudio/romanos.json"], 48: ["estudio/efesios.json"], 47: ["estudio/galatas.json"], 49: ["estudio/filipenses.json"], 50: ["estudio/colosenses.json"], 57: ["estudio/hebreos.json"], 58: ["estudio/santiago.json"], 59: ["estudio/1pedro.json"], 61: ["estudio/1juan.json"] };
+  var EST_AUT = { 0: "moises", 1: "moises", 39: "mateo", 40: "marcos", 41: "lucas", 42: "juan", 43: "lucas", 57: "libro", 58: "libro", 59: "pedro", 60: "pedro", 61: "juan", 62: "juan", 63: "juan", 64: "libro", 65: "juan" };
   for (var eb = 39; eb <= 65; eb++) EST.libros[eb] = { dat: EST_DAT[eb] ? EST_DAT[eb][0] : null, gk: "estudio/gk/" + eb + "/" };
+  EST_HB.forEach(function(eb){ EST.libros[eb] = { dat: EST_DAT[eb] ? EST_DAT[eb][0] : null, gk: "estudio/hb/" + eb + "/", hb: true }; });
   var EST_CRED = "Griego: STEPBible.org, Tyndale House, Cambridge (CC BY 4.0).";
+  function estHeb(){ return EST.b < 39; }
+  function estLeng(){ return estHeb() ? "hebreo" : "griego"; }
+  function estMorfoH(m){
+    if (!m) return ""; var lg = m[0] === "A" ? "arameo" : "", seg = m.slice(1).split("/"), out = [];
+    var ST = { q: "qal", N: "nifal", p: "piel", P: "pual", h: "hifil", H: "hofal", t: "hitpael", o: "polel", O: "polal", r: "hitpolel", Q: "qal pasivo", l: "pilpel", f: "hitpalpel" };
+    var TY = { p: "perfecto", q: "perfecto con vav", i: "imperfecto", w: "imperfecto con vav (narrativo)", h: "cohortativo", j: "yusivo", v: "imperativo", r: "participio activo", s: "participio pasivo", a: "infinitivo absoluto", c: "infinitivo constructo" };
+    var GE = { m: "masculino", f: "femenino", b: "ambos géneros", c: "común" }, NU = { s: "singular", p: "plural", d: "dual" }, SA = { a: "absoluto", c: "constructo", d: "determinado" };
+    var PA = { a: "afirmación", d: "artículo", e: "exhortación", i: "interrogativo", j: "interjección", m: "demostrativo", n: "negación", o: "marca de objeto directo", r: "relativo" };
+    function gn(x){ var r = []; if (/^[123]/.test(x)){ r.push(x[0] + ".ª persona"); x = x.slice(1); } if (GE[x[0]]) r.push(GE[x[0]]); if (NU[x[1]]) r.push(NU[x[1]]); if (SA[x[2]]) r.push("estado " + SA[x[2]]); return r; }
+    seg.forEach(function(s){
+      var c = s[0], r = [];
+      if (c === "V"){ r.push("verbo"); if (ST[s[1]]) r.push(ST[s[1]]); if (TY[s[2]]) r.push(TY[s[2]]); r = r.concat(gn(s.slice(3))); }
+      else if (c === "N"){ r.push(s[1] === "p" ? "nombre propio" : s[1] === "g" ? "gentilicio" : "sustantivo"); r = r.concat(gn(s.slice(2))); }
+      else if (c === "A"){ r.push(s[1] === "c" ? "número" : s[1] === "o" ? "ordinal" : "adjetivo"); r = r.concat(gn(s.slice(2))); }
+      else if (c === "P"){ r.push("pronombre"); r = r.concat(gn(s.slice(2))); }
+      else if (c === "S"){ if (s[1] === "p") r.push("sufijo pronominal " + gn(s.slice(2)).join(" ")); else return; }
+      else if (c === "T"){ r.push(PA[s[1]] || "partícula"); }
+      else if (c === "R") r.push("preposición"); else if (c === "C") r.push("conjunción «y»"); else if (c === "D") r.push("adverbio");
+      if (r.length) out.push(r.join(", "));
+    });
+    return out.join(" + ") + (lg ? " (" + lg + ")" : "");
+  }
   var EST_SVG = {
+    escalera: '<svg viewBox="0 0 300 120" aria-hidden="true"><rect width="300" height="120" rx="12" fill="#26215C"/><circle cx="150" cy="14" r="40" fill="#FAC775" opacity=".2"/><g stroke="#FAC775" stroke-width="3"><path d="M120 120L140 4M180 120L160 4"/><path d="M123 104h54M126 86h48M129 68h42M132 50h36M135 32h30M138 16h24"/></g><g fill="#F1EFE8" opacity=".9"><circle cx="128" cy="78" r="4"/><path d="M122 84l6-4 6 4-6 8z"/><circle cx="170" cy="44" r="4"/><path d="M164 50l6-4 6 4-6 8z"/></g><path d="M0 112h300v8H0z" fill="#412402"/><path d="M40 112q14-14 30 0z" fill="#5F5E5A"/><g fill="#AFA9EC"><circle cx="40" cy="20" r="1.4"/><circle cx="250" cy="30" r="1.4"/><circle cx="270" cy="70" r="1.2"/><circle cx="60" cy="60" r="1.2"/></g></svg>',
+    arca: '<svg viewBox="0 0 300 120" aria-hidden="true"><rect width="300" height="120" rx="12" fill="#E6F1FB"/><path d="M0 92q40-10 80 0t80 0t80 0t60 0v28H0z" fill="#378ADD"/><path d="M60 66h180l-14 26H74z" fill="#854F0B"/><path d="M84 44h132v22H84z" fill="#BA7517"/><path d="M76 44l74-20 74 20z" fill="#633806"/><g fill="#412402"><rect x="100" y="50" width="12" height="8"/><rect x="144" y="50" width="12" height="8"/><rect x="188" y="50" width="12" height="8"/></g><path d="M60 66h180" stroke="#412402" stroke-width="2"/><path d="M226 22l10-4 4 4-6 6" fill="#F1EFE8"/><path d="M234 18q6-2 8 2" stroke="#3B6D11" stroke-width="2" fill="none"/><path d="M20 100q30-6 60 0M200 106q30-6 70 0" stroke="#B5D4F4" stroke-width="2" fill="none"/></svg>',
+    moises: '<svg viewBox="0 0 64 64" width="52" height="52" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#FAEEDA"/><path d="M14 60c2-11 9-16 18-16s16 5 18 16" fill="#854F0B"/><path d="M24 46l8 6 8-6" fill="none" stroke="#633806" stroke-width="2"/><ellipse cx="32" cy="29" rx="11" ry="13" fill="#D9A47A"/><path d="M20 30c0-11 5-17 12-17s12 6 12 17c-2-5-6-8-12-8s-10 3-12 8z" fill="#F1EFE8"/><path d="M22 32c1 14 5 20 10 20s9-6 10-20c-2 3-5 5-10 5s-8-2-10-5z" fill="#F1EFE8"/><circle cx="28" cy="28" r="1.6" fill="#2b1d10"/><circle cx="36" cy="28" r="1.6" fill="#2b1d10"/><path d="M29 35c2 1.2 4 1.2 6 0" stroke="#2b1d10" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M52 14v46" stroke="#633806" stroke-width="3" stroke-linecap="round"/><path d="M52 14q-6 0-6 6" stroke="#633806" stroke-width="3" fill="none" stroke-linecap="round"/></svg>',
     rio: '<svg viewBox="0 0 300 120" aria-hidden="true"><rect width="300" height="120" rx="12" fill="#EAF3DE"/><path d="M120 0h60q-10 40 10 70t30 50H80q20-20 30-50t10-70z" fill="#85B7EB"/><path d="M140 10q-6 30 4 60M160 30q6 30-6 60" stroke="#E6F1FB" stroke-width="3" fill="none"/><g><rect x="52" y="64" width="8" height="40" fill="#854F0B"/><circle cx="56" cy="52" r="26" fill="#3B6D11"/><rect x="240" y="64" width="8" height="40" fill="#854F0B"/><circle cx="244" cy="52" r="26" fill="#3B6D11"/></g><g fill="#D85A30"><circle cx="46" cy="46" r="3.5"/><circle cx="64" cy="58" r="3.5"/><circle cx="58" cy="38" r="3.5"/><circle cx="236" cy="48" r="3.5"/><circle cx="252" cy="58" r="3.5"/><circle cx="246" cy="36" r="3.5"/></g><rect x="128" y="0" width="44" height="6" fill="#FAC775"/></svg>',
     cielo: '<svg viewBox="0 0 300 120" aria-hidden="true"><rect width="300" height="120" rx="12" fill="#E6F1FB"/><path d="M0 120V96q75-14 150 0t150 0v24z" fill="#B5D4F4"/><g fill="#fff"><ellipse cx="60" cy="88" rx="40" ry="12"/><ellipse cx="240" cy="90" rx="44" ry="12"/></g><path d="M150 0l-60 120h120z" fill="#FAC775" opacity=".35"/><path d="M150 0l-26 120h52z" fill="#FAEEDA" opacity=".8"/><g fill="#FAC775"><circle cx="70" cy="30" r="2"/><circle cx="230" cy="24" r="2"/><circle cx="260" cy="50" r="1.6"/><circle cx="40" cy="54" r="1.6"/></g></svg>',
     trono: '<svg viewBox="0 0 300 120" aria-hidden="true"><rect width="300" height="120" rx="12" fill="#26215C"/><path d="M60 64a90 54 0 0 1 180 0" fill="none" stroke="#5DCAA5" stroke-width="6" opacity=".7"/><path d="M68 64a82 48 0 0 1 164 0" fill="none" stroke="#FAC775" stroke-width="3" opacity=".6"/><circle cx="150" cy="56" r="34" fill="#FAC775" opacity=".18"/><path d="M124 104V54q0-14 26-20q26 6 26 20v50z" fill="#EF9F27" stroke="#BA7517" stroke-width="2"/><rect x="116" y="80" width="68" height="10" rx="3" fill="#BA7517"/><path d="M110 104h80v8h-80z" fill="#F1EFE8" opacity=".85"/><g fill="#F1EFE8"><circle cx="40" cy="100" r="7"/><circle cx="260" cy="100" r="7"/><circle cx="70" cy="104" r="6"/><circle cx="230" cy="104" r="6"/></g></svg>',
@@ -2613,7 +2640,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
   function estHay(b){ return !!EST.libros[b]; }
   function estCargar(b, c){
     var L = EST.libros[b], k = b + ":" + c;
-    var vacio = { per: [], n: {}, credito: EST_CRED };
+    var vacio = { per: [], n: {}, credito: estHeb() ? "Hebreo: STEPBible.org, Tyndale House, Cambridge (CC BY 4.0)." : EST_CRED };
     var p1 = EST.D[b] ? Promise.resolve(EST.D[b]) : (L.dat ? getJSON(L.dat).then(function(j){ return EST.D[b] = j; }, function(){ return vacio; }) : Promise.resolve(EST.D[b] = vacio));
     var p2 = EST.G[k] ? Promise.resolve(EST.G[k]) : getJSON(L.gk + (c + 1) + ".json").then(function(j){ return EST.G[k] = j.v; });
     return Promise.all([p1, p2]);
@@ -2636,16 +2663,16 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     var h = '<div class="es-top">' + (EST_SVG[aut] || EST_SVG.libro) + '<div><small>Estudiar · ' + esc(lib) + '</small><b>' + esc(refText(b, c, v)) + '</b></div></div>';
     h += '<p class="es-v">«' + esc(txt) + '»</p><p class="es-ver">' + esc(ver(cur.v).code) + '</p>';
     if (EST.tab !== "gr") h += '<button type="button" class="leer-big" data-leer-all="estBody" data-lt="Escuchar este estudio" aria-pressed="false"></button>';
-    h += '<div class="seg jg-niv es-seg" role="group" aria-label="Sección"><button type="button" data-est="est" aria-pressed="' + (EST.tab === "est") + '">Estudio</button><button type="button" data-est="gr" aria-pressed="' + (EST.tab === "gr") + '">Texto griego</button></div>';
+    h += '<div class="seg jg-niv es-seg" role="group" aria-label="Sección"><button type="button" data-est="est" aria-pressed="' + (EST.tab === "est") + '">Estudio</button><button type="button" data-est="gr" aria-pressed="' + (EST.tab === "gr") + '">Texto ' + estLeng() + '</button></div>';
     if (EST.tab === "gr"){
-      h += '<p class="es-ayu">Toca una palabra para ver su forma y significado.</p><div class="es-il">';
+      h += '<p class="es-ayu">Toca una palabra para ver su forma y significado.' + (estHeb() ? " El hebreo se lee de derecha a izquierda." : "") + '</p><div class="es-il' + (estHeb() ? " hb" : "") + '">';
       G.forEach(function(w, i){ h += '<button type="button" class="es-w' + (EST.w === i ? " on" : "") + '" data-esw="' + i + '"><span class="g">' + esc(w[0]) + '</span><span class="t">' + esc(w[1]) + '</span><span class="e">' + esc(w[2] || "—") + '</span></button>'; });
       h += '</div>';
-      if (EST.w != null && G[EST.w]){ var w = G[EST.w]; h += '<div class="es-det"><span class="g">' + esc(w[5] || w[0]) + '</span><p><b>' + esc(w[2] || "") + '</b> · ' + esc(estMorfo(w[4])) + '</p><small>Forma en el texto: ' + esc(w[0]) + ' (' + esc(w[1]) + ') · Strong ' + esc((w[3] || "").replace(/^G0*/, "G")) + '</small></div>'; }
+      if (EST.w != null && G[EST.w]){ var w = G[EST.w]; h += '<div class="es-det' + (estHeb() ? ' hb' : '') + '"><span class="g">' + esc(w[5] || w[0]) + '</span><p><b>' + esc(w[2] || "") + '</b> · ' + esc(estHeb() ? estMorfoH(w[4]) : estMorfo(w[4])) + '</p><small>Forma en el texto: ' + esc(w[0]) + ' (' + esc(w[1]) + ') · Strong ' + esc((w[3] || "").replace(/^([GH])0*(\d+)[A-Z]?$/, "$1$2")) + '</small></div>'; }
     } else {
       if (n){
         h += '<div class="es-s"><p class="es-lab">📖 Este versículo</p><p>' + esc(n.c) + '</p></div>';
-        if (n.k && n.k.length){ h += '<div class="es-s"><p class="es-lab">🔤 Palabras en griego</p>'; n.k.forEach(function(k){ h += '<div class="es-k"><span class="g">' + esc(k[0]) + '</span><div><b>' + esc(k[1]) + '</b><p>' + esc(k[2]) + '</p></div></div>'; }); h += '</div>'; }
+        if (n.k && n.k.length){ h += '<div class="es-s"><p class="es-lab">🔤 Palabras en ' + estLeng() + '</p>'; n.k.forEach(function(k){ h += '<div class="es-k"><span class="g">' + esc(k[0]) + '</span><div><b>' + esc(k[1]) + '</b><p>' + esc(k[2]) + '</p></div></div>'; }); h += '</div>'; }
       }
       if (P){
         h += '<div class="es-s"><p class="es-lab">📜 El pasaje · ' + esc(P.t) + ' <span>(' + P.d[0] + ':' + P.d[1] + '-' + (P.d[2] !== P.d[0] ? P.d[2] + ':' : '') + P.d[3] + ')</span></p><p>' + esc(P.c) + '</p></div>';
@@ -2653,7 +2680,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
         h += '<div class="es-s"><p class="es-lab">💡 Para meditar o predicar</p><p class="es-m">' + esc(P.m) + '</p>' + (P.x && P.x.length ? refChips(P.x) : '') + '</div>';
       }
       if (!n && !P){
-        h += '<div class="es-s"><p class="es-lab">Comentario muy pronto</p><p>Estamos preparando el comentario de este libro. Ya puedes leer cada versículo en griego, palabra por palabra, con su traducción.</p><button type="button" class="btn ghost" data-est="gr" style="width:100%;margin-top:6px">Ver el texto griego</button></div>';
+        h += '<div class="es-s"><p class="es-lab">Comentario muy pronto</p><p>Estamos preparando el comentario de este libro. Ya puedes leer cada versículo en ' + estLeng() + ', palabra por palabra, con su traducción.</p><button type="button" class="btn ghost" data-est="gr" style="width:100%;margin-top:6px">Ver el texto ' + estLeng() + '</button></div>';
       }
     }
     h += '<p class="es-cred">' + esc(D.credito || "") + '</p>';
