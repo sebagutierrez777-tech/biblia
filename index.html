@@ -2116,6 +2116,7 @@ nav button{transition:background-color .2s ease,color .2s ease}
     }
     $("vMore").innerHTML = h + '<p class="note">Estudio de apoyo de la Biblia Multiversión.</p>';
   }
+  $("vMore").addEventListener("click", function(e){ var b = e.target.closest("[data-cf]"); if (b){ e.stopPropagation(); renderCurio.f = b.dataset.cf; renderCurio(); } }, true);
   $("vMore").addEventListener("click", function(e){ var b = e.target.closest("[data-bb]"); if (b){ e.stopPropagation(); renderBiblio(b.dataset.bb); } }, true);
   /* ---------- Resumen de la Biblia ---------- */
   var RESUMEN = null;
@@ -2152,8 +2153,10 @@ nav button{transition:background-color .2s ease,color .2s ease}
   function renderCurio(){
     var el = $("vMore");
     if (!CURIO){ el.innerHTML = masHead("¿Sabías que…?") + '<p class="note">Cargando…</p>'; getJSON("curiosidades.json").then(function(j){ CURIO = j.items; if (masSub === "otros") renderCurio(); }, function(){ el.innerHTML = masHead("¿Sabías que…?") + '<p class="note">No se pudo cargar. Revisa tu conexión.</p>'; }); return; }
-    var h = masHead("¿Sabías que…?") + '<p class="sv-in">Datos curiosos de la Biblia, contados sobre el texto de la Reina-Valera 1960.</p>';
-    CURIO.forEach(function(c){ h += '<div class="cu" style="--c:' + c.c + '"><span class="cu-i">' + (ICO_EP[c.i] ? '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + ICO_EP[c.i] + '</svg>' : '') + '</span><div><b>' + esc(c.t) + '</b><p>' + esc(c.d) + '</p>' + (c.r ? refChips([c.r]) : '') + '</div></div>'; });
+    var cf = renderCurio.f || "todas", CF = [["todas", "Todas"], ["texto", "En el texto"], ["arq", "Arqueología"]];
+    var h = masHead("¿Sabías que…?") + '<p class="sv-in">Datos curiosos de la Biblia: unos contados sobre el texto de la Reina-Valera 1960 y otros sobre lo que ha encontrado la arqueología.</p>';
+    h += '<div class="seg hs-seg bb-seg" role="group" aria-label="Filtrar">' + CF.map(function(t){ var n = t[0] === "todas" ? CURIO.length : CURIO.filter(function(c){ return (c.k || "texto") === t[0]; }).length; return '<button type="button" data-cf="' + t[0] + '" aria-pressed="' + (cf === t[0]) + '">' + t[1] + ' (' + n + ')</button>'; }).join("") + '</div>';
+    CURIO.forEach(function(c){ if (cf !== "todas" && (c.k || "texto") !== cf) return; h += '<div class="cu" style="--c:' + c.c + '"><span class="cu-i">' + (ICO_EP[c.i] ? '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + ICO_EP[c.i] + '</svg>' : '') + '</span><div><b>' + esc(c.t) + '</b><p>' + esc(c.d) + '</p>' + (c.r ? refChips([c.r]) : '') + '</div></div>'; });
     el.innerHTML = h + '<p class="note">Las cifras pueden variar un poco en otras traducciones.</p>';
   }
 
