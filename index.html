@@ -850,6 +850,8 @@ header #btnRef svg{color:#7a6334}
 .ini-splash{background:radial-gradient(90% 55% at 50% 38%,rgba(64,86,190,.45) 0%,rgba(64,86,190,0) 70%),linear-gradient(180deg,#1f2a7a 0%,#1f2a7a 18%,#272479 48%,#3e2380 74%,#5a2185 90%,#6e2078 100%);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:calc(48px + env(safe-area-inset-top)) 28px calc(28px + env(safe-area-inset-bottom));overflow:hidden;transition:opacity .45s ease}
 .ini-c{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center}
 .ini-splash img{width:min(78vw,320px);height:auto}
+.ini-logo{position:relative;display:inline-block;line-height:0}.ini-logo::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.5) 50%,rgba(255,255,255,0) 60%);background-size:250% 100%;background-position:150% 0;-webkit-mask:url(logo-iglesia.png) center/contain no-repeat;mask:url(logo-iglesia.png) center/contain no-repeat;animation:iniLogo 2.8s ease-in-out .4s infinite;pointer-events:none}
+@keyframes iniLogo{0%{background-position:150% 0}55%,100%{background-position:-50% 0}}
 .ini-rule{width:56px;height:2px;border-radius:1px;background:rgba(255,255,255,.55)}
 .ini-tit{display:flex;flex-direction:column;gap:8px}
 .ini-tit h1{margin:0;font-family:var(--read);font-weight:600;font-size:32px;line-height:1.15;letter-spacing:.01em;background:linear-gradient(100deg,#ffffff 0%,#ffffff 34%,#f6d27a 42%,#ffe9a8 46%,#fff8e1 48%,#f2c45a 51%,#ffffff 60%,#ffffff 100%);background-size:280% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 6px rgba(246,210,122,.0));animation:iniShine 2.6s ease-in-out .5s 1 forwards,iniGlow 2.6s ease-in-out .5s 1}
@@ -880,13 +882,13 @@ header #btnRef svg{color:#7a6334}
 #iniNombre{height:50px;border:1px solid #c9c6e6;border-radius:12px;padding:0 14px;font:inherit;font-size:17px;background:#fff;color:#1b1840}
 .ini-pie button{height:56px;border:0;border-radius:16px;background:#4338ca;color:#fff;font-family:var(--ui);font-size:18px;font-weight:700;cursor:pointer}
 .ini-pie button:active{background:#3730a3}
-@media (prefers-reduced-motion:reduce){.ini-tit h1{animation:none;filter:none}.ini-load i{animation:none;width:100%}.ini-splash,.ini-bien{transition:none}}
+@media (prefers-reduced-motion:reduce){.ini-logo::after{animation:none;opacity:0}.ini-tit h1{animation:none;filter:none}.ini-load i{animation:none;width:100%}.ini-splash,.ini-bien{transition:none}}
 </style>
 </head>
 <body>
 <div class="ini ini-splash" id="iniSplash" role="status" aria-label="Cargando Biblia Multiversión">
 <div class="ini-c">
-<img src="logo-iglesia.png" alt="Iglesia de Dios de la Profecía">
+<span class="ini-logo"><img src="logo-iglesia.png" alt="Iglesia de Dios de la Profecía"></span>
 <span class="ini-rule" aria-hidden="true"></span>
 <div class="ini-tit"><h1>Biblia Multiversión</h1><p>12 versiones de la Santa Biblia<br>para leer, buscar y comparar</p></div>
 </div>

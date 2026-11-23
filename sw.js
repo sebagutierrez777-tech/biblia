@@ -1,5 +1,5 @@
 // Guarda la app en el celular para que funcione sin internet.
-var SHELL = "biblia-shell-v68";
+var SHELL = "biblia-shell-v69";
 var DATA = "biblia-data-v1";
 var FONTS = "biblia-fonts-v1";
 var SHELL_FILES = ["./", "index.html", "meta.json", "manifest.json", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png", "logo-iglesia.png", "logo-emblema.png", "logo-emblema-claro.png", "qr-app.png", "intros.json", "fichas.json", "mapas.json", "genealogias.json", "diccionario.json", "resumen.json", "curiosidades.json", "juegos.json", "historia.json", "inicio.mp3", "devocionales.json", "temas.json"];
@@ -38,10 +38,23 @@ function networkFirst(req, name) {
   });
 }
 
+// El audio pide el archivo por partes (Range); se responde con la parte pedida para que suene también desde lo guardado.
+function rangeResp(req) {
+  return caches.match(req, { ignoreSearch: true }).then(function (hit) {
+    if (!hit) return fetch(req);
+    return hit.arrayBuffer().then(function (buf) {
+      var m = /bytes=(\d*)-(\d*)/.exec(req.headers.get("range") || ""), n = buf.byteLength;
+      var s = m && m[1] ? +m[1] : 0, f = m && m[2] ? Math.min(+m[2], n - 1) : n - 1;
+      return new Response(buf.slice(s, f + 1), { status: 206, headers: { "Content-Type": hit.headers.get("Content-Type") || "audio/mpeg", "Content-Range": "bytes " + s + "-" + f + "/" + n, "Content-Length": String(f - s + 1), "Accept-Ranges": "bytes" } });
+    });
+  });
+}
+
 self.addEventListener("fetch", function (e) {
   var req = e.request;
   if (req.method !== "GET") return;
   var url = new URL(req.url);
+  if (req.headers.has("range") && url.origin === self.location.origin) { e.respondWith(rangeResp(req)); return; }
   if (url.hostname === "cdnjs.cloudflare.com" || url.hostname === "cdn.jsdelivr.net") {
     e.respondWith(cacheFirst(req, "biblia-voz"));
     return;
