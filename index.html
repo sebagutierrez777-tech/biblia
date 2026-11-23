@@ -3244,6 +3244,11 @@ header #btnRef svg{color:#7a6334}
   }
   function devoShare(){ var x = devoHoy(), txt = "Devocional del día: " + x.t + "\n\n" + x.c + "\n" + refText(x.r[0], x.r[1]-1, x.r[2]-1) + "\n\nBiblia Multiversión: " + location.origin + location.pathname;
     if (navigator.share) navigator.share({ text: txt }).catch(function(){}); else { try{ navigator.clipboard.writeText(txt).then(function(){ toast("Devocional copiado"); }); }catch(e){} } }
+  var favPend = {};
+  function favTxt(a){ var bk = bookData(cur.v, a[0]);
+    if (bk) return (bk[a[1]] || [])[a[2]] || "";
+    var k = cur.v + "/" + a[0]; if (!favPend[k]){ favPend[k] = 1; loadBook(cur.v, a[0]).then(function(){ delete favPend[k]; if ($("vFavs").classList.contains("on")) renderFavs(); }, function(){ delete favPend[k]; }); }
+    return null; }
   function renderFavs(){
     var el = $("vFavs");
     if (!META){ el.innerHTML = '<p class="note">Cargando…</p>'; load(cur.v).then(function(){ if ($("vFavs").classList.contains("on")) renderFavs(); }, function(){ el.innerHTML = '<p class="note">No se pudo cargar la versión.</p>'; }); return; }
@@ -3279,7 +3284,7 @@ header #btnRef svg{color:#7a6334}
     h += '<div class="mb-h">Favoritos</div>';
     if (!favs.length) h += '<p class="note">Todavía no guardas versículos. En <b>Leer</b>, toca un versículo y elige <b>♡ Favorito</b>.</p>';
     favs.map(function(k){ return k.split(".").map(Number); }).sort(function(a,b){ return a[0]-b[0] || a[1]-b[1] || a[2]-b[2]; }).forEach(function(a){
-      var t = d[a[0]][a[1]][a[2]] || "Sin texto en " + ver(cur.v).code;
+      var t = favTxt(a); if (t == null) t = "…"; else if (!t) t = "Sin texto en " + ver(cur.v).code;
       h += '<div class="fav-row"><button class="res" data-b="' + a[0] + '" data-c="' + a[1] + '" data-v="' + a[2] + '"><div class="r ' + (a[0] < 39 ? "at" : "nt") + '">' + esc(refText(a[0],a[1],a[2])) + '</div><div class="t">' + esc(t) + '</div></button><button class="del" data-k="' + a.join(".") + '" aria-label="Quitar ' + esc(refText(a[0],a[1],a[2])) + '">✕</button></div>';
     });
     // resaltados y notas
@@ -3287,7 +3292,7 @@ header #btnRef svg{color:#7a6334}
     var hk = Object.keys(keys).map(function(k){ return k.split(".").map(Number); }).sort(function(a,b){ return a[0]-b[0] || a[1]-b[1] || a[2]-b[2]; });
     h += '<div class="mb-h">Resaltados y notas</div>';
     if (!hk.length) h += '<p class="note">Toca un versículo en <b>Leer</b> y elige un color para resaltarlo, o <b>Nota</b> para escribir algo tuyo.</p>';
-    hk.forEach(function(a){ var k = a.join("."), t = d[a[0]][a[1]][a[2]] || "";
+    hk.forEach(function(a){ var k = a.join("."), t = favTxt(a) || "";
       h += '<button class="res hlr" data-b="' + a[0] + '" data-c="' + a[1] + '" data-v="' + a[2] + '"><div class="r ' + (a[0] < 39 ? "at" : "nt") + '">' + esc(refText(a[0],a[1],a[2])) + '</div><div class="t' + (HL[k] ? " hl-" + HL[k] : "") + '">' + esc(t) + '</div>' + (NOTES[k] ? '<div class="vnote">' + esc(NOTES[k]) + '</div>' : '') + '</button>'; });
     el.innerHTML = h;
   }
