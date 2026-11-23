@@ -929,6 +929,29 @@ nav button{transition:background-color .2s ease,color .2s ease}
 .mo-seg{margin-top:6px}
 html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,border-color .35s ease,fill .35s ease!important}
 @media (max-width:520px){header{gap:6px;padding-left:10px;padding-right:10px}header .icon{width:36px;height:36px}header .pill{padding:0 11px;gap:4px}header #btnVer svg{display:none}header .grow{flex:1 1 0;min-width:0}}
+
+.rk-card{display:flex;align-items:center;gap:12px;width:100%;margin:4px 0 14px;padding:14px;border-radius:16px;border:1px solid color-mix(in srgb,#c9962b 45%,var(--line));background:color-mix(in srgb,#c9962b 10%,var(--surface));color:var(--ink);text-align:left}
+.rk-card b{display:block;font-size:17px}.rk-card small{display:block;color:var(--muted);font-size:14px;margin-top:2px}.rk-card>i{margin-left:auto;font-style:normal;font-size:24px;color:var(--muted)}
+.rk-cop{flex:0 0 44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,#c9962b 22%,var(--surface));color:#a3731a}
+:root[data-modo="noche"] .rk-cop{color:#e8c06a}
+.rk-form{padding:16px;border-radius:16px;background:var(--surface);border:1px solid var(--line)}
+.rk-form>b{font-size:18px}.rk-form p{color:var(--muted);font-size:15px;margin:6px 0 12px}
+.rk-form label{display:block;font-weight:600;font-size:14px;margin:12px 0 6px}
+.rk-form input{width:100%;min-height:46px;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font:inherit;font-size:17px}
+.rk-err{color:#c2410c;font-weight:600}:root[data-modo="noche"] .rk-err{color:#fb923c}
+.rk-yo{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:12px 0;padding:12px 14px;border-radius:14px;background:var(--rubric-soft);color:var(--ink)}
+.rk-yo span{color:var(--muted);font-size:14px;text-align:right}
+.rk-l{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.rk-l li{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.rk-l li.yo{border-color:var(--rubric);box-shadow:0 0 0 1px var(--rubric) inset}
+.rk-n{flex:0 0 30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;background:var(--paper);color:var(--muted);font-size:14px}
+.rk-l li.top1 .rk-n{background:#f3d27a;color:#5a4206}.rk-l li.top2 .rk-n{background:#d9dde4;color:#3b4250}.rk-l li.top3 .rk-n{background:#e3b48c;color:#5a3313}
+.rk-p{flex:1;min-width:0}.rk-p b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rk-p small{display:block;color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rk-s{font-weight:700;font-variant-numeric:tabular-nums}
+.rk-f{flex:0 0 32px;height:32px;border:0;background:none;color:var(--muted);opacity:.55;border-radius:50%;display:flex;align-items:center;justify-content:center}.rk-f.on{opacity:1;color:#c2410c;background:var(--paper)}
+.rk-pos{text-align:center;margin:12px 0;color:var(--muted)}
+.rk-acc{display:flex;gap:8px;margin-top:8px}.rk-acc .btn{flex:1}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);box-shadow:none;min-height:44px}
 </style>
 <style>
 /* Presentación y bienvenida */
@@ -2295,7 +2318,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     if (pool.length < n){ seen = []; pool = ids.slice(); }
     var pick = shuffle(pool).slice(0, n); V[key] = seen.concat(pick); try{ store.set("jVisto", V); }catch(e){} return pick; }
   function jIdx(L){ return L.map(function(x, i){ return i; }); }
-  function jSave(k, v, menor){ var b = JSCORE[k]; if (b == null || (menor ? v < b : v > b)){ JSCORE[k] = v; store.set("juegos", JSCORE); return true; } return false; }
+  function jSave(k, v, menor){ try{ if (!menor) rkTouch(k, v); }catch(e){} var b = JSCORE[k]; if (b == null || (menor ? v < b : v > b)){ JSCORE[k] = v; store.set("juegos", JSCORE); return true; } return false; }
   function loadJuegos(){ return JUEGOS ? Promise.resolve(JUEGOS) : getJSON("juegos.json").then(function(j){ return JUEGOS = j; }); }
   function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var k = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[k]; a[k] = t; } return a; }
   var JLVL = store.get("jNivel", "a") === "e" ? "e" : "a";
@@ -2320,6 +2343,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
   function setNivel(l){ if (l === JLVL) return; JLVL = l; store.set("jNivel", l); SOPA = PZ = QS = TV = MJ = OL = HC = TR = CR = DN = GN = null; renderJuegos(); }
   function renderJuegos(){
     var h = masHead("Juegos") + '<div class="seg jg-niv" role="group" aria-label="Nivel"><button type="button" data-jn="a" aria-pressed="' + (JLVL === "a") + '">Aprendices</button><button type="button" data-jn="e" aria-pressed="' + (JLVL === "e") + '">Experimentados</button></div>';
+    h += rkCard();
     h += '<p class="sv-in">' + (JLVL === "a" ? "Para quienes recién comienzan a leer la Biblia. Juegos cortos, con personajes e historias conocidas." : "Para quienes ya conocen la Biblia. Más preguntas, más detalle y menos ayudas.") + '</p><div class="jg-l">';
     JORD[JLVL].forEach(function(id){ var g = GAMES.filter(function(x){ return x[0] === id; })[0], k = JK(id), v = JSCORE[k];
       var sc = id === "memo" ? (MEMO.filter(function(m){ return m.n >= 4; }).length + " memorizados") : JSCORE[RK(id)] != null ? "Récord: " + JSCORE[RK(id)] + " puntos" : "Sin récord todavía";
@@ -2341,6 +2365,121 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
   $("vMore").addEventListener("click", function(e){ if (masSub !== "juegos" || !e.target.closest("[data-jshare]")) return; var t = jRecTxt();
     if (navigator.share) navigator.share({ text: t }).catch(function(){}); else { try{ navigator.clipboard.writeText(t).then(function(){ toast("Récords copiados"); }); }catch(x){} } });
   $("vMore").addEventListener("click", function(e){ var b = e.target.closest("[data-jn]"); if (b && masSub === "juegos"){ e.stopPropagation(); setNivel(b.dataset.jn); } }, true);
+
+  /* ---------- Ranking público (Firebase, plan gratuito, sin SDK) ---------- */
+  var FB = { key: "AIzaSyCxRhMfzP3l_zQKwFCrT0N5J6jrKD5eqcA", pid: "biblia-multiversion-305f2" };
+  var FS = "https://firestore.googleapis.com/v1/projects/" + FB.pid + "/databases/(default)/documents";
+  var RKP = store.get("rkPerfil", null), RKA = store.get("rkAuth", null), RKC = {}, RKTAB = "sem", rkBusy = false;
+  var RK_MAX = 5000;
+  function semId(d){ d = d ? new Date(d) : new Date(); var t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())), dn = t.getUTCDay() || 7; t.setUTCDate(t.getUTCDate() + 4 - dn); var y0 = new Date(Date.UTC(t.getUTCFullYear(), 0, 1)); return t.getUTCFullYear() + "-S" + ("0" + Math.ceil(((t - y0) / 864e5 + 1) / 7)).slice(-2); }
+  function rkSem(){ var S = store.get("jSem", null), w = semId(); if (!S || S.w !== w){ S = { w: w, b: {} }; store.set("jSem", S); } return S; }
+  function rkTotal(){ var n = 0; Object.keys(JSCORE).forEach(function(k){ var v = +JSCORE[k]; if (v > 0) n += v; }); return Math.min(RK_MAX, Math.round(n)); }
+  function rkSemPts(){ var S = rkSem(), n = 0; Object.keys(S.b).forEach(function(k){ n += +S.b[k] || 0; }); return Math.min(RK_MAX, Math.round(n)); }
+  function rkTouch(k, v){ v = +v; if (!(v >= 0)) return; var S = rkSem(); if (S.b[k] == null || v > S.b[k]){ S.b[k] = v; store.set("jSem", S); } if (RKP){ clearTimeout(rkTouch.t); rkTouch.t = setTimeout(function(){ rkPush().catch(function(){}); }, 3000); } }
+  var RK_MALAS = ["puta","puto","putas","putos","mierda","weon","weona","hueon","huevon","culo","pico","pene","verga","concha","coño","joder","imbecil","idiota","estupido","estupida","zorra","perra","chucha","ctm","hdp","csm","sexo","porno","xxx","nazi","maraco","maricon","culiao","culiado","aweonao","ahueonao","conchetumare","conchatumadre","tontos","tonto","gil","gila","pajero","raja","caca","pichula","tula","cachar","marica","bastardo","malparido","cabron","pendejo","pendeja"];
+  function rkNorm(t){ return t.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
+  function rkMala(t){ var n = rkNorm(t), w = n.split(/[\s.]+/), j = n.replace(/[^a-zñ]/g, ""); return w.some(function(x){ return RK_MALAS.indexOf(x) >= 0; }) || RK_MALAS.some(function(m){ return m.length >= 6 && j.indexOf(m) >= 0; }); }
+  function rkLimpio(t){ return t.replace(/\s+/g, " ").trim(); }
+  function rkValido(t, max){ return t.length >= 2 && t.length <= max && /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ. ]+$/.test(t) && !rkMala(t); }
+  function rkPost(u, b){ return fetch(u, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(b) }).then(function(r){ return r.json().then(function(j){ if (!r.ok) throw j; return j; }); }); }
+  function rkToken(){
+    if (RKA && RKA.id && RKA.exp > Date.now() + 60000) return Promise.resolve(RKA);
+    var p = RKA && RKA.rt ? fetch("https://securetoken.googleapis.com/v1/token?key=" + FB.key, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: "grant_type=refresh_token&refresh_token=" + encodeURIComponent(RKA.rt) }).then(function(r){ return r.json().then(function(j){ if (!r.ok) throw j; return { uid: j.user_id, id: j.id_token, rt: j.refresh_token, exp: Date.now() + (+j.expires_in) * 1000 }; }); })
+      : rkPost("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + FB.key, { returnSecureToken: true }).then(function(j){ return { uid: j.localId, id: j.idToken, rt: j.refreshToken, exp: Date.now() + (+j.expiresIn) * 1000 }; });
+    return p.then(function(a){ RKA = a; store.set("rkAuth", a); return a; });
+  }
+  function fsReq(m, path, body){ return rkToken().then(function(a){ return fetch(FS + path, { method: m, headers: { "Content-Type": "application/json", "Authorization": "Bearer " + a.id }, body: body ? JSON.stringify(body) : undefined }).then(function(r){ if (r.status === 404 && m === "GET") return null; return r.json().then(function(j){ if (!r.ok) throw j; return j; }); }); }); }
+  function fsVal(v){ return typeof v === "number" ? { integerValue: String(Math.round(v)) } : Array.isArray(v) ? { arrayValue: v.length ? { values: v.map(fsVal) } : {} } : { stringValue: String(v) }; }
+  function fsOut(f){ var o = {}; Object.keys(f || {}).forEach(function(k){ var x = f[k]; o[k] = x.integerValue != null ? +x.integerValue : x.stringValue != null ? x.stringValue : x.arrayValue ? (x.arrayValue.values || []).map(function(y){ return y.stringValue; }) : null; }); return o; }
+  function fsSet(path, data, crear){ var keys = Object.keys(data), q = keys.map(function(k){ return "updateMask.fieldPaths=" + k; }).join("&") + (crear ? "&currentDocument.exists=false" : "&currentDocument.exists=true"); var f = {}; keys.forEach(function(k){ f[k] = fsVal(data[k]); }); return fsReq("PATCH", path + "?" + q, { fields: f }); }
+  function rkGuardar(path, data){ return fsSet(path, data, false).catch(function(e){ if (e && e.error && (e.error.status === "NOT_FOUND" || e.error.code === 404)){ data.rep = []; return fsSet(path, data, true); } throw e; }); }
+  function rkPush(){
+    if (!RKP) return Promise.resolve();
+    var t = rkTotal(), w = semId(), sp = rkSemPts(), last = store.get("rkLast", {});
+    if (last.t === t && last.w === w && last.s === sp && last.n === RKP.n && last.l === RKP.l) return Promise.resolve();
+    return rkToken().then(function(a){
+      return rkGuardar("/jugadores/" + a.uid, { n: RKP.n, l: RKP.l, t: t }).then(function(){ return sp > 0 ? rkGuardar("/semanas/" + w + "/jugadores/" + a.uid, { n: RKP.n, l: RKP.l, s: sp }) : 0; });
+    }).then(function(){ store.set("rkLast", { t: t, w: w, s: sp, n: RKP.n, l: RKP.l }); RKC = {}; });
+  }
+  function rkTop(tipo){
+    var c = RKC[tipo]; if (c && Date.now() - c.at < 180000) return Promise.resolve(c);
+    var w = semId(), campo = tipo === "sem" ? "s" : "t", parent = tipo === "sem" ? "/semanas/" + w : "";
+    return fsReq("POST", parent + ":runQuery", { structuredQuery: { from: [{ collectionId: "jugadores" }], orderBy: [{ field: { fieldPath: campo }, direction: "DESCENDING" }], limit: 30 } }).then(function(res){
+      var L = []; (res || []).forEach(function(r){ if (!r.document) return; var d = fsOut(r.document.fields); d.uid = r.document.name.split("/").pop(); d.p = d[campo] || 0; if ((d.rep || []).length >= 3 || !d.n) return; L.push(d); });
+      var out = { at: Date.now(), L: L.slice(0, 20), pos: null };
+      var mine = RKA && L.findIndex(function(x){ return x.uid === RKA.uid; });
+      if (RKP && mine != null && mine >= 0 && mine < 20){ out.pos = mine + 1; RKC[tipo] = out; return out; }
+      if (!RKP) { RKC[tipo] = out; return out; }
+      var mp = tipo === "sem" ? rkSemPts() : rkTotal();
+      return fsReq("POST", parent + ":runAggregationQuery", { structuredAggregationQuery: { structuredQuery: { from: [{ collectionId: "jugadores" }], where: { fieldFilter: { field: { fieldPath: campo }, op: "GREATER_THAN", value: { integerValue: String(mp) } } } }, aggregations: [{ alias: "n", count: {} }] } }).then(function(a){ var n = 0; try{ n = +a[0].result.aggregateFields.n.integerValue; }catch(e){} out.pos = mp > 0 ? n + 1 : null; RKC[tipo] = out; return out; }, function(){ RKC[tipo] = out; return out; });
+    });
+  }
+  function rkReportar(uid){
+    var w = semId(), hechos = store.get("rkRep", []);
+    if (hechos.indexOf(uid) >= 0){ toast("Ya reportaste a esta persona"); return; }
+    rkToken().then(function(a){
+      function tr(path){ return fsReq("POST", ":commit", { writes: [{ transform: { document: "projects/" + FB.pid + "/databases/(default)/documents" + path, fieldTransforms: [{ fieldPath: "rep", appendMissingElements: { values: [{ stringValue: a.uid }] } }] }, currentDocument: { exists: true } }] }); }
+      return tr("/jugadores/" + uid).catch(function(){}).then(function(){ return tr("/semanas/" + w + "/jugadores/" + uid).catch(function(){}); });
+    }).then(function(){ hechos.push(uid); store.set("rkRep", hechos); RKC = {}; toast("Gracias. Si varias personas lo reportan, se oculta solo."); });
+  }
+  function rkSalir(){
+    rkToken().then(function(a){ return fsReq("DELETE", "/jugadores/" + a.uid).catch(function(){}).then(function(){ return fsReq("DELETE", "/semanas/" + semId() + "/jugadores/" + a.uid).catch(function(){}); }); }).then(function(){ RKP = null; store.set("rkPerfil", null); store.set("rkLast", {}); RKC = {}; toast("Saliste del ranking"); renderRanking(); }, function(){ toast("No se pudo. Revisa tu conexión."); });
+  }
+  function rkCard(){
+    return '<button type="button" class="rk-card" data-mas="ranking"><span class="rk-cop"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM17 6h3v2a3 3 0 0 1-3 3M7 6H4v2a3 3 0 0 0 3 3"/></svg></span><span><b>Ranking</b><small>' + (RKP ? "Tu puntaje: " + rkTotal() + " en total, " + rkSemPts() + " esta semana" : "Compite con otros hermanos de la app") + '</small></span><i aria-hidden="true">›</i></button>';
+  }
+  var RK_LUG = ["IDP Osorno", "IDP Schilling", "IDP Patronato", "Osorno", "Santiago", "Temuco", "Puerto Montt", "Valdivia", "Concepción"];
+  function rkForm(edit){
+    var n = edit && RKP ? RKP.n : (nombre || ""), l = edit && RKP ? RKP.l : "";
+    return '<div class="rk-form"><b>' + (edit ? "Cambiar mis datos" : "Entrar al ranking") + '</b><p>Tu nombre y tu iglesia o ciudad se verán en el ranking. Usa tu nombre y la inicial del apellido, por ejemplo «María G.».</p>' +
+      '<label for="rkN">Nombre</label><input id="rkN" maxlength="16" autocomplete="off" value="' + esc(n) + '" placeholder="María G.">' +
+      '<label for="rkL">Iglesia o ciudad</label><input id="rkL" maxlength="24" autocomplete="off" list="rkLL" value="' + esc(l) + '" placeholder="IDP Osorno"><datalist id="rkLL">' + RK_LUG.map(function(x){ return '<option value="' + x + '">'; }).join("") + '</datalist>' +
+      '<p class="rk-err" id="rkErr" hidden></p><button type="button" class="btn" id="rkOk" style="width:100%;min-height:50px">' + (edit ? "Guardar" : "Entrar al ranking") + '</button>' + (edit ? '<button type="button" class="btn ghost" id="rkCancel" style="width:100%;margin-top:8px">Cancelar</button>' : '') + '</div>';
+  }
+  function renderRanking(edit){
+    var el = $("vMore"), w = semId();
+    el.dataset.sec = "juego"; el.style.setProperty("--sc", "#2f4d8a");
+    var h = masHead("Ranking", "juegos");
+    if (!RKP || edit === true){
+      h += (RKP ? '' : '<p class="sv-in">Suma los récords de tus juegos y compárate con otros que usan la app. Hay un ranking de la semana, que empieza de nuevo cada lunes, y otro total.</p>') + rkForm(edit === true);
+      el.innerHTML = h;
+      $("rkOk").onclick = function(){
+        var n = rkLimpio($("rkN").value), l = rkLimpio($("rkL").value), er = $("rkErr");
+        var msg = !rkValido(n, 16) ? "Escribe un nombre de 2 a 16 letras, sin números ni símbolos." : !rkValido(l, 24) ? "Escribe tu iglesia o ciudad, de 2 a 24 letras, sin números ni símbolos." : "";
+        if (RKP && edit === true && (n !== RKP.n || l !== RKP.l)){ var u = store.get("rkCambio", 0); if (Date.now() - u < 7 * 864e5) msg = "Puedes cambiar tus datos una vez por semana."; }
+        if (msg){ er.textContent = msg; er.hidden = false; return; }
+        if (rkBusy) return; rkBusy = true; this.disabled = true; this.textContent = "Guardando…";
+        var prev = RKP; RKP = { n: n, l: l };
+        rkPush().then(function(){ rkBusy = false; store.set("rkPerfil", RKP); if (prev && (prev.n !== n || prev.l !== l)) store.set("rkCambio", Date.now()); toast(prev ? "Datos guardados" : "¡Ya estás en el ranking!"); renderRanking(); },
+          function(){ rkBusy = false; RKP = prev; er.textContent = "No se pudo guardar. Revisa tu conexión e intenta de nuevo."; er.hidden = false; var b = $("rkOk"); if (b){ b.disabled = false; b.textContent = prev ? "Guardar" : "Entrar al ranking"; } });
+      };
+      var c = $("rkCancel"); if (c) c.onclick = function(){ renderRanking(); };
+      return;
+    }
+    h += '<div class="seg jg-niv hs-seg" role="group" aria-label="Ranking"><button type="button" data-rk="sem" aria-pressed="' + (RKTAB === "sem") + '">Esta semana</button><button type="button" data-rk="tot" aria-pressed="' + (RKTAB === "tot") + '">Total</button></div>';
+    h += '<div class="rk-yo"><b>' + esc(RKP.n) + ' · ' + esc(RKP.l) + '</b><span id="rkYo">' + (RKTAB === "sem" ? rkSemPts() + " puntos esta semana" : rkTotal() + " puntos en total") + '</span></div>';
+    h += '<div id="rkList"><p class="note">Cargando el ranking…</p></div>';
+    h += '<p class="note">' + (RKTAB === "sem" ? "Cuenta tu mejor puntaje de cada juego de esta semana. Vuelve a cero cada lunes." : "Suma tu récord de cada juego, en Aprendices y Experimentados.") + ' Si ves un nombre inapropiado, toca la bandera para reportarlo.</p>';
+    h += '<div class="rk-acc"><button type="button" class="btn ghost" id="rkEdit">Cambiar mis datos</button><button type="button" class="btn ghost" id="rkOut">Salir del ranking</button></div>';
+    el.innerHTML = h;
+    $("rkEdit").onclick = function(){ renderRanking(true); };
+    $("rkOut").onclick = function(){ if (this.dataset.ok){ rkSalir(); } else { this.dataset.ok = "1"; this.textContent = "Toca otra vez para salir"; } };
+    var tipo = RKTAB;
+    rkPush().catch(function(){}).then(function(){ return rkTop(tipo); }).then(function(d){
+      if (masSub !== "ranking" || RKTAB !== tipo || !$("rkList")) return;
+      if (!d.L.length){ $("rkList").innerHTML = '<p class="note">Todavía no hay puntajes ' + (tipo === "sem" ? "esta semana" : "") + '. ¡Juega y sé el primero!</p>'; return; }
+      var me = RKA && RKA.uid, x = '<ol class="rk-l">';
+      d.L.forEach(function(p, i){ var yo = p.uid === me; x += '<li class="' + (yo ? "yo" : "") + (i < 3 ? " top" + (i + 1) : "") + '"><span class="rk-n">' + (i + 1) + '</span><span class="rk-p"><b>' + esc(p.n) + '</b><small>' + esc(p.l || "") + '</small></span><span class="rk-s">' + p.p + '</span>' + (yo ? '<span class="rk-f"></span>' : '<button type="button" class="rk-f" data-rkrep="' + esc(p.uid) + '" aria-label="Reportar a ' + esc(p.n) + '"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg></button>') + '</li>'; });
+      x += '</ol>';
+      if (d.pos && d.pos > d.L.length) x += '<p class="rk-pos">Vas en el lugar <b>' + d.pos + '</b>.</p>';
+      $("rkList").innerHTML = x;
+    }, function(){ if ($("rkList")) $("rkList").innerHTML = '<p class="note">No se pudo cargar el ranking. Revisa tu conexión e intenta de nuevo.</p>'; });
+  }
+  $("vMore").addEventListener("click", function(e){
+    if (masSub !== "ranking") return;
+    var b = e.target.closest("[data-rk]"); if (b){ e.stopPropagation(); RKTAB = b.dataset.rk; renderRanking(); return; }
+    var r = e.target.closest("[data-rkrep]"); if (r){ e.stopPropagation(); if (r.dataset.ok){ rkReportar(r.dataset.rkrep); r.disabled = true; } else { r.dataset.ok = "1"; r.classList.add("on"); toast("Toca otra vez la bandera para reportar este nombre"); } }
+  }, true);
   function gLoading(t, fn){ $("vMore").innerHTML = gHead(t) + '<p class="note">Cargando…</p>'; var sub = masSub; Promise.all([loadJuegos(), loadFichas().catch(function(){}), DATA["rvr1960"] ? 0 : load("rvr1960"), GEN ? 0 : getJSON("genealogias.json").then(function(j){ GEN = j.genealogias; }, function(){})]).then(function(){ if (masSub === sub) fn(); }, function(){ $("vMore").innerHTML = gHead(t) + '<p class="note">No se pudo cargar. Revisa tu conexión.</p>'; }); }
   function gReady(){ return JUEGOS && FICHAS && DATA["rvr1960"]; }
   function rvrTxt(r){ var t = DATA["rvr1960"][r[0]][r[1]-1][r[2]-1] || ""; return t.replace(/\s+/g, " ").trim(); }
@@ -2729,6 +2868,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     if (sub === "salv") return renderSalv();
     if (sub === "memo") return renderMemo();
     if (sub === "juegos") return renderJuegos();
+    if (sub === "ranking") return renderRanking();
     if (sub === "historia") return renderHistoria();
     if (sub === "sopa") return renderSopa();
     if (sub === "puzzle") return renderPuzzle();
