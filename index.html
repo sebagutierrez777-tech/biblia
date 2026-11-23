@@ -1070,6 +1070,11 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
 .es-det{margin:12px 0 4px;padding:12px 14px;border-radius:14px;background:var(--rubric-soft)}.es-det .g{font-size:24px}.es-det p{margin:4px 0}.es-det small{color:var(--muted)}
 .es-cred{font-size:12px;color:var(--muted);margin:18px 0 0;line-height:1.5}
 .es-foto{width:100%;aspect-ratio:5/3;object-fit:cover;border-radius:12px;display:block;background:var(--line)}.es-cr{display:block;font-size:11.5px;color:var(--muted);margin-top:4px}
+
+.leer-b{display:inline-flex;align-items:center;gap:6px;margin:10px 0 2px;padding:6px 12px;min-height:34px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font-size:13.5px;font-weight:600}
+.leer-b.on,.leer-big.on{background:var(--rubric);border-color:var(--rubric);color:#fff}
+.leer-big{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:44px;margin:0 0 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-weight:700;font-size:15px}
+.hz-w .leer-b{margin:0 14px 12px}
 </style>
 <style>
 /* Presentación y bienvenida */
@@ -1550,7 +1555,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
 
   /* ---------- Hojas ---------- */
   function openSheet(id){ $(id).classList.add("on"); }
-  function closeSheets(){ var s = document.querySelectorAll(".sheet"); for (var i=0;i<s.length;i++) s[i].classList.remove("on"); }
+  function closeSheets(){ try{ leerParar(); }catch(e){} var s = document.querySelectorAll(".sheet"); for (var i=0;i<s.length;i++) s[i].classList.remove("on"); }
   document.addEventListener("click", function(e){ if (e.target.closest("[data-close]")) closeSheets(); });
   document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeSheets(); });
 
@@ -2488,6 +2493,57 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     if (navigator.share) navigator.share({ text: t }).catch(function(){}); else { try{ navigator.clipboard.writeText(t).then(function(){ toast("Récords copiados"); }); }catch(x){} } });
   $("vMore").addEventListener("click", function(e){ var b = e.target.closest("[data-jn]"); if (b && masSub === "juegos"){ e.stopPropagation(); setNivel(b.dataset.jn); } }, true);
 
+
+  /* ---------- Escuchar: lectura en voz alta de estudios, arqueología y más ---------- */
+  var LEER = { btn: null, partes: [], i: 0 };
+  var LEER_IC = '<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+  var LEER_STOP = '<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></svg>';
+  function leerEtiqueta(b, on){ var t = b.dataset.lt || "Escuchar"; b.classList.toggle("on", on); b.innerHTML = (on ? LEER_STOP + "Detener" : LEER_IC + t); b.setAttribute("aria-pressed", on); }
+  function leerParar(){ if (TTS && LEER.btn) TTS.cancel(); if (LEER.btn) leerEtiqueta(LEER.btn, false); LEER.btn = null; LEER.partes = []; }
+  function leerSacar(el, quitar){
+    var c = el.cloneNode(true);
+    c.querySelectorAll(".leer-b,.leer-big,button,.fi-r,.chip,figcaption,svg,img,.es-cr,.es-il,.es-det,.es-k .g,.tn,.es-seg,.es-cred,.es-ver,.es-ayu,script,style" + (quitar ? "," + quitar : "")).forEach(function(x){ x.remove(); });
+    c.querySelectorAll("p,b,li,blockquote,summary,h2,h3,cite,small,strong,.es-lab,.es-lt").forEach(function(x){ x.appendChild(document.createTextNode(". ")); });
+    return (c.textContent || "").replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, "").replace(/[«»“”"]/g, "").replace(/\s+/g, " ").replace(/([.!?:;,])\s*\.\s/g, "$1 ").replace(/\.\s*\./g, ".").trim();
+  }
+  function leerTexto(btn, txt){
+    if (LEER.btn === btn){ leerParar(); return; }
+    leerParar(); if (tts.on) ttsPause();
+    if (!TTS){ toast("Este navegador no puede leer en voz alta."); return; }
+    var P = [], cur0 = "";
+    (txt.match(/[^.!?;:]+[.!?;:]*\s*/g) || [txt]).forEach(function(f){ if ((cur0 + f).length > 220 && cur0){ P.push(cur0); cur0 = f; } else cur0 += f; });
+    if (cur0.trim()) P.push(cur0);
+    LEER.btn = btn; LEER.partes = P; LEER.i = 0; leerEtiqueta(btn, true);
+    (function sig(){
+      if (LEER.btn !== btn) return;
+      if (LEER.i >= LEER.partes.length || !document.body.contains(btn)){ leerParar(); return; }
+      var u = new SpeechSynthesisUtterance(LEER.partes[LEER.i]);
+      u.lang = tts.voice ? tts.voice.lang : "es-ES"; try{ if (tts.voice) u.voice = tts.voice; }catch(e){} u.rate = tts.rate || 1;
+      u.onend = function(){ if (LEER.btn !== btn) return; LEER.i++; sig(); };
+      u.onerror = function(e){ if (e.error === "interrupted" || e.error === "canceled") return; leerParar(); };
+      TTS.speak(u);
+    })();
+  }
+  var LEER_SEL = [[".hs-t > li", "end"], ["details.dic", "end"], [".cu", "end"], [".devo-b", "end"], [".rs-s", "end"], [".tj-g", "end"]];
+  function leerPoner(){
+    LEER_SEL.forEach(function(sx){
+      document.querySelectorAll("#vMore " + sx[0] + ", #vFavs " + sx[0]).forEach(function(el){
+        if (el.querySelector(":scope > .leer-b, :scope > div > .leer-b")) return;
+        var b = document.createElement("button"); b.type = "button"; b.className = "leer-b"; b.setAttribute("data-leer", ""); b.setAttribute("aria-label", "Escuchar"); leerEtiqueta(b, false);
+        var dst = el.classList.contains("cu") ? (el.querySelector(":scope > div") || el) : el;
+        dst.appendChild(b);
+      });
+    });
+    var fb = $("fiBody"); if (fb && fb.firstChild && !fb.querySelector(".leer-big")){ var b2 = document.createElement("button"); b2.type = "button"; b2.className = "leer-big"; b2.setAttribute("data-leer-all", "fiBody"); b2.dataset.lt = "Escuchar esta ficha"; leerEtiqueta(b2, false); fb.insertBefore(b2, fb.firstChild); }
+  }
+  var leerT = null;
+  try{ var mo = new MutationObserver(function(){ clearTimeout(leerT); leerT = setTimeout(leerPoner, 120); }); ["vMore", "vFavs", "fiBody"].forEach(function(id){ if ($(id)) mo.observe($(id), { childList: true, subtree: true }); }); }catch(e){}
+  document.addEventListener("click", function(e){
+    var b = e.target.closest("[data-leer]");
+    if (b){ e.preventDefault(); e.stopPropagation(); var src = b.parentNode.classList && b.parentNode.parentNode && b.parentNode.parentNode.classList && b.parentNode.parentNode.classList.contains("cu") ? b.parentNode.parentNode : b.parentNode; leerTexto(b, leerSacar(src)); return; }
+    var a = e.target.closest("[data-leer-all]");
+    if (a){ e.preventDefault(); e.stopPropagation(); leerTexto(a, leerSacar($(a.dataset.leerAll))); }
+  }, true);
   /* ---------- Estudio profundo (piloto: Juan) ---------- */
   var EST = { libros: {}, D: {}, G: {}, tab: "est", b: 0, c: 0, v: 0, w: null };
   var EST_DAT = { 40: ["estudio/marcos.json"], 42: ["estudio/juan.json"], 43: ["estudio/hechos.json"], 44: ["estudio/romanos.json"], 48: ["estudio/efesios.json"], 49: ["estudio/filipenses.json"], 57: ["estudio/hebreos.json"] };
@@ -2563,6 +2619,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     var aut = EST_AUT[b] || (b >= 44 && b <= 56 ? "pablo" : "libro"), lib = META.books[b][0];
     var h = '<div class="es-top">' + (EST_SVG[aut] || EST_SVG.libro) + '<div><small>Estudiar · ' + esc(lib) + '</small><b>' + esc(refText(b, c, v)) + '</b></div></div>';
     h += '<p class="es-v">«' + esc(txt) + '»</p><p class="es-ver">' + esc(ver(cur.v).code) + '</p>';
+    if (EST.tab !== "gr") h += '<button type="button" class="leer-big" data-leer-all="estBody" data-lt="Escuchar este estudio" aria-pressed="false"></button>';
     h += '<div class="seg jg-niv es-seg" role="group" aria-label="Sección"><button type="button" data-est="est" aria-pressed="' + (EST.tab === "est") + '">Estudio</button><button type="button" data-est="gr" aria-pressed="' + (EST.tab === "gr") + '">Texto griego</button></div>';
     if (EST.tab === "gr"){
       h += '<p class="es-ayu">Toca una palabra para ver su forma y significado.</p><div class="es-il">';
@@ -2584,7 +2641,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
       }
     }
     h += '<p class="es-cred">' + esc(D.credito || "") + '</p>';
-    $("estBody").innerHTML = h;
+    $("estBody").innerHTML = h; leerParar(); var lb = $("estBody").querySelector(".leer-big"); if (lb) leerEtiqueta(lb, false);
   }
   $("estBody").addEventListener("click", function(e){
     var t = e.target, b;
@@ -3941,7 +3998,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
   }
   function ttsStart(i){
     if (!TTS && !tts.app){ toast("Este navegador no puede leer en voz alta."); return; }
-    if (TTS) TTS.cancel(); appStop(); appNext = null; tts.on = true; tts.b = cur.b; tts.c = cur.c; tts.i = i || 0;
+    leerParar(); if (TTS) TTS.cancel(); appStop(); appNext = null; tts.on = true; tts.b = cur.b; tts.c = cur.c; tts.i = i || 0;
     $("player").hidden = false; ttsSpeak();
   }
   function ttsPause(){ tts.on = false; tts.cur = null; if (TTS) TTS.cancel(); appStop(); appNext = null; ttsMark(); }
