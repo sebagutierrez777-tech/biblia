@@ -565,8 +565,8 @@ html.simple #actFav{min-height:52px;font-size:18px;flex:1}
 .rs-go{width:100%;min-height:50px;margin-bottom:6px}
 .cu{display:flex;gap:12px;padding:14px;border-radius:14px;background:var(--surface);border:1px solid var(--line);margin-bottom:10px}
 .cu-i{flex:none;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--c);background:color-mix(in srgb,var(--c) 14%,transparent)}
-:root:is([data-tone="noche"],[data-tone="bosque"],[data-tone="vino"],[data-tone="grafito"]) .cu-i svg,:root:is([data-tone="noche"],[data-tone="bosque"],[data-tone="vino"],[data-tone="grafito"]) .cu b{filter:brightness(1.6)}
-.cu b{display:block;font-size:16.5px;color:var(--c)}.cu p{margin:3px 0 0;font-size:15.5px;line-height:1.5}.cu .fi-r{margin-top:8px}
+:root:is([data-tone="noche"],[data-tone="bosque"],[data-tone="vino"],[data-tone="grafito"]) .cu-i svg{filter:brightness(1.3)}
+.cu b{display:block;font-size:16.5px;color:color-mix(in srgb,var(--c) 65%,var(--ink))}.cu p{margin:3px 0 0;font-size:15.5px;line-height:1.5}.cu .fi-r{margin-top:8px}
 .sr-top{padding:16px;border-radius:16px;background:var(--surface);border:1px solid var(--line);margin-bottom:10px}
 .sr-top p{margin:0 0 10px;font-size:15.5px;line-height:1.5}
 .sr-bar{height:10px;border-radius:5px;background:var(--line);overflow:hidden}.sr-bar i{display:block;height:100%;background:#15803d}
@@ -637,7 +637,7 @@ html.simple .act-r2{display:flex!important}
 :root:is([data-tone="noche"],[data-tone="bosque"],[data-tone="vino"],[data-tone="grafito"]) .tv-b.bad{background:#7f1d1d;color:#fee2e2}
 .hs-seg button{font-size:14px}
 /* ---- v1.10: secciones con color propio ---- */
-#vMore[data-sec=resumen]{--sc:#185fa5}#vMore[data-sec=historia]{--sc:#a8660f}#vMore[data-sec=gen]{--sc:#3b6d11}#vMore[data-sec=dic]{--sc:#534ab7}#vMore[data-sec=biblio]{--sc:#a32d2d}
+#vMore[data-sec=resumen]{--sc:#4a6a96}#vMore[data-sec=historia]{--sc:#9a6b3f}#vMore[data-sec=gen]{--sc:#5f7a45}#vMore[data-sec=dic]{--sc:#625c8f}#vMore[data-sec=biblio]{--sc:#8c5050}
 #vMore[data-sec] .mas-h{--scx:color-mix(in srgb,var(--sc) 78%,var(--ink));padding:10px 12px;border-radius:16px;background:color-mix(in srgb,var(--sc) 13%,var(--surface));border:1px solid color-mix(in srgb,var(--sc) 30%,transparent)}
 #vMore[data-sec] .mas-h h2,#vMore[data-sec] .mas-h .icon{color:color-mix(in srgb,var(--sc) 78%,var(--ink))}
 #vMore[data-sec] .sv-in{padding:10px 14px;border-radius:12px;background:color-mix(in srgb,var(--sc) 8%,var(--surface));border-left:4px solid var(--sc)}
@@ -1860,8 +1860,8 @@ html.simple .act-r2{display:flex!important}
   }
 
   /* Bibliología */
-  var GRP_COL = {"Ley o Pentateuco":"#b45309","Libros históricos":"#0f766e","Libros poéticos":"#be185d","Profetas mayores":"#7c3aed","Profetas menores":"#c2410c","Evangelios":"#b91c1c","Libro histórico":"#0369a1","Cartas de Pablo":"#4338ca","Cartas generales":"#15803d","Libro profético":"#a21caf"};
-  var HUES = ["#b45309","#0f766e","#be185d","#7c3aed","#c2410c","#0369a1","#15803d","#b91c1c","#4338ca","#a21caf","#0e7490","#854d0e"];
+  var GRP_COL = {"Ley o Pentateuco":"#9a6b3f","Libros históricos":"#4f7a6a","Libros poéticos":"#8a5f6e","Profetas mayores":"#6a5f8f","Profetas menores":"#a0623f","Evangelios":"#8c5050","Libro histórico":"#4a7590","Cartas de Pablo":"#5d6b94","Cartas generales":"#5f7a45","Libro profético":"#7d5a7f"};
+  var HUES = ["#9a6b3f","#4f7a6a","#8a5f6e","#5d6b94","#a0623f","#4a7590","#6b7d45","#8c5050","#6a5f8f","#3f7d80","#8a7438","#7d5a7f"];
   var BIBLIO = [
     ["¿Qué es la Biblia?", "Es la palabra de Dios escrita. Aunque son 66 libros, cuenta una sola historia: cómo Dios salva al ser humano por medio de Jesucristo. Jesús mismo enseñó que las Escrituras hablan de él.", [[41,24,27],[42,5,39]]],
     ["Inspiración", "Toda la Escritura es inspirada por Dios; la palabra griega quiere decir «respirada por Dios». Él usó a hombres con su propio estilo y su cultura, y el Espíritu Santo los guió para que escribieran lo que él quería decir.", [[54,3,16],[60,1,21]]],
@@ -2033,18 +2033,18 @@ html.simple .act-r2{display:flex!important}
   function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var k = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[k]; a[k] = t; } return a; }
   var JLVL = store.get("jNivel", "a") === "e" ? "e" : "a";
   var GAMES = [
-    ["memo", "Memorizar versículos", "Esconde palabras por niveles hasta saberlo de memoria", '<path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/>', "#be185d", "ae", "Practica hasta el nivel 4 y repásalos"],
-    ["sopa", "Sopa de letras", "Animales, oficios, el nacimiento de Jesús y más", '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>', "#1d4ed8", "ae", "Reyes, jueces, tribus y viajes de Pablo, con diagonales"],
-    ["puzzle", "Puzzle de versículos", "Ordena las palabras de un versículo corto", '<path d="M10 3h4v3a2 2 0 1 0 4 0V3h3v7h-3a2 2 0 1 0 0 4h3v7h-7v-3a2 2 0 1 0-4 0v3H3v-7h3a2 2 0 1 0 0-4H3V3z"/>', "#15803d", "ae", "Versículos largos, palabra por palabra"],
-    ["quien", "¿Quién soy?", "Adivina personajes muy conocidos con pistas", '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/>', "#b45309", "ae", "Todos los personajes, también los menos conocidos"],
-    ["trivia", "Trivia bíblica", "Diez preguntas básicas de alternativas", '<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5h.01"/>', "#6d28d9", "ae", "Diez preguntas, con las más difíciles incluidas"],
+    ["memo", "Memorizar versículos", "Esconde palabras por niveles hasta saberlo de memoria", '<path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/>', "#9b5c72", "ae", "Practica hasta el nivel 4 y repásalos"],
+    ["sopa", "Sopa de letras", "Animales, oficios, el nacimiento de Jesús y más", '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>', "#4a6496", "ae", "Reyes, jueces, tribus y viajes de Pablo, con diagonales"],
+    ["puzzle", "Puzzle de versículos", "Ordena las palabras de un versículo corto", '<path d="M10 3h4v3a2 2 0 1 0 4 0V3h3v7h-3a2 2 0 1 0 0 4h3v7h-7v-3a2 2 0 1 0-4 0v3H3v-7h3a2 2 0 1 0 0-4H3V3z"/>', "#4f7a5a", "ae", "Versículos largos, palabra por palabra"],
+    ["quien", "¿Quién soy?", "Adivina personajes muy conocidos con pistas", '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/>', "#9a6b3f", "ae", "Todos los personajes, también los menos conocidos"],
+    ["trivia", "Trivia bíblica", "Diez preguntas básicas de alternativas", '<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5h.01"/>', "#6a5f8f", "ae", "Diez preguntas, con las más difíciles incluidas"],
     ["libros", "Ordena los libros", "Pon los libros en su orden, contra el reloj", '<path d="M4 19V5M9 19V5M14 19l4-14M20 19H3"/>', "#8a4a2c", "e", "Pon nueve libros en su orden, contra el reloj"],
-    ["parejas", "Memoria", "Seis parejas: une cada personaje con lo que hizo", '<rect x="3" y="4" width="8" height="11" rx="1.5"/><rect x="13" y="9" width="8" height="11" rx="1.5"/>', "#0e7490", "ae", "Ocho parejas para mentes rápidas"],
-    ["trio", "Objeto, personaje y dato", "Arca, Noé, 40 días: arma cada trío", '<circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M9 11l6-4M9 13l6 4"/>', "#c2410c", "a"],
-    ["hecho", "Personaje y hecho", "Une cada personaje con lo que hizo", '<path d="M4 7h7M4 12h7M4 17h7M13 7l7 10M13 17l7-10"/>', "#0f766e", "a"],
-    ["crono", "Cronología", "Ordena los hechos de la historia bíblica", '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', "#a21caf", "e"],
-    ["donde", "¿Dónde está?", "Encuentra el lugar en el mapa; las pistas restan puntos", '<path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/>', "#0369a1", "e"],
-    ["genea", "Completa la genealogía", "Llena el nombre que falta en la línea", '<path d="M12 3v5M12 8l-6 5M12 8l6 5M6 13v5M18 13v5"/>', "#3b6d11", "e"]
+    ["parejas", "Memoria", "Seis parejas: une cada personaje con lo que hizo", '<rect x="3" y="4" width="8" height="11" rx="1.5"/><rect x="13" y="9" width="8" height="11" rx="1.5"/>', "#3f7d80", "ae", "Ocho parejas para mentes rápidas"],
+    ["trio", "Objeto, personaje y dato", "Arca, Noé, 40 días: arma cada trío", '<circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M9 11l6-4M9 13l6 4"/>', "#a0623f", "a"],
+    ["hecho", "Personaje y hecho", "Une cada personaje con lo que hizo", '<path d="M4 7h7M4 12h7M4 17h7M13 7l7 10M13 17l7-10"/>', "#4f7a6a", "a"],
+    ["crono", "Cronología", "Ordena los hechos de la historia bíblica", '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', "#7d5a7f", "e"],
+    ["donde", "¿Dónde está?", "Encuentra el lugar en el mapa; las pistas restan puntos", '<path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/>', "#4a7590", "e"],
+    ["genea", "Completa la genealogía", "Llena el nombre que falta en la línea", '<path d="M12 3v5M12 8l-6 5M12 8l6 5M6 13v5M18 13v5"/>', "#6b7d45", "e"]
   ];
   var JORD = { a: ["trio", "hecho", "sopa", "parejas", "quien", "puzzle", "trivia", "memo"], e: ["trivia", "crono", "donde", "genea", "libros", "sopa", "puzzle", "quien", "parejas", "memo"] };
   var GAME_IDS = GAMES.map(function(g){ return g[0]; });
@@ -2414,7 +2414,7 @@ html.simple .act-r2{display:flex!important}
   function masHead(t, back){ return '<div class="mas-h"><button type="button" class="icon" data-mas="' + (back || "") + '" aria-label="Volver">‹</button><h2>' + esc(t) + '</h2></div>'; }
   function renderMore(sub, opt){
     var el = $("vMore"); masSub = sub || null; delete el.dataset.sec; el.style.removeProperty("--sc");
-    var gm = GAMES.filter(function(g){ return g[0] === sub; })[0]; if (gm || sub === "juegos"){ el.dataset.sec = "juego"; el.style.setProperty("--sc", gm ? gm[4] : "#be185d"); }
+    var gm = GAMES.filter(function(g){ return g[0] === sub; })[0]; if (gm || sub === "juegos"){ el.dataset.sec = "juego"; el.style.setProperty("--sc", gm ? gm[4] : "#7d6a8a"); }
     if (mapObj){ try{ mapObj.remove(); }catch(e){} mapObj = null; mapLayer = null; }
     if (DN && DN.map){ try{ DN.map.remove(); }catch(e){} DN.map = null; }
     if (!masSub){
