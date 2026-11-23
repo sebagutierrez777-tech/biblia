@@ -1,5 +1,5 @@
 // Guarda la app en el celular para que funcione sin internet.
-var SHELL = "biblia-shell-v62";
+var SHELL = "biblia-shell-v63";
 var DATA = "biblia-data-v1";
 var FONTS = "biblia-fonts-v1";
 var SHELL_FILES = ["./", "index.html", "meta.json", "manifest.json", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png", "logo-iglesia.png", "logo-emblema.png", "logo-emblema-claro.png", "qr-app.png", "intros.json", "fichas.json", "mapas.json", "genealogias.json", "diccionario.json", "resumen.json", "curiosidades.json", "juegos.json", "historia.json", "inicio.mp3", "devocionales.json", "temas.json"];
@@ -51,16 +51,15 @@ self.addEventListener("fetch", function (e) {
     return;
   }
   if (url.origin !== self.location.origin) return;
-  if (url.pathname.indexOf("/img/") >= 0) {
+  if (url.pathname.indexOf("/img/") >= 0 || url.pathname.indexOf("/data/") >= 0) {
     e.respondWith(cacheFirst(req, DATA));
     return;
   }
-  if (url.pathname.indexOf("/data/") >= 0) {
-    e.respondWith(cacheFirst(req, DATA));
-    return;
-  }
-  // La app misma: intenta traer la versión nueva y, sin señal, usa la guardada.
-  e.respondWith(networkFirst(req, SHELL));
+  if (url.pathname.indexOf("avisos.json") >= 0) { e.respondWith(networkFirst(req, SHELL)); return; }
+  // La app abre al instante con lo guardado; la versión nueva se instala sola y se ve al volver a abrir.
+  e.respondWith(caches.open(SHELL).then(function (c) {
+    return c.match(req, { ignoreSearch: true }).then(function (hit) { return hit || networkFirst(req, SHELL); });
+  }));
 });
 
 // Recordatorio diario de lectura (Android decide la hora exacta).

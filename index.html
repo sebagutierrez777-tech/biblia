@@ -14,7 +14,8 @@
 <meta name="apple-mobile-web-app-title" content="Biblia">
 <title>Biblia Multiversión</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet"></noscript>
 <style>
 /* Idea: columna de lectura sobre un fondo de color; cabecera en el color fuerte del tono; seis tonos de fondo para elegir. */
 :root{
@@ -247,6 +248,8 @@ header #btnMic,:root[data-tone="piedra"] header #btnMic{background:var(--nt-bg);
 .hz-f figcaption{padding:5px 10px;font-size:11.5px;color:#d6d3d1;background:#1c1917}.hz-f figcaption a{color:inherit}
 .hs-h.con-f{border-top-left-radius:0;border-top-right-radius:0;margin-top:0}
 .hs-h.flash{animation:hzF 1.6s}@keyframes hzF{0%,40%{box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 45%,transparent)}100%{box-shadow:none}}
+.mas-gt{margin:18px 2px 8px;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.mas-gt:first-of-type{margin-top:6px}
 .devo{margin-top:12px;border-radius:20px;overflow:hidden;background:var(--surface);border:1px solid color-mix(in srgb,#b45309 30%,var(--line))}
 .devo-h{display:flex;width:100%;align-items:center;gap:12px;padding:14px 16px;text-align:left;background:linear-gradient(160deg,#b45309,#c2410c 55%,#9d2c4f);color:#fff}
 .devo-ic{flex:none;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center}
@@ -1178,6 +1181,18 @@ header #btnRef svg{color:#7a6334}
     return PENDING[id];
   }
 
+  /* Un solo libro, para mostrar rápido sin bajar la versión completa */
+  var BK = {}, BKP = {};
+  function bookData(id, b){ return DATA[id] ? DATA[id][b] : BK[id + "/" + b]; }
+  function loadBook(id, b){
+    if (DATA[id]) return Promise.resolve(DATA[id][b]);
+    var k = id + "/" + b; if (BK[k]) return Promise.resolve(BK[k]);
+    if (EMB(id)) return load(id).then(function(d){ return d[b]; });
+    if (!BKP[k]) BKP[k] = fetch("data/" + id + "/" + b + ".json").then(function(r){ if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(function(d){ BK[k] = d; delete BKP[k]; return d; }, function(){ delete BKP[k]; return load(id).then(function(d){ return d[b]; }); });
+    return BKP[k];
+  }
+
   /* ---------- Lectura ---------- */
   function savePos(){ store.set("pos", cur); }
   var refRaf = 0;
@@ -1207,15 +1222,15 @@ header #btnRef svg{color:#7a6334}
     setSel(null);
     document.documentElement.setAttribute("data-test", cur.b < 39 ? "at" : "nt");
     var head = '<span class="test-tag">' + (cur.b < 39 ? "Antiguo Testamento" : "Nuevo Testamento") + '</span><div class="chap-head"><h1>' + esc(refText(cur.b, cur.c)) + '</h1><small>' + esc(v.code) + '</small></div>';
-    if (!DATA[cur.v]){
+    if (!bookData(cur.v, cur.b)){
       el.innerHTML = head + '<p class="note">Cargando ' + esc(v.name) + '…</p>';
-      load(cur.v).then(function(){ renderRead(focusVerse); }, function(){
+      loadBook(cur.v, cur.b).then(function(){ renderRead(focusVerse); }, function(){
         el.innerHTML = head + '<p class="note"><b>No se pudo cargar esta versión.</b> Revisa tu conexión y vuelve a intentarlo.</p><button class="more" id="retry">Reintentar</button>';
         $("retry").onclick = function(){ renderRead(focusVerse); };
       });
       return;
     }
-    var vs = DATA[cur.v][cur.b][cur.c], html = "", any = false;
+    var vs = bookData(cur.v, cur.b)[cur.c], html = "", any = false;
     addRecent(cur.b, cur.c);
     if (tts.on && (tts.b !== cur.b || tts.c !== cur.c)) ttsPause();
     for (var i=0;i<vs.length;i++){
@@ -1268,7 +1283,7 @@ header #btnRef svg{color:#7a6334}
   };
   $("actCopy").onclick = function(){
     if (sel == null) return;
-    var text = DATA[cur.v][cur.b][cur.c][sel] + "\n" + refText(cur.b,cur.c,sel) + " (" + ver(cur.v).code + ")";
+    var text = bookData(cur.v, cur.b)[cur.c][sel] + "\n" + refText(cur.b,cur.c,sel) + " (" + ver(cur.v).code + ")";
     try{ navigator.clipboard.writeText(text).then(function(){ toast("Versículo copiado"); }, function(){ toast("No se pudo copiar aquí"); }); }
     catch(e){ toast("No se pudo copiar aquí"); }
     setSel(null);
@@ -1338,7 +1353,7 @@ header #btnRef svg{color:#7a6334}
   function applyFs(){ document.documentElement.style.setProperty("--fs", fs + "px"); }
   $("btnSize").onclick = function(){ openSheet("shSize"); };
   $("promChk").checked = promOn;
-  $("promChk").addEventListener("change", function(){ promOn = this.checked; store.set("promesas", promOn); if (META && DATA[cur.v]) renderRead(); });
+  $("promChk").addEventListener("change", function(){ promOn = this.checked; store.set("promesas", promOn); if (META && bookData(cur.v, cur.b)) renderRead(); });
   $("szMinus").onclick = function(){ fs = Math.max(15, fs - 1); applyFs(); store.set("fs", fs); };
   $("szPlus").onclick = function(){ fs = Math.min(30, fs + 1); applyFs(); store.set("fs", fs); };
 
@@ -1442,7 +1457,7 @@ header #btnRef svg{color:#7a6334}
   function loadIntros(){ return INTROS ? Promise.resolve(INTROS) : fetch("intros.json").then(function(r){ return r.json(); }).then(function(j){ INTROS = j.libros || []; return INTROS; }); }
   function introHtml(){
     if (!INTROS || !INTROS[cur.b]) return "";
-    var x = INTROS[cur.b], n = META.books[cur.b][1].length, k = x.clave, kt = DATA[cur.v][cur.b][k[0]-1] ? DATA[cur.v][cur.b][k[0]-1][k[1]-1] : "";
+    var x = INTROS[cur.b], n = META.books[cur.b][1].length, k = x.clave, kt = bookData(cur.v, cur.b)[k[0]-1] ? bookData(cur.v, cur.b)[k[0]-1][k[1]-1] : "";
     var h = '<details class="intro"' + (cur.c === 0 && !store.get("introVisto." + cur.b, false) ? " open" : "") + ' data-b="' + cur.b + '"><summary>Acerca de ' + esc(bname(cur.b)) + '</summary><div class="intro-b">';
     h += '<p>' + esc(x.resumen) + '</p><dl class="intro-dl"><dt>Autor</dt><dd>' + esc(x.autor) + '</dd><dt>Época</dt><dd>' + esc(x.fecha) + '</dd><dt>Capítulos</dt><dd>' + n + '</dd></dl>';
     if (kt) h += '<button type="button" class="intro-k" data-c="' + (k[0]-1) + '" data-v="' + (k[1]-1) + '">“' + esc(kt.replace(/\n/g, " ")) + '”<small>Versículo clave · ' + esc(refText(cur.b, k[0]-1, k[1]-1)) + '</small></button>';
@@ -1463,7 +1478,7 @@ header #btnRef svg{color:#7a6334}
       return f; }); return FICHAS; }); }
   function fichasCap(){
     if (!FICHAS) return [];
-    var nt = cur.b >= 39, txt = (DATA[cur.v][cur.b][cur.c] || []).join("\n");
+    var nt = cur.b >= 39, txt = (bookData(cur.v, cur.b)[cur.c] || []).join("\n");
     return FICHAS.filter(function(f){
       if (f.s === "at" && nt || f.s === "nt" && !nt) return false;
       if (f.r.some(function(r){ return r[0] === cur.b && r[1] - 1 === cur.c; })) return true;
@@ -1831,7 +1846,7 @@ header #btnRef svg{color:#7a6334}
     ["dic", "Diccionario bíblico", "Palabras clave de la fe", svgI('<path d="M4 19V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M8 7h7M8 11h5"/>'), "nt"],
     ["biblio", "Bibliología", "Estudio corto sobre la Biblia", svgI('<path d="M7 4h11a2 2 0 0 1 0 4H7"/><path d="M7 4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11V8"/><path d="M9 12h6M9 15.5h4"/>'), "at"],
     ["az", "Personajes y lugares", "Todas las fichas de la A a la Z", svgI('<circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5"/><path d="M17 21s4-3.5 4-7a4 4 0 0 0-8 0c0 3.5 4 7 4 7z"/>'), "at"],
-    ["otros", "Otros", "Curiosidades de la Biblia", svgI('<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5h.01"/>'), "nt"],
+    ["otros", "Curiosidades", "Datos sorprendentes de la Biblia", svgI('<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5h.01"/>'), "nt"],
     ["sinred", "Usar sin internet", "Guarda todas las versiones", svgI('<path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"/><path d="M12 19.5h.01"/>'), "at"],
     ["cmp", "Comparar versiones", "Un versículo en varias traducciones", svgI('<rect x="3" y="4" width="7" height="16" rx="1.5"/><rect x="14" y="4" width="7" height="16" rx="1.5"/>'), "at"],
     ["resp", "Respaldo", "Guarda tus favoritos y notas", svgI('<path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 21h14"/>'), "nt"]
@@ -1895,7 +1910,7 @@ header #btnRef svg{color:#7a6334}
     ["Ora y busca el bautismo en el Espíritu Santo.", [43,1,8]],
     ["Sigue creciendo en santidad y en el conocimiento de Jesús.", [60,3,18]]
   ];
-  function versoTxt(r){ var v = ver(cur.v).books[r[0]] && DATA[cur.v] ? cur.v : "rvr1960"; var t = DATA[v] && DATA[v][r[0]][r[1]-1][r[2]-1]; return t ? { t: t.replace(/\n/g, " "), v: ver(v).code } : null; }
+  function versoTxt(r){ var v = ver(cur.v).books[r[0]] && bookData(cur.v, r[0]) ? cur.v : "rvr1960"; var vb = bookData(v, r[0]), t = vb && vb[r[1]-1][r[2]-1]; return t ? { t: t.replace(/\n/g, " "), v: ver(v).code } : null; }
   function renderSalv(){
     var el = $("vMore");
     if (!DATA["rvr1960"]){ el.innerHTML = masHead("Plan de salvación") + '<p class="note">Cargando…</p>'; load("rvr1960").then(function(){ if (masSub === "salv") renderSalv(); }); return; }
@@ -2473,9 +2488,12 @@ header #btnRef svg{color:#7a6334}
     if (mapObj){ try{ mapObj.remove(); }catch(e){} mapObj = null; mapLayer = null; }
     if (DN && DN.map){ try{ DN.map.remove(); }catch(e){} DN.map = null; }
     if (!masSub){
-      var h = '<h2 class="sec">Más</h2><div class="mas-grid">';
-      MAS.forEach(function(m){ h += '<button type="button" class="mas-it ' + m[4] + '" data-mas="' + m[0] + '"><span class="ic">' + m[3] + '</span><b>' + esc(m[1]) + '</b><small>' + esc(m[2]) + '</small></button>'; });
-      el.innerHTML = h + '</div>'; return;
+      var GR = [["Estudiar la Biblia", ["salv", "resumen", "historia", "mapa", "gen", "dic", "biblio", "az"]], ["Jugar y descubrir", ["juegos", "otros"]], ["Herramientas", ["cmp", "sinred", "resp"]]];
+      var h = '<h2 class="sec">Más</h2>';
+      GR.forEach(function(g){ h += '<div class="mas-gt">' + esc(g[0]) + '</div><div class="mas-grid">';
+        g[1].forEach(function(id){ var m = MAS.filter(function(x){ return x[0] === id; })[0]; if (m) h += '<button type="button" class="mas-it ' + m[4] + '" data-mas="' + m[0] + '"><span class="ic">' + m[3] + '</span><b>' + esc(m[1]) + '</b><small>' + esc(m[2]) + '</small></button>'; });
+        h += '</div>'; });
+      el.innerHTML = h; return;
     }
     $("main").scrollTop = 0;
     if (sub === "mapa") return renderMapa(opt || {});
@@ -2762,7 +2780,7 @@ header #btnRef svg{color:#7a6334}
     noteKey = key(cur.b,cur.c,sel);
     $("noteRef").textContent = refText(cur.b,cur.c,sel);
     $("noteTxt").value = NOTES[noteKey] || "";
-    $("noteVerse").textContent = DATA[cur.v][cur.b][cur.c][sel] || "";
+    $("noteVerse").textContent = bookData(cur.v, cur.b)[cur.c][sel] || "";
     $("noteDel").hidden = !NOTES[noteKey];
     setSel(null); openSheet("shNote"); setTimeout(function(){ $("noteTxt").focus(); }, 60);
   };
@@ -2793,7 +2811,7 @@ header #btnRef svg{color:#7a6334}
     var nodes = $("vRead").querySelectorAll(".v");
     for (var k=0;k<nodes.length;k++) nodes[k].classList.toggle("reading", tts.on && cur.b === tts.b && cur.c === tts.c && +nodes[k].dataset.i === tts.i);
     var n = $("vRead").querySelector(".v.reading"); if (n) n.scrollIntoView({block:"center", behavior:"smooth"});
-    var vs = DATA[cur.v] ? DATA[cur.v][tts.b][tts.c] : [], tot = vs.length;
+    var vs = bookData(cur.v, tts.b) ? bookData(cur.v, tts.b)[tts.c] : [], tot = vs.length;
     $("plInfo").innerHTML = '<b>' + esc(refText(tts.b, tts.c)) + '</b> · versículo ' + (tts.i + 1) + ' de ' + tot;
     $("plBar").style.width = tot ? Math.round((tts.i + 1) / tot * 100) + "%" : "0";
     $("plPlay").setAttribute("aria-label", tts.on ? "Pausar" : "Reproducir");
@@ -2801,7 +2819,7 @@ header #btnRef svg{color:#7a6334}
   }
   function ttsSpeak(){
     if (tts.app){ appSpeak(); return; }
-    var vs = DATA[cur.v][tts.b][tts.c];
+    var vs = bookData(cur.v, tts.b)[tts.c];
     while (tts.i < vs.length && !vs[tts.i]) tts.i++;
     if (tts.i >= vs.length){ tts.on = false; ttsMark(); toast("Terminó " + refText(tts.b, tts.c)); return; }
     var u = new SpeechSynthesisUtterance(vs[tts.i].replace(/\n/g, " "));
@@ -2882,12 +2900,12 @@ header #btnRef svg{color:#7a6334}
   var synthQ = Promise.resolve();
   function appSynth(text){ var id = tts.app; var p = synthQ.then(function(){ return vwCall({cmd:"speak", id:id, text:text}); }).then(function(d){ return new Blob([d.buf], {type:"audio/wav"}); }); synthQ = p.catch(function(){}); return p; }
   function appPrep(i){
-    var vs = DATA[cur.v][tts.b][tts.c]; while (i < vs.length && !vs[i]) i++;
+    var vs = bookData(cur.v, tts.b)[tts.c]; while (i < vs.length && !vs[i]) i++;
     if (i >= vs.length) return null;
     return { i: i, p: appSynth(vs[i].replace(/\n/g, " ")) };
   }
   function appSpeak(){
-    var vs = DATA[cur.v][tts.b][tts.c];
+    var vs = bookData(cur.v, tts.b)[tts.c];
     while (tts.i < vs.length && !vs[tts.i]) tts.i++;
     if (tts.i >= vs.length){ tts.on = false; ttsMark(); toast("Terminó " + refText(tts.b, tts.c)); return; }
     var job = (appNext && appNext.i === tts.i) ? appNext : appPrep(tts.i), myI = tts.i, token = {}; tts.cur = token;
@@ -2992,7 +3010,7 @@ header #btnRef svg{color:#7a6334}
     var g = ctx.createLinearGradient(0, 0, W * 0.4, H); g.addColorStop(0, bg.s[0]); g.addColorStop(0.55, bg.s[1]); g.addColorStop(1, bg.s[2]);
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
     adorno(ctx, W, H, !!bg.light); grain(ctx);
-    var vers = DATA[IMG.ver] || DATA[cur.v], text = (vers[IMG.b][IMG.c][IMG.v] || "").replace(/\n/g, " ");
+    var vbk = bookData(IMG.ver, IMG.b) || bookData(cur.v, IMG.b) || [], text = ((vbk[IMG.c] || [])[IMG.v] || "").replace(/\n/g, " ");
     var ref = refText(IMG.b, IMG.c, IMG.v) + " · " + ver(IMG.ver || cur.v).code;
     var pad = 110, maxW = W - pad * 2, maxH = H * (IMG.fmt === "story" ? 0.5 : 0.52), size = 74, lines, lh;
     do { ctx.font = "400 " + size + "px Literata, Georgia, serif"; lines = wrapLines(ctx, "“" + text + "”", maxW); lh = size * 1.42; size -= 2; } while (lines.length * lh > maxH && size > 30);
@@ -3013,7 +3031,7 @@ header #btnRef svg{color:#7a6334}
     openSheet("shImg");
     var go2 = function(){ (document.fonts && document.fonts.load ? Promise.all([document.fonts.load("400 60px Literata"), document.fonts.load("700 40px Figtree")]) : Promise.resolve()).then(drawImg, drawImg); };
     if (!EMBL.complete) EMBL.onload = go2;
-    load(IMG.ver).then(go2, function(){ toast("No se pudo cargar el texto."); });
+    loadBook(IMG.ver, IMG.b).then(go2, function(){ toast("No se pudo cargar el texto."); });
   }
   (function(){
     var h = ""; BGS.forEach(function(bg, i){ h += '<button type="button" class="sw" data-i="' + i + '" aria-label="Fondo ' + bg.n + '" aria-pressed="' + (i === 0) + '" style="background:linear-gradient(165deg,' + bg.s[0] + ',' + bg.s[2] + ')"></button>'; });
@@ -3074,7 +3092,7 @@ header #btnRef svg{color:#7a6334}
   /* ---------- Modo púlpito ---------- */
   var pfs = store.get("pfs", 34), wake = null;
   function renderPulpit(){
-    var vs = DATA[cur.v][cur.b][cur.c], h = "";
+    var vs = bookData(cur.v, cur.b)[cur.c], h = "";
     for (var i=0;i<vs.length;i++) if (vs[i]) h += '<p><sup>' + (i+1) + '</sup>' + esc(vs[i]) + '</p>';
     $("ppBody").innerHTML = h; $("ppBody").scrollTop = 0;
     $("ppRef").textContent = refText(cur.b, cur.c) + " · " + ver(cur.v).code;
@@ -3216,7 +3234,7 @@ header #btnRef svg{color:#7a6334}
   function devoHoy(){ if (!DEVO) return null; var hoyD = new Date(), fk = ("0" + (hoyD.getMonth() + 1)).slice(-2) + "-" + ("0" + hoyD.getDate()).slice(-2), fx = DEVO.filter(function(d){ return d.f === fk; })[0]; if (fx) return fx; var G = DEVO.filter(function(d){ return !d.f || d.f < "12-01"; }), i = Math.floor((hoyD - new Date(hoyD.getFullYear(), 0, 0)) / 864e5) % G.length, x = G[i], v = vddRef(); if (x.r[0] === v[0] && x.r[1] - 1 === v[1] && x.r[2] - 1 === v[2]) x = G[(i + 1) % G.length]; return x; }
   function devoHtml(){
     if (!DEVO){ getJSON("devocionales.json").then(function(j){ DEVO = j.devocionales; if ($("vFavs").classList.contains("on")) renderFavs(); }, function(){}); return ""; }
-    var x = devoHoy(), r = x.r, vid = ver(cur.v).books[r[0]] && DATA[cur.v] ? cur.v : "rvr1960", vt = DATA[vid] ? (DATA[vid][r[0]][r[1]-1][r[2]-1] || "").replace(/\n/g, " ") : "";
+    var x = devoHoy(), r = x.r, vid = ver(cur.v).books[r[0]] ? cur.v : "rvr1960", vbd = bookData(vid, r[0]), vt = vbd ? (vbd[r[1]-1][r[2]-1] || "").replace(/\n/g, " ") : ""; if (!vbd) loadBook(vid, r[0]).then(function(){ if ($("vFavs").classList.contains("on")) renderFavs(); }, function(){});
     var h = '<section class="devo' + (devoAbierto ? " on" : "") + '" aria-label="Devocional del día"><button type="button" class="devo-h" data-act="devoTog" aria-expanded="' + devoAbierto + '"><span class="devo-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M5.6 5.6l2.1 2.1M3 12h3M18 12h3M16.3 7.7l2.1-2.1"/><path d="M7 16a5 5 0 0 1 10 0"/><path d="M3 20h18"/></svg></span><span class="devo-t"><small>Devocional del día</small><b>' + esc(x.t) + '</b></span><span class="devo-a">' + (devoAbierto ? "−" : "+") + '</span></button>';
     if (devoAbierto){
       h += '<div class="devo-b">' + (vt ? '<blockquote class="devo-v">“' + esc(vt) + '”<cite>' + esc(refText(r[0], r[1]-1, r[2]-1)) + '</cite></blockquote>' : '') + '<p>' + esc(x.d) + '</p><div class="devo-o"><b>Oración</b><p>' + esc(x.o) + '</p></div>';
@@ -3228,12 +3246,12 @@ header #btnRef svg{color:#7a6334}
     if (navigator.share) navigator.share({ text: txt }).catch(function(){}); else { try{ navigator.clipboard.writeText(txt).then(function(){ toast("Devocional copiado"); }); }catch(e){} } }
   function renderFavs(){
     var el = $("vFavs");
-    if (!DATA[cur.v] || !META){ el.innerHTML = '<p class="note">Cargando…</p>'; load(cur.v).then(function(){ if ($("vFavs").classList.contains("on")) renderFavs(); }, function(){ el.innerHTML = '<p class="note">No se pudo cargar la versión.</p>'; }); return; }
-    var d = DATA[cur.v], vid = cur.v, r = vddRef();
-    if (!ver(vid).books[r[0]] || !d[r[0]][r[1]][r[2]]) vid = "rvr1960";
+    if (!META){ el.innerHTML = '<p class="note">Cargando…</p>'; load(cur.v).then(function(){ if ($("vFavs").classList.contains("on")) renderFavs(); }, function(){ el.innerHTML = '<p class="note">No se pudo cargar la versión.</p>'; }); return; }
+    var vid = cur.v, r = vddRef();
+    if (!ver(vid).books[r[0]] || (bookData(vid, r[0]) && !bookData(vid, r[0])[r[1]][r[2]])) vid = "rvr1960";
     var h = '<h2 class="sec' + (foto ? " con-ft" : "") + '">' + fotoHtml("ft-sec") + (nombre ? "La Biblia de " + esc(nombre) : "Mi Biblia") + '</h2>' + avisosHtml() + osInvitaHtml() + respAvisoHtml(); seeAvisos();
-    var vt = DATA[vid] ? DATA[vid][r[0]][r[1]][r[2]] : null;
-    if (!DATA[vid]) load(vid).then(function(){ if ($("vFavs").classList.contains("on")) renderFavs(); });
+    var vbk = bookData(vid, r[0]), vt = vbk ? vbk[r[1]][r[2]] : null;
+    if (!vbk) loadBook(vid, r[0]).then(function(){ if ($("vFavs").classList.contains("on")) renderFavs(); });
     h += '<section class="vdd" aria-label="Versículo del día"><div class="vdd-h"><img src="logo-emblema.png" alt=""><div><b>Versículo del día</b><span>' + esc(dateTxt()) + '</span></div></div>';
     h += '<div class="vdd-b"><p class="vdd-t">“' + esc((vt || "").replace(/\n/g, " ")) + '”</p><p class="vdd-r ' + (r[0] < 39 ? "at" : "nt") + '">' + esc(refText(r[0], r[1], r[2])) + ' · ' + esc(ver(vid).code) + '</p>';
     h += '<div class="vdd-btns"><button type="button" class="b1" data-act="vddImg">' + PLUS + '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>Crear imagen</button><button type="button" class="b2" data-act="vddShare">' + PLUS + '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Compartir</button></div>';
@@ -3283,7 +3301,7 @@ header #btnRef svg{color:#7a6334}
       else if (a === "devoTog"){ devoAbierto = !devoAbierto; renderFavs(); }
       else if (a === "devoShare") devoShare();
       else if (a === "devoRead"){ var dx = devoHoy(); go(dx.r[0], dx.r[1]-1, dx.r[2]-1); }
-      else if (a === "vddShare"){ var vid = ver(cur.v).books[r[0]] && DATA[cur.v][r[0]][r[1]][r[2]] ? cur.v : "rvr1960", txt = "“" + DATA[vid][r[0]][r[1]][r[2]].replace(/\n/g, " ") + "” " + refText(r[0], r[1], r[2]) + " (" + ver(vid).code + ")";
+      else if (a === "vddShare"){ var vid = ver(cur.v).books[r[0]] && bookData(cur.v, r[0]) && bookData(cur.v, r[0])[r[1]][r[2]] ? cur.v : "rvr1960", txt = "“" + (bookData(vid, r[0]) || bookData(cur.v, r[0]))[r[1]][r[2]].replace(/\n/g, " ") + "” " + refText(r[0], r[1], r[2]) + " (" + ver(vid).code + ")";
         if (navigator.share) navigator.share({text: txt}).catch(function(){}); else { try{ navigator.clipboard.writeText(txt).then(function(){ toast("Versículo copiado"); }); }catch(err){} } }
       else if (a === "avArch") avArchivar(x.dataset.id);
       else if (a === "avBorrar"){ avBorr.push(x.dataset.id); store.set("avisosBorrados", avBorr); toast("Aviso eliminado"); renderFavs(); }
