@@ -1049,6 +1049,26 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
 .nb-u{text-align:center;font-size:14px;margin:4px 0 8px}
 .nb-r{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}.nb-r summary{font-weight:700;cursor:pointer;padding:6px 0}.nb-r p{color:var(--muted);font-size:14px;margin:6px 0}
 .nb-r .du-row input{letter-spacing:.12em}
+#actEst{grid-column:1/-1;background:linear-gradient(100deg,#2f4d8a,#4f46e5)!important;color:#fff!important;border-color:transparent!important;font-weight:700}
+.es-head{gap:6px}.es-head h2{flex:1;font-size:17px}
+.es-top{display:flex;gap:12px;align-items:center;margin:2px 0 10px}.es-top small{display:block;color:var(--muted);font-size:13px}.es-top b{font-size:19px}
+.es-v{font-family:var(--read);font-size:18px;line-height:1.6;margin:0}.es-ver{margin:2px 0 12px;font-size:12px;color:var(--muted)}
+.es-seg{margin-bottom:6px}
+.es-s{padding:14px 0;border-top:1px solid var(--line)}.es-s>p{margin:0;line-height:1.6;font-size:16px}
+.es-lab{font-size:12.5px!important;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;font-weight:700;margin:0 0 8px!important}.es-lab span{text-transform:none;letter-spacing:0;font-weight:500}
+.es-k{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:var(--surface);border:1px solid var(--line);margin-bottom:8px}
+.es-k .g,.es-w .g,.es-det .g{font-family:"Literata",Georgia,serif;color:var(--ink)}
+.es-k .g{font-size:21px;min-width:86px;line-height:1.3}.es-k b{display:block;font-size:15px}.es-k p{margin:2px 0 0;font-size:14px;line-height:1.5;color:var(--muted)}
+.es-img svg{width:100%;height:auto;display:block;border-radius:12px}
+.es-lt{font-weight:700;margin:10px 0 2px!important}.es-ld{font-size:15px!important;color:var(--muted)}
+.es-m{font-style:italic;margin-bottom:10px!important}
+.es-ayu{color:var(--muted);font-size:14px;margin:8px 0}
+.es-il{display:flex;flex-wrap:wrap;gap:6px}
+.es-w{display:flex;flex-direction:column;align-items:center;padding:6px 8px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);min-width:54px}
+.es-w .g{font-size:19px;line-height:1.3}.es-w .t{font-size:11px;color:var(--muted)}.es-w .e{font-size:13px;font-weight:600;color:var(--rubric);margin-top:2px}
+.es-w.on{border-color:var(--rubric);box-shadow:0 0 0 1px var(--rubric) inset}
+.es-det{margin:12px 0 4px;padding:12px 14px;border-radius:14px;background:var(--rubric-soft)}.es-det .g{font-size:24px}.es-det p{margin:4px 0}.es-det small{color:var(--muted)}
+.es-cred{font-size:12px;color:var(--muted);margin:18px 0 0;line-height:1.5}
 </style>
 <style>
 /* Presentación y bienvenida */
@@ -1212,7 +1232,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
       </div>
     </div>
     <div class="act-r2">
-      <button id="actFav">♡ Favorito</button><button id="actNote">Nota</button><button id="actImg">Imagen</button><button id="actCopy">Copiar</button><button id="actCmp">Comparar</button><button id="actMemo">Memorizar</button>
+      <button id="actEst" hidden>📖 Estudiar este versículo</button><button id="actFav">♡ Favorito</button><button id="actNote">Nota</button><button id="actImg">Imagen</button><button id="actCopy">Copiar</button><button id="actCmp">Comparar</button><button id="actMemo">Memorizar</button>
     </div>
   </div>
   <div id="player" hidden>
@@ -1239,6 +1259,10 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
   <div class="sheet" id="shVers" role="dialog" aria-label="Versiones">
     <div class="sheet-head"><h2>Versiones</h2><button class="icon" data-close aria-label="Cerrar">✕</button></div>
     <div class="sheet-body" id="vrBody"></div>
+  </div>
+  <div class="sheet" id="shEst" role="dialog" aria-label="Estudiar">
+    <div class="sheet-head es-head"><button class="icon" id="estPrev" aria-label="Versículo anterior">‹</button><h2 id="estRef"></h2><button class="icon" id="estNext" aria-label="Versículo siguiente">›</button><button class="icon" data-close aria-label="Cerrar">✕</button></div>
+    <div class="sheet-body" id="estBody"></div>
   </div>
   <div class="sheet" id="shNote" role="dialog" aria-label="Nota">
     <div class="sheet-head"><h2>Nota · <span id="noteRef"></span></h2><button class="icon" data-close aria-label="Cerrar">✕</button></div>
@@ -1418,7 +1442,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     for (var k=0;k<nodes.length;k++) nodes[k].classList.toggle("sel", +nodes[k].dataset.i === i);
     var bar = $("actions");
     if (i == null){ bar.classList.remove("on"); return; }
-    bar.classList.add("on");
+    bar.classList.add("on"); try{ $("actEst").hidden = !estHay(cur.b); }catch(e){}
     $("actRef").textContent = refText(cur.b, cur.c, i) + " · " + ver(cur.v).code + (PROM[key(cur.b,cur.c,i)] ? " · Promesa" : "");
     $("actFav").textContent = favs.indexOf(key(cur.b,cur.c,i)) >= 0 ? "♥ Quitar" : "♡ Favorito";
   }
@@ -2463,6 +2487,85 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     if (navigator.share) navigator.share({ text: t }).catch(function(){}); else { try{ navigator.clipboard.writeText(t).then(function(){ toast("Récords copiados"); }); }catch(x){} } });
   $("vMore").addEventListener("click", function(e){ var b = e.target.closest("[data-jn]"); if (b && masSub === "juegos"){ e.stopPropagation(); setNivel(b.dataset.jn); } }, true);
 
+  /* ---------- Estudio profundo (piloto: Juan) ---------- */
+  var EST = { libros: { 42: { dat: "estudio/juan.json", gk: "estudio/jhn/" } }, D: {}, G: {}, tab: "est", b: 0, c: 0, v: 0, w: null };
+  var EST_SVG = {
+    juan: '<svg viewBox="0 0 64 64" width="52" height="52" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#E6F1FB"/><path d="M14 60c2-11 9-16 18-16s16 5 18 16" fill="#C8A27A"/><path d="M22 46l10 8 10-8" fill="none" stroke="#8a6a48" stroke-width="2"/><ellipse cx="32" cy="29" rx="11" ry="13" fill="#E8B98E"/><path d="M21 26c0-9 5-14 11-14s11 5 11 14c-2-4-5-6-11-6s-9 2-11 6z" fill="#5a3b22"/><path d="M23 32c1 9 5 13 9 13s8-4 9-13c-2 3-5 4-9 4s-7-1-9-4z" fill="#6b4529"/><circle cx="28" cy="28" r="1.6" fill="#2b1d10"/><circle cx="36" cy="28" r="1.6" fill="#2b1d10"/><path d="M29 35c2 1.5 4 1.5 6 0" stroke="#2b1d10" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>',
+    efeso: '<svg viewBox="0 0 300 120" aria-hidden="true"><rect width="300" height="120" rx="12" fill="#E6F1FB"/><path d="M0 96h300v24H0z" fill="#D3D1C7"/><path d="M70 40h160l-80-22z" fill="#B4B2A9"/><rect x="70" y="40" width="160" height="8" fill="#888780"/><g fill="#F1EFE8" stroke="#B4B2A9"><rect x="80" y="48" width="12" height="48"/><rect x="108" y="48" width="12" height="48"/><rect x="136" y="48" width="12" height="48"/><rect x="164" y="48" width="12" height="48"/><rect x="192" y="48" width="12" height="48"/></g><rect x="64" y="94" width="172" height="6" fill="#888780"/></svg>',
+    jordan: '<svg viewBox="0 0 300 120" aria-hidden="true"><rect width="300" height="120" rx="12" fill="#FAEEDA"/><circle cx="60" cy="30" r="14" fill="#EF9F27"/><path d="M0 70 Q80 58 150 66 T300 62 V120 H0z" fill="#C0DD97"/><path d="M0 88 Q70 78 150 90 T300 84 V108 Q220 100 150 110 T0 104z" fill="#85B7EB"/><path d="M20 92 Q60 86 100 94" stroke="#E6F1FB" stroke-width="2" fill="none"/><g stroke="#3B6D11" stroke-width="2.5" stroke-linecap="round"><path d="M240 86V60M246 86V54M252 86V64M258 86V58"/><path d="M30 80V58M36 80V52M42 80V62"/></g></svg>',
+    galilea: '<svg viewBox="0 0 300 120" aria-hidden="true"><rect width="300" height="120" rx="12" fill="#E6F1FB"/><path d="M0 62 Q50 30 100 52 T200 44 T300 50 V70 H0z" fill="#97C459"/><rect y="66" width="300" height="54" fill="#378ADD"/><path d="M20 86 Q60 80 100 88M180 100 Q220 94 270 102" stroke="#B5D4F4" stroke-width="2" fill="none"/><path d="M120 92h56l-8 12h-40z" fill="#854F0B"/><path d="M148 92V64" stroke="#5F5E5A" stroke-width="2"/><path d="M148 66l22 22h-22z" fill="#F1EFE8"/></svg>',
+    tinajas: '<svg viewBox="0 0 300 120" aria-hidden="true"><rect width="300" height="120" rx="12" fill="#F1EFE8"/><rect y="98" width="300" height="22" fill="#D3D1C7"/><g fill="#B4B2A9" stroke="#888780" stroke-width="1.5"><path d="M30 98c-4-30 2-48 16-48s20 18 16 48z"/><path d="M72 98c-4-30 2-48 16-48s20 18 16 48z"/><path d="M114 98c-4-30 2-48 16-48s20 18 16 48z"/><path d="M156 98c-4-30 2-48 16-48s20 18 16 48z"/><path d="M198 98c-4-30 2-48 16-48s20 18 16 48z"/><path d="M240 98c-4-30 2-48 16-48s20 18 16 48z"/></g><g fill="#888780"><rect x="38" y="46" width="16" height="6" rx="2"/><rect x="80" y="46" width="16" height="6" rx="2"/><rect x="122" y="46" width="16" height="6" rx="2"/><rect x="164" y="46" width="16" height="6" rx="2"/><rect x="206" y="46" width="16" height="6" rx="2"/><rect x="248" y="46" width="16" height="6" rx="2"/></g></svg>',
+    templo: '<svg viewBox="0 0 300 120" aria-hidden="true"><rect width="300" height="120" rx="12" fill="#FAEEDA"/><rect x="20" y="84" width="260" height="36" fill="#D3D1C7"/><path d="M20 84h260" stroke="#B4B2A9" stroke-width="2"/><g stroke="#B4B2A9"><path d="M40 92h30M90 100h40M160 92h30M210 104h40"/></g><rect x="110" y="34" width="80" height="50" fill="#F1EFE8" stroke="#B4B2A9"/><rect x="130" y="46" width="40" height="38" fill="#BA7517"/><path d="M104 34h92l-8-10h-76z" fill="#EF9F27"/><g fill="#F1EFE8" stroke="#B4B2A9"><rect x="60" y="56" width="50" height="28"/><rect x="190" y="56" width="50" height="28"/></g></svg>',
+    noche: '<svg viewBox="0 0 300 120" aria-hidden="true"><rect width="300" height="120" rx="12" fill="#26215C"/><circle cx="240" cy="30" r="13" fill="#FAC775"/><circle cx="234" cy="26" r="12" fill="#26215C"/><g fill="#CECBF6"><circle cx="40" cy="20" r="1.5"/><circle cx="90" cy="34" r="1.2"/><circle cx="150" cy="16" r="1.5"/><circle cx="190" cy="40" r="1"/><circle cx="280" cy="60" r="1.2"/></g><path d="M0 120V84h30V70h26v14h24V60h34v24h20V74h30v10h28V66h40v18h24V78h44v42z" fill="#3C3489"/><g fill="#FAC775"><rect x="40" y="76" width="5" height="6"/><rect x="92" y="68" width="5" height="6"/><rect x="200" y="74" width="5" height="6"/><rect x="250" y="84" width="5" height="6"/></g></svg>',
+    pozo: '<svg viewBox="0 0 300 120" aria-hidden="true"><rect width="300" height="120" rx="12" fill="#FAEEDA"/><circle cx="250" cy="28" r="14" fill="#EF9F27"/><path d="M0 92 Q70 70 150 86 T300 80 V120 H0z" fill="#C0DD97"/><path d="M0 100 Q80 86 160 98 T300 94 V120 H0z" fill="#97C459"/><ellipse cx="150" cy="86" rx="38" ry="9" fill="#888780"/><rect x="112" y="62" width="76" height="24" fill="#B4B2A9"/><path d="M112 70h76M112 78h76M131 62v8M150 70v8M169 62v8M131 78v8M169 78v8" stroke="#888780" stroke-width="1.5"/><ellipse cx="150" cy="62" rx="38" ry="8" fill="#D3D1C7"/><ellipse cx="150" cy="62" rx="26" ry="5" fill="#2C2C2A"/><path d="M120 62V30M180 62V30M114 30h72" stroke="#854F0B" stroke-width="4" stroke-linecap="round"/><path d="M150 30v18" stroke="#5F5E5A" stroke-width="1.5"/><path d="M144 48h12l-2 9h-8z" fill="#BA7517"/></svg>'
+  };
+  var EST_POS = { N: "sustantivo", V: "verbo", A: "adjetivo", T: "artículo", P: "pronombre personal", R: "pronombre relativo", D: "demostrativo", I: "interrogativo", X: "indefinido", Q: "correlativo", K: "correlativo", S: "posesivo", F: "reflexivo", C: "recíproco", ADV: "adverbio", CONJ: "conjunción", PREP: "preposición", PRT: "partícula", INJ: "interjección", COND: "conjunción condicional", ARAM: "palabra aramea", HEB: "palabra hebrea" };
+  function estMorfo(m){
+    if (!m) return ""; var p = m.split("-"), t = EST_POS[p[0]] || p[0], out = [t];
+    var CA = { N: "nominativo", G: "genitivo", D: "dativo", A: "acusativo", V: "vocativo" }, NU = { S: "singular", P: "plural" }, GE = { M: "masculino", F: "femenino", N: "neutro" };
+    function cng(s){ var r = []; if (!s) return r; if (/^[123]/.test(s)){ r.push(s[0] + ".ª persona"); s = s.slice(1); } if (CA[s[0]]) r.push(CA[s[0]]); if (NU[s[1]]) r.push(NU[s[1]]); if (GE[s[2]]) r.push(GE[s[2]]); return r; }
+    if (p[0] === "V" && p[1]){
+      var TI = { P: "presente", I: "imperfecto", F: "futuro", A: "aoristo", R: "perfecto", L: "pluscuamperfecto" }, VO = { A: "activo", M: "medio", P: "pasivo", E: "medio o pasivo", D: "deponente", N: "deponente", O: "pasivo deponente", Q: "pasivo" }, MO = { I: "indicativo", S: "subjuntivo", O: "optativo", M: "imperativo", N: "infinitivo", P: "participio" };
+      var x = p[1].replace(/^2/, ""); if (TI[x[0]]) out.push(TI[x[0]]); if (VO[x[1]]) out.push(VO[x[1]]); if (MO[x[2]]) out.push(MO[x[2]]);
+      if (p[2]){ var y = p[2]; if (/^[123][SP]$/.test(y)) out.push(y[0] + ".ª persona " + (y[1] === "S" ? "singular" : "plural")); else out = out.concat(cng(y)); }
+    } else if (p[1]) out = out.concat(cng(p[1]));
+    return out.join(", ");
+  }
+  function estHay(b){ return !!EST.libros[b]; }
+  function estCargar(b, c){
+    var L = EST.libros[b], k = b + ":" + c;
+    var p1 = EST.D[b] ? Promise.resolve(EST.D[b]) : getJSON(L.dat).then(function(j){ return EST.D[b] = j; });
+    var p2 = EST.G[k] ? Promise.resolve(EST.G[k]) : getJSON(L.gk + (c + 1) + ".json").then(function(j){ return EST.G[k] = j.v; });
+    return Promise.all([p1, p2]);
+  }
+  function estPer(D, c, v){ c++; v++; return (D.per || []).filter(function(p){ var a = p.d[0] * 1000 + p.d[1], z = p.d[2] * 1000 + p.d[3], x = c * 1000 + v; return x >= a && x <= z; })[0]; }
+  function openEst(b, c, v){
+    EST.b = b; EST.c = c; EST.v = v; EST.w = null;
+    $("estRef").textContent = refText(b, c, v);
+    $("estBody").innerHTML = '<p class="note">Cargando el estudio…</p>';
+    openSheet("shEst");
+    estCargar(b, c).then(estRender, function(){ $("estBody").innerHTML = '<p class="note">No se pudo cargar el estudio. Revisa tu conexión.</p>'; });
+  }
+  function estRender(){
+    var b = EST.b, c = EST.c, v = EST.v, D = EST.D[b], G = (EST.G[b + ":" + c] || {})[String(v + 1)] || [], n = (D.n || {})[(c + 1) + ":" + (v + 1)], P = estPer(D, c, v);
+    var nv = META.books[b][1][c];
+    $("estRef").textContent = refText(b, c, v);
+    $("estPrev").disabled = v === 0; $("estNext").disabled = v >= nv - 1;
+    var txt = (bookData(cur.v, b) && bookData(cur.v, b)[c] ? bookData(cur.v, b)[c][v] : "") || "";
+    var h = '<div class="es-top">' + EST_SVG.juan + '<div><small>Estudiar · Evangelio de Juan</small><b>' + esc(refText(b, c, v)) + '</b></div></div>';
+    h += '<p class="es-v">«' + esc(txt) + '»</p><p class="es-ver">' + esc(ver(cur.v).code) + '</p>';
+    h += '<div class="seg jg-niv es-seg" role="group" aria-label="Sección"><button type="button" data-est="est" aria-pressed="' + (EST.tab === "est") + '">Estudio</button><button type="button" data-est="gr" aria-pressed="' + (EST.tab === "gr") + '">Texto griego</button></div>';
+    if (EST.tab === "gr"){
+      h += '<p class="es-ayu">Toca una palabra para ver su forma y significado.</p><div class="es-il">';
+      G.forEach(function(w, i){ h += '<button type="button" class="es-w' + (EST.w === i ? " on" : "") + '" data-esw="' + i + '"><span class="g">' + esc(w[0]) + '</span><span class="t">' + esc(w[1]) + '</span><span class="e">' + esc(w[2] || "—") + '</span></button>'; });
+      h += '</div>';
+      if (EST.w != null && G[EST.w]){ var w = G[EST.w]; h += '<div class="es-det"><span class="g">' + esc(w[5] || w[0]) + '</span><p><b>' + esc(w[2] || "") + '</b> · ' + esc(estMorfo(w[4])) + '</p><small>Forma en el texto: ' + esc(w[0]) + ' (' + esc(w[1]) + ') · Strong ' + esc((w[3] || "").replace(/^G0*/, "G")) + '</small></div>'; }
+    } else {
+      if (n){
+        h += '<div class="es-s"><p class="es-lab">📖 Este versículo</p><p>' + esc(n.c) + '</p></div>';
+        if (n.k && n.k.length){ h += '<div class="es-s"><p class="es-lab">🔤 Palabras en griego</p>'; n.k.forEach(function(k){ h += '<div class="es-k"><span class="g">' + esc(k[0]) + '</span><div><b>' + esc(k[1]) + '</b><p>' + esc(k[2]) + '</p></div></div>'; }); h += '</div>'; }
+      }
+      if (P){
+        h += '<div class="es-s"><p class="es-lab">📜 El pasaje · ' + esc(P.t) + ' <span>(' + P.d[0] + ':' + P.d[1] + '-' + (P.d[2] !== P.d[0] ? P.d[2] + ':' : '') + P.d[3] + ')</span></p><p>' + esc(P.c) + '</p></div>';
+        if (P.l) h += '<div class="es-s"><p class="es-lab">📍 Lugar y contexto</p><div class="es-img">' + (EST_SVG[P.l.i] || "") + '</div><p class="es-lt">' + esc(P.l.t) + '</p><p class="es-ld">' + esc(P.l.d) + '</p></div>';
+        h += '<div class="es-s"><p class="es-lab">💡 Para meditar o predicar</p><p class="es-m">' + esc(P.m) + '</p>' + (P.x && P.x.length ? refChips(P.x) : '') + '</div>';
+      }
+      if (!n && !P){
+        h += '<div class="es-s"><p class="es-lab">Muy pronto</p><p>Estamos preparando el comentario de este capítulo. Mientras tanto, puedes ver el texto griego palabra por palabra.</p><button type="button" class="btn ghost" data-est="gr" style="width:100%;margin-top:6px">Ver el texto griego</button></div>';
+      }
+    }
+    h += '<p class="es-cred">' + esc(D.credito || "") + '</p>';
+    $("estBody").innerHTML = h;
+  }
+  $("estBody").addEventListener("click", function(e){
+    var t = e.target, b;
+    if ((b = t.closest("[data-est]"))){ EST.tab = b.dataset.est; EST.w = null; estRender(); return; }
+    if ((b = t.closest("[data-esw]"))){ var i = +b.dataset.esw; EST.w = EST.w === i ? null : i; estRender(); var d = $("estBody").querySelector(".es-det"); if (d) d.scrollIntoView({ block: "nearest", behavior: "smooth" }); return; }
+    if ((b = t.closest(".chip[data-b]"))){ closeSheets(); go(+b.dataset.b, +b.dataset.c, +b.dataset.v); return; }
+  });
+  $("estPrev").onclick = function(){ if (EST.v > 0){ EST.v--; EST.w = null; estRender(); $("estBody").scrollTop = 0; } };
+  $("estNext").onclick = function(){ if (EST.v < META.books[EST.b][1][EST.c] - 1){ EST.v++; EST.w = null; estRender(); $("estBody").scrollTop = 0; } };
+  $("actEst").onclick = function(){ if (sel == null) return; var i = sel; setSel(null); openEst(cur.b, cur.c, i); };
   /* ---------- Premios: medallas, trofeos, diamantes y paloma dorada ---------- */
   function hoyStr(d){ d = d || new Date(); return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); }
   function diasEntre(a, b){ return Math.round((new Date(b + "T12:00:00") - new Date(a + "T12:00:00")) / 864e5); }
