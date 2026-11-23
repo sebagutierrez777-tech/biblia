@@ -907,6 +907,13 @@ body.map-fs-on nav,body.map-fs-on header{visibility:hidden}
 @keyframes shIn{from{opacity:.4;transform:translateY(18px)}to{opacity:1;transform:none}}
 nav button{transition:background-color .2s ease,color .2s ease}
 @media (prefers-reduced-motion:reduce){.view.vt,.sheet.on{animation:none}}
+.bb-seg button{font-size:13px;padding-left:4px;padding-right:4px}
+.tj{margin:0 0 14px;padding:14px 14px 10px;border-radius:14px;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--c)}
+.tj-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.tj-h b{font-family:var(--read);font-size:22px}.tj-h span{font-size:13px;font-weight:700;color:var(--muted)}
+.tj>p{margin:6px 0 10px;line-height:1.5}.tj-g{display:block;margin:8px 0 4px;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.sdef{margin:18px 0 8px;padding:14px 16px;border-radius:14px;background:var(--surface);border:1px solid var(--line);border-left:3px solid #625c8f}
+.sdef small{display:block;font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}.sdef b{display:block;font-family:var(--read);font-size:20px;margin:2px 0 6px}.sdef p{margin:0 0 8px;line-height:1.5}
+.sdef hr{border:0;border-top:1px solid var(--line);margin:12px 0}.sdef-f{display:block;margin-top:8px;font-size:12px;color:var(--muted)}
 </style>
 <style>
 /* Presentación y bienvenida */
@@ -1702,7 +1709,7 @@ nav button{transition:background-color .2s ease,color .2s ease}
     if (r){ go(r.b, r.c, r.v); return; }
     if (norm(q).replace(/[^a-z0-9]/g,"").length < 2){ box.innerHTML = '<p class="note">Escribe al menos dos letras.</p>'; return; }
     box.innerHTML = '<p class="note">Buscando en ' + esc(ver(cur.v).name) + '…</p>';
-    Promise.all([load(cur.v), loadTemas().catch(function(){}), loadFichas().catch(function(){}), HIST ? 0 : getJSON("historia.json").then(function(j){ HIST = j; }, function(){})]).then(function(){
+    Promise.all([load(cur.v), loadTemas().catch(function(){}), loadFichas().catch(function(){}), HIST ? 0 : getJSON("historia.json").then(function(j){ HIST = j; }, function(){}), DIC ? 0 : getJSON("diccionario.json").then(function(j){ DIC = j.terminos; }, function(){})]).then(function(){
       var phrase = /^".+"$/.test(q) || /^«.+»$/.test(q);
       var nq = norm(q.replace(/["«»]/g,"")).replace(/\s+/g," ").trim();
       var terms = phrase ? [nq] : nq.split(" ").filter(Boolean);
@@ -1716,7 +1723,7 @@ nav button{transition:background-color .2s ease,color .2s ease}
         var ok = true; for (var t=0;t<terms.length;t++){ if (!res[t].test(a[3])){ ok = false; break; } }
         if (ok) hits.push(a);
       }
-      lastHits = hits; lastTerms = terms; shown = 0; box.innerHTML = temaPanel(q);
+      lastHits = hits; lastTerms = terms; shown = 0; lastDef = defPanel(q); box.innerHTML = temaPanel(q);
       var c = document.createElement("p"); c.className = "count";
       c.textContent = hits.length ? hits.length.toLocaleString("es-CL") + (hits.length === 1 ? " versículo" : " versículos") + " en " + ver(cur.v).code : "Sin resultados en " + ver(cur.v).code + ". Prueba con otra palabra o con otra versión.";
       box.appendChild(c); moreResults();
@@ -1726,8 +1733,10 @@ nav button{transition:background-color .2s ease,color .2s ease}
     var box = $("results"), old = box.querySelector(".more"); if (old) old.remove();
     var end = Math.min(lastHits.length, shown + 100), h = "", d = DATA[cur.v];
     for (var i=shown;i<end;i++){ var a = lastHits[i]; h += '<button class="res" data-b="' + a[0] + '" data-c="' + a[1] + '" data-v="' + a[2] + '"><div class="r ' + (a[0] < 39 ? "at" : "nt") + '">' + esc(refText(a[0],a[1],a[2])) + '</div><div class="t">' + hl(d[a[0]][a[1]][a[2]], lastTerms) + '</div></button>'; }
+    var od = box.querySelector(".sdef"); if (od) od.remove();
     box.insertAdjacentHTML("beforeend", h); shown = end;
     if (shown < lastHits.length){ var m = document.createElement("button"); m.className = "more"; m.textContent = "Mostrar 100 más"; m.onclick = moreResults; box.appendChild(m); }
+    if (lastDef) box.insertAdjacentHTML("beforeend", lastDef);
   }
   $("searchForm").addEventListener("submit", function(e){ e.preventDefault(); $("q").blur(); doSearch(); });
   $("scope").addEventListener("click", function(e){
@@ -1735,7 +1744,17 @@ nav button{transition:background-color .2s ease,color .2s ease}
     var all = $("scope").querySelectorAll("button"); for (var i=0;i<all.length;i++) all[i].setAttribute("aria-pressed", all[i] === b ? "true" : "false");
     if ($("q").value.trim() && lastHits) doSearch();
   });
-  function resClick(e){ var b = e.target.closest(".res"); if (b) go(+b.dataset.b, +b.dataset.c, +b.dataset.v); }
+  function resClick(e){ var b = e.target.closest(".res, .sdef .chip"); if (b) go(+b.dataset.b, +b.dataset.c, +b.dataset.v); }
+  // Significado de la palabra buscada, tomado del diccionario bíblico
+  var lastDef = "";
+  function defPanel(q){
+    if (!DIC) return "";
+    var core = norm(q.replace(/["«»]/g, "")).replace(/[^a-z0-9ñ ]/g, " ").replace(/\s+/g, " ").trim(); if (core.length < 3) return "";
+    var forms = [core, core.replace(/es$/, ""), core.replace(/s$/, "")];
+    var hits = DIC.filter(function(d){ return d.t.split(/ o |\//).some(function(n){ var k = norm(n).trim(); return forms.indexOf(k) >= 0 || (core.length >= 5 && (k.split(" ")[0] === core || (k.indexOf(core) === 0 && k.split(" ").length === 1))); }); }).slice(0, 2);
+    if (!hits.length) return "";
+    return '<section class="sdef">' + hits.map(function(d){ return '<small>Qué significa</small><b>' + esc(d.t) + '</b><p>' + esc(d.d) + '</p>' + (d.r && d.r.length ? refChips(d.r) : ''); }).join('<hr>') + '<span class="sdef-f">Del diccionario bíblico de la app</span></section>';
+  }
   $("results").addEventListener("click", resClick);
 
   /* ---------- Concordancia ---------- */
@@ -1941,7 +1960,7 @@ nav button{transition:background-color .2s ease,color .2s ease}
     ["mapa", "Mapas bíblicos", "Los lugares del capítulo que lees", svgI('<path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/>'), "at"],
     ["gen", "Genealogías", "De Adán a Jesús", svgI('<circle cx="12" cy="5" r="2.5"/><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5H6v5M12 11.5h6v5"/>'), "nt"],
     ["dic", "Diccionario bíblico", "Palabras clave de la fe", svgI('<path d="M4 19V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M8 7h7M8 11h5"/>'), "nt"],
-    ["biblio", "Bibliología", "Estudio corto sobre la Biblia", svgI('<path d="M7 4h11a2 2 0 0 1 0 4H7"/><path d="M7 4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11V8"/><path d="M9 12h6M9 15.5h4"/>'), "at"],
+    ["biblio", "Bibliología", "La Biblia, la Biblia hebrea y el canon", svgI('<path d="M7 4h11a2 2 0 0 1 0 4H7"/><path d="M7 4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11V8"/><path d="M9 12h6M9 15.5h4"/>'), "at"],
     ["az", "Personajes y lugares", "Todas las fichas de la A a la Z", svgI('<circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5"/><path d="M17 21s4-3.5 4-7a4 4 0 0 0-8 0c0 3.5 4 7 4 7z"/>'), "at"],
     ["otros", "Curiosidades", "Datos sorprendentes de la Biblia", svgI('<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5h.01"/>'), "nt"],
     ["sinred", "Usar sin internet", "Guarda todas las versiones", svgI('<path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"/><path d="M12 19.5h.01"/>'), "at"],
@@ -2043,27 +2062,61 @@ nav button{transition:background-color .2s ease,color .2s ease}
   var BB_TL = [
     ["Entre 1400 a. C. y 100 d. C.", "Se escriben los libros", "Unos 40 autores, en hebreo, arameo y griego. Dios los usó y el Espíritu Santo los guió."],
     ["Siglo III a. C.", "La Septuaginta", "Los judíos de Alejandría traducen el Antiguo Testamento al griego. Era la Biblia que muchos conocían en tiempos de Jesús."],
-    ["Siglos I y II", "Se copian y se reparten las cartas", "Las iglesias copian a mano los evangelios y las cartas, y los leen en sus reuniones."],
+    ["Siglo I", "Jesús y los apóstoles usan las Escrituras hebreas", "Citan la Ley, los Profetas y los Salmos como palabra de Dios. El historiador judío Josefo habla de 22 libros sagrados, los mismos que hoy, contados de otra forma."],
+    ["Siglos I y II", "Se copian y se reparten las cartas", "Las iglesias copian a mano los evangelios y las cartas, y los leen en sus reuniones. Pedro ya llama Escritura a las cartas de Pablo."],
+    ["Fines del siglo II", "Las primeras listas", "Aparecen listas de los libros que las iglesias leían como Escritura, como el llamado Fragmento Muratoriano."],
     ["Año 367 y 397", "Se reconoce el Nuevo Testamento", "Atanasio enumera los 27 libros en 367, y el Concilio de Cartago los confirma en 397."],
     ["Hacia el año 405", "La Vulgata", "Jerónimo traduce la Biblia al latín, y esa versión se usó en Europa por más de mil años."],
     ["Hacia 1455", "La imprenta", "Gutenberg imprime la Biblia con tipos móviles y los libros dejan de copiarse solo a mano."],
     ["1569 y 1602", "Reina y Valera", "Casiodoro de Reina publica la Biblia en español en 1569 y Cipriano de Valera la revisa en 1602."],
     ["1960", "La Reina-Valera 1960", "Es la revisión que usa hasta hoy la mayoría de las iglesias evangélicas de habla hispana."]
   ];
-  function renderBiblio(){
-    var h = masHead("Bibliología") + '<p class="sv-in">Un estudio corto sobre la Biblia: qué es, cómo nos llegó y cómo leerla.</p>';
+  var TANAJ = [
+    ["Torá", "La Ley o Instrucción", "Los cinco libros de Moisés: la creación, los patriarcas, la salida de Egipto y el pacto en el Sinaí.", [["", [0, 1, 2, 3, 4]]]],
+    ["Neviím", "Los Profetas", "Se dividen en Profetas anteriores, que cuentan la historia de Israel en su tierra, y Profetas posteriores, que traen el mensaje de Dios a su pueblo. Samuel y Reyes se cuentan como un libro cada uno, y los doce profetas menores forman un solo libro: «Los Doce».", [["Profetas anteriores", [5, 6, 8, 9, 10, 11]], ["Profetas posteriores", [22, 23, 25]], ["Los Doce", [27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38]]]],
+    ["Ketuvim", "Los Escritos", "Poesía, sabiduría e historia. Incluye los cinco rollos (Meguilot), que se leen en las fiestas judías. Esdras y Nehemías forman un libro, igual que 1 y 2 Crónicas, que cierran la Biblia hebrea.", [["Poesía y sabiduría", [18, 19, 17]], ["Los cinco rollos", [21, 7, 24, 20, 16]], ["Historia y profecía", [26, 14, 15, 12, 13]]]]
+  ];
+  var CANON_T = [
+    ["¿Qué significa «canon»?", "La palabra viene de una caña que se usaba para medir. Con el tiempo pasó a significar «regla», y luego la lista de libros que la iglesia reconoce como inspirados por Dios. La iglesia no inventó esos libros ni les dio autoridad: reconoció la autoridad que ya tenían por venir de Dios.", [[54,3,16]]],
+    ["El canon del Antiguo Testamento", "A los judíos les fue confiada la palabra de Dios. Jesús y los apóstoles usaron la Biblia hebrea, la citaron como Escritura y hablaron de sus tres partes: la Ley, los Profetas y los Salmos. Nuestros 39 libros del Antiguo Testamento son exactamente los mismos 24 libros de la Biblia hebrea, solo que ordenados y contados de otra manera.", [[44,3,2],[41,24,44],[39,23,35]]],
+    ["El canon del Nuevo Testamento", "Las iglesias reconocieron los 27 libros con criterios claros: que vinieran de un apóstol o de alguien muy cercano a ellos, que estuvieran de acuerdo con la fe enseñada por los apóstoles, que fueran leídos y usados en las iglesias de todas partes y que mostraran el sello del Espíritu Santo. Ya en el mismo Nuevo Testamento, Pedro llama Escritura a las cartas de Pablo.", [[60,3,16],[53,5,18]]],
+    ["Los libros deuterocanónicos o apócrifos", "Son libros como Tobías, Judit, Sabiduría, Eclesiástico, Baruc y 1 y 2 Macabeos, además de algunos agregados a Ester y Daniel. Aparecían en la traducción griega (la Septuaginta) y en la latina, y la Iglesia católica los declaró canónicos en el Concilio de Trento, en 1546. Las iglesias evangélicas no los consideran inspirados: no estaban en la Biblia hebrea y Jesús nunca los citó como Escritura. Se pueden leer como libros históricos, pero no son regla de fe.", []],
+    ["Un canon completo", "Con la revelación de Jesucristo y el testimonio de los apóstoles, Dios nos entregó lo necesario para la fe y la vida. Judas habla de la fe «una vez dada a los santos», y el Apocalipsis cierra con una advertencia de no añadir ni quitar a sus palabras.", [[64,1,3],[65,22,18]]]
+  ];
+  function chipsB(list){ var h = '<div class="fi-r">'; list.forEach(function(b){ if (ver(cur.v).books[b] !== false) h += '<button type="button" class="chip" data-b="' + b + '" data-c="0" data-v="0">' + esc(bname(b)) + '</button>'; }); return h + '</div>'; }
+  function renderBiblio(tb){
+    tb = tb || renderBiblio.tab || "biblia"; renderBiblio.tab = tb;
+    var T = [["biblia", "La Biblia"], ["hebrea", "Biblia hebrea"], ["canon", "El canon"], ["libros", "66 libros"]];
+    var h = masHead("Bibliología") + '<div class="seg hs-seg bb-seg" role="group" aria-label="Sección">' + T.map(function(t){ return '<button type="button" data-bb="' + t[0] + '" aria-pressed="' + (tb === t[0]) + '">' + t[1] + '</button>'; }).join("") + '</div>';
     $("vMore").dataset.sec = "biblio";
-    BIBLIO.forEach(function(s, i){ h += '<details class="dic tc" style="--c:' + HUES[i % HUES.length] + '"' + (i === 0 ? " open" : "") + '><summary><i class="tn">' + (i + 1) + '</i>' + esc(s[0]) + '</summary><p>' + esc(s[1]) + '</p>' + (s[2].length ? refChips(s[2]) : '<div class="fi-r"></div>') + '</details>'; });
-    h += '<div class="grp" style="margin-top:22px">Cómo nos llegó la Biblia</div><ol class="hs-t bb-t">';
-    BB_TL.forEach(function(x, i){ h += '<li style="--e:' + HUES[(i * 2 + 1) % HUES.length] + '"><span class="hs-f">' + esc(x[0]) + '</span><b>' + esc(x[1]) + '</b><p>' + esc(x[2]) + '</p></li>'; });
-    h += '</ol><div class="grp" style="margin-top:22px">Los 66 libros</div><p class="note" style="padding:0 0 10px">Toca un libro para empezar a leerlo.</p>';
-    CANON.forEach(function(t){
-      var n = t[2][t[2].length-1][2] - t[2][0][1] + 1;
-      h += '<div class="grp ' + t[1] + '">' + t[0] + ' <small>' + n + ' libros</small></div>';
-      t[2].forEach(function(g){ h += '<div class="cn-g"><b>' + esc(g[0]) + ' <small>' + (g[2] - g[1] + 1) + '</small></b><div class="fi-r">'; for (var b = g[1]; b <= g[2]; b++) if (ver(cur.v).books[b] !== false) h += '<button type="button" class="chip" data-b="' + b + '" data-c="0" data-v="0">' + esc(bname(b)) + '</button>'; h += '</div></div>'; });
-    });
+    if (tb === "biblia"){
+      h += '<p class="sv-in">Qué es la Biblia, cómo se escribió y cómo leerla.</p>';
+      BIBLIO.forEach(function(s, i){ h += '<details class="dic tc" style="--c:' + HUES[i % HUES.length] + '"' + (i === 0 ? " open" : "") + '><summary><i class="tn">' + (i + 1) + '</i>' + esc(s[0]) + '</summary><p>' + esc(s[1]) + '</p>' + (s[2].length ? refChips(s[2]) : '<div class="fi-r"></div>') + '</details>'; });
+    } else if (tb === "hebrea"){
+      h += '<p class="sv-in">Los judíos llaman a su Biblia <b>Tanaj</b>, una palabra formada con las iniciales de sus tres partes: <b>T</b>orá, <b>N</b>eviím y <b>K</b>etuvim. Tiene 24 libros, que son los mismos 39 de nuestro Antiguo Testamento, contados de otra forma. Jesús se refirió a estas tres partes cuando habló de «la ley de Moisés, los profetas y los salmos».</p>' + refChips([[41,24,44]]);
+      TANAJ.forEach(function(p, i){
+        h += '<section class="tj" style="--c:' + HUES[(i * 3 + 1) % HUES.length] + '"><div class="tj-h"><b>' + esc(p[0]) + '</b><span>' + esc(p[1]) + '</span></div><p>' + esc(p[2]) + '</p>';
+        p[3].forEach(function(g){ h += (g[0] ? '<small class="tj-g">' + esc(g[0]) + '</small>' : '') + chipsB(g[1]); });
+        h += '</section>';
+      });
+      h += '<p class="note">El orden de la Biblia hebrea termina con Crónicas. Por eso Jesús, al hablar de los mártires «desde Abel hasta Zacarías», abarcó toda la Escritura, de Génesis a Crónicas.</p>';
+    } else if (tb === "canon"){
+      h += '<p class="sv-in">Cómo se reconocieron los libros que forman la Biblia y por qué tenemos 66.</p>';
+      CANON_T.forEach(function(s, i){ h += '<details class="dic tc" style="--c:' + HUES[(i + 4) % HUES.length] + '"' + (i === 0 ? " open" : "") + '><summary><i class="tn">' + (i + 1) + '</i>' + esc(s[0]) + '</summary><p>' + esc(s[1]) + '</p>' + (s[2].length ? refChips(s[2]) : '<div class="fi-r"></div>') + '</details>'; });
+      h += '<div class="grp" style="margin-top:22px">Cómo nos llegó la Biblia</div><ol class="hs-t bb-t">';
+      BB_TL.forEach(function(x, i){ h += '<li style="--e:' + HUES[(i * 2 + 1) % HUES.length] + '"><span class="hs-f">' + esc(x[0]) + '</span><b>' + esc(x[1]) + '</b><p>' + esc(x[2]) + '</p></li>'; });
+      h += '</ol>';
+    } else {
+      h += '<p class="sv-in">Así se ordenan los 66 libros en nuestras Biblias. Toca un libro para empezar a leerlo.</p>';
+      CANON.forEach(function(t){
+        var n = t[2][t[2].length-1][2] - t[2][0][1] + 1;
+        h += '<div class="grp ' + t[1] + '">' + t[0] + ' <small>' + n + ' libros</small></div>';
+        t[2].forEach(function(g){ var l = []; for (var b = g[1]; b <= g[2]; b++) l.push(b); h += '<div class="cn-g"><b>' + esc(g[0]) + ' <small>' + (g[2] - g[1] + 1) + '</small></b>' + chipsB(l) + '</div>'; });
+      });
+    }
     $("vMore").innerHTML = h + '<p class="note">Estudio de apoyo de la Biblia Multiversión.</p>';
   }
+  $("vMore").addEventListener("click", function(e){ var b = e.target.closest("[data-bb]"); if (b){ e.stopPropagation(); renderBiblio(b.dataset.bb); } }, true);
   /* ---------- Resumen de la Biblia ---------- */
   var RESUMEN = null;
   var rsCur = null;
