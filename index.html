@@ -901,6 +901,12 @@ header #btnRef svg{color:#7a6334}
 .map-fs-b{width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:#fff;color:#222;border:2px solid rgba(0,0,0,.2);border-radius:6px;cursor:pointer;background-clip:padding-box}
 .leaflet-container.map-fs{position:fixed!important;inset:0;z-index:96;width:100vw!important;height:100vh!important;height:100dvh!important;min-height:0;border-radius:0!important;border:0!important}
 body.map-fs-on nav,body.map-fs-on header{visibility:hidden}
+.view.vt{animation:vtIn .2s cubic-bezier(.2,.7,.3,1)}
+@keyframes vtIn{from{opacity:.3;transform:translateY(8px)}to{opacity:1;transform:none}}
+.sheet.on{animation:shIn .22s cubic-bezier(.2,.7,.3,1)}
+@keyframes shIn{from{opacity:.4;transform:translateY(18px)}to{opacity:1;transform:none}}
+nav button{transition:background-color .2s ease,color .2s ease}
+@media (prefers-reduced-motion:reduce){.view.vt,.sheet.on{animation:none}}
 </style>
 <style>
 /* Presentación y bienvenida */
@@ -1338,7 +1344,7 @@ body.map-fs-on nav,body.map-fs-on header{visibility:hidden}
     else if (c >= META.books[b][1].length){ if (b === 65) return; b++; c = 0; }
     go(b, c);
   }
-  function go(b, c, v){ cur.b = b; cur.c = c; savePos(); cmpVerse = v || 0; tab("vRead"); renderRead(v); }
+  function go(b, c, v){ if (b !== cur.b || c !== cur.c) vt($("vRead")); cur.b = b; cur.c = c; savePos(); cmpVerse = v || 0; tab("vRead"); renderRead(v); }
 
   $("vRead").addEventListener("click", function(e){
     var p = e.target.closest(".v, .vp"); if (!p) return;
@@ -1366,8 +1372,10 @@ body.map-fs-on nav,body.map-fs-on header{visibility:hidden}
   $("actCmp").onclick = function(){ if (sel == null) return; cmpVerse = sel; setSel(null); tab("vCompare"); };
 
   /* ---------- Pestañas ---------- */
+  function vt(el){ if (!el) return; el.classList.remove("vt"); void el.offsetWidth; el.classList.add("vt"); }
   function tab(id){
     var views = document.querySelectorAll(".view"), btns = document.querySelectorAll("nav button");
+    var prev = document.querySelector(".view.on"); if (!prev || prev.id !== id) vt($(id));
     for (var i=0;i<views.length;i++) views[i].classList.toggle("on", views[i].id === id);
     for (var j=0;j<btns.length;j++){ if (btns[j].dataset.tab === id || (id === "vCompare" && btns[j].dataset.tab === "vMore") || (id === "vConc" && btns[j].dataset.tab === "vSearch")) btns[j].setAttribute("aria-current","page"); else btns[j].removeAttribute("aria-current"); }
     if (id !== "vRead") setSel(null);
@@ -2599,7 +2607,7 @@ body.map-fs-on nav,body.map-fs-on header{visibility:hidden}
   var masSub = null;
   function masHead(t, back){ return '<div class="mas-h"><button type="button" class="icon" data-mas="' + (back || "") + '" aria-label="Volver">‹</button><h2>' + esc(t) + '</h2></div>'; }
   function renderMore(sub, opt){
-    var el = $("vMore"); masSub = sub || null; delete el.dataset.sec; el.style.removeProperty("--sc");
+    var el = $("vMore"); if ((sub || null) !== masSub) vt(el); masSub = sub || null; delete el.dataset.sec; el.style.removeProperty("--sc");
     var gm = GAMES.filter(function(g){ return g[0] === sub; })[0]; if (gm || sub === "juegos"){ el.dataset.sec = "juego"; el.style.setProperty("--sc", gm ? gm[4] : "#7d6a8a"); }
     if (mapObj){ try{ mapObj.remove(); }catch(e){} mapObj = null; mapLayer = null; }
     if (DN && DN.map){ try{ DN.map.remove(); }catch(e){} DN.map = null; }
