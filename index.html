@@ -1036,6 +1036,11 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
 .du-big{font-size:70px;line-height:1.1;animation:prSpin .9s ease-out}.du-res>b{display:block;font-size:26px;margin:6px 0}.du-res>p{color:var(--muted);margin:0 0 12px}
 .du-fin{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0 14px}.du-fin span{padding:12px;border-radius:14px;background:var(--paper);font-size:13px;color:var(--muted);display:flex;flex-direction:column}.du-fin span.w{box-shadow:0 0 0 2px #e5b93c inset}.du-fin b{font-size:28px;color:var(--ink)}
 @media (prefers-reduced-motion:reduce){.du-dots i,.du-cnt,.du-big,.du-pis li.new{animation:none}}
+
+.du-turno{text-align:center;font-weight:700;padding:10px;border-radius:12px;margin:0 0 10px;background:var(--paper);color:var(--muted)}
+.du-turno.yo{background:color-mix(in srgb,#4f46e5 14%,var(--surface));color:#4338ca;animation:rtPulse 1.8s ease-in-out infinite}
+:root[data-modo="noche"] .du-turno.yo{color:#c7d2fe}
+.du-mj .mj-c[disabled]{opacity:.92}
 </style>
 <style>
 /* Presentación y bienvenida */
@@ -2613,13 +2618,16 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
   }, true);
   setTimeout(function(){ try{ prRevisar(); }catch(e){} }, 2500);
   /* ---------- Duelo en vivo (Firebase, sondeo cada 1,5 s) ---------- */
-  var DU = null, DU_PEND = null, DU_N = { trivia: 7, quien: 5 }, DU_T = { trivia: 15, quien: 25 };
+  var DU = null, DU_PEND = null, DU_N = { trivia: 7, quien: 5, libros: 3, memoria: 8 }, DU_T = { trivia: 15, quien: 25 };
+  var DU_JN = { trivia: "Trivia", quien: "¿Quién soy?", libros: "Ordena los libros", memoria: "Memoria por turnos" };
   var DU_ABC = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   function duNombre(){ return RKP ? RKP.n : store.get("duNombre", "") || (nombre && rkValido(nombre, 16) ? nombre : ""); }
   function duCodigo(){ var c = ""; for (var i = 0; i < 4; i++) c += DU_ABC[Math.floor(Math.random() * DU_ABC.length)]; return c; }
   function duShuffle(a, r){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var k = Math.floor(r() * (i + 1)), t = a[i]; a[i] = a[k]; a[k] = t; } return a; }
   function duPreguntas(cod, j){
     var r = seedRnd("duelo" + cod + j);
+    if (j === "libros"){ var R = []; for (var k = 0; k < 3; k++){ var st = Math.floor(r() * 61), ids = []; for (var m = 0; m < 6; m++) ids.push(st + m); R.push({ ids: ids, pool: duShuffle(ids, r) }); } return R; }
+    if (j === "memoria"){ var PJ = duShuffle(JUEGOS.parejas.map(function(x, i){ return i; }), r).slice(0, 8), C = []; PJ.forEach(function(pi, k){ C.push({ p: k, t: JUEGOS.parejas[pi][0], k: "n" }); C.push({ p: k, t: JUEGOS.parejas[pi][1], k: "h" }); }); return duShuffle(C, r); }
     if (j === "trivia"){
       var T = JUEGOS.trivia, fac = [], dif = []; T.forEach(function(q, i){ (q.e ? dif : fac).push(i); });
       return duShuffle(fac, r).slice(0, 4).concat(duShuffle(dif, r).slice(0, 3)).map(function(i){ var q = T[i]; return { q: q.q, o: duShuffle(q.o, r), a: q.o[0], r: q.r }; });
@@ -2638,7 +2646,10 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
   function duLeer(c){ return fsReq("GET", duPath(c)).then(function(d){ return d ? fsOut(d.fields) : null; }); }
   function duYo(){ return RKA && RKA.uid; }
   function duSoyH(){ return DU && DU.doc && DU.doc.h === duYo(); }
-  function duRival(){ var d = DU.doc; return duSoyH() ? { n: d.gn || "Rival", p: d.pg || 0, i: d.ig || 0 } : { n: d.hn, p: d.ph || 0, i: d.ih || 0 }; }
+  function duRival(){ var d = DU.doc, r = duSoyH() ? { n: d.gn || "Rival", p: d.pg || 0, i: d.ig || 0 } : { n: d.hn, p: d.ph || 0, i: d.ih || 0 }; if (DU.j === "memoria") r.i = Math.round(r.p / 100); return r; }
+  function mmOk(){ return (DU.doc.ok || "") ? DU.doc.ok.split(",").map(Number) : []; }
+  function mmFl(){ return (DU.doc.fl || "") ? DU.doc.fl.split(",").map(Number) : []; }
+  function mmMiTurno(){ return DU.doc.tu === (duSoyH() ? "h" : "g"); }
   function duStop(){ if (DU){ clearTimeout(DU.poll); clearInterval(DU.tick); clearTimeout(DU.adv); } }
   function duPoll(){
     if (!DU) return; clearTimeout(DU.poll);
@@ -2654,11 +2665,12 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
         if (riv.i !== riv0) DU.rivT = Date.now();
         if (DU.fase === "espera" && d.est === "jugando"){ DU.fase = "cuenta"; duRender(); }
         else if (d.est === "cancelado" && DU.fase !== "res"){ DU.fase = "cancelado"; duRender(); return; }
+        else if (DU.j === "memoria" && DU.fase === "juego"){ DU.pts = duSoyH() ? d.ph || 0 : d.pg || 0; var firma = d.tu + "|" + d.fl + "|" + d.ok; if (firma !== DU.firma){ DU.firma = firma; DU.rivT = Date.now(); if (!DU.mmBusy) duRender(); } duMmFin(); }
         else if (DU.fase === "juego" || DU.fase === "fin1"){ duMarcador(); duRevFin(); }
         else if (DU.fase === "res"){ if (d.rv && d.rv !== DU.c && !DU.rvVisto){ DU.rvVisto = 1; duRender(); } }
         duPoll();
       }, function(){ duPoll(); });
-    }, DU.fase === "res" ? 3000 : 1500);
+    }, DU.fase === "res" ? 3000 : DU.j === "memoria" && DU.fase === "juego" ? 1000 : 1500);
   }
   function duRevFin(){
     if (DU.fase !== "fin1") return;
@@ -2681,7 +2693,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     var intento = 0;
     (function go(){
       var c = duCodigo();
-      rkToken().then(function(a){ return fsSet(duPath(c), { j: j, h: a.uid, hn: n, g: "", gn: "", ph: 0, pg: 0, ih: 0, ig: 0, est: "esperando", c: Date.now(), rv: "" }, true); }).then(function(){
+      rkToken().then(function(a){ return fsSet(duPath(c), { j: j, h: a.uid, hn: n, g: "", gn: "", ph: 0, pg: 0, ih: 0, ig: 0, est: "esperando", c: Date.now(), rv: "", tu: "h", fl: "", ok: "" }, true); }).then(function(){
         if (rvDe) fsSet(duPath(rvDe), duSoyH() ? { rv: c } : { rv: c }, false).catch(function(){});
         duStop(); DU = { c: c, j: j, fase: "espera", doc: { h: duYo(), hn: n, g: "", j: j, ih: 0, ig: 0, ph: 0, pg: 0 } };
         renderMore("duelo"); duPoll();
@@ -2704,15 +2716,50 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
   }
   function duMsg(t, ok){ var m = $("duMsg"); if (m){ m.textContent = t; m.hidden = false; m.className = "du-msg" + (ok ? " ok" : ""); } }
   function duCompartir(){
-    var t = "⚡ Te reto a un duelo bíblico en vivo de " + (DU.j === "trivia" ? "Trivia" : "¿Quién soy?") + ".\nCódigo: " + DU.c + "\n\nÁbrelo aquí y entra directo:\nhttps://sebagutierrez777-tech.github.io/biblia/?duelo=" + DU.c + "\n\nO en la app: Más → Juegos → Duelo en vivo → Unirme.";
+    var t = "⚡ Te reto a un duelo bíblico en vivo de " + DU_JN[DU.j] + ".\nCódigo: " + DU.c + "\n\nÁbrelo aquí y entra directo:\nhttps://sebagutierrez777-tech.github.io/biblia/?duelo=" + DU.c + "\n\nO en la app: Más → Juegos → Duelo en vivo → Unirme.";
     if (navigator.share) navigator.share({ text: t }).catch(function(){}); else { try{ navigator.clipboard.writeText(t).then(function(){ toast("Invitación copiada"); }); }catch(e){} }
   }
   function duMarcador(){
-    var m = $("duMarc"); if (!m || !DU) return; var riv = duRival(), N = DU.Q ? DU.Q.length : DU_N[DU.j];
+    var m = $("duMarc"); if (!m || !DU) return; var riv = duRival(), N = DU_N[DU.j]; if (DU.j === "memoria") DU.i = Math.round(DU.pts / 100);
     m.innerHTML = '<div class="du-p yo"><b>Tú</b><span>' + DU.pts + '</span><div class="du-pb"><i style="width:' + Math.round(DU.i / N * 100) + '%"></i></div></div><div class="du-vs">VS</div><div class="du-p"><b>' + esc(riv.n) + '</b><span>' + riv.p + '</span><div class="du-pb"><i style="width:' + Math.round(riv.i / N * 100) + '%"></i></div></div>';
   }
+  function duMmFin(){
+    if (DU.fase !== "juego" || DU.j !== "memoria") return;
+    if (mmOk().length >= 16){ DU.i = Math.round(DU.pts / 100); DU.fase = "res"; duFinal(); duRender(); return; }
+    if (!mmMiTurno() && Date.now() - (DU.rivT || Date.now()) > 60000){ DU.fase = "res"; DU.abandono = 1; duFinal(); duRender(); }
+  }
   function duEmpezar(){
-    DU.Q = duPreguntas(DU.c, DU.j); DU.i = 0; DU.pts = 0; DU.rivT = Date.now(); DU.fase = "juego"; duPregunta();
+    DU.Q = duPreguntas(DU.c, DU.j); DU.i = 0; DU.pts = 0; DU.rivT = Date.now(); DU.fase = "juego";
+    if (DU.j === "libros"){ DU.L = { r: 0, next: 0, err: 0, t0: Date.now(), bad: null }; duRender(); return; }
+    if (DU.j === "memoria"){ DU.mmLoc = null; DU.mmBusy = false; DU.firma = ""; duRender(); return; }
+    duPregunta();
+  }
+  function duLibro(bk){
+    var L = DU.L, R = DU.Q[L.r]; if (!R || L.listo) return;
+    if (bk === R.ids[L.next]){ L.next++; L.bad = null;
+      if (L.next === R.ids.length){ var seg = (Date.now() - L.t0) / 1000, gan = Math.max(30, Math.round(150 - seg * 4 - L.err * 15)); DU.pts += gan; DU.i++; L.listo = 1; DU.ult = { ok: true, gan: gan, seg: Math.round(seg), err: L.err }; duEnviar(); duRender();
+        DU.adv = setTimeout(function(){ if (!DU || DU.fase !== "juego") return; if (DU.i >= DU.Q.length){ DU.fase = "fin1"; DU.fin1T = Date.now(); duRevFin(); duRender(); } else { DU.L = { r: L.r + 1, next: 0, err: 0, t0: Date.now(), bad: null }; duRender(); } }, 1600); return; }
+    } else { L.err++; L.bad = bk; try{ if (navigator.vibrate) navigator.vibrate(60); }catch(e){} }
+    duRender();
+  }
+  function duCarta(i){
+    if (DU.mmBusy || !mmMiTurno()) return;
+    var ok = mmOk(), fl = DU.mmLoc || [];
+    if (ok.indexOf(i) >= 0 || fl.indexOf(i) >= 0 || fl.length >= 2) return;
+    fl = fl.concat([i]); DU.mmLoc = fl; duRender();
+    fsSet(duPath(DU.c), { fl: fl.join(",") }, false).catch(function(){});
+    if (fl.length < 2) return;
+    DU.mmBusy = true;
+    var a = DU.Q[fl[0]], b = DU.Q[fl[1]], par = a.p === b.p;
+    try{ if (navigator.vibrate) navigator.vibrate(par ? 30 : [20, 40, 20]); }catch(e){}
+    setTimeout(function(){
+      if (!DU || DU.fase !== "juego") return;
+      var d = {}, ok2 = mmOk();
+      if (par){ ok2 = ok2.concat(fl); d.ok = ok2.join(","); d.fl = ""; DU.pts += 100; if (duSoyH()) d.ph = DU.pts; else d.pg = DU.pts; }
+      else { d.fl = ""; d.tu = duSoyH() ? "g" : "h"; }
+      Object.keys(d).forEach(function(k){ DU.doc[k] = d[k]; }); DU.mmLoc = null; DU.mmBusy = false; DU.firma = DU.doc.tu + "|" + DU.doc.fl + "|" + DU.doc.ok; DU.rivT = Date.now();
+      fsSet(duPath(DU.c), d, false).catch(function(){}); duRender(); duMmFin();
+    }, par ? 900 : 1300);
   }
   function duPregunta(){
     clearInterval(DU.tick); clearTimeout(DU.adv);
@@ -2756,12 +2803,14 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
       h += '<div class="du-box"><label for="duNom">Tu nombre en el duelo</label><input id="duNom" maxlength="16" autocomplete="off" value="' + esc(nm) + '" placeholder="María G."></div>';
       h += '<h3 class="pv-h">Crear un duelo</h3><div class="du-jg">';
       h += '<button type="button" class="du-j" data-ducrear="trivia"><span aria-hidden="true">❓</span><b>Trivia</b><small>7 preguntas · 15 s cada una · bono por rapidez</small></button>';
-      h += '<button type="button" class="du-j" data-ducrear="quien"><span aria-hidden="true">🕵️</span><b>¿Quién soy?</b><small>5 personajes · las pistas aparecen solas · menos pistas, más puntos</small></button></div>';
+      h += '<button type="button" class="du-j" data-ducrear="quien"><span aria-hidden="true">🕵️</span><b>¿Quién soy?</b><small>5 personajes · las pistas aparecen solas · menos pistas, más puntos</small></button>';
+      h += '<button type="button" class="du-j" data-ducrear="libros"><span aria-hidden="true">📚</span><b>Ordena los libros</b><small>3 rondas de carrera · gana el más rápido y sin errores</small></button>';
+      h += '<button type="button" class="du-j" data-ducrear="memoria"><span aria-hidden="true">🃏</span><b>Memoria por turnos</b><small>8 parejas en el mismo tablero · si aciertas, sigues</small></button></div>';
       h += '<h3 class="pv-h">Unirme a un duelo</h3><div class="du-box du-row"><input id="duCod" maxlength="4" autocomplete="off" autocapitalize="characters" placeholder="Código" aria-label="Código del duelo"><button type="button" class="btn" data-duunir>Unirme</button></div>';
       h += '<p class="du-msg" id="duMsg" hidden></p><p class="note">Solo puedes jugar con quien tenga tu código. No hay chat ni se empareja con desconocidos.</p>';
       el.innerHTML = h; return;
     }
-    var d = DU.doc, riv = duRival(), J = DU.j === "trivia" ? "Trivia" : "¿Quién soy?";
+    var d = DU.doc, riv = duRival(), J = DU_JN[DU.j] || "Trivia";
     if (DU.fase === "espera"){
       h += '<div class="du-wait"><small>Duelo de ' + J + '</small><p>Comparte este código con tu rival</p><div class="du-code">' + DU.c.split("").map(function(x){ return '<i>' + x + '</i>'; }).join("") + '</div><button type="button" class="btn du-share" data-dushare>Enviar invitación</button><div class="du-dots" aria-hidden="true"><i></i><i></i><i></i></div><p class="du-esp">Esperando a tu rival…</p><button type="button" class="btn ghost" data-ducancel>Cancelar duelo</button></div>';
       el.innerHTML = h; return;
@@ -2773,6 +2822,21 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
       return;
     }
     if (DU.fase !== "res") h += '<div class="du-marc" id="duMarc"></div>';
+    if (DU.fase === "juego" && DU.j === "libros"){
+      var L = DU.L, R = DU.Q[L.r];
+      h += '<div class="pz-top"><b>Ronda ' + (L.r + 1) + ' de 3</b><span>Errores: ' + L.err + '</span></div><p class="du-qs" style="font-size:16px">Toca los libros en el orden de la Biblia</p><div class="ol-a">';
+      R.ids.slice(0, L.next).forEach(function(b, k){ h += '<span class="ol-ok">' + (k + 1) + '. ' + esc(bname(b)) + '</span>'; });
+      h += '</div><div class="tv-o">'; R.pool.forEach(function(b){ if (R.ids.indexOf(b) >= L.next) h += '<button type="button" class="tv-b' + (L.bad === b ? " bad" : "") + '" data-dul="' + b + '">' + esc(bname(b)) + '</button>'; }); h += '</div>';
+      if (L.listo) h += '<p class="du-fb ok">¡Ronda lista! +' + DU.ult.gan + ' · ' + DU.ult.seg + ' s' + (DU.ult.err ? ', ' + DU.ult.err + (DU.ult.err === 1 ? " error" : " errores") : ", sin errores") + '</p>';
+      el.innerHTML = h; duMarcador(); return;
+    }
+    if (DU.fase === "juego" && DU.j === "memoria"){
+      var okL = mmOk(), flL = DU.mmLoc || mmFl(), mio = mmMiTurno();
+      h += '<div class="du-turno ' + (mio ? "yo" : "") + '">' + (mio ? "Tu turno: da vuelta dos cartas" : "Turno de " + esc(riv.n) + "…") + '</div><div class="mj-g du-mj">';
+      DU.Q.forEach(function(c, k){ var up = flL.indexOf(k) >= 0 || okL.indexOf(k) >= 0; h += '<button type="button" class="mj-c' + (up ? " up" : "") + (okL.indexOf(k) >= 0 ? " ok" : "") + (c.k === "n" ? " nm" : "") + '" data-dum="' + k + '"' + (mio ? "" : " disabled") + ' aria-label="' + (up ? esc(c.t) : "Carta boca abajo") + '"><span class="mj-in"><span class="mj-f" aria-hidden="true"><i>✦</i></span><span class="mj-b"><span>' + esc(c.t) + '</span></span></span></button>'; });
+      h += '</div><p class="note">Une cada personaje con lo que hizo. Si aciertas, sumas y sigues jugando.</p>';
+      el.innerHTML = h; duMarcador(); return;
+    }
     if (DU.fase === "juego"){
       var idx = DU.sel == null ? DU.i : DU.i - 1, q = DU.Q[idx];
       h += '<div class="pz-top"><b>' + (DU.j === "trivia" ? "Pregunta " : "Personaje ") + (idx + 1) + ' de ' + DU.Q.length + '</b><span id="duVale">' + (DU.sel == null ? "Vale " + (DU.j === "quien" ? duVale() : "100 + bono") + " pts" : "") + '</span></div><div class="du-time"><i id="duTime"></i></div>';
@@ -2805,10 +2869,12 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     if (t.closest("[data-dushare]")){ e.stopPropagation(); duCompartir(); return; }
     if (t.closest("[data-ducancel]")){ e.stopPropagation(); var c = DU.c; duStop(); DU = null; fsReq("DELETE", duPath(c)).catch(function(){}); duRender(); return; }
     if ((b = t.closest("[data-duo]"))){ e.stopPropagation(); duResponder(+b.dataset.duo); return; }
+    if ((b = t.closest("[data-dul]"))){ e.stopPropagation(); duLibro(+b.dataset.dul); return; }
+    if ((b = t.closest("[data-dum]"))){ e.stopPropagation(); duCarta(+b.dataset.dum); return; }
     if (t.closest("[data-durv]")){ e.stopPropagation(); var old = DU.c; duCrear(DU.j, old); return; }
     if ((b = t.closest("[data-durvok]"))){ e.stopPropagation(); duUnir(b.dataset.durvok); return; }
     if (t.closest("[data-dusalir]")){ e.stopPropagation(); duStop(); DU = null; renderMore("juegos"); return; }
-    if (t.closest("[data-dushres]")){ e.stopPropagation(); var riv = duRival(), tx = (DU.gane ? "🏆 Gané" : DU.emp ? "🤝 Empaté" : "💪 Jugué") + " un duelo bíblico en vivo de " + (DU.j === "trivia" ? "Trivia" : "¿Quién soy?") + ".\n" + duNombre() + " " + DU.pts + " · " + riv.n + " " + riv.p + "\n\n¿Te animas a retarme? Juega en Biblia Multiversión · IDP Chile"; if (navigator.share) navigator.share({ text: tx }).catch(function(){}); else { try{ navigator.clipboard.writeText(tx).then(function(){ toast("Copiado para compartir"); }); }catch(x){} } return; }
+    if (t.closest("[data-dushres]")){ e.stopPropagation(); var riv = duRival(), tx = (DU.gane ? "🏆 Gané" : DU.emp ? "🤝 Empaté" : "💪 Jugué") + " un duelo bíblico en vivo de " + DU_JN[DU.j] + ".\n" + duNombre() + " " + DU.pts + " · " + riv.n + " " + riv.p + "\n\n¿Te animas a retarme? Juega en Biblia Multiversión · IDP Chile"; if (navigator.share) navigator.share({ text: tx }).catch(function(){}); else { try{ navigator.clipboard.writeText(tx).then(function(){ toast("Copiado para compartir"); }); }catch(x){} } return; }
   }, true);
   document.addEventListener("visibilitychange", function(){ if (!document.hidden && DU && masSub === "duelo") duPoll(); });
   (function(){ try{ var q = new URLSearchParams(location.search).get("duelo"); if (q && /^[A-Za-z0-9]{4}$/.test(q)){ DU_PEND = q.toUpperCase(); history.replaceState(null, "", location.pathname); setTimeout(function(){ try{ tab("vMore"); renderMore("duelo"); }catch(e){} }, 3800); } }catch(e){} })();
