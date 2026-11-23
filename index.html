@@ -952,6 +952,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
 .rk-pos{text-align:center;margin:12px 0;color:var(--muted)}
 .rk-acc{display:flex;gap:8px;margin-top:8px}.rk-acc .btn{flex:1}
 .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);box-shadow:none;min-height:44px}
+.rk-share{width:100%;min-height:50px;margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(100deg,#b8860b,#d4a017);color:#fff}
 </style>
 <style>
 /* Presentación y bienvenida */
@@ -2474,8 +2475,16 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
       var me = RKA && RKA.uid, x = '<ol class="rk-l">';
       d.L.forEach(function(p, i){ var yo = p.uid === me; x += '<li class="' + (yo ? "yo" : "") + (i < 3 ? " top" + (i + 1) : "") + '"><span class="rk-n">' + (i + 1) + '</span><span class="rk-p"><b>' + esc(p.n) + '</b><small>' + esc(p.l || "") + '</small></span><span class="rk-s">' + p.p + '</span>' + (yo ? '<span class="rk-f"></span>' : '<button type="button" class="rk-f" data-rkrep="' + esc(p.uid) + '" aria-label="Reportar a ' + esc(p.n) + '"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg></button>') + '</li>'; });
       x += '</ol>';
+      var miPos = null; d.L.forEach(function(p, i){ if (p.uid === me) miPos = i + 1; }); if (!miPos && d.pos) miPos = d.pos;
       if (d.pos && d.pos > d.L.length) x += '<p class="rk-pos">Vas en el lugar <b>' + d.pos + '</b>.</p>';
+      var misPts = tipo === "sem" ? rkSemPts() : rkTotal();
+      if (miPos && misPts > 0) x += '<button type="button" class="btn rk-share" id="rkShare"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Compartir mi puesto</button>';
       $("rkList").innerHTML = x;
+      var sb = $("rkShare"); if (sb) sb.onclick = function(){
+        var med = miPos === 1 ? "🥇 " : miPos === 2 ? "🥈 " : miPos === 3 ? "🥉 " : "🏆 ";
+        var t = med + "Voy en el lugar " + miPos + " del ranking " + (tipo === "sem" ? "de esta semana" : "total") + " de los juegos bíblicos, con " + misPts + " puntos.\n" + RKP.n + " · " + RKP.l + "\n\n¿Te animas a superarme? Juega en Biblia Multiversión · IDP Chile";
+        if (navigator.share) navigator.share({ text: t }).catch(function(){}); else { try{ navigator.clipboard.writeText(t).then(function(){ toast("Copiado para compartir"); }); }catch(e){} }
+      };
     }, function(){ if ($("rkList")) $("rkList").innerHTML = '<p class="note">No se pudo cargar el ranking. Revisa tu conexión e intenta de nuevo.</p>'; });
   }
   $("vMore").addEventListener("click", function(e){
