@@ -3348,6 +3348,7 @@ header #btnRef svg{color:#7a6334}
   if (!("serviceWorker" in navigator)) return;
   var V = ["rvr1960","rvc","rvg","ntv","lbla","nblh","dhh","tla","pdt","bls","bj","bl95"];
   function warm(){
+    try{ var pv = JSON.parse(localStorage.getItem("biblia.pos") || "{}").v; V = [pv || "rvr1960"]; }catch(e){ V = ["rvr1960"]; }
     var i = 0;
     (function next(){
       if (i >= V.length) return;
@@ -3358,13 +3359,17 @@ header #btnRef svg{color:#7a6334}
       }, function(){ setTimeout(next, 400); });
     })();
   }
+  // Cuando se instala una versión nueva, la app se recarga sola una vez para mostrarla.
+  var habia = !!navigator.serviceWorker.controller, recargo = false;
+  navigator.serviceWorker.addEventListener("controllerchange", function(){ if (!habia || recargo) { habia = true; return; } recargo = true; location.reload(); });
   window.addEventListener("load", function(){
-    navigator.serviceWorker.register("sw.js").then(function(){
+    navigator.serviceWorker.register("sw.js").then(function(reg){
+      document.addEventListener("visibilitychange", function(){ if (document.visibilityState === "visible") reg.update().catch(function(){}); });
       return navigator.serviceWorker.ready;
     }).then(function(){
       var c = navigator.connection;
       if (c && c.saveData) return;
-      setTimeout(warm, 3000);
+      setTimeout(warm, 8000);
     }).catch(function(){});
   });
 })();
