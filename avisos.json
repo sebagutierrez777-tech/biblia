@@ -1,6 +1,14 @@
 {
  "avisos": [
   {
+   "id": "2026-11-23-version-2-2",
+   "fecha": "2026-11-23",
+   "titulo": "Versión 2.2: lectura en paralelo y tablet",
+   "texto": "Ahora puedes leer un capítulo en dos versiones a la vez: toca el botón de la versión y elige «Leer en paralelo con». En tablet o con el celular girado se ve en dos columnas. La app quedó adaptada para tablet, el diccionario bíblico creció a 176 palabras, los 40 hallazgos de arqueología tienen imagen y puedes verlas en pantalla completa tocándolas. Además, puedes compartir tu versículo y el devocional juntos en un solo mensaje.",
+   "enlace": "",
+   "texto_enlace": ""
+  },
+  {
    "id": "2026-11-22-version-2-1",
    "fecha": "2026-11-22",
    "titulo": "Versión 2.1: devocional, juegos y búsqueda",
