@@ -784,6 +784,60 @@ html.simple .act-r2{display:flex!important}
 .gn-l li{margin-top:0}.gn-l li+li{margin-top:22px}
 .gn-l li.q{border:2px dashed #3b6d11;color:#3b6d11}.gn-l li.good{background:#dcfce7;border-color:#15803d;color:#14532d}.gn-l li.bad{background:#fee2e2;border-color:#b91c1c;color:#7f1d1d}
 :root:is([data-tone="noche"],[data-tone="bosque"],[data-tone="vino"],[data-tone="grafito"]) .mj-c.ok{background:#14532d;color:#dcfce7}
+
+/* ---- Lectura sobria: menos color, más formal ---- */
+header #btnRef,:root[data-tone] header #btnRef{background:#f3ead3;border-color:#dccb9f;color:#3b2e14;box-shadow:none}
+header #btnRef svg{color:#7a6334}
+#vMore[data-sec] .mas-h{background:var(--surface);border:1px solid var(--line)}
+#vMore[data-sec] .mas-h h2{color:var(--ink)}
+#vMore[data-sec] .mas-h .icon{color:color-mix(in srgb,var(--sc) 55%,var(--ink))}
+#vMore[data-sec] .sv-in{background:var(--surface);border-left:3px solid color-mix(in srgb,var(--sc) 55%,var(--line))}
+.dic.tc,.dic.tc[open]{background:var(--surface);border:1px solid var(--line);border-left:3px solid color-mix(in srgb,var(--c) 55%,var(--line))}
+.dic.tc summary::after{color:var(--muted)}
+.tn{background:color-mix(in srgb,var(--c,var(--gc,var(--sc,#888))) 16%,var(--surface));color:color-mix(in srgb,var(--c,var(--gc,var(--sc,#888))) 70%,var(--ink));font-weight:700}
+.cu b{color:var(--ink)}
+.hs-h{background:var(--surface);border-left:3px solid color-mix(in srgb,var(--c) 55%,var(--line))}
+.hs-h .hs-w{color:var(--muted);font-weight:600}
+.cu-i{background:color-mix(in srgb,var(--c) 10%,transparent);color:color-mix(in srgb,var(--c) 70%,var(--ink))}
+.hs-t li{border-left-color:color-mix(in srgb,var(--e,#888) 50%,var(--line))!important}
+.hs-t li::before{background:color-mix(in srgb,var(--e,#888) 70%,var(--line))!important}
+.hs-t .hs-f{background:var(--paper);color:var(--muted)}
+.hs-t b{color:var(--ink)}
+.gen{background:var(--surface);border-color:var(--line);border-left:3px solid color-mix(in srgb,var(--gc) 55%,var(--line))}
+.gen[open] summary{background:var(--paper)}
+.gen summary b{color:var(--ink)}
+.tribu{background:var(--paper)!important;border-left:3px solid color-mix(in srgb,var(--c) 55%,var(--line))}
+.tribu b{color:var(--ink)!important}
+.dic-l b{background:color-mix(in srgb,var(--c) 18%,var(--surface));color:color-mix(in srgb,var(--c) 70%,var(--ink))}
+.dic-l span{background:var(--line)}
+.dic-bar button{background:var(--surface);border:1px solid var(--line);color:var(--ink)}
+.cn-g[style*="--g"] b{background:var(--paper);color:var(--ink)}
+.cn-g[style*="--g"] .chip{background:var(--surface);border-color:var(--line)}
+.rs-hero{background:linear-gradient(150deg,color-mix(in srgb,var(--g) 55%,#1f2430),color-mix(in srgb,var(--g) 75%,#1f2430))!important}
+.rs-meta div{background:var(--surface);border-color:var(--line)}
+.rs-meta span{color:var(--muted)}
+.rs-s[style*="--g"]{border-left:3px solid color-mix(in srgb,var(--g) 55%,var(--line))}
+.rs-s[style*="--g"] .rs-l{color:var(--muted)}
+.tm{border-top:3px solid color-mix(in srgb,#4a6a96 55%,var(--line))}
+.tm-h small{color:var(--muted)}
+.tm-hz{background:var(--surface);border:1px solid var(--line);border-left:3px solid color-mix(in srgb,#9a6b3f 55%,var(--line))}
+.devo{border-color:var(--line)}
+.devo-h{background:var(--surface);color:var(--ink);border-bottom:1px solid var(--line)}
+.devo-ic{background:color-mix(in srgb,#9a6b3f 14%,var(--surface));color:#7a5a36}
+.devo-t small{color:var(--muted)}
+.devo-v{border-left-color:color-mix(in srgb,#9a6b3f 55%,var(--line));background:var(--paper)}
+.devo-v cite{color:var(--muted)}
+.devo-o{background:var(--paper)}.devo-o b{color:var(--muted)}
+.devo .vdd-btns .b1{background:var(--rubric)}
+#vMore[data-sec=juego] .jg{background:var(--surface);border-left:3px solid color-mix(in srgb,var(--c) 55%,var(--line))}
+#vMore[data-sec=juego] .jg-i{background:color-mix(in srgb,var(--c) 16%,var(--surface));color:color-mix(in srgb,var(--c) 70%,var(--ink));box-shadow:none}
+#vMore[data-sec=juego] .jg-t em{color:var(--muted)}
+#vMore[data-sec=juego] .g-rec span,#vMore[data-sec=juego] .g-rec span:last-child{background:var(--surface);border-color:var(--line);color:var(--muted)}
+#vMore[data-sec=juego] .g-rec b{color:var(--ink)}
+#vMore[data-sec=juego] .tv-b{border-left:3px solid color-mix(in srgb,var(--sc) 50%,var(--line))}
+#vMore[data-sec=juego] .tv-q,#vMore[data-sec=juego] .pz-top b{color:var(--ink)}
+#vMore[data-sec=juego] .pz-top span{background:var(--paper);color:var(--muted)}
+.jg-share{background:var(--rubric)}
 </style>
 <style>
 /* Presentación y bienvenida */
