@@ -898,6 +898,9 @@ header #btnRef svg{color:#7a6334}
 .lb.lb-clean button,.lb.lb-clean .lb-cap{opacity:0;pointer-events:none}.lb.lb-clean .lb-x{opacity:.5;pointer-events:auto}
 .cfg-g{margin:26px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line);font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}.cfg-g:first-child{margin-top:4px}
 #shSize .rem-box{margin-top:14px}#shSize .prom-row+.rem-box{margin-top:16px}
+.map-fs-b{width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:#fff;color:#222;border:2px solid rgba(0,0,0,.2);border-radius:6px;cursor:pointer;background-clip:padding-box}
+.leaflet-container.map-fs{position:fixed!important;inset:0;z-index:96;width:100vw!important;height:100vh!important;height:100dvh!important;min-height:0;border-radius:0!important;border:0!important}
+body.map-fs-on nav,body.map-fs-on header{visibility:hidden}
 </style>
 <style>
 /* Presentación y bienvenida */
@@ -2495,7 +2498,7 @@ header #btnRef svg{color:#7a6334}
     $("vMore").innerHTML = h;
     loadLeaflet().then(function(Lf){
       var box = $("dnMap"); if (!box || masSub !== "donde") return; box.innerHTML = "";
-      var m = Lf.map(box, { zoomControl: true, attributionControl: true, scrollWheelZoom: false }); DN.map = m;
+      var m = Lf.map(box, { zoomControl: true, attributionControl: true, scrollWheelZoom: false }); DN.map = m; mapFs(Lf, m);
       Lf.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 12, attribution: "© OpenStreetMap" }).addTo(m);
       var pts = [];
       q.ops.forEach(function(o, n){ if (DN.quita.indexOf(o) >= 0) return; var y = L[o], cls = DN.res != null ? (o === q.t ? " good" : o === DN.res ? " bad" : "") : "";
@@ -2662,6 +2665,25 @@ header #btnRef svg{color:#7a6334}
     });
     return best;
   }
+  // Botón de pantalla completa para los mapas
+  var FS_IN = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+  var FS_OUT = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>';
+  function mapFs(Lf, m){
+    document.body.classList.remove("map-fs-on");
+    var Ctl = Lf.Control.extend({ options: { position: "topright" }, onAdd: function(){
+      var b = Lf.DomUtil.create("button", "map-fs-b"); b.type = "button"; b.setAttribute("aria-label", "Pantalla completa"); b.innerHTML = FS_IN;
+      Lf.DomEvent.disableClickPropagation(b);
+      Lf.DomEvent.on(b, "click", function(){ var c = m.getContainer(), on = !c.classList.contains("map-fs");
+        c.classList.toggle("map-fs", on); document.body.classList.toggle("map-fs-on", on);
+        b.innerHTML = on ? FS_OUT : FS_IN; b.setAttribute("aria-label", on ? "Salir de pantalla completa" : "Pantalla completa");
+        try{ if (on && c.requestFullscreen) c.requestFullscreen().catch(function(){}); else if (!on && document.fullscreenElement) document.exitFullscreen(); }catch(e){}
+        if (on) m.scrollWheelZoom.enable();
+        setTimeout(function(){ m.invalidateSize(); }, 250); });
+      return b; } });
+    m.addControl(new Ctl());
+  }
+  document.addEventListener("fullscreenchange", function(){ if (document.fullscreenElement) return; var c = document.querySelector(".map-fs"); if (c){ var b = c.querySelector(".map-fs-b"); if (b) b.click(); } });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape"){ var c = document.querySelector(".map-fs"); if (c){ var b = c.querySelector(".map-fs-b"); if (b) b.click(); } } });
   function renderMapa(opt){
     var el = $("vMore");
     el.innerHTML = masHead("Mapas bíblicos") + '<div class="mapa-chips"><button type="button" class="chip" id="mpCap" aria-pressed="' + (opt.place == null) + '">' + esc(refText(cur.b, cur.c)) + '</button></div><input class="mas-q" id="mpQ" type="search" placeholder="Buscar un lugar, como Betel o Éfeso" autocomplete="off" aria-label="Buscar un lugar"><div id="mapa" role="region" aria-label="Mapa"></div><div id="mpSel"></div><div class="mapa-l" id="mpList"></div><p class="note" style="padding-top:4px">Ubicaciones aproximadas según OpenBible.info (CC BY). El mapa necesita internet para dibujarse; la lista funciona igual sin conexión.</p>';
@@ -2671,7 +2693,7 @@ header #btnRef svg{color:#7a6334}
         if (!$("mapa")) return;
         mapObj = L.map("mapa", { zoomControl: true, attributionControl: true }).setView([31.8, 35.2], 6);
         L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 13, attribution: "© OpenStreetMap · OpenBible.info" }).addTo(mapObj);
-        mapLayer = L.layerGroup().addTo(mapObj);
+        mapLayer = L.layerGroup().addTo(mapObj); mapFs(L, mapObj);
         mapDraw();
       }, function(){ var m = $("mapa"); if (m){ m.style.height = "auto"; m.style.minHeight = "0"; m.innerHTML = '<p class="note" style="padding:14px">Sin internet no se puede dibujar el mapa. Aquí abajo tienes la lista de lugares.</p>'; } });
     }, function(){ $("mpList").innerHTML = '<p class="note">No se pudieron cargar los lugares. Revisa tu conexión.</p>'; });
