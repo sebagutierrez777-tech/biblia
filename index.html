@@ -1600,10 +1600,16 @@ body.map-fs-on nav,body.map-fs-on header{visibility:hidden}
 
   /* ---------- Botón atrás ---------- */
   (function(){
-    var leaving = false;
-    function arm(){ try{ history.pushState({ biblia: 1 }, ""); }catch(e){} }
-    arm();
+    // Android/Chrome ignora las entradas de historial agregadas sin un toque del usuario,
+    // así que el "colchón" de entradas se rellena en cada toque y no dentro de popstate.
+    var leaving = false, depth = 0, MAXD = 8;
+    function push(){ try{ history.pushState({ biblia: 1 }, ""); depth++; return true; }catch(e){ return false; } }
+    function arm(){ /* se rellena en el próximo toque */ }
+    function armUser(e){ if (leaving || (e && e.target && e.target.closest && e.target.closest("#exitYes"))) return; while (depth < MAXD){ if (!push()) break; } }
+    push();
+    ["pointerdown", "keydown", "touchstart"].forEach(function(ev){ document.addEventListener(ev, armUser, { capture: true, passive: true }); });
     window.addEventListener("popstate", function(){
+      depth = Math.max(0, depth - 1);
       if (leaving) return;
       var open = document.querySelector(".sheet.on");
       if (!$("exitAsk").hidden){ $("exitAsk").hidden = true; arm(); return; }
@@ -1622,7 +1628,7 @@ body.map-fs-on nav,body.map-fs-on header{visibility:hidden}
       $("exitAsk").hidden = false; arm();
     });
     $("exitNo").onclick = function(){ $("exitAsk").hidden = true; };
-    $("exitYes").onclick = function(){ leaving = true; $("exitAsk").hidden = true; history.go(-2); setTimeout(function(){ try{ window.close(); }catch(e){} }, 300); };
+    $("exitYes").onclick = function(){ leaving = true; $("exitAsk").hidden = true; history.go(-(depth + 1)); setTimeout(function(){ try{ window.close(); }catch(e){} }, 300); };
   })();
 
   /* ---------- Buscar ---------- */
