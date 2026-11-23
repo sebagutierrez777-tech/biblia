@@ -908,7 +908,7 @@ body.map-fs-on nav,body.map-fs-on header{visibility:hidden}
 nav button{transition:background-color .2s ease,color .2s ease}
 @media (prefers-reduced-motion:reduce){.view.vt,.sheet.on{animation:none}}
 .bb-seg button{font-size:13px;padding-left:4px;padding-right:4px}
-.cu.cfL{animation:cfL .22s ease-out}.cu.cfR{animation:cfR .22s ease-out}@keyframes cfL{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}@keyframes cfR{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:none}}@media (prefers-reduced-motion:reduce){.cu.cfL,.cu.cfR{animation:none}}
+.swL{animation:cfL .22s ease-out}.swR{animation:cfR .22s ease-out}@keyframes cfL{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}@keyframes cfR{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:none}}@media (prefers-reduced-motion:reduce){.swL,.swR{animation:none}}
 .tj{margin:0 0 14px;padding:14px 14px 10px;border-radius:14px;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--c)}
 .tj-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.tj-h b{font-family:var(--read);font-size:22px}.tj-h span{font-size:13px;font-weight:700;color:var(--muted)}
 .tj>p{margin:6px 0 10px;line-height:1.5}.tj-g{display:block;margin:8px 0 4px;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
@@ -2118,14 +2118,18 @@ nav button{transition:background-color .2s ease,color .2s ease}
     $("vMore").innerHTML = h + '<p class="note">Estudio de apoyo de la Biblia Multiversión.</p>';
   }
   (function(){ var x0 = null, y0 = 0, t0 = 0, V = $("vMore");
-    V.addEventListener("touchstart", function(e){ x0 = null; if (masSub !== "otros" || !CURIO || e.touches.length > 1 || e.target.closest(".chip,button")) return; x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; t0 = Date.now(); }, { passive: true });
+    function hScroll(el){ for (; el && el !== V; el = el.parentElement){ if (el.scrollWidth > el.clientWidth + 4){ var o = getComputedStyle(el).overflowX; if (o === "auto" || o === "scroll") return true; } } return false; }
+    V.addEventListener("touchstart", function(e){ x0 = null; if (e.touches.length > 1 || !V.querySelector(".hs-seg") || e.target.closest(".leaflet-container,input,textarea,select,.hs-seg") || hScroll(e.target)) return; x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; t0 = Date.now(); }, { passive: true });
     V.addEventListener("touchend", function(e){ if (x0 == null) return; var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
       if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5 || Date.now() - t0 > 800) return;
-      var O = ["todas", "texto", "arq"], i = O.indexOf(renderCurio.f || "todas"), j = i + (dx < 0 ? 1 : -1);
-      if (j < 0 || j >= O.length) return;
-      renderCurio.f = O[j]; var y = $("main").scrollTop; renderCurio();
-      var L = V.querySelectorAll(".cu"); L.forEach(function(c){ c.classList.remove("cfL", "cfR"); void c.offsetWidth; c.classList.add(dx < 0 ? "cfL" : "cfR"); });
-      var sg = V.querySelector("[data-cf]"); if (sg && y > sg.offsetTop) $("main").scrollTop = Math.max(0, sg.offsetTop - 70);
+      var sg = V.querySelector(".hs-seg"); if (!sg) return;
+      var B = [].slice.call(sg.querySelectorAll("button")), i = B.findIndex(function(x){ return x.getAttribute("aria-pressed") === "true"; }), j = i + (dx < 0 ? 1 : -1);
+      if (i < 0 || j < 0 || j >= B.length) return;
+      var y = $("main").scrollTop; B[j].click();
+      sg = V.querySelector(".hs-seg"); if (!sg) return;
+      var c = dx < 0 ? "swL" : "swR";
+      for (var n = sg.nextElementSibling; n; n = n.nextElementSibling){ n.classList.remove("swL", "swR"); void n.offsetWidth; n.classList.add(c); }
+      if (y > sg.offsetTop) $("main").scrollTop = Math.max(0, sg.offsetTop - 70);
     }, { passive: true });
   })();
   $("vMore").addEventListener("click", function(e){ var b = e.target.closest("[data-cf]"); if (b){ e.stopPropagation(); renderCurio.f = b.dataset.cf; renderCurio(); } }, true);
