@@ -1145,7 +1145,7 @@ header #btnRef svg{color:#7a6334}
         <label class="prom-row" style="margin:0"><input type="checkbox" id="osChk"> <span>Avisos de la iglesia<small id="osInfo">Recibe en tu celular los avisos de IDP Chile.</small></span></label>
       </div>
       <div class="rem-box" id="remBox">
-        <label class="prom-row" style="margin:0"><input type="checkbox" id="remChk"> <span>Recordatorio diario de lectura<small id="remInfo">Te avisamos una vez al día qué te toca leer.</small></span></label>
+        <label class="prom-row" style="margin:0"><input type="checkbox" id="remChk"> <span>Recordatorio diario del devocional<small id="remInfo">Te avisamos una vez al día para que leas tu devocional.</small></span></label>
       </div>
       <div class="size-row"><button class="step" id="szMinus" aria-label="Letra más chica">A−</button><output id="szOut">En el principio</output><button class="step" id="szPlus" aria-label="Letra más grande">A+</button></div>
       <div class="grp" style="margin-top:26px">Tipo de letra</div>
@@ -1303,7 +1303,7 @@ header #btnRef svg{color:#7a6334}
     var first = cur.b === 0 && cur.c === 0, last = cur.b === 65 && cur.c === META.books[65][1].length - 1;
     var lst = (window.speechSynthesis ? '<button type="button" class="listen" id="btnListen"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>Escuchar</button>' : '') + '<button type="button" class="listen" id="btnPulpit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5h16v2"/><path d="M9 20h6"/><path d="M12 5v15"/></svg>Púlpito</button>';
     var tip = store.get("tipVerso", false) ? "" : '<div class="tip" id="tipV"><span>Toca un versículo para guardarlo en <b>Favoritos</b>, resaltarlo con color, escribir una nota o crear una imagen.</span><button type="button" id="tipOk">Entendido</button></div>';
-    if (remOn && store.get("remDia", "") !== today()) tip = '<div class="tip" id="remBan"><span>' + esc(remText()) + '</span><button type="button" id="remOk">Ver</button></div>' + tip;
+    if (remOn && store.get("remDia", "") !== today()) tip = '<div class="tip" id="remBan"><span>' + esc(remText()) + '</span><button type="button" id="remOk">Leer</button></div>' + tip;
     var hola = holaHtml(); if (hola) holaShown = true;
     if (!INTROS) loadIntros().then(function(){ if ($("vRead").classList.contains("on")) renderReadKeep(); }, function(){});
     if (!FICHAS) loadFichas().then(function(){ if ($("vRead").classList.contains("on")) renderReadKeep(); }, function(){});
@@ -1311,7 +1311,7 @@ header #btnRef svg{color:#7a6334}
     $("prevC").onclick = function(){ step(-1); };
     el.classList.toggle("par-on", !!pv);
     if ($("parOff")) $("parOff").onclick = function(e){ e.stopPropagation(); setPar(null); };
-    if ($("remOk")) $("remOk").onclick = function(e){ e.stopPropagation(); store.set("remDia", today()); tab("vFavs"); };
+    if ($("remOk")) $("remOk").onclick = function(e){ e.stopPropagation(); store.set("remDia", today()); devoAbierto = true; tab("vFavs"); };
     if ($("tipOk")) $("tipOk").onclick = function(e){ e.stopPropagation(); store.set("tipVerso", true); var t = $("tipV"); if (t) t.remove(); };
     if (!$("player").hidden) ttsMark();
     $("nextC").onclick = function(){ step(1); };
@@ -3302,15 +3302,16 @@ header #btnRef svg{color:#7a6334}
 
   /* ---------- Recordatorio diario ---------- */
   var remOn = store.get("recordatorio", false);
-  function remText(){
-    var p = planDef();
-    if (p){ var di = planDay(p), items = p.days[di].filter(function(x, j){ return !plan.done[di + "." + j]; }); if (!items.length) items = p.days[di];
-      return "Hoy te toca: " + items.map(itemLabel).join(", ") + " (" + p.n + ")"; }
-    var r = vddRef(); return "Versículo del día: " + refText(r[0], r[1], r[2]) + ". Abre la Biblia y lee un capítulo hoy.";
+  function remText(dt){
+    var x = devoHoy(dt);
+    return x ? "Tu devocional de hoy: «" + x.t + "». " + x.c : "Tu devocional de hoy te espera. Regálate unos minutos con Dios.";
   }
   function remSave(){
     if (!("caches" in window)) return;
-    caches.open("biblia-meta").then(function(c){ return c.put("__recordatorio", new Response(JSON.stringify({ on: remOn, title: "Biblia Multiversión", body: remText() }), {headers:{"Content-Type":"application/json"}})); }).catch(function(){});
+    if (!DEVO){ getJSON("devocionales.json").then(function(j){ DEVO = j.devocionales; remSave(); }, function(){}); return; }
+    var days = {}, d0 = new Date();
+    for (var k = 0; k < 45; k++){ var d = new Date(d0.getFullYear(), d0.getMonth(), d0.getDate() + k); days[d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2)] = remText(d); }
+    caches.open("biblia-meta").then(function(c){ return c.put("__recordatorio", new Response(JSON.stringify({ on: remOn, title: "Tu devocional de hoy", body: "Tu devocional de hoy te espera. Regálate unos minutos con Dios.", days: days, url: "./?devo=1" }), {headers:{"Content-Type":"application/json"}})); }).catch(function(){});
   }
   function remInfo(t){ $("remInfo").textContent = t; }
   function remSetup(){
@@ -3336,7 +3337,7 @@ header #btnRef svg{color:#7a6334}
   var PLUS = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
   /* ---------- Devocional del día ---------- */
   var DEVO = null, devoAbierto = false;
-  function devoHoy(){ if (!DEVO) return null; var hoyD = new Date(), fk = ("0" + (hoyD.getMonth() + 1)).slice(-2) + "-" + ("0" + hoyD.getDate()).slice(-2), fy = hoyD.getFullYear() + "-" + fk, fx = DEVO.filter(function(d){ return d.f === fy; })[0] || DEVO.filter(function(d){ return d.f === fk; })[0]; if (fx) return fx; var G = DEVO.filter(function(d){ return !d.f || (d.f.length === 5 && d.f < "12-01"); }), i = Math.floor((hoyD - new Date(hoyD.getFullYear(), 0, 0)) / 864e5) % G.length, x = G[i], v = vddRef(); if (x.r[0] === v[0] && x.r[1] - 1 === v[1] && x.r[2] - 1 === v[2]) x = G[(i + 1) % G.length]; return x; }
+  function devoHoy(dt){ if (!DEVO) return null; var hoyD = dt || new Date(), fk = ("0" + (hoyD.getMonth() + 1)).slice(-2) + "-" + ("0" + hoyD.getDate()).slice(-2), fy = hoyD.getFullYear() + "-" + fk, fx = DEVO.filter(function(d){ return d.f === fy; })[0] || DEVO.filter(function(d){ return d.f === fk; })[0]; if (fx) return fx; var G = DEVO.filter(function(d){ return !d.f || (d.f.length === 5 && d.f < "12-01"); }), i = Math.floor((hoyD - new Date(hoyD.getFullYear(), 0, 0)) / 864e5) % G.length, x = G[i], v = vddRef(); if (x.r[0] === v[0] && x.r[1] - 1 === v[1] && x.r[2] - 1 === v[2]) x = G[(i + 1) % G.length]; return x; }
   function devoHtml(){
     if (!DEVO){ getJSON("devocionales.json").then(function(j){ DEVO = j.devocionales; if ($("vFavs").classList.contains("on")) renderFavs(); }, function(){}); return ""; }
     var x = devoHoy(), r = x.r, vid = ver(cur.v).books[r[0]] ? cur.v : "rvr1960", vbd = bookData(vid, r[0]), vt = vbd ? (vbd[r[1]-1][r[2]-1] || "").replace(/\n/g, " ") : ""; if (!vbd) loadBook(vid, r[0]).then(function(){ if ($("vFavs").classList.contains("on")) renderFavs(); }, function(){});

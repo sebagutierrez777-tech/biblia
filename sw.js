@@ -1,5 +1,5 @@
 // Guarda la app en el celular para que funcione sin internet.
-var SHELL = "biblia-shell-v77";
+var SHELL = "biblia-shell-v78";
 var DATA = "biblia-data-v1";
 var FONTS = "biblia-fonts-v1";
 var SHELL_FILES = ["./", "index.html", "meta.json", "manifest.json", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png", "logo-iglesia.png", "logo-emblema.png", "logo-emblema-claro.png", "qr-app.png", "intros.json", "fichas.json", "mapas.json", "genealogias.json", "diccionario.json", "resumen.json", "curiosidades.json", "juegos.json", "historia.json", "inicio.mp3", "devocionales.json", "temas.json"];
@@ -75,7 +75,7 @@ self.addEventListener("fetch", function (e) {
   }));
 });
 
-// Recordatorio diario de lectura (Android decide la hora exacta).
+// Recordatorio diario del devocional (Android decide la hora exacta).
 function hoy() { var d = new Date(); return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); }
 function mostrarRecordatorio() {
   return caches.open("biblia-meta").then(function (c) {
@@ -85,7 +85,7 @@ function mostrarRecordatorio() {
         if (!d || !d.on) return;
         return c.match("__ultimo").then(function (u) { return u ? u.text() : ""; }).then(function (ult) {
           if (ult === hoy()) return;
-          return self.registration.showNotification(d.title || "Biblia Multiversión", { body: d.body, icon: "icon-192.png", badge: "icon-192.png", tag: "lectura" })
+          return self.registration.showNotification(d.title || "Biblia Multiversión", { body: (d.days && d.days[hoy()]) || d.body, icon: "icon-192.png", badge: "icon-192.png", tag: "lectura", data: { url: d.url || "./" } })
             .then(function () { return c.put("__ultimo", new Response(hoy())); });
         });
       });
@@ -96,7 +96,8 @@ self.addEventListener("periodicsync", function (e) { if (e.tag === "lectura") e.
 self.addEventListener("notificationclick", function (e) {
   e.notification.close();
   e.waitUntil(self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(function (list) {
-    for (var i = 0; i < list.length; i++) { if ("focus" in list[i]) return list[i].focus(); }
-    return self.clients.openWindow("./");
+    var url = (e.notification.data && e.notification.data.url) || "./";
+    for (var i = 0; i < list.length; i++) { if ("focus" in list[i]) { var c = list[i]; return (url !== "./" && c.navigate ? c.navigate(url).catch(function () { return c; }) : Promise.resolve(c)).then(function (x) { return (x || c).focus(); }); } }
+    return self.clients.openWindow(url);
   }));
 });
