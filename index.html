@@ -1031,6 +1031,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
 .du-pis{margin:0 0 14px;padding-left:20px;display:flex;flex-direction:column;gap:6px}.du-pis li{line-height:1.45}.du-pis li.new{animation:duIn .4s ease-out}@keyframes duIn{from{opacity:0;transform:translateY(6px)}}
 .du-fb{text-align:center;font-weight:700;margin:12px 0;color:#b91c1c}.du-fb.ok{color:#15803d}
 :root[data-modo="noche"] .du-fb{color:#fca5a5}:root[data-modo="noche"] .du-fb.ok{color:#86efac}
+.du-sig{display:block;width:100%;margin:12px 0 0;padding:13px;border-radius:14px;font-weight:700}.du-sig-t{margin:14px 0 4px;font-weight:700}.du-ayu{display:block;margin:4px 2px 10px;font-size:12.5px;opacity:.75;text-align:center}.du-share.alt{background:#0f6e56;border-color:#0f6e56;color:#fff}
 .du-res{margin:8px 0;padding:22px 16px;border-radius:20px;background:var(--surface);border:2px solid var(--line);text-align:center}
 .du-res.win{border-color:#e5b93c;background:linear-gradient(170deg,color-mix(in srgb,#e5b93c 16%,var(--surface)),var(--surface) 60%)}
 .du-big{font-size:70px;line-height:1.1;animation:prSpin .9s ease-out}.du-res>b{display:block;font-size:26px;margin:6px 0}.du-res>p{color:var(--muted);margin:0 0 12px}
@@ -3022,7 +3023,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
       if (rest <= 0 && DU.sel == null) duResponder(-1);
     }, 200);
   }
-  function duPistas(){ var e = $("duPis"); if (!e) return; var q = DU.Q[DU.i]; e.innerHTML = q.p.slice(0, DU.pis).map(function(p, k){ return '<li class="' + (k === DU.pis - 1 ? "new" : "") + '">' + esc(p) + '</li>'; }).join(""); var v = $("duVale"); if (v) v.textContent = "Vale " + duVale() + " pts"; }
+  function duPistas(){ var e = $("duPis"); if (!e) return; var q = DU.Q[DU.sel == null ? DU.i : DU.i - 1]; if (!q) return; e.innerHTML = q.p.slice(0, DU.pis).map(function(p, k){ return '<li class="' + (k === DU.pis - 1 ? "new" : "") + '">' + esc(p) + '</li>'; }).join(""); var v = $("duVale"); if (v) v.textContent = "Vale " + duVale() + " pts"; }
   function duVale(){ return DU.j === "quien" ? Math.max(60, 150 - 30 * (DU.pis - 1)) : 100; }
   function duResponder(k){
     if (DU.sel != null) return; clearInterval(DU.tick);
@@ -3037,7 +3038,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     var el = $("vMore"); el.dataset.sec = "juego"; el.style.setProperty("--sc", "#4338ca");
     if (!JUEGOS || !FICHAS){ el.innerHTML = masHead("Duelo en vivo", "juegos") + '<p class="note">Cargando…</p>'; Promise.all([loadJuegos(), loadFichas()]).then(function(){ if (masSub === "duelo") renderDuelo(); }, function(){ el.innerHTML = masHead("Duelo en vivo", "juegos") + '<p class="note">No se pudo cargar. Revisa tu conexión.</p>'; }); return; }
     if (DU_PEND){ var c = DU_PEND; DU_PEND = null; duStop(); DU = null; duRender(); var i = $("duCod"); if (i) i.value = c; if (duNombre()) duUnir(c); else duMsg("Escribe tu nombre y toca Unirme para entrar al duelo " + c + ".", 1); return; }
-    duRender(); if (DU){ duPoll(); if (DU.fase === "juego" && DU.sel == null) duTick(); }
+    duRender(); if (DU){ duPoll(); if (DU.fase === "juego" && DU.sel == null) duTick(); else if (DU.fase === "juego" && DU.sel != null && DU.j !== "libros" && DU.j !== "memoria"){ clearTimeout(DU.adv); DU.adv = setTimeout(function(){ if (DU && DU.fase === "juego" && masSub === "duelo") duPregunta(); }, 1200); } }
   }
   function duRender(){
     var el = $("vMore"); if (masSub !== "duelo") return;
@@ -3090,20 +3091,21 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
       if (DU.j === "trivia") h += '<p class="tv-q">' + esc(q.q) + '</p>';
       else h += '<p class="du-qs">¿Quién soy?</p><ol class="du-pis" id="duPis"></ol>';
       h += '<div class="tv-o">'; q.o.forEach(function(o, k){ var c = DU.sel != null ? (o === q.a ? " good" : k === DU.sel ? " bad" : "") : ""; h += '<button type="button" class="tv-b' + c + '" data-duo="' + k + '"' + (DU.sel != null ? " disabled" : "") + '>' + esc(o) + '</button>'; }); h += '</div>';
-      if (DU.sel != null) h += '<p class="du-fb ' + (DU.ult.ok ? "ok" : "") + '">' + (DU.ult.ok ? "¡Correcto! +" + DU.ult.gan : DU.sel < 0 ? "Se acabó el tiempo. Era: " + esc(q.a) : "Era: " + esc(q.a)) + '</p>';
+      if (DU.sel != null){ h += '<p class="du-fb ' + (DU.ult.ok ? "ok" : "") + '">' + (DU.ult.ok ? "¡Correcto! +" + DU.ult.gan : DU.sel < 0 ? "Se acabó el tiempo. Era: " + esc(q.a) : "Era: " + esc(q.a)) + '</p>'; h += '<button type="button" class="btn du-sig" data-dusig>' + (DU.i >= DU.Q.length ? "Ver resultado del duelo ›" : "Siguiente ›") + '</button>'; }
       el.innerHTML = h; duMarcador(); if (DU.j === "quien") duPistas(); return;
     }
     if (DU.fase === "fin1"){
-      h += '<div class="du-wait"><p class="du-esp">Terminaste con <b>' + DU.pts + '</b> puntos.</p><div class="du-dots" aria-hidden="true"><i></i><i></i><i></i></div><p class="du-esp">Esperando que ' + esc(riv.n) + ' termine…</p></div>';
+      h += '<div class="du-wait"><small>Terminaste tu parte</small><p class="du-esp">Hiciste <b>' + DU.pts + '</b> puntos.</p><div class="du-dots" aria-hidden="true"><i></i><i></i><i></i></div><p class="du-esp">Esperando que ' + esc(riv.n) + ' termine para ver quién ganó…</p><p class="note">Si tu rival no termina en 1 minuto, el duelo se cierra solo.</p></div>';
       el.innerHTML = h; duMarcador(); return;
     }
     if (DU.fase === "res"){
       var tit = DU.emp ? "¡Empate!" : DU.gane ? "¡Ganaste!" : "¡Ganó " + esc(riv.n) + "!";
-      h += '<div class="du-res ' + (DU.emp ? "emp" : DU.gane ? "win" : "lose") + '"><div class="du-big" aria-hidden="true">' + (DU.emp ? "🤝" : DU.gane ? "🏆" : "💪") + '</div><b>' + tit + '</b><p>' + (DU.abandono ? esc(riv.n) + " no terminó el duelo." : DU.gane ? "Bien jugado. ¡Que no te quiten el título!" : DU.emp ? "Quedaron igualados. ¿Desempate?" : "Buen duelo. Pide la revancha.") + '</p>';
+      h += '<div class="du-res ' + (DU.emp ? "emp" : DU.gane ? "win" : "lose") + '"><div class="du-big" aria-hidden="true">' + (DU.emp ? "🤝" : DU.gane ? "🏆" : "💪") + '</div><b>' + tit + '</b><p>' + (DU.abandono ? esc(riv.n) + " no terminó el duelo, así que el triunfo es tuyo." : DU.gane ? "Hiciste más puntos que " + esc(riv.n) + ". ¡Que no te quiten el título!" : DU.emp ? "Los dos hicieron los mismos puntos." : esc(riv.n) + " hizo más puntos esta vez. ¡Buen duelo!") + '</p><p class="du-sig-t">El duelo terminó. ¿Qué quieres hacer ahora?</p>';
       h += '<div class="du-fin"><span class="' + (DU.gane || DU.emp ? "w" : "") + '"><b>' + DU.pts + '</b>Tú</span><span class="' + (!DU.gane || DU.emp ? "w" : "") + '"><b>' + riv.p + '</b>' + esc(riv.n) + '</span></div>';
       if (d.rv && d.rv !== DU.c && DU.rvMio !== d.rv) h += '<button type="button" class="btn du-share" data-durvok="' + esc(d.rv) + '">' + esc(riv.n) + ' pide revancha · Aceptar</button>';
-      else h += '<button type="button" class="btn du-share" data-durv>Revancha</button>';
-      h += '<button type="button" class="btn ghost" data-dushres>Compartir resultado</button><button type="button" class="btn ghost" data-dusalir>Volver</button></div>';
+      else h += '<button type="button" class="btn du-share" data-durv>🔁 Revancha con ' + esc(riv.n) + '</button><small class="du-ayu">Se crea un duelo nuevo y a ' + esc(riv.n) + ' le aparece el botón para aceptar.</small>';
+      h += '<button type="button" class="btn du-share alt" data-dunuevo>🎮 Nuevo duelo</button><small class="du-ayu">Elige otro juego o juega con otra persona.</small>';
+      h += '<button type="button" class="btn ghost" data-dushres>Compartir resultado</button><button type="button" class="btn ghost" data-dusalir>Salir a juegos</button></div>';
       el.innerHTML = h; return;
     }
   }
@@ -3118,6 +3120,8 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     if ((b = t.closest("[data-duo]"))){ e.stopPropagation(); duResponder(+b.dataset.duo); return; }
     if ((b = t.closest("[data-dul]"))){ e.stopPropagation(); duLibro(+b.dataset.dul); return; }
     if ((b = t.closest("[data-dum]"))){ e.stopPropagation(); duCarta(+b.dataset.dum); return; }
+    if (t.closest("[data-dusig]")){ e.stopPropagation(); if (DU && DU.fase === "juego") duPregunta(); return; }
+    if (t.closest("[data-dunuevo]")){ e.stopPropagation(); duStop(); DU = null; duRender(); try{ window.scrollTo(0, 0); }catch(x){} return; }
     if (t.closest("[data-durv]")){ e.stopPropagation(); var old = DU.c; duCrear(DU.j, old); return; }
     if ((b = t.closest("[data-durvok]"))){ e.stopPropagation(); duUnir(b.dataset.durvok); return; }
     if (t.closest("[data-dusalir]")){ e.stopPropagation(); duStop(); DU = null; renderMore("juegos"); return; }
