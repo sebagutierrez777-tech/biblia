@@ -3636,7 +3636,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     var el = $("vMore");
     if (!HIST){ el.innerHTML = masHead("Historia y arqueología") + '<p class="note">Cargando…</p>'; getJSON("historia.json").then(function(j){ HIST = j; if (masSub === "historia") renderHistoria(tabh); }, function(){ el.innerHTML = masHead("Historia y arqueología") + '<p class="note">No se pudo cargar. Revisa tu conexión.</p>'; }); return; }
     el.dataset.sec = "historia"; tabh = tabh || renderHistoria.tab || "tiempo"; renderHistoria.tab = tabh;
-    var h = masHead("Historia y arqueología") + '<div class="seg hs-seg" role="group" aria-label="Sección"><button type="button" data-hs="tiempo" aria-pressed="' + (tabh === "tiempo") + '">Línea de tiempo</button><button type="button" data-hs="judaismo" aria-pressed="' + (tabh === "judaismo") + '">Judaísmo</button><button type="button" data-hs="hallazgos" aria-pressed="' + (tabh === "hallazgos") + '">Hallazgos</button></div>';
+    var h = masHead("Historia y arqueología") + '<div class="seg hs-seg" role="group" aria-label="Sección"><button type="button" data-hs="tiempo" aria-pressed="' + (tabh === "tiempo") + '">Historia</button><button type="button" data-hs="judaismo" aria-pressed="' + (tabh === "judaismo") + '">Judaísmo</button><button type="button" data-hs="hallazgos" aria-pressed="' + (tabh === "hallazgos") + '">Hallazgos</button><button type="button" data-hs="evidencias" aria-pressed="' + (tabh === "evidencias") + '">Evidencias</button></div>';
     if (tabh === "tiempo"){
       h += '<p class="sv-in">La historia de la Biblia en doce etapas. Las fechas son aproximadas.</p><ol class="hs-t">';
       HIST.tiempo.forEach(function(x, i){ h += '<li class="' + (i >= 10 ? "nt" : "") + '" style="--e:' + HUES[i % HUES.length] + '"><span class="hs-f">' + esc(x.f) + '</span><b>' + esc(x.t) + '</b><p>' + esc(x.d) + '</p>' + (x.r.length ? refChips(x.r) : "") + '</li>'; });
@@ -3644,6 +3644,9 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     } else if (tabh === "judaismo"){
       h += '<p class="sv-in">Cómo era el mundo judío cuando llegó Jesús: lo que pasó en los 400 años entre los Testamentos, los grupos religiosos y la vida del templo.</p>';
       HIST.judaismo.forEach(function(x, i){ h += '<details class="dic tc" style="--c:' + HUES[(i + 3) % HUES.length] + '"><summary><i class="tn">' + (i + 1) + '</i>' + esc(x.t) + '</summary><p>' + esc(x.d) + '</p>' + (x.r.length ? refChips(x.r) : '<div class="fi-r"></div>') + '</details>'; });
+    } else if (tabh === "evidencias"){
+      h += '<p class="sv-in">Por qué podemos confiar en la Biblia: manuscritos, historiadores antiguos, arqueología y profecía, con su contexto cultural.</p>';
+      (HIST.evidencias || []).forEach(function(x, i){ h += '<details class="dic tc" style="--c:' + HUES[(i + 5) % HUES.length] + '"' + (i === 0 ? " open" : "") + '><summary><i class="tn">' + (i + 1) + '</i>' + esc(x.t) + '</summary><p>' + esc(x.d) + '</p>' + (x.r.length ? refChips(x.r) : '<div class="fi-r"></div>') + '</details>'; });
     } else {
       h += '<p class="sv-in">Descubrimientos que muestran que la Biblia habla de lugares, pueblos y personas reales. La arqueología no es la base de nuestra fe, pero la confirma.</p>';
       h += '<div class="hz-g">';
