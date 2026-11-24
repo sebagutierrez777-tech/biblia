@@ -1100,6 +1100,14 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
 </style>
 <style>
 /* Presentación y bienvenida */
+.pr-open{display:flex;align-items:center;gap:12px;width:100%;margin:6px 0 4px;padding:12px 14px;min-height:60px;border-radius:14px;border:1.5px dashed var(--line);background:var(--surface);color:var(--ink);text-align:left;font:inherit}.pr-ic{width:40px;height:40px;border-radius:12px;background:var(--rubric);display:flex;align-items:center;justify-content:center;flex:none}.pr-tx{flex:1;display:flex;flex-direction:column;gap:1px}.pr-tx b{font-size:15.5px}.pr-tx small{font-size:12.5px;color:var(--muted);line-height:1.3}.pr-open i{font-style:normal;font-size:22px;color:var(--rubric)}
+.pred{position:fixed;inset:0;z-index:70;display:flex;flex-direction:column;background:var(--paper);animation:shIn .22s cubic-bezier(.2,.7,.3,1)}.pred[hidden]{display:none}
+.pred-h{background:var(--rubric);color:#fff;padding:calc(10px + env(safe-area-inset-top)) 14px 12px;display:flex;flex-direction:column;gap:10px}.pred-r{display:flex;align-items:center;gap:10px}.pred-x{width:42px;height:42px;border-radius:21px;background:rgba(255,255,255,.18);color:#fff;font-size:24px;line-height:1}.pred-t{flex:1;display:flex;flex-direction:column}.pred-t small{font-size:12px;opacity:.85}.pred-t b{font-size:17px}
+.pred-pdf{display:flex;align-items:center;gap:6px;min-height:42px;padding:0 14px;border-radius:12px;background:#fff;color:var(--rubric);font-weight:700;font-size:14px}
+.pred-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:4px;border-radius:12px;background:rgba(255,255,255,.16)}.pred-tabs button{min-height:42px;border-radius:9px;color:#fff;font-weight:600;font-size:14.5px;background:transparent}.pred-tabs button[aria-selected="true"]{background:#fff;color:var(--rubric)}
+.pred-b{flex:1;overflow-y:auto;padding:14px 16px calc(24px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px}
+.pr-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;font-size:15.5px;line-height:1.6}.pr-card p{margin:0 0 10px}.pr-card p:last-child{margin-bottom:0}.pr-lab{font-size:12.5px!important;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--rubric)}.pr-h{margin:2px 0 4px;font-size:21px;line-height:1.25}.pr-sub{color:var(--muted);font-size:13.5px!important}.pr-r,.pr-ap{color:var(--muted);font-size:13.5px}.pr-ol{margin:0;padding-left:22px}.pr-ol li{margin-bottom:8px}
+.pr-fg{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;font-size:14px}.pr-fg span{display:flex;flex-direction:column}.pr-fg b{font-size:12.5px;color:var(--muted)}.pr-fg .w{grid-column:span 2}.pr-k .g{font-weight:700;font-size:17px}.pr-cred{font-size:12.5px;color:var(--muted);text-align:center;margin:4px 0 0}
 .inst{position:fixed;left:12px;right:12px;bottom:calc(76px + env(safe-area-inset-bottom));z-index:8000;max-width:520px;margin:0 auto;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 32px rgba(0,0,0,.22);padding:14px;animation:prIn .25s ease}
 .inst-r{display:flex;gap:12px;align-items:center}.inst img{width:48px;height:48px;border-radius:12px;flex:none}.inst-t{flex:1;display:flex;flex-direction:column;gap:2px}.inst-t b{font-size:16px}.inst-t span{font-size:13.5px;color:var(--muted);line-height:1.35}
 .inst ol{margin:10px 0 0;padding-left:22px;font-size:14.5px;line-height:1.55}.inst-b{display:flex;gap:8px;margin-top:12px}.inst-b button{flex:1;min-height:46px;border-radius:12px;font-weight:700;font-size:15px}.inst-si{background:var(--rubric);color:#fff}.inst-no{background:transparent;color:var(--ink);border:1px solid var(--line)}
@@ -1915,6 +1923,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
       depth = Math.max(0, depth - 1);
       if (leaving) return;
       var open = document.querySelector(".sheet.on");
+      if ($("predSh") && !$("predSh").hidden){ predCerrar(); arm(); return; }
       if (!$("exitAsk").hidden){ $("exitAsk").hidden = true; arm(); return; }
       if (open){ closeSheets(); arm(); return; }
       if (!$("pulpit").hidden){ closePulpit(); arm(); return; }
@@ -2768,7 +2777,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     $("estRef").textContent = refText(b, c, v);
     $("estBody").innerHTML = '<p class="note">Cargando el estudio…</p>';
     openSheet("shEst");
-    estCargar(b, c).then(estRender, function(){ $("estBody").innerHTML = '<p class="note">No se pudo cargar el estudio. Revisa tu conexión.</p>'; });
+    estCargar(b, c).then(function(){ return predCargar(b); }).then(estRender, function(){ $("estBody").innerHTML = '<p class="note">No se pudo cargar el estudio. Revisa tu conexión.</p>'; });
   }
   function estRender(){
     var b = EST.b, c = EST.c, v = EST.v, D = EST.D[b], G = (EST.G[b + ":" + c] || {})[String(v + 1)] || [], n = (D.n || {})[(c + 1) + ":" + (v + 1)], P = estPer(D, c, v);
@@ -2795,6 +2804,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
         h += '<div class="es-s"><p class="es-lab">📜 El pasaje · ' + esc(P.t) + ' <span>(' + P.d[0] + ':' + P.d[1] + '-' + (P.d[2] !== P.d[0] ? P.d[2] + ':' : '') + P.d[3] + ')</span></p><p>' + esc(P.c) + '</p></div>';
         if (P.l) h += '<div class="es-s"><p class="es-lab">📍 Lugar y contexto</p><div class="es-img">' + (P.l.f ? '<img src="' + P.l.f + '" alt="' + esc(P.l.t) + '" loading="lazy" class="es-foto"><small class="es-cr">Foto: ' + esc(P.l.cr || "") + '</small>' : (EST_SVG[P.l.i] || "")) + '</div><p class="es-lt">' + esc(P.l.t) + '</p><p class="es-ld">' + esc(P.l.d) + '</p></div>';
         h += '<div class="es-s"><p class="es-lab">💡 Para meditar o predicar</p><p class="es-m">' + esc(P.m) + '</p>' + (P.x && P.x.length ? refChips(P.x) : '') + '</div>';
+        h += predBoton(b, P);
       }
       if (!n && !P){
         h += '<div class="es-s"><p class="es-lab">Comentario muy pronto</p><p>Estamos preparando el comentario de este libro. Ya puedes leer cada versículo en ' + estLeng() + ', palabra por palabra, con su traducción.</p><button type="button" class="btn ghost" data-est="gr" style="width:100%;margin-top:6px">Ver el texto ' + estLeng() + '</button></div>';
@@ -2805,6 +2815,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
   }
   $("estBody").addEventListener("click", function(e){
     var t = e.target, b;
+    if (t.closest("[data-pred]")){ predAbrir(); return; }
     if ((b = t.closest("[data-est]"))){ EST.tab = b.dataset.est; EST.w = null; estRender(); return; }
     if ((b = t.closest("[data-esw]"))){ var i = +b.dataset.esw; EST.w = EST.w === i ? null : i; estRender(); var d = $("estBody").querySelector(".es-det"); if (d) d.scrollIntoView({ block: "nearest", behavior: "smooth" }); return; }
     if ((b = t.closest(".chip[data-b]"))){ closeSheets(); go(+b.dataset.b, +b.dataset.c, +b.dataset.v); return; }
@@ -2812,6 +2823,149 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
   $("estPrev").onclick = function(){ if (EST.v > 0){ EST.v--; EST.w = null; estRender(); $("estBody").scrollTop = 0; } };
   $("estNext").onclick = function(){ if (EST.v < META.books[EST.b][1][EST.c] - 1){ EST.v++; EST.w = null; estRender(); $("estBody").scrollTop = 0; } };
   $("actEst").onclick = function(){ if (sel == null) return; var i = sel; setSel(null); openEst(cur.b, cur.c, i); };
+  /* ---------- Prepara tu prédica: sermón, enseñanza y exégesis por pasaje ---------- */
+  var PRED_LIB = { 42: "juan" }, PRED = {}, PR = { b: null, P: null, s: null, tab: "ser" };
+  function predCargar(b){
+    if (!PRED_LIB[b]) return Promise.resolve(null);
+    if (PRED[b] !== undefined) return Promise.resolve(PRED[b]);
+    return getJSON("estudio/predica/" + PRED_LIB[b] + ".json").then(function(j){ return PRED[b] = j; }, function(){ return PRED[b] = null; });
+  }
+  function predDe(b, P){ var j = PRED[b]; return j && P ? (j.s || {})[P.d[0] + ":" + P.d[1]] || null : null; }
+  function predRango(P){ return P.d[0] + ":" + P.d[1] + "-" + (P.d[2] !== P.d[0] ? P.d[2] + ":" : "") + P.d[3]; }
+  function predBoton(b, P){
+    var s = predDe(b, P); if (!s) return "";
+    return '<button type="button" class="pr-open" data-pred><span class="pr-ic"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6"/><path d="M11 7l6 6-2.5 2.5-6-6z"/><path d="M8.5 9.5L3 15v3h3l5.5-5.5"/></svg></span><span class="pr-tx"><b>Prepara tu prédica</b><small>Sermón listo, clase y exégesis de ' + esc(META.books[b][0] + " " + predRango(P)) + '</small></span><i aria-hidden="true">›</i></button>';
+  }
+  function predRefs(a){ return (a || []).map(function(r){ return esc(r); }).join(" · "); }
+  function predSer(s){
+    var h = '<div class="pr-card"><p class="pr-lab">Sermón listo</p><h3 class="pr-h">' + esc(s.t) + '</h3><p class="pr-sub">Texto: ' + esc(s.texto) + (s.clave ? " · Versículo clave: " + esc(s.clave) : "") + '</p><p><b>Idea central:</b> ' + esc(s.idea) + '</p></div>';
+    h += '<div class="pr-card"><p><b>Introducción.</b> ' + esc(s.intro) + '</p>';
+    s.pts.forEach(function(p, i){ h += '<p><b>' + (i + 1) + '. ' + esc(p[0]) + '</b> <span class="pr-r">(' + esc(p[1]) + ')</span>. ' + esc(p[2]) + (p[3] && p[3].length ? ' <span class="pr-ap">Apoyo: ' + predRefs(p[3]) + '.</span>' : "") + '</p>'; });
+    h += '<p><b>Ilustración.</b> ' + esc(s.ilus) + '</p><p><b>Aplicación.</b> ' + esc(s.apl) + '</p><p><b>Llamado.</b> ' + esc(s.llamado) + '</p></div>';
+    return h;
+  }
+  function predEns(s){
+    var e = s.ens, h = '<div class="pr-card"><p class="pr-lab">Modo enseñanza · ' + (+e.min || 45) + ' minutos</p><p><b>Objetivo:</b> ' + esc(e.obj) + '</p><p><b>Para empezar:</b> ' + esc(e.ini) + '</p></div>';
+    h += '<div class="pr-card"><p><b>Preguntas para conversar</b></p><ol class="pr-ol">'; e.q.forEach(function(q){ h += '<li>' + esc(q) + '</li>'; }); h += '</ol></div>';
+    h += '<div class="pr-card"><p><b>Actividad:</b> ' + esc(e.act) + '</p><p><b>Para memorizar:</b> ' + esc(e.mem) + '</p><p><b>Oración final:</b> ' + esc(e.orar) + '</p></div>';
+    return h;
+  }
+  function predNotas(b, P){
+    var D = EST.D[b], out = []; if (!D || !D.n) return out;
+    Object.keys(D.n).forEach(function(k){ var cv = k.split(":").map(Number), x = cv[0] * 1000 + cv[1]; if (x >= P.d[0] * 1000 + P.d[1] && x <= P.d[2] * 1000 + P.d[3]) (D.n[k].k || []).forEach(function(w){ out.push([w[0], w[1], w[2], k]); }); });
+    return out;
+  }
+  function predExe(b, P, s){
+    var f = (PRED[b] || {}).ficha, h = "";
+    if (f) h += '<div class="pr-card pr-ficha"><p class="pr-lab">Ficha del libro · ' + esc(META.books[b][0]) + '</p><div class="pr-fg"><span><b>Autor</b>' + esc(f.autor) + '</span><span><b>Fecha</b>' + esc(f.fecha) + '</span><span><b>Género</b>' + esc(f.genero) + '</span><span><b>Propósito</b>' + esc(f.prop) + '</span><span class="w"><b>Estructura</b>' + esc(f.estr) + '</span></div></div>';
+    var k = predNotas(b, P);
+    if (k.length){ h += '<div class="pr-card"><p><b>Palabras clave en ' + estLeng() + '</b></p>'; k.slice(0, 8).forEach(function(w){ h += '<p class="pr-k"><span class="g">' + esc(w[0]) + '</span> · <i>' + esc(w[1]) + '</i> <span class="pr-r">(' + esc(w[3]) + ')</span>. ' + esc(w[2]) + '</p>'; }); h += '</div>'; }
+    if (s.palabra || s.trad){ h += '<div class="pr-card">'; if (s.palabra) h += '<p><b>Estudio de una palabra en toda la Biblia</b></p><p>' + esc(s.palabra) + '</p>'; if (s.trad) h += '<p><b>Nota de traducción</b></p><p>' + esc(s.trad) + '</p>'; h += '</div>'; }
+    return h;
+  }
+  function predAbrir(){
+    var b = EST.b, P = estPer(EST.D[b], EST.c, EST.v), s = predDe(b, P); if (!s) return;
+    PR.b = b; PR.P = P; PR.s = s; PR.tab = PR.tab || "ser";
+    var el = $("predSh");
+    if (!el){
+      el = document.createElement("div"); el.id = "predSh"; el.className = "pred"; el.setAttribute("role", "dialog"); el.setAttribute("aria-label", "Prepara tu prédica");
+      el.innerHTML = '<div class="pred-h"><div class="pred-r"><button type="button" class="pred-x" data-pcl aria-label="Volver al estudio">‹</button><span class="pred-t"><small>Prepara tu prédica</small><b id="predRef"></b></span><button type="button" class="pred-pdf" data-ppdf><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>PDF</button></div><div class="pred-tabs" role="tablist"><button type="button" role="tab" data-ptab="ser">Sermón</button><button type="button" role="tab" data-ptab="ens">Enseñanza</button><button type="button" role="tab" data-ptab="exe">Exégesis</button></div></div><div class="pred-b" id="predBody"></div>';
+      document.body.appendChild(el);
+      el.addEventListener("click", function(e){
+        var t;
+        if (e.target.closest("[data-pcl]")){ predCerrar(); return; }
+        if ((t = e.target.closest("[data-ptab]"))){ PR.tab = t.dataset.ptab; predPintar(); $("predBody").scrollTop = 0; return; }
+        if ((t = e.target.closest("[data-ppdf]"))){ predPDF(t); return; }
+      });
+    }
+    el.hidden = false; document.body.classList.add("pred-on"); predPintar(); $("predBody").scrollTop = 0;
+  }
+  function predCerrar(){ var el = $("predSh"); if (el) el.hidden = true; document.body.classList.remove("pred-on"); }
+  function predPintar(){
+    var b = PR.b, P = PR.P, s = PR.s;
+    $("predRef").textContent = META.books[b][0] + " " + predRango(P);
+    document.querySelectorAll("#predSh [data-ptab]").forEach(function(x){ x.setAttribute("aria-selected", String(x.dataset.ptab === PR.tab)); });
+    var h = PR.tab === "ens" ? predEns(s) : PR.tab === "exe" ? predExe(b, P, s) : predSer(s);
+    $("predBody").innerHTML = h + '<p class="pr-cred">Contenido propio de la Biblia Multiversión, inspirado en las notas de Juan Wesley y Adam Clarke. Úsalo como base y deja que el Espíritu Santo lo haga tuyo.</p>';
+  }
+
+  /* PDF de varias páginas a partir de HTML (sermón, clase, exégesis y otros estudios) */
+  function pdfPaginas(jpgs, iw, ih, pw, ph){
+    var enc = new TextEncoder(), parts = [], off = 0, xref = [], n = jpgs.length;
+    function add(x){ var b = typeof x === "string" ? enc.encode(x) : x; parts.push(b); off += b.length; }
+    function obj(i, body){ xref[i - 1] = off; add(i + " 0 obj\n" + body + "\nendobj\n"); }
+    add("%PDF-1.4\n%\xE2\xE3\xCF\xD3\n");
+    var kids = []; for (var i = 0; i < n; i++) kids.push((3 + i * 3) + " 0 R");
+    obj(1, "<< /Type /Catalog /Pages 2 0 R >>");
+    obj(2, "<< /Type /Pages /Kids [" + kids.join(" ") + "] /Count " + n + " >>");
+    jpgs.forEach(function(j, i){
+      var pg = 3 + i * 3, ct = pg + 1, im = pg + 2, cont = "q " + pw + " 0 0 " + ph + " 0 0 cm /Im0 Do Q";
+      obj(pg, "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 " + pw + " " + ph + "] /Resources << /XObject << /Im0 " + im + " 0 R >> >> /Contents " + ct + " 0 R >>");
+      obj(ct, "<< /Length " + cont.length + " >>\nstream\n" + cont + "\nendstream");
+      xref[im - 1] = off; add(im + " 0 obj\n<< /Type /XObject /Subtype /Image /Width " + iw + " /Height " + ih + " /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length " + j.length + " >>\nstream\n"); add(j); add("\nendstream\nendobj\n");
+    });
+    var tot = 3 + n * 3, xo = off, x = "xref\n0 " + tot + "\n0000000000 65535 f \n";
+    for (var k = 0; k < tot - 1; k++) x += String(xref[k]).padStart(10, "0") + " 00000 n \n";
+    add(x + "trailer\n<< /Size " + tot + " /Root 1 0 R >>\nstartxref\n" + xo + "\n%%EOF");
+    return new Blob(parts, { type: "application/pdf" });
+  }
+  var PDF_CSS = "*{box-sizing:border-box}.doc{width:816px;padding:0 72px;font-family:Georgia,'Times New Roman',serif;color:#1d2230;font-size:16px;line-height:1.55;background:#fff}.doc p{margin:0 0 10px}.doc h1{font-size:30px;line-height:1.15;margin:0 0 6px}.doc h2{font-family:Arial,Helvetica,sans-serif;font-size:13px;letter-spacing:.08em;color:#2f4d8c;margin:22px 0 8px;text-transform:uppercase}.doc .top{display:flex;justify-content:space-between;border-bottom:2px solid #2f4d8c;padding-bottom:8px;margin-bottom:16px;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#2f4d8c;font-weight:700;letter-spacing:.08em}.doc .sub{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#5b6478;margin-bottom:12px}.doc .q{font-style:italic;background:#f2f5fb;border-radius:8px;padding:10px 14px}.doc .ap{font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#5b6478}.doc ol{margin:0 0 10px;padding-left:22px}.doc li{margin-bottom:6px}.doc .g{font-weight:700}.doc .notas{border-top:1px dashed #c4cbdb;margin-top:18px;padding-top:10px}.doc .ln{height:30px;border-bottom:1px solid #e3e7ef}.doc .pie{font-family:Arial,Helvetica,sans-serif;font-size:11.5px;color:#5b6478;margin-top:18px}.doc .ficha{display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;font-size:14.5px}";
+  function docPDF(html, nombre, btn){
+    var MT = 56, PH = 1056, CH = PH - MT * 2, txt = btn ? btn.innerHTML : "";
+    if (btn){ btn.disabled = true; btn.textContent = "Preparando…"; }
+    function fin(){ if (btn){ btn.disabled = false; btn.innerHTML = txt; } }
+    var box = document.createElement("div"); box.style.cssText = "position:fixed;left:-20000px;top:0;width:816px;background:#fff";
+    box.innerHTML = '<style>' + PDF_CSS + '</style><div class="doc">' + html + '</div>'; document.body.appendChild(box);
+    var doc = box.querySelector(".doc"), bl = doc.querySelectorAll(".doc > *:not(style)");
+    // Evita cortar un bloque entre dos páginas: lo empuja a la página siguiente
+    for (var i = 0; i < bl.length; i++){
+      var t = bl[i].offsetTop, hgt = bl[i].offsetHeight, fin0 = Math.ceil((t + 1) / CH) * CH;
+      if (hgt < CH && t + hgt > fin0){ var sp = document.createElement("div"); sp.style.height = (fin0 - t) + "px"; bl[i].parentNode.insertBefore(sp, bl[i]); }
+    }
+    var H = Math.max(CH, Math.ceil(doc.offsetHeight / CH) * CH), pages = Math.round(H / CH);
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="816" height="' + H + '"><foreignObject width="816" height="' + H + '"><div xmlns="http://www.w3.org/1999/xhtml"><style>' + PDF_CSS + '</style>' + new XMLSerializer().serializeToString(doc) + '</div></foreignObject></svg>';
+    box.remove();
+    var img = new Image(), S = 2;
+    img.onload = function(){
+      var jpgs = [], k = 0;
+      function sig(){
+        if (k >= pages){
+          var blob = pdfPaginas(jpgs, 816 * S, PH * S, 612, 792), nom = nombre + ".pdf";
+          try{ var file = new File([blob], nom, { type: "application/pdf" }); if (navigator.canShare && navigator.canShare({ files: [file] }) && /Android|iPhone|iPad/i.test(navigator.userAgent)){ navigator.share({ files: [file], title: nombre }).catch(function(){}).then(fin); return; } }catch(er){}
+          var a = document.createElement("a"), url = URL.createObjectURL(blob); a.href = url; a.download = nom; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ URL.revokeObjectURL(url); }, 4000); toast("PDF listo"); fin(); return;
+        }
+        var cv = document.createElement("canvas"); cv.width = 816 * S; cv.height = PH * S; var cx = cv.getContext("2d");
+        cx.fillStyle = "#fff"; cx.fillRect(0, 0, cv.width, cv.height);
+        cx.drawImage(img, 0, k * CH, 816, CH, 0, MT * S, 816 * S, CH * S);
+        cx.fillStyle = "#8a92a5"; cx.font = (11 * S) + "px Arial"; cx.textAlign = "right"; cx.fillText("Biblia Multiversión · página " + (k + 1) + " de " + pages, (816 - 72) * S, (PH - 26) * S);
+        cv.toBlob(function(b){ b.arrayBuffer().then(function(ab){ jpgs.push(new Uint8Array(ab)); k++; sig(); }); }, "image/jpeg", 0.9);
+      }
+      sig();
+    };
+    img.onerror = function(){ toast("No se pudo crear el PDF"); fin(); };
+    img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+  }
+  window.__docPDF = docPDF;
+  function predPDF(btn){
+    var b = PR.b, P = PR.P, s = PR.s, ref = META.books[b][0] + " " + predRango(P), e = s.ens, h = "";
+    h += '<div class="top"><span>BIBLIA MULTIVERSIÓN · PREPARA TU PRÉDICA</span><span>Reina-Valera 1960</span></div>';
+    h += '<h1>' + esc(s.t) + '</h1><p class="sub">Texto: ' + esc(s.texto) + (s.clave ? " · Versículo clave: " + esc(s.clave) : "") + '</p>';
+    if (s.cita) h += '<p class="q">' + esc(s.cita) + '</p>';
+    h += '<p><b>Idea central.</b> ' + esc(s.idea) + '</p><p><b>Introducción.</b> ' + esc(s.intro) + '</p>';
+    s.pts.forEach(function(p, i){ h += '<p><b>' + (i + 1) + '. ' + esc(p[0]) + '</b> (' + esc(p[1]) + '). ' + esc(p[2]) + (p[3] && p[3].length ? ' <span class="ap">Apoyo: ' + predRefs(p[3]) + '.</span>' : "") + '</p>'; });
+    h += '<p><b>Ilustración.</b> ' + esc(s.ilus) + '</p><p><b>Aplicación.</b> ' + esc(s.apl) + '</p><p><b>Llamado.</b> ' + esc(s.llamado) + '</p>';
+    h += '<div class="notas"><h2>Mis notas</h2><div class="ln"></div><div class="ln"></div><div class="ln"></div></div>';
+    h += '<h2>Modo enseñanza · ' + (+e.min || 45) + ' minutos</h2><p><b>Objetivo:</b> ' + esc(e.obj) + '</p><p><b>Para empezar:</b> ' + esc(e.ini) + '</p>';
+    h += '<div><p><b>Preguntas para conversar</b></p><ol>' + e.q.map(function(q){ return '<li>' + esc(q) + '</li>'; }).join("") + '</ol></div><p><b>Actividad:</b> ' + esc(e.act) + '</p><p><b>Para memorizar:</b> ' + esc(e.mem) + '</p><p><b>Oración final:</b> ' + esc(e.orar) + '</p>';
+    var f = (PRED[b] || {}).ficha, k = predNotas(b, P);
+    h += '<h2>Exégesis</h2>';
+    if (f) h += '<div class="ficha"><p><b>Autor:</b> ' + esc(f.autor) + '</p><p><b>Fecha:</b> ' + esc(f.fecha) + '</p><p><b>Género:</b> ' + esc(f.genero) + '</p><p><b>Propósito:</b> ' + esc(f.prop) + '</p></div><p><b>Estructura:</b> ' + esc(f.estr) + '</p>';
+    k.slice(0, 8).forEach(function(w){ h += '<p><span class="g">' + esc(w[0]) + '</span> · <i>' + esc(w[1]) + '</i> (' + esc(w[3]) + '). ' + esc(w[2]) + '</p>'; });
+    if (s.palabra) h += '<p><b>Estudio de una palabra.</b> ' + esc(s.palabra) + '</p>';
+    if (s.trad) h += '<p><b>Nota de traducción.</b> ' + esc(s.trad) + '</p>';
+    h += '<p class="pie">Contenido propio de la Biblia Multiversión, inspirado en las notas de Juan Wesley y Adam Clarke.</p>';
+    docPDF(h, "predica-" + norm(ref).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""), btn);
+  }
   /* ---------- Premios: medallas, trofeos, diamantes y paloma dorada ---------- */
   function hoyStr(d){ d = d || new Date(); return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); }
   function diasEntre(a, b){ return Math.round((new Date(b + "T12:00:00") - new Date(a + "T12:00:00")) / 864e5); }
