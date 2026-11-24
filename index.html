@@ -2843,7 +2843,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
   deslizar($("estBody"), estPaso);
   $("actEst").onclick = function(){ if (sel == null) return; var i = sel; setSel(null); openEst(cur.b, cur.c, i); };
   /* ---------- Prepara tu prédica: sermón, enseñanza y exégesis por pasaje ---------- */
-  var PRED_LIB = { 42: "juan", 43: "hechos", 44: "romanos" }, PRED = {}, PR = { b: null, P: null, s: null, tab: "ser" };
+  var PRED_LIB = { 39: "mateo", 40: "marcos", 41: "lucas", 42: "juan", 43: "hechos", 44: "romanos" }, PRED = {}, PR = { b: null, P: null, s: null, tab: "ser" };
   function predCargar(b){
     if (!PRED_LIB[b]) return Promise.resolve(null);
     if (PRED[b] !== undefined) return Promise.resolve(PRED[b]);
