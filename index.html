@@ -3034,6 +3034,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     duEnviar(); duRender();
     DU.adv = setTimeout(function(){ if (DU && DU.fase === "juego" && masSub === "duelo") duPregunta(); }, 1400);
   }
+  window.__duActivo = function(){ return !!DU; };
   function renderDuelo(){
     var el = $("vMore"); el.dataset.sec = "juego"; el.style.setProperty("--sc", "#4338ca");
     if (!JUEGOS || !FICHAS){ el.innerHTML = masHead("Duelo en vivo", "juegos") + '<p class="note">Cargando…</p>'; Promise.all([loadJuegos(), loadFichas()]).then(function(){ if (masSub === "duelo") renderDuelo(); }, function(){ el.innerHTML = masHead("Duelo en vivo", "juegos") + '<p class="note">No se pudo cargar. Revisa tu conexión.</p>'; }); return; }
@@ -4606,7 +4607,15 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
   }
   // Cuando se instala una versión nueva, la app se recarga sola una vez para mostrarla.
   var habia = !!navigator.serviceWorker.controller, recargo = false;
-  navigator.serviceWorker.addEventListener("controllerchange", function(){ if (!habia || recargo) { habia = true; return; } recargo = true; location.reload(); });
+  navigator.serviceWorker.addEventListener("controllerchange", function(){
+    if (!habia || recargo) { habia = true; return; }
+    recargo = true;
+    // Si hay un duelo en curso, la actualización espera a que termine para no sacar a los jugadores.
+    (function intentar(){
+      if (window.__duActivo && window.__duActivo()){ if (!intentar.av){ intentar.av = 1; try{ toast("Hay una versión nueva. Se aplicará cuando salgas del duelo."); }catch(e){} } setTimeout(intentar, 4000); return; }
+      location.reload();
+    })();
+  });
   window.addEventListener("load", function(){
     navigator.serviceWorker.register("sw.js").then(function(reg){
       document.addEventListener("visibilitychange", function(){ if (document.visibilityState === "visible") reg.update().catch(function(){}); });
