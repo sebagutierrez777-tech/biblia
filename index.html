@@ -2909,20 +2909,32 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     add(x + "trailer\n<< /Size " + tot + " /Root 1 0 R >>\nstartxref\n" + xo + "\n%%EOF");
     return new Blob(parts, { type: "application/pdf" });
   }
-  var PDF_CSS = "*{box-sizing:border-box}.doc{width:816px;padding:0 72px;font-family:Georgia,'Times New Roman',serif;color:#1d2230;font-size:16px;line-height:1.55;background:#fff}.doc p{margin:0 0 10px}.doc h1{font-size:30px;line-height:1.15;margin:0 0 6px}.doc h2{font-family:Arial,Helvetica,sans-serif;font-size:13px;letter-spacing:.08em;color:#2f4d8c;margin:22px 0 8px;text-transform:uppercase}.doc .top{display:flex;justify-content:space-between;border-bottom:2px solid #2f4d8c;padding-bottom:8px;margin-bottom:16px;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#2f4d8c;font-weight:700;letter-spacing:.08em}.doc .sub{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#5b6478;margin-bottom:12px}.doc .q{font-style:italic;background:#f2f5fb;border-radius:8px;padding:10px 14px}.doc .ap{font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#5b6478}.doc ol{margin:0 0 10px;padding-left:22px}.doc li{margin-bottom:6px}.doc .g{font-weight:700}.doc .notas{border-top:1px dashed #c4cbdb;margin-top:18px;padding-top:10px}.doc .ln{height:30px;border-bottom:1px solid #e3e7ef}.doc .pie{font-family:Arial,Helvetica,sans-serif;font-size:11.5px;color:#5b6478;margin-top:18px}.doc .ficha{display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;font-size:14.5px}";
-  function docPDF(html, nombre, btn){
-    var MT = 56, PH = 1056, CH = PH - MT * 2, txt = btn ? btn.innerHTML : "";
+  var PDF_CSS = ".doc,.doc *{all:revert;box-sizing:border-box}*{box-sizing:border-box}.doc{width:816px;padding:0 64px;font-family:Georgia,'Times New Roman',serif;color:#1f2633;font-size:15px;line-height:1.55;background:#fff}.doc p{margin:0}"
+    + ".banda{margin:0 -64px 0;padding:30px 64px 26px;background:#24407a;color:#fff}.banda .k{font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.16em;font-weight:700;color:#c9d6f2}.banda h1{font-size:31px;line-height:1.15;margin:10px 0 14px;font-weight:700}.chips{display:flex;flex-wrap:wrap;gap:8px}.chips span{font-family:Arial,Helvetica,sans-serif;font-size:11.5px;padding:5px 10px;border-radius:20px;background:rgba(255,255,255,.14);color:#fff}"
+    + ".cita{margin:22px 0 0;padding:16px 26px;text-align:center;font-size:17px;font-style:italic;line-height:1.55;color:#24407a;border-top:1px solid #d8deea;border-bottom:1px solid #d8deea}.cita small{display:block;margin-top:6px;font-style:normal;font-family:Arial,Helvetica,sans-serif;font-size:11.5px;letter-spacing:.08em;color:#6a7386}"
+    + ".idea{margin:18px 0 0;padding:14px 18px;background:#f1f4fa;border-radius:10px}.lab{display:block;font-family:Arial,Helvetica,sans-serif;font-size:10.5px;letter-spacing:.14em;font-weight:700;color:#24407a;margin-bottom:4px}"
+    + ".sec{display:flex;align-items:center;gap:12px;margin:28px 0 12px;font-family:Arial,Helvetica,sans-serif}.sec b{width:30px;height:30px;border-radius:50%;background:#24407a;color:#fff;font-size:14px;display:flex;align-items:center;justify-content:center;flex:none}.sec span{font-size:17px;font-weight:700;color:#1f2633;letter-spacing:.02em}.sec i{flex:1;height:1px;background:#cfd6e4}"
+    + ".par{margin:0 0 12px}.pt{display:grid;grid-template-columns:34px 1fr;gap:12px;margin:0 0 12px;padding:12px 14px;border:1px solid #dfe4ee;border-radius:10px}.pt .n{width:30px;height:30px;border-radius:8px;background:#e7ecf7;color:#24407a;font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center}.pt h3{margin:0 0 4px;font-size:16px;line-height:1.3}.pt h3 em{font-style:normal;font-family:Arial,Helvetica,sans-serif;font-size:11.5px;font-weight:600;color:#6a7386;margin-left:6px}.ap{margin-top:6px;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#55607a}"
+    + ".fila{display:grid;grid-template-columns:118px 1fr;gap:14px;padding:10px 0;border-top:1px solid #e6eaf2}.fila .lab{margin:2px 0 0}.fila.ult{border-bottom:1px solid #e6eaf2}"
+    + ".notas{margin:16px 0 0;padding:12px 16px 4px;border:1px dashed #c3cbdb;border-radius:10px}.ln{height:30px;border-bottom:1px solid #e3e7ef}"
+    + ".preg{padding:12px 16px;background:#f7f9fc;border-radius:10px;margin:10px 0 0}.preg ol{margin:6px 0 0;padding-left:22px}.preg li{margin:0 0 6px}"
+    + ".ficha{display:grid;grid-template-columns:1fr 1fr;border:1px solid #dfe4ee;border-radius:10px;overflow:hidden}.ficha div{padding:10px 14px;border-bottom:1px solid #e6eaf2;font-size:14px}.ficha div:nth-child(odd){border-right:1px solid #e6eaf2}.ficha .w{grid-column:span 2;border-right:0!important;border-bottom:0}"
+    + ".kh,.kr{display:grid;grid-template-columns:130px 112px 58px 1fr;gap:10px;padding:8px 12px;font-size:13.5px;line-height:1.45}.kh{margin-top:14px;background:#24407a;color:#fff;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.08em;font-weight:700;border-radius:8px 8px 0 0}.kr{border:1px solid #e3e7ef;border-top:0}.kr:nth-of-type(even){background:#fafbfd}.kr .g{font-size:17px;font-weight:700;color:#1f2633}.kr .t{font-style:italic;color:#4a5570}.kr .c{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6a7386}"
+    + ".nota{margin:14px 0 0;padding:12px 16px;border-radius:10px;background:#f7f4ec}.cierre{margin:24px 0 0;padding-top:10px;border-top:1px solid #e3e7ef;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#6a7386;text-align:center}";
+  function docPDF(html, nombre, btn, opt){
+    opt = opt || {};
+    var MT = 70, MB = 64, PH = 1056, CH = PH - MT - MB, txt = btn ? btn.innerHTML : "";
     if (btn){ btn.disabled = true; btn.textContent = "Preparando…"; }
     function fin(){ if (btn){ btn.disabled = false; btn.innerHTML = txt; } }
     var box = document.createElement("div"); box.style.cssText = "position:fixed;left:-20000px;top:0;width:816px;background:#fff";
     box.innerHTML = '<style>' + PDF_CSS + '</style><div class="doc">' + html + '</div>'; document.body.appendChild(box);
-    var doc = box.querySelector(".doc"), bl = doc.querySelectorAll(".doc > *:not(style)");
-    // Evita cortar un bloque entre dos páginas: lo empuja a la página siguiente
+    var doc = box.querySelector(".doc"), bl = doc.querySelectorAll(".doc > *");
+    // Evita cortar un bloque entre páginas y que un título quede solo al final de una página
     for (var i = 0; i < bl.length; i++){
-      var t = bl[i].offsetTop, hgt = bl[i].offsetHeight, fin0 = Math.ceil((t + 1) / CH) * CH;
+      var t = bl[i].offsetTop, hgt = bl[i].offsetHeight + (bl[i].classList.contains("kw") ? 150 : 0), fin0 = t < CH + MT ? CH + MT : (Math.floor((t - MT) / CH) + 1) * CH + MT;
       if (hgt < CH && t + hgt > fin0){ var sp = document.createElement("div"); sp.style.height = (fin0 - t) + "px"; bl[i].parentNode.insertBefore(sp, bl[i]); }
     }
-    var H = Math.max(CH, Math.ceil(doc.offsetHeight / CH) * CH), pages = Math.round(H / CH);
+    var pages = Math.max(1, Math.ceil((doc.offsetHeight - MT) / CH)), H = pages * CH + MT;
     var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="816" height="' + H + '"><foreignObject width="816" height="' + H + '"><div xmlns="http://www.w3.org/1999/xhtml"><style>' + PDF_CSS + '</style>' + new XMLSerializer().serializeToString(doc) + '</div></foreignObject></svg>';
     box.remove();
     var img = new Image(), S = 2;
@@ -2936,9 +2948,16 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
         }
         var cv = document.createElement("canvas"); cv.width = 816 * S; cv.height = PH * S; var cx = cv.getContext("2d");
         cx.fillStyle = "#fff"; cx.fillRect(0, 0, cv.width, cv.height);
-        cx.drawImage(img, 0, k * CH, 816, CH, 0, MT * S, 816 * S, CH * S);
-        cx.fillStyle = "#8a92a5"; cx.font = (11 * S) + "px Arial"; cx.textAlign = "right"; cx.fillText("Biblia Multiversión · página " + (k + 1) + " de " + pages, (816 - 72) * S, (PH - 26) * S);
-        cv.toBlob(function(b){ b.arrayBuffer().then(function(ab){ jpgs.push(new Uint8Array(ab)); k++; sig(); }); }, "image/jpeg", 0.9);
+        var top = k === 0 ? 0 : MT, src = k === 0 ? 0 : k * CH;
+        // La primera página empieza arriba del todo para que la banda de color llegue al borde
+        if (k === 0) cx.drawImage(img, 0, 0, 816, CH + MT, 0, 0, 816 * S, (CH + MT) * S);
+        else cx.drawImage(img, 0, src + MT, 816, CH, 0, top * S, 816 * S, CH * S);
+        cx.textBaseline = "alphabetic";
+        if (k > 0 && opt.cab){ cx.fillStyle = "#24407a"; cx.font = "bold " + (10.5 * S) + "px Arial"; cx.textAlign = "left"; cx.fillText(opt.cab[0].toUpperCase(), 64 * S, 38 * S); cx.fillStyle = "#6a7386"; cx.font = (10.5 * S) + "px Arial"; cx.textAlign = "right"; cx.fillText(opt.cab[1], (816 - 64) * S, 38 * S); cx.fillStyle = "#cfd6e4"; cx.fillRect(64 * S, 46 * S, (816 - 128) * S, 1 * S); }
+        cx.fillStyle = "#cfd6e4"; cx.fillRect(64 * S, (PH - 44) * S, (816 - 128) * S, 1 * S);
+        cx.fillStyle = "#6a7386"; cx.font = (10.5 * S) + "px Arial"; cx.textAlign = "left"; cx.fillText(opt.pie || "Biblia Multiversión", 64 * S, (PH - 26) * S);
+        cx.textAlign = "right"; cx.fillText("Página " + (k + 1) + " de " + pages, (816 - 64) * S, (PH - 26) * S);
+        cv.toBlob(function(b){ b.arrayBuffer().then(function(ab){ jpgs.push(new Uint8Array(ab)); k++; sig(); }); }, "image/jpeg", 0.92);
       }
       sig();
     };
@@ -2948,23 +2967,29 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
   window.__docPDF = docPDF;
   function predPDF(btn){
     var b = PR.b, P = PR.P, s = PR.s, ref = META.books[b][0] + " " + predRango(P), e = s.ens, h = "";
-    h += '<div class="top"><span>BIBLIA MULTIVERSIÓN · PREPARA TU PRÉDICA</span><span>Reina-Valera 1960</span></div>';
-    h += '<h1>' + esc(s.t) + '</h1><p class="sub">Texto: ' + esc(s.texto) + (s.clave ? " · Versículo clave: " + esc(s.clave) : "") + '</p>';
-    if (s.cita) h += '<p class="q">' + esc(s.cita) + '</p>';
-    h += '<p><b>Idea central.</b> ' + esc(s.idea) + '</p><p><b>Introducción.</b> ' + esc(s.intro) + '</p>';
-    s.pts.forEach(function(p, i){ h += '<p><b>' + (i + 1) + '. ' + esc(p[0]) + '</b> (' + esc(p[1]) + '). ' + esc(p[2]) + (p[3] && p[3].length ? ' <span class="ap">Apoyo: ' + predRefs(p[3]) + '.</span>' : "") + '</p>'; });
-    h += '<p><b>Ilustración.</b> ' + esc(s.ilus) + '</p><p><b>Aplicación.</b> ' + esc(s.apl) + '</p><p><b>Llamado.</b> ' + esc(s.llamado) + '</p>';
-    h += '<div class="notas"><h2>Mis notas</h2><div class="ln"></div><div class="ln"></div><div class="ln"></div></div>';
-    h += '<h2>Modo enseñanza · ' + (+e.min || 45) + ' minutos</h2><p><b>Objetivo:</b> ' + esc(e.obj) + '</p><p><b>Para empezar:</b> ' + esc(e.ini) + '</p>';
-    h += '<div><p><b>Preguntas para conversar</b></p><ol>' + e.q.map(function(q){ return '<li>' + esc(q) + '</li>'; }).join("") + '</ol></div><p><b>Actividad:</b> ' + esc(e.act) + '</p><p><b>Para memorizar:</b> ' + esc(e.mem) + '</p><p><b>Oración final:</b> ' + esc(e.orar) + '</p>';
+    var cita = (s.cita || "").replace(/\s*[^»]*$/, ""), citaRef = s.clave || "";
+    h += '<div class="banda"><div class="k">PREPARA TU PRÉDICA · SERMÓN, CLASE Y EXÉGESIS</div><h1>' + esc(s.t) + '</h1><div class="chips"><span>Texto: ' + esc(s.texto) + '</span>' + (s.clave ? '<span>Versículo clave: ' + esc(s.clave) + '</span>' : "") + '<span>Reina-Valera 1960</span></div></div>';
+    if (cita) h += '<div class="cita">' + esc(cita) + '<small>' + esc(citaRef.toUpperCase()) + '</small></div>';
+    h += '<div class="idea"><span class="lab">IDEA CENTRAL</span>' + esc(s.idea) + '</div>';
+    h += '<div class="sec kw"><b>1</b><span>Bosquejo del sermón</span><i></i></div>';
+    h += '<div class="fila"><span class="lab">INTRODUCCIÓN</span><p>' + esc(s.intro) + '</p></div>';
+    s.pts.forEach(function(p, i){ h += '<div class="pt"><span class="n">' + (i + 1) + '</span><div><h3>' + esc(p[0]) + '<em>' + esc(p[1]) + '</em></h3><p>' + esc(p[2]) + '</p>' + (p[3] && p[3].length ? '<div class="ap">Apoyo: ' + predRefs(p[3]) + '</div>' : "") + '</div></div>'; });
+    h += '<div class="fila"><span class="lab">ILUSTRACIÓN</span><p>' + esc(s.ilus) + '</p></div>';
+    h += '<div class="fila"><span class="lab">APLICACIÓN</span><p>' + esc(s.apl) + '</p></div>';
+    h += '<div class="fila ult"><span class="lab">LLAMADO</span><p>' + esc(s.llamado) + '</p></div>';
+    h += '<div class="notas"><span class="lab">MIS NOTAS</span><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div>';
+    h += '<div class="sec kw"><b>2</b><span>Clase para enseñar · ' + (+e.min || 45) + ' minutos</span><i></i></div>';
+    h += '<div class="fila"><span class="lab">OBJETIVO</span><p>' + esc(e.obj) + '</p></div><div class="fila ult"><span class="lab">PARA EMPEZAR</span><p>' + esc(e.ini) + '</p></div>';
+    h += '<div class="preg"><span class="lab">PREGUNTAS PARA CONVERSAR</span><ol>' + e.q.map(function(q){ return '<li>' + esc(q) + '</li>'; }).join("") + '</ol></div>';
+    h += '<div class="fila"><span class="lab">ACTIVIDAD</span><p>' + esc(e.act) + '</p></div><div class="fila"><span class="lab">PARA MEMORIZAR</span><p>' + esc(e.mem) + '</p></div><div class="fila ult"><span class="lab">ORACIÓN FINAL</span><p>' + esc(e.orar) + '</p></div>';
     var f = (PRED[b] || {}).ficha, k = predNotas(b, P);
-    h += '<h2>Exégesis</h2>';
-    if (f) h += '<div class="ficha"><p><b>Autor:</b> ' + esc(f.autor) + '</p><p><b>Fecha:</b> ' + esc(f.fecha) + '</p><p><b>Género:</b> ' + esc(f.genero) + '</p><p><b>Propósito:</b> ' + esc(f.prop) + '</p></div><p><b>Estructura:</b> ' + esc(f.estr) + '</p>';
-    k.slice(0, 8).forEach(function(w){ h += '<p><span class="g">' + esc(w[0]) + '</span> · <i>' + esc(w[1]) + '</i> (' + esc(w[3]) + '). ' + esc(w[2]) + '</p>'; });
-    if (s.palabra) h += '<p><b>Estudio de una palabra.</b> ' + esc(s.palabra) + '</p>';
-    if (s.trad) h += '<p><b>Nota de traducción.</b> ' + esc(s.trad) + '</p>';
-    h += '<p class="pie">Contenido propio de la Biblia Multiversión, inspirado en las notas de Juan Wesley y Adam Clarke.</p>';
-    docPDF(h, "predica-" + norm(ref).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""), btn);
+    h += '<div class="sec kw"><b>3</b><span>Exégesis del pasaje</span><i></i></div>';
+    if (f) h += '<div class="ficha"><div><span class="lab">AUTOR</span>' + esc(f.autor) + '</div><div><span class="lab">FECHA</span>' + esc(f.fecha) + '</div><div><span class="lab">GÉNERO</span>' + esc(f.genero) + '</div><div><span class="lab">PROPÓSITO</span>' + esc(f.prop) + '</div><div class="w"><span class="lab">ESTRUCTURA DEL LIBRO</span>' + esc(f.estr) + '</div></div>';
+    if (k.length){ h += '<div class="kh kw"><span>ORIGINAL</span><span>SE LEE</span><span>CITA</span><span>SIGNIFICADO</span></div>'; k.slice(0, 10).forEach(function(w){ h += '<div class="kr"><span class="g">' + esc(w[0]) + '</span><span class="t">' + esc(w[1]) + '</span><span class="c">' + esc(w[3]) + '</span><span>' + esc(w[2]) + '</span></div>'; }); }
+    if (s.palabra) h += '<div class="nota"><span class="lab">ESTUDIO DE UNA PALABRA EN TODA LA BIBLIA</span>' + esc(s.palabra) + '</div>';
+    if (s.trad) h += '<div class="nota"><span class="lab">NOTA DE TRADUCCIÓN</span>' + esc(s.trad) + '</div>';
+    h += '<div class="cierre">Contenido propio de la Biblia Multiversión, con mirada evangélica pentecostal y wesleyana, inspirado en las notas de Juan Wesley y Adam Clarke.</div>';
+    docPDF(h, "predica-" + norm(ref).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""), btn, { cab: [s.t, ref], pie: "Biblia Multiversión · Prepara tu prédica" });
   }
   /* ---------- Premios: medallas, trofeos, diamantes y paloma dorada ---------- */
   function hoyStr(d){ d = d || new Date(); return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); }
