@@ -392,6 +392,7 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
 .sheet-head h2{flex:1;margin:0;font-size:18px;font-weight:700}
 .sheet-body{flex:1;overflow-y:auto;padding:14px 16px 28px}
 .grp{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px}
+.bk-seguir{display:flex;align-items:center;gap:12px;width:100%;margin:0 0 14px;padding:12px 14px;min-height:56px;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);text-align:left;font:inherit}.bk-seguir svg{color:var(--rubric);flex:none}.bk-seguir span{flex:1;display:flex;flex-direction:column}.bk-seguir small{font-size:12.5px;color:var(--muted)}.bk-seguir b{font-size:16px}.bk-seguir i{font-style:normal;font-size:22px;color:var(--rubric)}
 .books{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
 .books button{min-height:44px;padding:6px 12px;text-align:left;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-weight:500;font-size:15px}
 .books.at button,.books.nt button{border:0;border-left:6px solid;border-radius:10px;color:var(--ink);display:flex;flex-direction:column;justify-content:center;gap:1px;min-height:52px}
@@ -446,6 +447,20 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
 .mas-h .icon{font-size:26px;width:42px;height:42px}
 .mas-q{width:100%;min-height:46px;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);font-size:16px;margin-bottom:12px}
 #mapa{height:52vh;min-height:280px;border-radius:16px;border:1px solid var(--line);overflow:hidden;background:var(--surface);z-index:0}
+#mapa{position:relative;touch-action:none;user-select:none;-webkit-user-select:none}#mapa svg{display:block;width:100%;height:100%;transform-origin:center}
+.mp-ctl{position:absolute;bottom:8px;right:8px;display:flex;gap:6px;z-index:2}
+.mp-ctl button{width:40px;height:40px;opacity:.92;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:22px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.mp-seg{margin-bottom:12px}.mpx-bar{display:flex;gap:8px;align-items:stretch;margin:10px 0}.mpx-bar .seg{flex:1;margin:0}.mpx-bar .seg button{min-height:40px;font-size:14.5px}
+.mp-dl{display:flex;align-items:center;gap:6px;padding:0 14px;border-radius:14px;background:var(--rubric);color:#fff;font-weight:700;font-size:14.5px;min-height:48px}
+.mp-exp{margin:0 0 12px;padding:12px;border-radius:14px;background:var(--surface);border:1px solid var(--line)}.mp-exp-t{margin:2px 0 6px;font-size:12.5px;font-weight:700;letter-spacing:.05em;color:var(--muted);text-transform:uppercase}
+.mp-op{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:10px}.mp-op button{display:flex;flex-direction:column;align-items:flex-start;gap:1px;padding:9px 12px;min-height:56px;border-radius:12px;border:2px solid var(--line);background:var(--paper);color:var(--ink);text-align:left}.mp-op button[aria-pressed="true"]{border-color:var(--rubric)}.mp-op b{font-size:14.5px}.mp-op small{font-size:12.5px;color:var(--muted)}
+.mp-exp-b{display:flex;gap:8px}.mp-go{flex:1;min-height:48px;border-radius:12px;background:var(--rubric);color:#fff;font-weight:700;font-size:15px}.mp-go.alt{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.mp-gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+.mp-card{display:flex;flex-direction:column;gap:3px;padding:0 0 10px;border-radius:14px;border:1px solid var(--line);background:var(--surface);text-align:left;overflow:hidden;color:var(--ink)}.mp-card b,.mp-card small{padding:0 10px}.mp-card b{font-size:15px;margin-top:6px}.mp-card small{font-size:12.5px;color:var(--muted);line-height:1.35}.mp-card .mp-ref{color:var(--rubric);font-weight:600}
+.mp-thumb{display:block;aspect-ratio:320/170;overflow:hidden}.mp-thumb svg{width:100%;height:100%;display:block}
+.mp-tt{margin:12px 0 2px;font-size:21px}
+.mp-ol{list-style:none;margin:12px 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}.mp-ol button{width:100%;display:grid;grid-template-columns:auto 1fr;column-gap:8px;align-items:center;text-align:left;padding:8px 10px;min-height:52px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.mp-ol .mp-n{grid-row:span 2;width:26px;height:26px;border-radius:50%;background:var(--rubric);color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center}.mp-ol.tri .mp-n{background:var(--tc);width:14px;height:14px}.mp-ol b{font-size:14.5px}.mp-ol small{font-size:12px;color:var(--muted)}
 .mapa-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
 .mapa-l{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
 .mapa-l .chip{display:inline-flex;align-items:center;gap:4px}
@@ -899,7 +914,7 @@ header #btnRef svg{color:#7a6334}
 .cfg-g{margin:26px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line);font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}.cfg-g:first-child{margin-top:4px}
 #shSize .rem-box{margin-top:14px}#shSize .prom-row+.rem-box{margin-top:16px}
 .map-fs-b{width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:#fff;color:#222;border:2px solid rgba(0,0,0,.2);border-radius:6px;cursor:pointer;background-clip:padding-box}
-.leaflet-container.map-fs{position:fixed!important;inset:0;z-index:96;width:100vw!important;height:100vh!important;height:100dvh!important;min-height:0;border-radius:0!important;border:0!important}
+#mapa.map-fs,.leaflet-container.map-fs{position:fixed!important;inset:0;z-index:96;width:100vw!important;height:100vh!important;height:100dvh!important;min-height:0;border-radius:0!important;border:0!important}
 body.map-fs-on nav,body.map-fs-on header{visibility:hidden}
 .view.vt{animation:vtIn .2s cubic-bezier(.2,.7,.3,1)}
 @keyframes vtIn{from{opacity:.3;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -1151,17 +1166,19 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
 <script>
 (function(){
   var sp=document.getElementById("iniSplash"), bi=document.getElementById("iniBien");
+  window.__inicioLink = location.search.length > 1 || location.hash.length > 1;
+  function listo(){ try{ window.dispatchEvent(new Event("biblia-inicio")); }catch(e){} }
   var mt=document.querySelector('meta[name="theme-color"]'); if (mt) mt.setAttribute("content","#1f2a7a");
   function visto(){ try{ return localStorage.getItem("biblia.bienvenidaVista")==="1"; }catch(e){ return false; } }
   function quitar(el,cb){ el.classList.add("ini-out"); setTimeout(function(){ el.hidden=true; el.remove && el.remove(); if (el === sp && window.__barColor && mt) mt.setAttribute("content", window.__barColor); cb&&cb(); },450); }
   setTimeout(function(){
     quitar(sp, function(){
-      if(visto()) return;
+      if(visto()){ listo(); return; }
       bi.hidden=false;
       document.getElementById("iniIr").focus();
     });
   }, 2200);
-  function simple(v){ try{ localStorage.setItem("biblia.sencillo", v ? "true" : "false"); window.dispatchEvent(new Event("biblia-sencillo")); }catch(e){} quitar(bi); }
+  function simple(v){ try{ localStorage.setItem("biblia.sencillo", v ? "true" : "false"); window.dispatchEvent(new Event("biblia-sencillo")); }catch(e){} quitar(bi, listo); }
   document.getElementById("iniSi").addEventListener("click", function(){ simple(true); });
   document.getElementById("iniNo").addEventListener("click", function(){ simple(false); });
   document.getElementById("iniIr").addEventListener("click", function(){
@@ -1174,7 +1191,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
       else localStorage.removeItem("biblia.bienvenidaVista");
     }catch(e){}
     if (ed >= 60 && box.hidden){ box.hidden = false; this.hidden = true; box.scrollIntoView({ block: "center", behavior: "smooth" }); document.getElementById("iniSi").focus(); return; }
-    quitar(bi);
+    quitar(bi, listo);
   });
 })();
 </script>
@@ -1567,8 +1584,14 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
       for (var b=g[1]; b<g[2]; b++){ var nc = META.books[b][1].length; h += '<button data-b="' + b + '" class="' + (b === cur.b ? "cur" : "") + (v.books[b] ? "" : " off") + '"><span class="nm">' + esc(bname(b)) + '</span><span class="cap">' + nc + (nc === 1 ? " capítulo" : " capítulos") + '</span></button>'; }
       h += '</div>';
     });
+    h = '<button type="button" class="bk-seguir" data-close><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M9 8l3 3 3-3"/></svg><span><small>Seguir leyendo</small><b>' + esc(refText(cur.b, cur.c)) + '</b></span><i aria-hidden="true">›</i></button>' + h;
     $("bkTitle").textContent = "Libros"; $("bkBack").hidden = true; $("bkBody").innerHTML = h; $("bkBody").scrollTop = 0;
   }
+  window.addEventListener("biblia-inicio", function(){
+    if (window.__inicioLink) return;
+    if (document.querySelector(".sheet.on") || !$("vRead").classList.contains("on")) return;
+    showBooks(); openSheet("shBooks");
+  });
   function showChapters(b){
     var n = META.books[b][1].length, h = '<div class="nums">';
     for (var c=0;c<n;c++) h += '<button data-b="' + b + '" data-c="' + c + '" class="' + (b === cur.b && c === cur.c ? "cur" : "") + '">' + (c+1) + '</button>';
@@ -1577,7 +1600,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
   $("btnRef").onclick = function(){ showBooks(); openSheet("shBooks"); };
   $("bkBack").onclick = showBooks;
   $("bkBody").addEventListener("click", function(e){
-    var b = e.target.closest("button"); if (!b) return;
+    var b = e.target.closest("button"); if (!b || b.dataset.b == null) return;
     if (b.dataset.c != null){ closeSheets(); go(+b.dataset.b, +b.dataset.c); }
     else if (META.books[+b.dataset.b][1].length === 1){ closeSheets(); go(+b.dataset.b, 0); }
     else showChapters(+b.dataset.b);
@@ -3723,41 +3746,289 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
   }
   document.addEventListener("fullscreenchange", function(){ if (document.fullscreenElement) return; var c = document.querySelector(".map-fs"); if (c){ var b = c.querySelector(".map-fs-b"); if (b) b.click(); } });
   document.addEventListener("keydown", function(e){ if (e.key === "Escape"){ var c = document.querySelector(".map-fs"); if (c){ var b = c.querySelector(".map-fs-b"); if (b) b.click(); } } });
+  /* Mapas propios: dibujados en SVG, en español, en dos estilos y sin internet */
+  var MBASE = null, MTEMA = null;
+  function loadBase(){ return MBASE ? Promise.resolve(MBASE) : getJSON("mapabase.json").then(function(j){
+    function bb(p){ var a = [99, -99, 999, -999]; p.forEach(function(q){ if (q[1] < a[0]) a[0] = q[1]; if (q[1] > a[1]) a[1] = q[1]; if (q[0] < a[2]) a[2] = q[0]; if (q[0] > a[3]) a[3] = q[0]; }); return a; }
+    j.landB = j.land.map(bb); j.lakesB = j.lakes.map(bb); j.rivB = j.rivers.map(function(r){ return bb(r[1]); });
+    return MBASE = j; }); }
+  function loadTemas(){ return MTEMA ? Promise.resolve(MTEMA) : getJSON("mapas_tema.json").then(function(j){ return MTEMA = j; }); }
+  var MEST = {
+    mod: { sea: "#cfe3f2", land: "#fbf8f1", lake: "#a9cdea", river: "#7fb1d9", coast: "#b5cbe0", txt: "#1c1a2b", reg: "#8a7f6a", seaTxt: "#3f6f99", pt: "#e0245e", sel: "#d4a72c", route: "#e0245e", font: "Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif", halo: "#ffffff", bg: "#ffffff", head: "#1c1a2b", sub: "#625f78", acc: "#b0174a", line: "#ddd7ee" },
+    cla: { sea: "#c9d6c8", land: "#efe3c6", lake: "#b4c8c2", river: "#7fa0a4", coast: "#a89466", txt: "#3b2a16", reg: "#8a6a3a", seaTxt: "#4d6458", pt: "#a32a1d", sel: "#1f5f8b", route: "#a32a1d", font: "Georgia, 'Times New Roman', serif", halo: "#efe3c6", bg: "#efe3c6", head: "#3b2a16", sub: "#5c4528", acc: "#a32a1d", line: "#8a6a3a" }
+  };
+  var MTRIBU = ["#e0245e", "#2f7d5b", "#c77a12", "#3d5bb8", "#8a3fa8", "#8a3fa8", "#b0472f", "#1f7f8f", "#6b7a1e", "#9b2f5f", "#5a6e8c", "#a8681f", "#4f8a3a"];
+  var MSEAS = [["Mar Mediterráneo", [[33.25, 34.25], [34.6, 31.2], [34.4, 27.0], [36.2, 19.5]]], ["Mar Rojo", [[27.3, 34.55], [21.5, 38.3]]], ["Mar Muerto", [[31.5, 35.5]]], ["Mar de Galilea", [[32.83, 35.6]]], ["Mar Negro", [[43.0, 34.0]]], ["Golfo Pérsico", [[28.3, 49.6]]]];
+  var MREG_S = [["GALILEA", 33.0, 35.25], ["SAMARIA", 32.28, 35.05], ["JUDEA", 31.5, 34.95], ["MOAB", 31.35, 35.95], ["EDOM", 30.5, 35.55], ["FILISTEA", 31.55, 34.45]];
+  var MREG_L = [["EGIPTO", 28.8, 30.6], ["SIRIA", 35.0, 37.6], ["MESOPOTAMIA", 33.6, 43.4], ["ARABIA", 29.0, 39.5], ["ASIA", 38.7, 28.6], ["GALACIA", 38.9, 32.9], ["MACEDONIA", 41.0, 22.2], ["ACAYA", 37.55, 22.25], ["ITALIA", 42.6, 13.6], ["CHIPRE", 35.35, 33.3], ["CRETA", 35.45, 24.2]];
+  function mxml(t){ return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+  function mBounds(pts, minSpan, pad){
+    var b = { s: 90, n: -90, w: 180, e: -180 };
+    pts.forEach(function(p){ b.s = Math.min(b.s, p[0]); b.n = Math.max(b.n, p[0]); b.w = Math.min(b.w, p[1]); b.e = Math.max(b.e, p[1]); });
+    if (!pts.length) b = { s: 30.6, n: 33.4, w: 34.0, e: 36.4 };
+    var ms = minSpan || 1.1, cy = (b.s + b.n) / 2, cx = (b.w + b.e) / 2, dy = Math.max(b.n - b.s, ms), dx = Math.max(b.e - b.w, ms);
+    dy *= pad || 1.3; dx *= pad || 1.3;
+    return { s: cy - dy / 2, n: cy + dy / 2, w: cx - dx / 2, e: cx + dx / 2 };
+  }
+  function mProj(b, W, H){
+    var lc = Math.cos(((b.s + b.n) / 2) * Math.PI / 180), dx = (b.e - b.w) * lc, dy = b.n - b.s;
+    var k = Math.min(W / dx, H / dy), ox = (W - dx * k) / 2, oy = (H - dy * k) / 2;
+    var p = { k: k, lc: lc, x: function(lo){ return ox + (lo - b.w) * lc * k; }, y: function(la){ return oy + (b.n - la) * k; } };
+    p.view = { w: b.w - ox / (lc * k), e: b.w + (W - ox) / (lc * k), n: b.n + oy / k, s: b.n - (H - oy) / k };
+    return p;
+  }
+  // o: { w, h, b, est, fs, pts:[{n,la,lo,num,sel,id,c}], ruta:[[la,lo]], reg:[[n,la,lo]], tribus, x, y }
+  function mapSVG(o){
+    var S = MEST[o.est] || MEST.mod, W = o.w, H = o.h, fs = o.fs || 1, P = mProj(o.b, W, H), v = P.view, r1 = function(n){ return Math.round(n * 10) / 10; };
+    var vis = function(a){ return !(a[1] < v.s || a[0] > v.n || a[3] < v.w || a[2] > v.e); };
+    var poly = function(pl){ var d = ""; pl.forEach(function(q, i){ d += (i ? "L" : "M") + r1(P.x(q[0])) + " " + r1(P.y(q[1])); }); return d + "Z"; };
+    var h = '<svg xmlns="http://www.w3.org/2000/svg"' + (o.x != null ? ' x="' + o.x + '" y="' + o.y + '"' : "") + ' width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + " " + H + '" font-family="' + mxml(S.font) + '">';
+    h += '<rect width="' + W + '" height="' + H + '" fill="' + S.sea + '"/>';
+    var d = "";
+    MBASE.land.forEach(function(pl, i){ if (vis(MBASE.landB[i])) d += poly(pl); });
+    h += '<path d="' + d + '" fill="' + S.land + '" stroke="' + S.coast + '" stroke-width="' + r1(1.2 * fs) + '" stroke-linejoin="round"/>';
+    d = ""; MBASE.lakes.forEach(function(pl, i){ if (vis(MBASE.lakesB[i])) d += poly(pl); });
+    if (d) h += '<path d="' + d + '" fill="' + S.lake + '" stroke="' + S.coast + '" stroke-width="' + r1(0.8 * fs) + '"/>';
+    d = ""; MBASE.rivers.forEach(function(rv, i){ if (!vis(MBASE.rivB[i])) return; rv[1].forEach(function(q, j){ d += (j ? "L" : "M") + r1(P.x(q[0])) + " " + r1(P.y(q[1])); }); });
+    if (d) h += '<path d="' + d + '" fill="none" stroke="' + S.river + '" stroke-width="' + r1(1.6 * fs) + '" stroke-linecap="round" stroke-linejoin="round"/>';
+    var boxes = [], span = v.n - v.s;
+    function hit(bx){ for (var i = 0; i < boxes.length; i++){ var c = boxes[i]; if (bx[0] < c[2] && bx[2] > c[0] && bx[1] < c[3] && bx[3] > c[1]) return true; } return false; }
+    function inside(bx){ return bx[0] > 2 && bx[1] > 2 && bx[2] < W - 2 && bx[3] < H - 2; }
+    var cw = S === MEST.cla ? 0.56 : 0.58;
+    // Puntos y ruta primero en las cajas, para que las etiquetas no los tapen
+    var pts = (o.pts || []).map(function(p){ return { p: p, x: P.x(p.lo), y: P.y(p.la) }; });
+    var rr = (o.tribus ? 0 : (o.pts && o.pts.some(function(p){ return p.num; }) ? 9.5 : 5.5)) * fs;
+    pts.forEach(function(q){ boxes.push([q.x - rr, q.y - rr, q.x + rr, q.y + rr]); });
+    var buf = { lab: "", under: "" };
+    // Escala: se calcula antes para que ninguna etiqueta la tape
+    var km = [5, 10, 20, 50, 100, 200, 500, 1000], pxkm = P.k / 111, want = W * 0.18, kmv = km[0];
+    km.forEach(function(k){ if (k * pxkm <= want) kmv = k; });
+    var sl = kmv * pxkm, sx = 12 * fs, sy = H - 12 * fs;
+    boxes.push([0, sy - 10 * fs, sx + sl + 52 * fs, H]); boxes.push([W - 32 * fs, 0, W, 50 * fs]);
+    if (o.ctl) boxes.push([W - 186, H - 56, W, H]);
+    function etiqueta(t, x, y, size, opt){
+      var w = t.length * size * cw * (opt.sp ? 1.25 : 1), hh = size * 1.15, pos = opt.pos || [[0, 0]], ok = null;
+      for (var i = 0; i < pos.length; i++){ var px = x + pos[i][0], py = y + pos[i][1], an = pos[i][2] || "middle";
+        var x0 = an === "start" ? px : an === "end" ? px - w : px - w / 2, bx = [x0 - 2, py - hh * 0.82, x0 + w + 2, py + hh * 0.25];
+        if (inside(bx) && (opt.force || !hit(bx))){ ok = [px, py, an, bx]; break; } }
+      if (!ok) return false;
+      boxes.push(ok[3]);
+      var at = ' x="' + r1(ok[0]) + '" y="' + r1(ok[1]) + '" text-anchor="' + ok[2] + '" font-size="' + r1(size) + '"' + (opt.attr || "");
+      var tg = opt.under ? "under" : "lab";
+      if (opt.halo) buf[tg] += '<text' + at + ' fill="none" stroke="' + S.halo + '" stroke-width="' + r1(size * 0.28) + '" stroke-linejoin="round">' + mxml(t) + '</text>';
+      buf[tg] += '<text' + at + ' fill="' + (opt.fill || S.txt) + '">' + mxml(t) + '</text>';
+      return true;
+    }
+    h += "@@UNDER@@";
+    // Ruta
+    if (o.ruta && o.ruta.length > 1){
+      var rd = ""; o.ruta.forEach(function(q, i){ rd += (i ? "L" : "M") + r1(P.x(q[1])) + " " + r1(P.y(q[0])); });
+      h += '<path d="' + rd + '" fill="none" stroke="' + S.halo + '" stroke-width="' + r1(5 * fs) + '" stroke-linejoin="round" stroke-linecap="round" opacity=".7"/>';
+      h += '<path d="' + rd + '" fill="none" stroke="' + S.route + '" stroke-width="' + r1(2.6 * fs) + '" stroke-dasharray="' + r1(8 * fs) + " " + r1(6 * fs) + '" stroke-linejoin="round" stroke-linecap="round"/>';
+    }
+    // Etiquetas de puntos
+    var pl = "", lfs = 12.5 * fs;
+    pts.forEach(function(q){
+      var p = q.p;
+      if (o.tribus){
+        h += '<circle cx="' + r1(q.x) + '" cy="' + r1(q.y) + '" r="' + r1(Math.max(14 * fs, P.k * 0.16)) + '" fill="' + p.c + '" opacity=".22"/>';
+        etiqueta(p.n, q.x, q.y + lfs * 0.4, lfs * 1.15, { force: true, halo: true, fill: p.c, attr: ' font-weight="700"' + (p.id != null ? ' data-tp="' + p.id + '"' : "") });
+        return;
+      }
+      var g = '<g' + (p.id != null ? (p.tema ? ' data-tp="' : ' data-pl="') + p.id + '"' : "") + ' style="cursor:pointer">';
+      if (p.num){
+        g += '<circle cx="' + r1(q.x) + '" cy="' + r1(q.y) + '" r="' + r1(9.5 * fs) + '" fill="' + (p.sel ? S.sel : S.pt) + '" stroke="' + S.halo + '" stroke-width="' + r1(2 * fs) + '"/>';
+        g += '<text x="' + r1(q.x) + '" y="' + r1(q.y + 4 * fs) + '" text-anchor="middle" font-size="' + r1(11 * fs) + '" font-weight="700" fill="#fff">' + p.num + '</text>';
+      } else {
+        g += '<circle cx="' + r1(q.x) + '" cy="' + r1(q.y) + '" r="' + r1((p.sel ? 8 : 5.5) * fs) + '" fill="' + (p.sel ? S.sel : S.pt) + '" stroke="' + S.halo + '" stroke-width="' + r1(2 * fs) + '"/>';
+      }
+      g += '<circle cx="' + r1(q.x) + '" cy="' + r1(q.y) + '" r="' + r1(16 * fs) + '" fill="transparent"/></g>';
+      pl += g;
+    });
+    pts.forEach(function(q){
+      if (o.tribus || !q.p.n) return;
+      var gap = rr + 4 * fs, s = q.p.sel ? lfs * 1.12 : lfs;
+      etiqueta(q.p.n, q.x, q.y, s, { halo: true, force: q.p.sel, attr: ' font-weight="' + (q.p.sel ? 700 : 600) + '"', pos: [[gap, s * 0.35, "start"], [-gap, s * 0.35, "end"], [0, -gap], [0, gap + s * 0.8], [gap * 0.7, -gap * 0.7, "start"], [-gap * 0.7, gap + s * 0.5, "end"]] });
+    });
+    // Mares y regiones, después, solo donde quepan
+    var regs = o.reg || (span < 5 ? MREG_S : span < 30 ? MREG_L : []);
+    if (o.reg == null && span < 5 && o.pts && o.pts.some(function(p){ return p.lo < 34.2 || p.la < 29.5; })) regs = regs.concat(MREG_L);
+    regs.forEach(function(g){ var x = P.x(g[2]), y = P.y(g[1]); if (x < 0 || x > W || y < 0 || y > H) return;
+      etiqueta(g[0], x, y, 13 * fs, { sp: 1, under: 1, fill: S.reg, attr: ' font-weight="700" letter-spacing="' + r1(2.5 * fs) + '" opacity=".85"' }); });
+    MSEAS.forEach(function(sm){ var small = /Muerto|Galilea/.test(sm[0]);
+      if (small && span > 4) return;
+      for (var i = 0; i < sm[1].length; i++){ var c = sm[1][i]; if (c[0] < v.s || c[0] > v.n || c[1] < v.w || c[1] > v.e) continue;
+        var x = P.x(c[1]), y = P.y(c[0]);
+        if (small) x += (sm[0] === "Mar Muerto" ? 0.14 : 0.12) * P.k * P.lc + 4 * fs;
+        if (etiqueta(sm[0], x, y, (small ? 10.5 : 13) * fs, { under: 1, fill: S.seaTxt, attr: ' font-style="italic"', pos: small ? [[0, 0, "start"]] : [[0, 0]] })) break; } });
+    // Norte y escala
+    var ny = 14 * fs, nx = W - 18 * fs;
+    h = h.replace("@@UNDER@@", buf.under) + pl + buf.lab;
+    h += '<g opacity=".8"><path d="M' + r1(nx) + " " + r1(ny) + "l" + r1(6 * fs) + " " + r1(16 * fs) + "l" + r1(-6 * fs) + " " + r1(-4 * fs) + "l" + r1(-6 * fs) + " " + r1(4 * fs) + 'z" fill="' + S.reg + '"/><text x="' + r1(nx) + '" y="' + r1(ny + 30 * fs) + '" text-anchor="middle" font-size="' + r1(11 * fs) + '" font-weight="700" fill="' + S.reg + '">N</text></g>';
+    h += '<g><path d="M' + r1(sx) + " " + r1(sy) + "h" + r1(sl) + '" stroke="' + S.txt + '" stroke-width="' + r1(2 * fs) + '"/><path d="M' + r1(sx) + " " + r1(sy - 4 * fs) + "v" + r1(8 * fs) + "M" + r1(sx + sl) + " " + r1(sy - 4 * fs) + "v" + r1(8 * fs) + '" stroke="' + S.txt + '" stroke-width="' + r1(1.5 * fs) + '"/><text x="' + r1(sx + sl + 6 * fs) + '" y="' + r1(sy + 4 * fs) + '" font-size="' + r1(10.5 * fs) + '" fill="' + S.txt + '">' + kmv + ' km</text></g>';
+    return h + "</svg>";
+  }
+
+  var MP = { modo: "cap", tema: null, view: null, base: null, est: "mod", fmt: "png", tam: "cel", exp: false };
+  try{ MP.est = store.get("mapEst", "mod") === "cla" ? "cla" : "mod"; }catch(e){}
+  function mapPts(){
+    if (MP.modo === "tema" && MP.tema){
+      var t = MP.tema;
+      return t.p.map(function(p, i){ return { n: p[0], la: p[1], lo: p[2], num: t.tribus ? 0 : i + 1, sel: mapSelI === i, id: i, tema: 1, c: MTRIBU[i % MTRIBU.length] }; });
+    }
+    return mapCur.map(function(i){ var l = MAPAS.lugares[i]; return { n: l[0], la: l[1], lo: l[2], sel: i === mapSelI, id: i }; });
+  }
+  function mapRuta(){
+    if (MP.modo !== "tema" || !MP.tema || !MP.tema.linea) return null;
+    var t = MP.tema, ord = t.ruta || t.p.map(function(_, i){ return i; });
+    return ord.map(function(i){ return [t.p[i][1], t.p[i][2]]; });
+  }
+  function mapFit(){
+    var pts = mapPts(); MP.base = mBounds(pts.map(function(p){ return [p.la, p.lo]; }), MP.modo === "tema" ? 1.4 : (pts.length === 1 ? 1.6 : 1.1), MP.modo === "tema" ? 1.5 : 1.3); MP.view = MP.base;
+  }
+  function mapDraw(){
+    var box = $("mapa"); if (!box || !MBASE || !MAPAS) return;
+    var W = box.clientWidth || 340, H = box.clientHeight || 340;
+    if (!MP.view) mapFit();
+    var t = MP.modo === "tema" ? MP.tema : null;
+    box.innerHTML = mapSVG({ w: W, h: H, b: MP.view, est: MP.est, fs: 1, ctl: 1, pts: mapPts(), ruta: mapRuta(), reg: t ? t.reg : null, tribus: t && t.tribus })
+      + '<div class="mp-ctl"><button type="button" class="map-fs-b" data-mfs aria-label="Pantalla completa">' + (box.classList.contains("map-fs") ? FS_OUT : FS_IN) + '</button><button type="button" class="mp-z" data-mz="1" aria-label="Acercar">+</button><button type="button" class="mp-z" data-mz="-1" aria-label="Alejar">−</button><button type="button" class="mp-z" data-mz="0" aria-label="Ver todo el mapa"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="7"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></button></div>';
+    var sv = box.querySelector("svg"); if (sv) sv.setAttribute("aria-hidden", "true");
+  }
+  function mapZoom(f, cx, cy){
+    var v = MP.view, box = $("mapa"); if (!v || !box) return;
+    var P = mProj(v, box.clientWidth, box.clientHeight), pv = P.view;
+    var fx = cx == null ? 0.5 : cx / box.clientWidth, fy = cy == null ? 0.5 : cy / box.clientHeight;
+    var lo = pv.w + (pv.e - pv.w) * fx, la = pv.n - (pv.n - pv.s) * fy;
+    var nw = (pv.e - pv.w) / f, nh = (pv.n - pv.s) / f;
+    if (nh < 0.12 || nh > 30) return;
+    MP.view = { w: lo - nw * fx, e: lo + nw * (1 - fx), n: la + nh * fy, s: la - nh * (1 - fy) };
+    mapDraw();
+  }
+  function mapPan(dx, dy){
+    var box = $("mapa"), P = mProj(MP.view, box.clientWidth, box.clientHeight), pv = P.view;
+    var ddx = dx / (P.k * P.lc), ddy = dy / P.k;
+    MP.view = { w: pv.w - ddx, e: pv.e - ddx, n: pv.n + ddy, s: pv.s + ddy };
+    mapDraw();
+  }
+  function mapGestos(box){
+    var ps = {}, start = null, moved = false;
+    box.addEventListener("pointerdown", function(e){ if (e.target.closest(".mp-ctl")) return; ps[e.pointerId] = [e.clientX, e.clientY]; moved = false;
+      var k = Object.keys(ps); start = k.length === 2 ? { d: Math.hypot(ps[k[0]][0] - ps[k[1]][0], ps[k[0]][1] - ps[k[1]][1]), x: e.clientX, y: e.clientY } : { x: e.clientX, y: e.clientY };
+      try{ box.setPointerCapture(e.pointerId); }catch(er){} });
+    box.addEventListener("pointermove", function(e){ if (!ps[e.pointerId] || !start) return; ps[e.pointerId] = [e.clientX, e.clientY];
+      var k = Object.keys(ps), sv = box.querySelector("svg"); if (!sv) return;
+      if (k.length === 2 && start.d){ var d = Math.hypot(ps[k[0]][0] - ps[k[1]][0], ps[k[0]][1] - ps[k[1]][1]); start.f = d / start.d; sv.style.transform = "scale(" + start.f + ")"; moved = true; return; }
+      var dx = e.clientX - start.x, dy = e.clientY - start.y; if (Math.abs(dx) + Math.abs(dy) > 6) moved = true;
+      if (moved){ start.dx = dx; start.dy = dy; sv.style.transform = "translate(" + dx + "px," + dy + "px)"; e.preventDefault(); } });
+    function fin(e){ if (!ps[e.pointerId]) return; delete ps[e.pointerId]; if (!start) return;
+      var s = start; start = null; if (!moved) return;
+      if (s.f) mapZoom(s.f); else if (s.dx != null) mapPan(s.dx, s.dy);
+      box.__noClick = true; setTimeout(function(){ box.__noClick = false; }, 60); }
+    box.addEventListener("pointerup", fin); box.addEventListener("pointercancel", fin);
+    box.addEventListener("wheel", function(e){ e.preventDefault(); var r = box.getBoundingClientRect(); mapZoom(e.deltaY < 0 ? 1.25 : 0.8, e.clientX - r.left, e.clientY - r.top); }, { passive: false });
+    box.addEventListener("click", function(e){
+      if (box.__noClick) return;
+      var z = e.target.closest("[data-mz]"); if (z){ var f = +z.dataset.mz; if (f === 0){ MP.view = MP.base; mapDraw(); } else mapZoom(f > 0 ? 1.6 : 0.625); return; }
+      if (e.target.closest("[data-mfs]")){ var on = !box.classList.contains("map-fs"); box.classList.toggle("map-fs", on); document.body.classList.toggle("map-fs-on", on);
+        try{ if (on && box.requestFullscreen) box.requestFullscreen().catch(function(){}); else if (!on && document.fullscreenElement) document.exitFullscreen(); }catch(er){}
+        setTimeout(mapDraw, 260); return; }
+      var p = e.target.closest("[data-pl]"); if (p){ mapPick(+p.dataset.pl); return; }
+      var t = e.target.closest("[data-tp]"); if (t){ mapPickTema(+t.dataset.tp); }
+    });
+  }
+  function mapHead(){
+    var t = MP.modo === "tema";
+    return '<div class="seg mp-seg" role="group" aria-label="Tipo de mapa"><button type="button" data-mmodo="cap" aria-pressed="' + !t + '">Este capítulo</button><button type="button" data-mmodo="gal" aria-pressed="' + t + '">Mapas temáticos</button></div>';
+  }
+  function mapEstHtml(){ return '<div class="mpx-bar"><div class="seg mp-est" role="group" aria-label="Estilo del mapa"><button type="button" data-mest="mod" aria-pressed="' + (MP.est === "mod") + '">Moderno</button><button type="button" data-mest="cla" aria-pressed="' + (MP.est === "cla") + '">Clásico</button></div><button type="button" class="mp-dl" data-mexp aria-expanded="' + MP.exp + '"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Descargar</button></div><div id="mpExp"></div>'; }
+  function mapExpHtml(){
+    if (!MP.exp) return "";
+    var o = function(k, v, t, d){ return '<button type="button" data-m' + k + '="' + v + '" aria-pressed="' + (MP[k] === v) + '"><b>' + t + '</b><small>' + d + '</small></button>'; };
+    return '<div class="mp-exp"><p class="mp-exp-t">Formato</p><div class="mp-op">' + o("fmt", "png", "Imagen PNG", "WhatsApp y proyector") + o("fmt", "pdf", "PDF", "Para imprimir") + '</div><p class="mp-exp-t">Tamaño</p><div class="mp-op">' + o("tam", "cel", "Celular", "Vertical") + o("tam", "pro", "Proyector", "Horizontal 16:9") + o("tam", "carta", "Carta", "Hoja carta") + o("tam", "a4", "A4", "Hoja A4") + '</div><div class="mp-exp-b"><button type="button" class="mp-go" data-mgo="dl">Descargar ' + (MP.fmt === "png" ? "PNG" : "PDF") + '</button>' + (navigator.share ? '<button type="button" class="mp-go alt" data-mgo="sh">Compartir</button>' : "") + '</div><p class="note" style="padding:6px 0 0">Los nombres van en español y al pie sale la cita y la fuente de los datos.</p></div>';
+  }
   function renderMapa(opt){
-    var el = $("vMore");
-    el.innerHTML = masHead("Mapas bíblicos") + '<div class="mapa-chips"><button type="button" class="chip" id="mpCap" aria-pressed="' + (opt.place == null) + '">' + esc(refText(cur.b, cur.c)) + '</button></div><input class="mas-q" id="mpQ" type="search" placeholder="Buscar un lugar, como Betel o Éfeso" autocomplete="off" aria-label="Buscar un lugar"><div id="mapa" role="region" aria-label="Mapa"></div><div id="mpSel"></div><div class="mapa-l" id="mpList"></div><p class="note" style="padding-top:4px">Ubicaciones aproximadas según OpenBible.info (CC BY). El mapa necesita internet para dibujarse; la lista funciona igual sin conexión.</p>';
-    loadMapas().then(function(){
-      if (opt.place != null) mapShow([opt.place], opt.place); else mapShow(capPlaces(cur.b, cur.c));
-      loadLeaflet().then(function(L){
-        if (!$("mapa")) return;
-        mapObj = L.map("mapa", { zoomControl: true, attributionControl: true }).setView([31.8, 35.2], 6);
-        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 13, attribution: "© OpenStreetMap · OpenBible.info" }).addTo(mapObj);
-        mapLayer = L.layerGroup().addTo(mapObj); mapFs(L, mapObj);
-        mapDraw();
-      }, function(){ var m = $("mapa"); if (m){ m.style.height = "auto"; m.style.minHeight = "0"; m.innerHTML = '<p class="note" style="padding:14px">Sin internet no se puede dibujar el mapa. Aquí abajo tienes la lista de lugares.</p>'; } });
-    }, function(){ $("mpList").innerHTML = '<p class="note">No se pudieron cargar los lugares. Revisa tu conexión.</p>'; });
-    $("mpCap").onclick = function(){ $("mpQ").value = ""; this.setAttribute("aria-pressed", "true"); mapShow(capPlaces(cur.b, cur.c)); };
+    var el = $("vMore"); el.dataset.sec = "mapa";
+    if (opt.tema != null) MP.modo = "tema"; else if (opt.place != null || !opt.keep) MP.modo = "cap";
+    if (opt.place != null || !opt.keep){ MP.view = null; mapSelI = null; }
+    el.innerHTML = masHead("Mapas bíblicos") + mapHead() + '<div id="mpMain"><p class="note">Cargando mapas…</p></div>';
+    el.onclick = mapClicks;
+    Promise.all([loadMapas(), loadBase(), loadTemas()]).then(function(){
+      if (opt.tema != null){ var t = MTEMA.filter(function(x){ return x.id === opt.tema; })[0]; if (t) return mapTema(t); }
+      if (MP.modo === "gal") return mapGaleria();
+      mapCap(opt);
+    }, function(){ $("mpMain").innerHTML = '<p class="note">No se pudieron cargar los mapas. Revisa tu conexión la primera vez; después funcionan sin internet.</p>'; });
+  }
+  function mapCap(opt){
+    MP.modo = "cap"; MP.tema = null;
+    $("mpMain").innerHTML = '<div class="mapa-chips"><button type="button" class="chip" id="mpCap" aria-pressed="' + (opt.place == null) + '">' + esc(refText(cur.b, cur.c)) + '</button></div><input class="mas-q" id="mpQ" type="search" placeholder="Buscar un lugar, como Betel o Éfeso" autocomplete="off" aria-label="Buscar un lugar">' + mapEstHtml() + '<div id="mapa" role="region" aria-label="Mapa"></div><div id="mpSel"></div><div class="mapa-l" id="mpList"></div><p class="note" style="padding-top:4px">Ubicaciones aproximadas según OpenBible.info (CC BY). Costas y ríos: Natural Earth. Arrastra para mover y usa + y − para acercar.</p>';
+    mapGestos($("mapa"));
+    if (opt.place != null) mapShow([opt.place], opt.place); else mapShow(capPlaces(cur.b, cur.c));
+    $("mpCap").onclick = function(){ $("mpQ").value = ""; this.setAttribute("aria-pressed", "true"); MP.view = null; mapSelI = null; mapShow(capPlaces(cur.b, cur.c)); };
     $("mpQ").oninput = function(){
       var q = norm(this.value.trim()); if (!MAPAS) return;
       if (!q){ $("mpCap").onclick(); return; }
       $("mpCap").setAttribute("aria-pressed", "false");
       var seen = {}, r = [];
       MAPAS.lugares.forEach(function(l, i){ var n = norm(l[0]); if (n.indexOf(q) === 0 || (q.length > 2 && n.indexOf(q) > 0)){ if (seen[n] != null){ if (LUG_CAP[i].length > LUG_CAP[seen[n]].length) r[r.indexOf(seen[n])] = i, seen[n] = i; return; } seen[n] = i; r.push(i); } });
-      mapShow(r.slice(0, 40), r.length === 1 ? r[0] : null);
+      MP.view = null; mapShow(r.slice(0, 40), r.length === 1 ? r[0] : null);
     };
-    $("mpList").onclick = function(e){ var b = e.target.closest("[data-pl]"); if (b) mapPick(+b.dataset.pl); };
-    $("mpSel").onclick = function(e){ var c = e.target.closest(".chip[data-cb]"); if (c) go(+c.dataset.cb, +c.dataset.cc); };
+  }
+  function mapGaleria(){
+    MP.modo = "gal"; MP.tema = null;
+    var h = '<p class="note" style="padding-top:0">Rutas y regiones de la historia bíblica. Toca uno para verlo grande y descargarlo.</p><div class="mp-gal">';
+    MTEMA.forEach(function(t){
+      var pts = t.p.map(function(p, i){ return { n: "", la: p[1], lo: p[2], num: 0, c: MTRIBU[i % MTRIBU.length] }; });
+      var ord = t.ruta || t.p.map(function(_, i){ return i; });
+      var thumb = mapSVG({ w: 320, h: 170, b: mBounds(t.p.map(function(p){ return [p[1], p[2]]; }), 1.4), est: MP.est, fs: 0.7, pts: pts, tribus: t.tribus, ruta: t.linea ? ord.map(function(i){ return [t.p[i][1], t.p[i][2]]; }) : null, reg: [] });
+      h += '<button type="button" class="mp-card" data-mtema="' + t.id + '"><span class="mp-thumb" aria-hidden="true">' + thumb + '</span><b>' + esc(t.t) + '</b><small>' + esc(t.s) + '</small><small class="mp-ref">' + esc(t.r) + '</small></button>';
+    });
+    $("mpMain").innerHTML = h + '</div>' + mapEstHtml().replace('<div id="mpExp"></div>', "").replace(/<button type="button" class="mp-dl"[\s\S]*?<\/button>/, "");
+  }
+  function mapTema(t){
+    MP.modo = "tema"; MP.tema = t; mapSelI = null; MP.view = null;
+    $("vMore").querySelectorAll("[data-mmodo]").forEach(function(b){ b.setAttribute("aria-pressed", String(b.dataset.mmodo === "gal")); });
+    var h = '<button type="button" class="chip" data-mmodo="gal">‹ Todos los mapas</button><h3 class="mp-tt">' + esc(t.t) + '</h3><p class="note" style="padding:0 0 8px">' + esc(t.s) + ' · ' + esc(t.r) + '</p>' + mapEstHtml() + '<div id="mapa" role="region" aria-label="' + esc(t.t) + '"></div><div id="mpSel"></div><ol class="mp-ol' + (t.tribus ? " tri" : "") + '">';
+    t.p.forEach(function(p, i){ h += '<li><button type="button" data-tp="' + i + '"' + (t.tribus ? ' style="--tc:' + MTRIBU[i % MTRIBU.length] + '"' : "") + '><span class="mp-n">' + (t.tribus ? "" : i + 1) + '</span><b>' + esc(p[0]) + '</b><small>' + esc(refText(p[3], p[4] - 1, p[5] - 1)) + '</small></button></li>'; });
+    h += '</ol>' + (t.nota ? '<p class="note">' + esc(t.nota) + '</p>' : "") + '<p class="note" style="padding-top:0">Ubicaciones aproximadas. Costas y ríos: Natural Earth.</p>';
+    $("mpMain").innerHTML = h;
+    mapGestos($("mapa")); mapDraw();
+  }
+  function mapPickTema(i){
+    var t = MP.tema; if (!t) return; mapSelI = i; mapDraw();
+    var p = t.p[i];
+    $("mpSel").innerHTML = '<div class="mapa-sel"><b>' + esc(p[0]) + '</b><div class="fi-r"><button type="button" class="chip" data-cb="' + p[3] + '" data-cc="' + (p[4] - 1) + '" data-cv="' + (p[5] - 1) + '">Leer ' + esc(refText(p[3], p[4] - 1, p[5] - 1)) + '</button></div></div>';
+    $("mapa").scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }
+  function mapClicks(e){
+    var b; if (!$("mpMain")) return;
+    if ((b = e.target.closest("[data-mmodo]"))){ if (b.dataset.mmodo === "gal"){ mapGaleria(); } else { MP.view = null; mapSelI = null; mapCap({}); } $("vMore").querySelectorAll(".mp-seg [data-mmodo]").forEach(function(x){ x.setAttribute("aria-pressed", String(x.dataset.mmodo === b.dataset.mmodo)); }); return; }
+    if ((b = e.target.closest("[data-mtema]"))){ var t = MTEMA.filter(function(x){ return x.id === b.dataset.mtema; })[0]; if (t){ mapTema(t); $("vMore").scrollTop = 0; window.scrollTo(0, 0); } return; }
+    if ((b = e.target.closest("[data-mest]"))){ MP.est = b.dataset.mest; store.set("mapEst", MP.est); document.querySelectorAll("[data-mest]").forEach(function(x){ x.setAttribute("aria-pressed", String(x.dataset.mest === MP.est)); }); if (MP.modo === "gal") mapGaleria(); else mapDraw(); return; }
+    if ((b = e.target.closest("[data-mexp]"))){ MP.exp = !MP.exp; b.setAttribute("aria-expanded", String(MP.exp)); $("mpExp").innerHTML = mapExpHtml(); return; }
+    if ((b = e.target.closest("[data-mfmt]"))){ MP.fmt = b.dataset.mfmt; $("mpExp").innerHTML = mapExpHtml(); return; }
+    if ((b = e.target.closest("[data-mtam]"))){ MP.tam = b.dataset.mtam; $("mpExp").innerHTML = mapExpHtml(); return; }
+    if ((b = e.target.closest("[data-mgo]"))){ mapExport(b.dataset.mgo === "sh", b); return; }
+    if (e.target.closest("#mapa")) return;
+    if ((b = e.target.closest(".mp-ol [data-tp]"))){ mapPickTema(+b.dataset.tp); return; }
+    if ((b = e.target.closest("#mpList [data-pl]"))){ mapPick(+b.dataset.pl); return; }
+    if ((b = e.target.closest("#mpSel .chip[data-cb]"))){ go(+b.dataset.cb, +b.dataset.cc, b.dataset.cv != null ? +b.dataset.cv : undefined); return; }
   }
   var mapCur = [], mapSelI = null;
   function mapShow(list, sel){
     mapCur = list; mapSelI = sel == null ? null : sel;
     var h = "";
-    if (!list.length) h = '<p class="note">' + ($("mpQ") && $("mpQ").value ? "No encontramos ese lugar." : "Este capítulo no menciona lugares que tengamos en el mapa.") + '</p>';
+    if (!list.length) h = '<p class="note">' + ($("mpQ") && $("mpQ").value ? "No encontramos ese lugar." : "Este capítulo no menciona lugares que tengamos en el mapa. Prueba con los mapas temáticos.") + '</p>';
     list.forEach(function(i){ h += '<button type="button" class="chip" data-pl="' + i + '">' + ICO_L + esc(MAPAS.lugares[i][0]) + '</button>'; });
     $("mpList").innerHTML = h;
-    mapSelHtml(); mapDraw();
+    mapSelHtml(); MP.view = null; mapDraw();
   }
-  function mapPick(i){ mapSelI = i; mapSelHtml(); if (mapObj){ mapDraw(); } $("mpSel").scrollIntoView({ block: "nearest", behavior: "smooth" }); }
+  function mapPick(i){
+    mapSelI = i; mapSelHtml();
+    var l = MAPAS.lugares[i], v = MP.view;
+    if (v && (l[1] < v.s || l[1] > v.n || l[2] < v.w || l[2] > v.e)){ var dy = (v.n - v.s) / 2, dx = (v.e - v.w) / 2; MP.view = { s: l[1] - dy, n: l[1] + dy, w: l[2] - dx, e: l[2] + dx }; }
+    mapDraw(); $("mpSel").scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }
   function mapSelHtml(){
     var el = $("mpSel"); if (!el) return;
     if (mapSelI == null){ el.innerHTML = ""; return; }
@@ -3766,23 +4037,92 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     if (caps.length > 24) h += '<span class="note" style="padding:6px">y ' + (caps.length - 24) + ' más</span>';
     el.innerHTML = h + '</div></div>';
   }
-  function mapDraw(){
-    if (!mapObj || !mapLayer || !window.L) return;
-    mapLayer.clearLayers();
-    var pts = [], col = getComputedStyle(document.documentElement).getPropertyValue(cur.b >= 39 ? "--nt" : "--at").trim() || "#2f4d8a";
-    mapCur.forEach(function(i){
-      var l = MAPAS.lugares[i], on = i === mapSelI;
-      var m = L.circleMarker([l[1], l[2]], { radius: on ? 10 : 7, color: "#fff", weight: 2, fillColor: on ? "#d4a72c" : col, fillOpacity: 1 }).addTo(mapLayer);
-      m.bindTooltip(l[0], { permanent: mapCur.length <= 14 || on, direction: "top", offset: [0, -6], className: "mapa-lbl" });
-      m.on("click", function(){ mapPick(i); });
-      pts.push([l[1], l[2]]);
-    });
-    setTimeout(function(){ if (!mapObj) return; mapObj.invalidateSize();
-      if (mapSelI != null){ var s = MAPAS.lugares[mapSelI]; mapObj.setView([s[1], s[2]], Math.max(mapObj.getZoom(), 8)); }
-      else if (pts.length === 1) mapObj.setView(pts[0], 8);
-      else if (pts.length) mapObj.fitBounds(pts, { padding: [30, 30], maxZoom: 9 });
-    }, 50);
+  window.addEventListener("resize", function(){ if ($("mapa") && MBASE) mapDraw(); });
+
+  /* Exportar el mapa como imagen o PDF */
+  var MTAM = { cel: [1080, 1920], pro: [1920, 1080], carta: [1700, 2200], a4: [1654, 2339] };
+  function mWrap(t, max){ var w = String(t).split(" "), l = [], c = ""; w.forEach(function(x){ if ((c + " " + x).trim().length > max){ if (c) l.push(c); c = x; } else c = (c + " " + x).trim(); }); if (c) l.push(c); return l; }
+  function mapPagina(){
+    var S = MEST[MP.est], sz = MTAM[MP.tam], W = sz[0], H = sz[1], land = W > H, t = MP.modo === "tema" ? MP.tema : null;
+    var u = (land ? H : W) / 1000, m = 50 * u, f = S.font;
+    var titulo = t ? t.t : "Lugares de " + refText(cur.b, cur.c), sub = t ? t.s + " · " + t.r : "Mapa del capítulo";
+    var items = t ? t.p.map(function(p, i){ return [(t.tribus ? "" : (i + 1) + ". ") + p[0], refText(p[3], p[4] - 1, p[5] - 1)]; }) : mapCur.map(function(i){ return [MAPAS.lugares[i][0], ""]; });
+    var pts = mapPts(), b = MP.view || mBounds(pts.map(function(p){ return [p.la, p.lo]; }), 1.2);
+    var s = '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + " " + H + '" font-family="' + mxml(f) + '"><rect width="' + W + '" height="' + H + '" fill="' + S.bg + '"/>';
+    var mx, my, mw, mh, lx, ly, lw;
+    if (land){ lw = W * 0.3; mx = m; my = m; mw = W - lw - m * 2.6; mh = H - m * 2; lx = mx + mw + m * 0.8; ly = m; }
+    else { mx = m; mw = W - m * 2; my = m + 230 * u; mh = Math.min(H * 0.56, mw * 1.15); lx = m; ly = my + mh + 46 * u; lw = W - m * 2; }
+    // Título
+    var tx = land ? lx : m, ty = land ? ly + 30 * u : m + 30 * u, tw = land ? lw : W - m * 2;
+    s += '<text x="' + tx + '" y="' + ty + '" font-size="' + 24 * u + '" font-weight="700" letter-spacing="' + 4 * u + '" fill="' + S.acc + '">' + (t ? "MAPA BÍBLICO" : "MAPA DEL CAPÍTULO") + '</text>';
+    var tl = mWrap(titulo, Math.floor(tw / (46 * u))), yy = ty + 66 * u;
+    tl.forEach(function(l){ s += '<text x="' + tx + '" y="' + yy + '" font-size="' + 62 * u + '" font-weight="700" fill="' + S.head + '">' + mxml(l) + '</text>'; yy += 70 * u; });
+    mWrap(sub, Math.floor(tw / (17 * u))).forEach(function(l){ s += '<text x="' + tx + '" y="' + yy + '" font-size="' + 30 * u + '" fill="' + S.sub + '">' + mxml(l) + '</text>'; yy += 38 * u; });
+    if (!land){ my = Math.max(my, yy + 10 * u);
+      var need = Math.ceil(items.length / (items.length > 6 ? 2 : 1)) * ((items[0] && items[0][1] ? 72 : 42) * u) + 60 * u;
+      var nl = t && t.nota ? Math.min(3, mWrap(t.nota, Math.floor((W - m * 2) / (11.5 * u))).length) : 0;
+      var room = H - m - 70 * u - (nl ? nl * 30 * u + 30 * u : 0) - need - 46 * u - my;
+      mh = Math.max(Math.min(mh, room), H * 0.3); ly = my + mh + 46 * u; }
+    else ly = yy + 30 * u;
+    // Mapa
+    s += '<rect x="' + (mx - 3 * u) + '" y="' + (my - 3 * u) + '" width="' + (mw + 6 * u) + '" height="' + (mh + 6 * u) + '" fill="none" stroke="' + S.line + '" stroke-width="' + 3 * u + '" rx="' + 10 * u + '"/>';
+    var t2 = MP.modo === "tema" ? MP.tema : null, vb = MP.view ? b : mBounds(pts.map(function(p){ return [p.la, p.lo]; }), t2 ? 1.4 : 1.2);
+    s += mapSVG({ x: mx, y: my, w: mw, h: mh, b: vb, est: MP.est, fs: 1.9 * u * (land ? 1.15 : 1), pts: pts.map(function(p){ var q = Object.assign({}, p); q.sel = false; return q; }), ruta: mapRuta(), reg: t2 ? t2.reg : null, tribus: t2 && t2.tribus });
+    // Lista
+    var cols = land ? (items.length > 4 ? 2 : 1) : (items.length > 6 ? 2 : 1), fsz = (land && cols > 1 ? 22 : 27) * u, cwid = lw / cols, rows = Math.ceil(items.length / cols), lh = (items[0] && items[0][1] ? (land ? 62 : 72) : 42) * u;
+    var notaL = t && t.nota ? mWrap(t.nota, Math.floor((land ? lw : W - m * 2) / (11.5 * u))).slice(0, 3) : [];
+    var bottom = H - m - 70 * u - (notaL.length ? notaL.length * 30 * u + 30 * u : 0);
+    var maxRows = Math.floor((bottom - ly - 30 * u) / lh);
+    if (rows > maxRows){ rows = Math.max(1, maxRows); }
+    items.slice(0, rows * cols).forEach(function(it, i){ var c = Math.floor(i / rows), r = i % rows, x = lx + c * cwid, y = ly + r * lh + fsz;
+      s += '<text x="' + x + '" y="' + y + '" font-size="' + fsz + '" font-weight="700" fill="' + S.head + '">' + mxml(it[0]) + '</text>';
+      if (it[1]) s += '<text x="' + x + '" y="' + (y + 31 * u) + '" font-size="' + 22 * u + '" fill="' + S.sub + '">' + mxml(it[1]) + '</text>'; });
+    if (items.length > rows * cols) s += '<text x="' + lx + '" y="' + (ly + rows * lh + fsz) + '" font-size="' + 22 * u + '" fill="' + S.sub + '">y ' + (items.length - rows * cols) + (items.length - rows * cols === 1 ? " lugar más" : " lugares más") + '</text>';
+    // Pie
+    var py = H - m - (t && t.nota ? 60 * u : 20 * u);
+    notaL.forEach(function(l, i){ s += '<text x="' + (land ? lx : m) + '" y="' + (bottom + 20 * u + i * 30 * u) + '" font-size="' + 21 * u + '" font-style="italic" fill="' + S.sub + '">' + mxml(l) + '</text>'; });
+    var cr = mWrap("Biblia Multiversión · Datos: OpenBible.info (CC BY) y Natural Earth", Math.floor((land ? lw : W - m * 2) / (11 * u)));
+    cr.forEach(function(l, i){ s += '<text x="' + (land ? lx : m) + '" y="' + (H - m + 4 * u - (cr.length - 1 - i) * 26 * u) + '" font-size="' + 20 * u + '" fill="' + S.sub + '">' + mxml(l) + '</text>'; });
+    return { svg: s + "</svg>", w: W, h: H, nombre: "mapa-" + norm(titulo).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") };
   }
+  function mapPDF(jpgBytes, iw, ih, pw, ph){
+    var enc = new TextEncoder(), parts = [], off = 0, xref = [];
+    function add(x){ var b = typeof x === "string" ? enc.encode(x) : x; parts.push(b); off += b.length; }
+    add("%PDF-1.4\n%\xE2\xE3\xCF\xD3\n");
+    var sc = Math.min(pw / iw, ph / ih), dw = iw * sc, dh = ih * sc, dx = (pw - dw) / 2, dy = (ph - dh) / 2;
+    var cont = "q " + dw.toFixed(2) + " 0 0 " + dh.toFixed(2) + " " + dx.toFixed(2) + " " + dy.toFixed(2) + " cm /Im0 Do Q";
+    var objs = ["<< /Type /Catalog /Pages 2 0 R >>", "<< /Type /Pages /Kids [3 0 R] /Count 1 >>", "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 " + pw + " " + ph + "] /Resources << /XObject << /Im0 5 0 R >> >> /Contents 4 0 R >>", "<< /Length " + cont.length + " >>\nstream\n" + cont + "\nendstream"];
+    objs.forEach(function(o, i){ xref.push(off); add((i + 1) + " 0 obj\n" + o + "\nendobj\n"); });
+    xref.push(off); add("5 0 obj\n<< /Type /XObject /Subtype /Image /Width " + iw + " /Height " + ih + " /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length " + jpgBytes.length + " >>\nstream\n"); add(jpgBytes); add("\nendstream\nendobj\n");
+    var xo = off, x = "xref\n0 6\n0000000000 65535 f \n"; xref.forEach(function(o){ x += String(o).padStart(10, "0") + " 00000 n \n"; });
+    add(x + "trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n" + xo + "\n%%EOF");
+    return new Blob(parts, { type: "application/pdf" });
+  }
+  function mapExport(share, btn){
+    if (!MBASE) return;
+    var pg = mapPagina(), img = new Image(), txt = btn ? btn.textContent : "";
+    if (btn){ btn.disabled = true; btn.textContent = "Preparando…"; }
+    function done(){ if (btn){ btn.disabled = false; btn.textContent = txt; } }
+    img.onload = function(){
+      var cv = document.createElement("canvas"); cv.width = pg.w; cv.height = pg.h;
+      var cx = cv.getContext("2d"); cx.fillStyle = MEST[MP.est].bg; cx.fillRect(0, 0, pg.w, pg.h); cx.drawImage(img, 0, 0, pg.w, pg.h);
+      function entregar(blob, ext){
+        var nom = pg.nombre + "." + ext;
+        if (share && navigator.canShare){ try{ var file = new File([blob], nom, { type: blob.type }); if (navigator.canShare({ files: [file] })){ navigator.share({ files: [file], title: "Mapa bíblico" }).catch(function(){}).then(done); return; } }catch(er){} }
+        var a = document.createElement("a"), url = URL.createObjectURL(blob); a.href = url; a.download = nom; document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function(){ URL.revokeObjectURL(url); }, 4000); toast("Mapa descargado"); done();
+      }
+      if (MP.fmt === "png") cv.toBlob(function(b){ b ? entregar(b, "png") : (toast("No se pudo crear la imagen"), done()); }, "image/png");
+      else cv.toBlob(function(b){ if (!b){ toast("No se pudo crear el PDF"); done(); return; }
+        b.arrayBuffer().then(function(ab){
+          var pw = MP.tam === "carta" ? 612 : MP.tam === "a4" ? 595 : Math.round(pg.w * 0.5), ph = MP.tam === "carta" ? 792 : MP.tam === "a4" ? 842 : Math.round(pg.h * 0.5);
+          entregar(mapPDF(new Uint8Array(ab), pg.w, pg.h, pw, ph), "pdf"); }); }, "image/jpeg", 0.92);
+    };
+    img.onerror = function(){ toast("No se pudo crear el mapa"); done(); };
+    img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(pg.svg);
+  }
+  window.__mapPagina = function(){ return mapPagina(); };
+
 
   /* Genealogías */
   var GEN = null;
