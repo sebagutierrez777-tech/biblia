@@ -1,6 +1,14 @@
 {
 "avisos": [
 {
+"id": "2026-11-24-version-2-4",
+"fecha": "2026-11-24",
+"titulo": "Versión 2.4: Biblia completa para estudiar, mapas y evidencias",
+"texto": "Toca cualquier versículo y elige «📖 Estudiar este versículo»: ahora los 66 libros tienen comentario, preguntas para meditar y el texto original palabra por palabra, en griego en el Nuevo Testamento y en hebreo en el Antiguo. Los mapas son nuevos: están en español, funcionan sin internet, tienen estilo moderno o clásico y se pueden descargar en PNG o PDF para clases y prédicas. En Mapas temáticos están el Éxodo, las doce tribus, el ministerio de Jesús y los viajes de Pablo. En Historia y arqueología hay una pestaña nueva, Evidencias, con manuscritos, historiadores antiguos y profecías cumplidas, y hallazgos nuevos como la tablilla del diluvio. Además, la app abre en la lista de libros, te invita a instalarla en tu celular y los duelos en vivo ya no se cortan.",
+"enlace": "",
+"texto_enlace": ""
+},
+{
 "id": "2026-11-23-estudio-juan",
 "fecha": "2026-11-23",
 "titulo": "Nuevo: Estudio profundo",
