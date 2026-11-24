@@ -114,7 +114,7 @@ main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .ch-swipe{margin:10px 0 0;text-align:center;font-size:13px;color:var(--muted)}
 #chFab{position:fixed;left:10px;right:10px;z-index:40;display:flex;justify-content:space-between;pointer-events:none;transition:opacity .25s}#chFab[hidden]{display:none}#chFab.dim{opacity:.15}
 #chFab button{pointer-events:auto;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--rubric);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(0,0,0,.18);opacity:.9}#chFab button:disabled{visibility:hidden}
-@keyframes chInR{from{opacity:.2;transform:translateX(28px)}to{opacity:1;transform:none}}@keyframes chInL{from{opacity:.2;transform:translateX(-28px)}to{opacity:1;transform:none}}#main.ch-in-r #vRead{animation:chInR .25s ease}#main.ch-in-l #vRead{animation:chInL .25s ease}
+@keyframes chInR{from{opacity:.2;transform:translateX(28px)}to{opacity:1;transform:none}}@keyframes chInL{from{opacity:.2;transform:translateX(-28px)}to{opacity:1;transform:none}}#main.ch-in-r #vRead,.pred-b.ch-r{animation:chInR .25s ease}.pred-b.ch-l{animation:chInL .25s ease}.pr-nav{margin-top:6px}#main.ch-in-r #vRead{animation:chInR .25s ease}#main.ch-in-l #vRead{animation:chInL .25s ease}
 .note{color:var(--muted);font-size:15px;padding:18px 0;max-width:60ch}
 .note b{color:var(--ink)}
 
@@ -2783,7 +2783,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     var b = EST.b, c = EST.c, v = EST.v, D = EST.D[b], G = (EST.G[b + ":" + c] || {})[String(v + 1)] || [], n = (D.n || {})[(c + 1) + ":" + (v + 1)], P = estPer(D, c, v);
     var nv = META.books[b][1][c];
     $("estRef").textContent = refText(b, c, v);
-    $("estPrev").disabled = v === 0; $("estNext").disabled = v >= nv - 1;
+    $("estPrev").disabled = b === 0 && c === 0 && v === 0; $("estNext").disabled = b === 65 && c === META.books[65][1].length - 1 && v >= nv - 1;
     var txt = (bookData(cur.v, b) && bookData(cur.v, b)[c] ? bookData(cur.v, b)[c][v] : "") || "";
     var aut = EST_AUT[b] || (b >= 44 && b <= 56 ? "pablo" : "libro"), lib = META.books[b][0];
     var h = '<div class="es-top">' + (EST_SVG[aut] || EST_SVG.libro) + '<div><small>Estudiar · ' + esc(lib) + '</small><b>' + esc(refText(b, c, v)) + '</b></div></div>';
@@ -2820,11 +2820,30 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     if ((b = t.closest("[data-esw]"))){ var i = +b.dataset.esw; EST.w = EST.w === i ? null : i; estRender(); var d = $("estBody").querySelector(".es-det"); if (d) d.scrollIntoView({ block: "nearest", behavior: "smooth" }); return; }
     if ((b = t.closest(".chip[data-b]"))){ closeSheets(); go(+b.dataset.b, +b.dataset.c, +b.dataset.v); return; }
   });
-  $("estPrev").onclick = function(){ if (EST.v > 0){ EST.v--; EST.w = null; estRender(); $("estBody").scrollTop = 0; } };
-  $("estNext").onclick = function(){ if (EST.v < META.books[EST.b][1][EST.c] - 1){ EST.v++; EST.w = null; estRender(); $("estBody").scrollTop = 0; } };
+  function estPaso(d){
+    var b = EST.b, c = EST.c, v = EST.v + d, n = META.books[b][1][c];
+    if (v >= 0 && v < n){ EST.v = v; EST.w = null; estRender(); $("estBody").scrollTop = 0; return; }
+    if (v < 0){ if (c > 0) c--; else if (b > 0){ b--; c = META.books[b][1].length - 1; } else return; v = META.books[b][1][c] - 1; }
+    else { if (c < META.books[b][1].length - 1) c++; else if (b < 65){ b++; c = 0; } else return; v = 0; }
+    var tab = EST.tab; openEst(b, c, v); EST.tab = tab; toast(refText(b, c, v));
+  }
+  $("estPrev").onclick = function(){ estPaso(-1); };
+  $("estNext").onclick = function(){ estPaso(1); };
+  // Deslizar a los lados: versículo anterior o siguiente (y cambia de capítulo al llegar al borde)
+  function deslizar(el, fn){
+    var x0 = null, y0 = 0, t0 = 0;
+    el.addEventListener("touchstart", function(e){ x0 = null; if (e.touches.length > 1 || e.target.closest("input,textarea,select,.es-il,.pred-tabs,.chips")) return; x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; t0 = Date.now(); }, { passive: true });
+    el.addEventListener("touchend", function(e){
+      if (x0 == null) return; var t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0; x0 = null;
+      if (Date.now() - t0 > 700 || Math.abs(dx) < 70 || Math.abs(dy) > Math.abs(dx) * 0.6) return;
+      var sl = window.getSelection && String(window.getSelection()); if (sl && sl.length > 1) return;
+      fn(dx < 0 ? 1 : -1);
+    }, { passive: true });
+  }
+  deslizar($("estBody"), estPaso);
   $("actEst").onclick = function(){ if (sel == null) return; var i = sel; setSel(null); openEst(cur.b, cur.c, i); };
   /* ---------- Prepara tu prédica: sermón, enseñanza y exégesis por pasaje ---------- */
-  var PRED_LIB = { 42: "juan" }, PRED = {}, PR = { b: null, P: null, s: null, tab: "ser" };
+  var PRED_LIB = { 42: "juan", 43: "hechos" }, PRED = {}, PR = { b: null, P: null, s: null, tab: "ser" };
   function predCargar(b){
     if (!PRED_LIB[b]) return Promise.resolve(null);
     if (PRED[b] !== undefined) return Promise.resolve(PRED[b]);
@@ -2871,8 +2890,10 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
       el = document.createElement("div"); el.id = "predSh"; el.className = "pred"; el.setAttribute("role", "dialog"); el.setAttribute("aria-label", "Prepara tu prédica");
       el.innerHTML = '<div class="pred-h"><div class="pred-r"><button type="button" class="pred-x" data-pcl aria-label="Volver al estudio">‹</button><span class="pred-t"><small>Prepara tu prédica</small><b id="predRef"></b></span><button type="button" class="pred-pdf" data-ppdf><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>PDF</button></div><div class="pred-tabs" role="tablist"><button type="button" role="tab" data-ptab="ser">Sermón</button><button type="button" role="tab" data-ptab="ens">Enseñanza</button><button type="button" role="tab" data-ptab="exe">Exégesis</button></div></div><div class="pred-b" id="predBody"></div>';
       document.body.appendChild(el);
+      deslizar(el, predPaso);
       el.addEventListener("click", function(e){
         var t;
+        if ((t = e.target.closest("[data-ppas]"))){ predPaso(+t.dataset.ppas); return; }
         if (e.target.closest("[data-pcl]")){ predCerrar(); return; }
         if ((t = e.target.closest("[data-ptab]"))){ PR.tab = t.dataset.ptab; predPintar(); $("predBody").scrollTop = 0; return; }
         if ((t = e.target.closest("[data-ppdf]"))){ predPDF(t); return; }
@@ -2880,12 +2901,24 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     }
     el.hidden = false; document.body.classList.add("pred-on"); predPintar(); $("predBody").scrollTop = 0;
   }
+  function predPaso(d){
+    var b = PR.b, per = (EST.D[b] && EST.D[b].per) || [], i = per.indexOf(PR.P), j = i + d;
+    while (j >= 0 && j < per.length && !predDe(b, per[j])) j += d;
+    if (j < 0 || j >= per.length){ toast(d > 0 ? "Es el último pasaje con prédica de este libro" : "Es el primer pasaje con prédica de este libro"); return; }
+    PR.P = per[j]; PR.s = predDe(b, per[j]);
+    var bd = $("predBody"); bd.classList.remove("ch-l", "ch-r"); void bd.offsetWidth; bd.classList.add(d > 0 ? "ch-r" : "ch-l");
+    predPintar(); bd.scrollTop = 0;
+  }
   function predCerrar(){ var el = $("predSh"); if (el) el.hidden = true; document.body.classList.remove("pred-on"); }
   function predPintar(){
     var b = PR.b, P = PR.P, s = PR.s;
     $("predRef").textContent = META.books[b][0] + " " + predRango(P);
     document.querySelectorAll("#predSh [data-ptab]").forEach(function(x){ x.setAttribute("aria-selected", String(x.dataset.ptab === PR.tab)); });
     var h = PR.tab === "ens" ? predEns(s) : PR.tab === "exe" ? predExe(b, P, s) : predSer(s);
+    var per = (EST.D[b] && EST.D[b].per) || [], i = per.indexOf(P), ant = null, sig = null, k;
+    for (k = i - 1; k >= 0; k--) if (predDe(b, per[k])){ ant = per[k]; break; }
+    for (k = i + 1; k < per.length; k++) if (predDe(b, per[k])){ sig = per[k]; break; }
+    h += '<div class="chap-nav pr-nav"><button type="button" data-ppas="-1"' + (ant ? "" : " disabled") + '><small>Pasaje anterior</small>' + (ant ? "‹ " + esc(META.books[b][0] + " " + ant.d[0] + ":" + ant.d[1]) : "") + '</button><button type="button" data-ppas="1"' + (sig ? "" : " disabled") + '><small>Siguiente pasaje</small>' + (sig ? esc(META.books[b][0] + " " + sig.d[0] + ":" + sig.d[1]) + " ›" : "") + '</button></div><p class="ch-swipe">También puedes deslizar el dedo a los lados para cambiar de pasaje.</p>';
     $("predBody").innerHTML = h + '<p class="pr-cred">Contenido propio de la Biblia Multiversión, inspirado en las notas de Juan Wesley y Adam Clarke. Úsalo como base y deja que el Espíritu Santo lo haga tuyo.</p>';
   }
 
