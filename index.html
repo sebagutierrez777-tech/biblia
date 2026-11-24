@@ -391,9 +391,10 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
 .tip button{flex:none;min-height:38px;padding:0 14px;border-radius:999px;background:var(--nt-bg);color:#fff;font-weight:700;font-size:14px}
 
 /* Hojas */
-.sheet{position:absolute;inset:0;z-index:10;display:none;flex-direction:column;background:var(--paper)}
+.sheet{position:absolute;inset:0;bottom:var(--navh,0px);z-index:10;border-radius:0 0 0 0;box-shadow:0 2px 0 var(--line);display:none;flex-direction:column;background:var(--paper)}
 .sheet.on{display:flex}
-.sheet-head{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.sh-grip{display:block;width:44px;height:5px;border-radius:3px;background:var(--line);margin:8px auto 0;flex:none}
+.sheet-head{touch-action:none;display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
 .sheet-head h2{flex:1;margin:0;font-size:18px;font-weight:700}
 .sheet-body{flex:1;overflow-y:auto;padding:14px 16px 28px}
 .grp{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px}
@@ -1610,7 +1611,21 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     $("main").scrollTop = 0; try{ updFab(); }catch(e){}
   }
   document.addEventListener("click", function(e){ var g = e.target.closest(".seg [data-go]"); if (g){ tab(g.dataset.go); var f = $(g.dataset.go === "vConc" ? "ccQ" : "q"); if (f && !f.value) f.focus(); } });
-  document.querySelector("nav").addEventListener("click", function(e){ var b = e.target.closest("button"); if (b) tab(b.dataset.tab); });
+  document.querySelector("nav").addEventListener("click", function(e){ var b = e.target.closest("button"); if (!b) return; if (document.querySelector(".sheet.on")) closeSheets(); tab(b.dataset.tab); });
+  /* Las hojas (libros, versiones…) dejan visible la barra de abajo y se cierran deslizando hacia abajo */
+  (function(){
+    function navH(){ var n = document.querySelector("nav"); if (n) document.documentElement.style.setProperty("--navh", n.offsetHeight + "px"); }
+    navH(); window.addEventListener("resize", navH); setTimeout(navH, 500);
+    document.querySelectorAll(".sheet").forEach(function(sh){
+      var hd = sh.querySelector(".sheet-head"); if (!hd) return;
+      var g = document.createElement("span"); g.className = "sh-grip"; g.setAttribute("aria-hidden", "true"); sh.insertBefore(g, hd);
+      var y0 = null, dy = 0;
+      function ini(e){ if (e.target.closest("button,input")) return; y0 = e.touches[0].clientY; dy = 0; sh.style.transition = "none"; }
+      function mov(e){ if (y0 == null) return; dy = Math.max(0, e.touches[0].clientY - y0); sh.style.transform = "translateY(" + dy + "px)"; }
+      function fin(){ if (y0 == null) return; y0 = null; sh.style.transition = "transform .2s ease"; if (dy > 90){ sh.style.transform = "translateY(100%)"; setTimeout(function(){ closeSheets(); sh.style.transform = ""; sh.style.transition = ""; }, 200); } else { sh.style.transform = ""; } }
+      [g, hd].forEach(function(el){ el.addEventListener("touchstart", ini, { passive: true }); el.addEventListener("touchmove", mov, { passive: true }); el.addEventListener("touchend", fin); el.addEventListener("touchcancel", fin); });
+    });
+  })();
 
   /* ---------- Hojas ---------- */
   function openSheet(id){ $(id).classList.add("on"); try{ updFab(); }catch(e){} }
