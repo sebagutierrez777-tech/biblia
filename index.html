@@ -1094,6 +1094,9 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
 </style>
 <style>
 /* Presentación y bienvenida */
+.inst{position:fixed;left:12px;right:12px;bottom:calc(76px + env(safe-area-inset-bottom));z-index:8000;max-width:520px;margin:0 auto;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 32px rgba(0,0,0,.22);padding:14px;animation:prIn .25s ease}
+.inst-r{display:flex;gap:12px;align-items:center}.inst img{width:48px;height:48px;border-radius:12px;flex:none}.inst-t{flex:1;display:flex;flex-direction:column;gap:2px}.inst-t b{font-size:16px}.inst-t span{font-size:13.5px;color:var(--muted);line-height:1.35}
+.inst ol{margin:10px 0 0;padding-left:22px;font-size:14.5px;line-height:1.55}.inst-b{display:flex;gap:8px;margin-top:12px}.inst-b button{flex:1;min-height:46px;border-radius:12px;font-weight:700;font-size:15px}.inst-si{background:var(--rubric);color:#fff}.inst-no{background:transparent;color:var(--ink);border:1px solid var(--line)}
 .ini{position:fixed;inset:0;z-index:9000;font-family:var(--ui)}
 .ini[hidden]{display:none}
 .ini-splash{background:radial-gradient(90% 55% at 50% 38%,rgba(64,86,190,.45) 0%,rgba(64,86,190,0) 70%),linear-gradient(180deg,#1f2a7a 0%,#1f2a7a 18%,#272479 48%,#3e2380 74%,#5a2185 90%,#6e2078 100%);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:calc(48px + env(safe-area-inset-top)) 28px calc(28px + env(safe-area-inset-bottom));overflow:hidden;transition:opacity .45s ease}
@@ -1587,6 +1590,34 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     h = '<button type="button" class="bk-seguir" data-close><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M9 8l3 3 3-3"/></svg><span><small>Seguir leyendo</small><b>' + esc(refText(cur.b, cur.c)) + '</b></span><i aria-hidden="true">›</i></button>' + h;
     $("bkTitle").textContent = "Libros"; $("bkBack").hidden = true; $("bkBody").innerHTML = h; $("bkBody").scrollTop = 0;
   }
+
+  /* Invitación a instalar la app cuando se abre desde el link */
+  (function(){
+    var aviso = null, mostrado = false;
+    function instalada(){ try{ return (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true; }catch(e){ return false; } }
+    function pospuesto(){ var t = +store.get("instNo", 0) || 0; return Date.now() - t < 7 * 864e5; }
+    var ios = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    function cerrar(no){ var el = document.getElementById("instCard"); if (el) el.remove(); if (no) store.set("instNo", Date.now()); }
+    function mostrar(){
+      if (mostrado || instalada() || pospuesto() || window.__inicioLink) return;
+      if (!aviso && !ios) return;
+      mostrado = true;
+      var el = document.createElement("div"); el.className = "inst"; el.id = "instCard"; el.setAttribute("role", "dialog"); el.setAttribute("aria-label", "Instalar la app");
+      el.innerHTML = '<div class="inst-r"><img src="icon-192.png" alt=""><div class="inst-t"><b>Instala la Biblia en tu celular</b><span>Queda con su ícono en la pantalla de inicio y funciona sin internet.</span></div></div>'
+        + (aviso ? "" : '<ol><li>Toca el botón <b>Compartir</b> de Safari (el cuadro con la flecha hacia arriba).</li><li>Elige <b>Agregar a pantalla de inicio</b>.</li><li>Toca <b>Agregar</b>.</li></ol>')
+        + '<div class="inst-b">' + (aviso ? '<button type="button" class="inst-si" data-inst="si">Instalar</button>' : "") + '<button type="button" class="inst-no" data-inst="no">' + (aviso ? "Ahora no" : "Entendido") + '</button></div>';
+      el.addEventListener("click", function(e){
+        var b = e.target.closest("[data-inst]"); if (!b) return;
+        if (b.dataset.inst === "si" && aviso){ var a = aviso; aviso = null; a.prompt(); (a.userChoice || Promise.resolve({})).then(function(r){ cerrar(r && r.outcome !== "accepted"); }); }
+        else cerrar(true);
+      });
+      document.body.appendChild(el);
+    }
+    window.addEventListener("beforeinstallprompt", function(e){ e.preventDefault(); aviso = e; if (window.__inicioListo) setTimeout(mostrar, 1500); });
+    window.addEventListener("appinstalled", function(){ cerrar(false); toast("¡Listo! La Biblia quedó instalada"); });
+    window.addEventListener("biblia-inicio", function(){ window.__inicioListo = true; setTimeout(mostrar, 2500); });
+    window.__instMostrar = function(){ mostrado = false; store.set("instNo", 0); mostrar(); };
+  })();
   window.addEventListener("biblia-inicio", function(){
     if (window.__inicioLink) return;
     if (document.querySelector(".sheet.on") || !$("vRead").classList.contains("on")) return;
