@@ -554,6 +554,12 @@ nav button[data-tab="vRead"][aria-current="page"]{color:var(--at);border-top-col
 .seg{display:flex;padding:4px;border-radius:14px;background:var(--line);margin:0 0 14px}
 .seg button{flex:1;min-height:44px;border-radius:11px;font-size:15.5px;font-weight:700;color:var(--muted)}
 .seg button[aria-pressed="true"]{background:var(--surface);color:var(--rubric);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.seg{position:relative}.seg button{position:relative;z-index:1;transition:color .28s ease}
+.seg.has-ind button[aria-pressed="true"]{background:transparent;box-shadow:none}
+.seg .seg-ind{position:absolute;top:4px;bottom:4px;left:0;width:0;border-radius:11px;background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.08);transition:left .32s cubic-bezier(.3,.7,.2,1),width .32s cubic-bezier(.3,.7,.2,1);pointer-events:none}
+.seg-fade > :not(.seg){animation:segIn .3s ease both}
+@keyframes segIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.seg .seg-ind{transition:none}.seg-fade > :not(.seg){animation:none}}
 #iniEdad{height:50px;width:140px;border:1px solid #c9c6e6;border-radius:12px;padding:0 14px;font:inherit;font-size:17px;background:#fff;color:#1b1840}
 .ini-simple{background:#fff;border-radius:18px;padding:18px;border:1px solid #c9c6e6;border-bottom:4px solid #d4a72c;display:flex;flex-direction:column;gap:10px}
 .ini-simple b{font-size:19px;color:#1b1840}.ini-simple p{margin:0;font-size:15.5px;line-height:1.5;color:#4a4870}
@@ -2779,6 +2785,24 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
     openSheet("shEst");
     estCargar(b, c).then(function(){ return predCargar(b); }).then(estRender, function(){ $("estBody").innerHTML = '<p class="note">No se pudo cargar el estudio. Revisa tu conexión.</p>'; });
   }
+  var SEGPOS = {};
+  function segFade(el){ if (!el) return; el.classList.remove("seg-fade"); void el.offsetWidth; el.classList.add("seg-fade"); clearTimeout(el._sf); el._sf = setTimeout(function(){ el.classList.remove("seg-fade"); }, 400); }
+  function segSync(){
+    document.querySelectorAll(".seg").forEach(function(s){
+      var p = s.querySelector('button[aria-pressed="true"]'); if (!p || !p.offsetWidth) return;
+      var k = (s.getAttribute("aria-label") || "") + "|" + s.className.replace(/\bhas-ind\b/, "").trim();
+      var ind = s.querySelector(".seg-ind"), nl = p.offsetLeft, nw = p.offsetWidth, pr = SEGPOS[k];
+      if (!ind){ ind = document.createElement("span"); ind.className = "seg-ind"; ind.setAttribute("aria-hidden", "true"); s.insertBefore(ind, s.firstChild); s.classList.add("has-ind");
+        ind.style.transition = "none"; ind.style.left = (pr ? pr.l : nl) + "px"; ind.style.width = (pr ? pr.w : nw) + "px"; void ind.offsetWidth; ind.style.transition = ""; }
+      if (ind.style.left !== nl + "px" || ind.style.width !== nw + "px"){ ind.style.left = nl + "px"; ind.style.width = nw + "px"; }
+      SEGPOS[k] = { l: nl, w: nw };
+    });
+  }
+  (function(){ var q = 0; function go(){ if (q) return; q = 1; requestAnimationFrame(function(){ q = 0; segSync(); }); }
+    new MutationObserver(go).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["aria-pressed", "hidden", "class"] });
+    window.addEventListener("resize", go); go(); })();
+  document.addEventListener("click", function(e){ var bt = e.target.closest && e.target.closest(".seg button"); if (!bt) return; var sg = bt.parentNode, k = sg.getAttribute("aria-label") || "", cls = sg.className.replace(/\bhas-ind\b/, "").trim();
+    setTimeout(function(){ if (sg.isConnected) return; var nw = Array.prototype.filter.call(document.querySelectorAll(".seg"), function(x){ return (x.getAttribute("aria-label") || "") === k && x.className.replace(/\bhas-ind\b/, "").trim() === cls && x.offsetWidth; })[0]; if (nw && nw.parentNode) segFade(nw.parentNode); }, 0); }, true);
   function estRender(){
     var b = EST.b, c = EST.c, v = EST.v, D = EST.D[b], G = (EST.G[b + ":" + c] || {})[String(v + 1)] || [], n = (D.n || {})[(c + 1) + ":" + (v + 1)], P = estPer(D, c, v);
     var nv = META.books[b][1][c];
@@ -2816,7 +2840,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
   $("estBody").addEventListener("click", function(e){
     var t = e.target, b;
     if (t.closest("[data-pred]")){ predAbrir(); return; }
-    if ((b = t.closest("[data-est]"))){ EST.tab = b.dataset.est; EST.w = null; estRender(); return; }
+    if ((b = t.closest("[data-est]"))){ if (EST.tab === b.dataset.est) return; EST.tab = b.dataset.est; EST.w = null; estRender(); segFade($("estBody")); return; }
     if ((b = t.closest("[data-esw]"))){ var i = +b.dataset.esw; EST.w = EST.w === i ? null : i; estRender(); var d = $("estBody").querySelector(".es-det"); if (d) d.scrollIntoView({ block: "nearest", behavior: "smooth" }); return; }
     if ((b = t.closest(".chip[data-b]"))){ closeSheets(); go(+b.dataset.b, +b.dataset.c, +b.dataset.v); return; }
   });
@@ -2843,7 +2867,7 @@ html.mo-tr,html.mo-tr *{transition:background-color .35s ease,color .35s ease,bo
   deslizar($("estBody"), estPaso);
   $("actEst").onclick = function(){ if (sel == null) return; var i = sel; setSel(null); openEst(cur.b, cur.c, i); };
   /* ---------- Prepara tu prédica: sermón, enseñanza y exégesis por pasaje ---------- */
-  var PRED_LIB = { 39: "mateo", 40: "marcos", 41: "lucas", 42: "juan", 43: "hechos", 44: "romanos" }, PRED = {}, PR = { b: null, P: null, s: null, tab: "ser" };
+  var PRED_LIB = { 39: "mateo", 40: "marcos", 41: "lucas", 42: "juan", 43: "hechos", 44: "romanos", 45: "1corintios", 47: "galatas", 48: "efesios", 49: "filipenses" }, PRED = {}, PR = { b: null, P: null, s: null, tab: "ser" };
   function predCargar(b){
     if (!PRED_LIB[b]) return Promise.resolve(null);
     if (PRED[b] !== undefined) return Promise.resolve(PRED[b]);
